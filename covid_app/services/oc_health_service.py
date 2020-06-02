@@ -5,16 +5,19 @@ Uses OC HCA API. For more information, see:
 
 https://occovid19.ochealthinfo.com/coronavirus-in-oc
 """
-from functools import cached_property
+from os.path import join as path_join
 from datetime import datetime, timedelta
 import json
 import csv
 import requests
 
+from config.app import DATA_ROOT
+
 
 SERVICE_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
 SERVICE_DATE_F = '%m/%d/%Y'
 START_DATE = '3/1/2020'
+OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 
 
 class OCHealthService:
@@ -39,7 +42,8 @@ class OCHealthService:
 
     @staticmethod
     def output_daily_csv(rows):
-        csv_path = 'oc_daily.csv'
+        csv_name = 'oc_hca.csv'
+        csv_path = path_join(OC_DATA_PATH, csv_name)
         header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU']
         rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
 
@@ -48,6 +52,11 @@ class OCHealthService:
             writer.writerow(header_row)
             for row in rows_by_most_recent:
                 writer.writerow(row)
+
+            # Add timestamp
+            timestamp = 'exported at {}'.format(datetime.now().isoformat())
+            writer.writerow([])
+            writer.writerow([timestamp])
 
         return {
             'path': csv_path,

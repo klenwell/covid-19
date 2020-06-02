@@ -11,51 +11,21 @@ class BaseController(Controller):
     class Meta:
         label = 'base'
 
-    # python app.py new-tests
-    @expose(help="Outputs csv file with OC HCA test counts.")
-    def new_tests(self):
-        csv_file = 'new_tests.csv'
-        header_row = ['Date', 'Count']
-        service = OCHealthService()
-        new_tests = service.extract_new_tests()
-        sorted_tests = sorted(new_tests, key=lambda t: t[0], reverse=True)
-
-        with open(csv_file, 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(header_row)
-            for row in sorted_tests:
-                writer.writerow(row)
-
-        print('CSV written to {}'.format(csv_file))
-
-    # python app.py new-cases
-    @expose(help="Outputs csv file with OC HCA case counts.")
-    def new_cases(self):
-        csv_file = 'new_cases.csv'
-        header_row = ['Date', 'Count']
-        service = OCHealthService()
-        new_cases = service.extract_new_cases()
-        sorted_cases = sorted(new_cases, key=lambda t: t[0], reverse=True)
-
-        with open(csv_file, 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(header_row)
-            for row in sorted_cases:
-                writer.writerow(row)
-
-        print('CSV written to {}'.format(csv_file))
+    # python app.py oc-daily
+    @expose(help="Export data from OC HCA site to csv file.")
+    def oc_daily(self):
+        csv = OCHealthService.export_daily_csv()
+        vars = {'csv': csv}
+        self.app.render(vars, 'oc_daily.jinja2')
 
     # python app.py interactive
-    @expose(help="Run the Application interactively.")
+    # This command can be used for testing and development.
+    @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        csv_file = 'new_tests.csv'
-        header_row = ['Date', 'Count']
-        service = OCHealthService()
-        new_tests = service.extract_new_tests()
-        sorted_tests = sorted(new_tests, key=lambda t: t[0], reverse=True)
+        rows = OCHealthService.fetch_daily_data()
         breakpoint()
 
-    # python app.py test -f foo arg1 extra2 extra2
+    # python app.py test -f foo arg1 extra1 extra2
     @expose(
         help="Test Cement framework and CLI.",
         arguments=[
@@ -67,5 +37,5 @@ class BaseController(Controller):
         ]
     )
     def test(self):
-        data = {'args': self.app.pargs}
-        self.app.render(data, 'test.jinja2')
+        vars = {'args': self.app.pargs}
+        self.app.render(vars, 'test.jinja2')

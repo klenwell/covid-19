@@ -9,6 +9,7 @@
 # Cement is an advanced CLI Application Framework for Python.
 # For more info, see: http://builtoncement.com/
 cement
+jinja2
 
 # Requests for Website and API interactions
 requests

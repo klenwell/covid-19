@@ -21,7 +21,8 @@ OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ARCHIVE_PATH = path_join(OC_DATA_PATH, 'daily')
 
 
-class OCServiceError(Exception): pass
+class OCServiceError(Exception):
+    pass
 
 
 class OCHealthService:

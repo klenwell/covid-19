@@ -67,9 +67,6 @@ class OCHealthService:
             for row in rows_by_most_recent:
                 writer.writerow(row)
 
-            # Add timestamp
-            timestamp = 'exported at {}'.format(datetime.now().isoformat())
-
             if footer:
                 writer.writerow([])
                 writer.writerow([footer])

@@ -18,13 +18,22 @@ class BaseController(Controller):
 
     # python app.py interactive
     # This command can be used for testing and development.
-    @expose(help="Run the Application interactively. Useful for testing and development.")
+    @expose(
+        help="Run the Application interactively. Useful for testing and development.",
+        arguments=[
+            (['-a'], dict(dest='archive', action='store',
+                          help='Extract data from archived web page.'))
+        ]
+    )
     def interactive(self):
-        service = OCHealthService()
-        html = service.fetch_page_source()
-        new_cases = service.extract_new_cases(html)
-        latest_date = service.extract_latest_date_from_new_cases(new_cases)
-        print(latest_date)
+        url = None
+        use_archive = self.app.pargs.archive
+        if use_archive:
+            url = '{}/{}'.format('https://web.archive.org/web/20200331224552',
+                                 'https://occovid19.ochealthinfo.com/coronavirus-in-oc')
+            print('Using archive ({}): {}'.format(self.app.pargs.archive, format(url)))
+        data = OCHealthService.fetch_daily_data(url)
+        print('Latest daily report: {}'.format(data[-1]))
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

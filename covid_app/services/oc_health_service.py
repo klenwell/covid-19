@@ -25,15 +25,21 @@ class OCHealthService:
     # Static Methods
     #
     @staticmethod
+    def export_archive(archive_url):
+        rows = OCHealthService.fetch_daily_data(archive_url)
+        result = OCHealthService.output_daily_csv(rows)
+        return result
+
+    @staticmethod
     def export_daily_csv():
         rows = OCHealthService.fetch_daily_data()
         result = OCHealthService.output_daily_csv(rows)
         return result
 
     @staticmethod
-    def fetch_daily_data():
+    def fetch_daily_data(url=None):
         service = OCHealthService()
-        html = service.fetch_page_source()
+        html = service.fetch_page_source(url)
         new_tests = service.extract_new_tests(html)
         new_cases = service.extract_new_cases(html)
         hosps, icus = service.extract_hospitalizations(html)
@@ -71,8 +77,10 @@ class OCHealthService:
     def __init__(self):
         self.url = SERVICE_URL
 
-    def fetch_page_source(self):
-        response = requests.get(self.url)
+    def fetch_page_source(self, source_url=None):
+        if not source_url:
+            source_url = self.url
+        response = requests.get(source_url)
 
         # This will raise a requests.exceptions.HTTPError error for caller to handle.
         response.raise_for_status()
@@ -83,9 +91,13 @@ class OCHealthService:
         needle = 'testData ='
         new_tests = {}
 
-        _, tail = html.split(needle)
-        payload, _ = tail.split(';', 1)
-        daily_tests = json.loads(payload)
+        try:
+            _, tail = html.split(needle)
+            payload, _ = tail.split(';', 1)
+            daily_tests = json.loads(payload)
+        except ValueError as e:
+            print("Failed to extract new tests: {}".format(e))
+            return {}
 
         for test in daily_tests:
             test_date = datetime.strptime(test[0], SERVICE_DATE_F).date()
@@ -114,9 +126,13 @@ class OCHealthService:
         new_hospitalizations = {}
         new_icu_cases = {}
 
-        _, tail = html.split(needle)
-        payload, _ = tail.split(';', 1)
-        daily_hospitalizations = json.loads(payload)
+        try:
+            _, tail = html.split(needle)
+            payload, _ = tail.split(';', 1)
+            daily_hospitalizations = json.loads(payload)
+        except ValueError as e:
+            print("Failed to extract hospitalizations: {}".format(e))
+            return {}, {}
 
         for daily in daily_hospitalizations:
             case_date = datetime.strptime(daily[0], SERVICE_DATE_F).date()

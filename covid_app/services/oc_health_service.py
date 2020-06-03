@@ -18,6 +18,7 @@ SERVICE_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
 SERVICE_DATE_F = '%m/%d/%Y'
 START_DATE = '3/1/2020'
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
+OC_ARCHIVE_PATH = path_join(OC_DATA_PATH, 'daily')
 
 
 class OCHealthService:
@@ -27,7 +28,13 @@ class OCHealthService:
     @staticmethod
     def export_archive(archive_url):
         rows = OCHealthService.fetch_daily_data(archive_url)
-        result = OCHealthService.output_daily_csv(rows)
+
+        archive_date = rows[-1][0]
+        csv_fname = 'oc-hca-{}.csv'.format(archive_date.strftime('%Y%m%d'))
+        csv_path = path_join(OC_ARCHIVE_PATH, csv_fname)
+        footer = 'exported from {} at {}'.format(archive_url, datetime.now().isoformat())
+
+        result = OCHealthService.output_daily_csv(rows, csv_path=csv_path, footer=footer)
         return result
 
     @staticmethod
@@ -47,9 +54,10 @@ class OCHealthService:
         return rows
 
     @staticmethod
-    def output_daily_csv(rows):
-        csv_name = 'oc_hca.csv'
-        csv_path = path_join(OC_DATA_PATH, csv_name)
+    def output_daily_csv(rows, csv_path=None, footer=None):
+        if not csv_path:
+            csv_path = path_join(OC_DATA_PATH, 'oc-hca.csv')
+
         header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU']
         rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
 
@@ -61,8 +69,10 @@ class OCHealthService:
 
             # Add timestamp
             timestamp = 'exported at {}'.format(datetime.now().isoformat())
-            writer.writerow([])
-            writer.writerow([timestamp])
+
+            if footer:
+                writer.writerow([])
+                writer.writerow([footer])
 
         return {
             'path': csv_path,

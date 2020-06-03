@@ -1,5 +1,5 @@
 """
-Klenwell COVID-19
+Klenwell COVID-19 Command Line Application
 klenwell@gmail.com
 
 Main application entry point:

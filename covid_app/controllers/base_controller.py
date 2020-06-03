@@ -22,7 +22,10 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        rows = OCHealthService.fetch_daily_data()
+        service = OCHealthService()
+        html = service.fetch_page_source()
+        new_cases = service.extract_new_cases(html)
+        latest_date = service.extract_latest_date_from_new_cases(new_cases)
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

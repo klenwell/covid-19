@@ -127,22 +127,27 @@ class OCHealthService:
 
         return new_hospitalizations, new_icu_cases
 
-    def collate_daily_data(self, tests, cases, hosps, icus):
+    def collate_daily_data(self, cases, tests, hosps, icus):
         rows = []
 
         start_on = datetime.strptime(START_DATE, SERVICE_DATE_F).date()
-        end_on = datetime.now().date()
+        end_on = self.extract_latest_date_from_new_cases(cases)
         next_date = start_on
 
         while next_date <= end_on:
-            daily_tests = tests.get(next_date, 0)
             daily_cases = cases.get(next_date, 0)
+            daily_tests = tests.get(next_date, 0)
             daily_hosps = hosps.get(next_date, 0)
             daily_icus = icus.get(next_date, 0)
 
-            row = [next_date, daily_tests, daily_cases, daily_hosps, daily_icus]
+            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus]
             rows.append(row)
 
             next_date = next_date + timedelta(days=1)
 
         return rows
+
+    def extract_latest_date_from_new_cases(self, cases):
+        dates = cases.keys()
+        sorted_dates = sorted(dates)
+        return sorted_dates[-1]

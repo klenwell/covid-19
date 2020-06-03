@@ -21,13 +21,26 @@ OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ARCHIVE_PATH = path_join(OC_DATA_PATH, 'daily')
 
 
+class OCServiceError(Exception): pass
+
+
 class OCHealthService:
     #
     # Static Methods
     #
     @staticmethod
+    def export_daily_csv():
+        service = OCHealthService()
+        rows = service.extract_daily_data_rows()
+
+        result = OCHealthService.output_daily_csv(rows)
+        result['format_version'] = service.format_version
+        return result
+
+    @staticmethod
     def export_archive(archive_url):
-        rows = OCHealthService.fetch_daily_data(archive_url)
+        service = OCHealthService()
+        rows = service.extract_daily_data_rows(archive_url)
 
         archive_date = rows[-1][0]
         csv_fname = 'oc-hca-{}.csv'.format(archive_date.strftime('%Y%m%d'))
@@ -35,23 +48,8 @@ class OCHealthService:
         footer = 'exported from {} at {}'.format(archive_url, datetime.now().isoformat())
 
         result = OCHealthService.output_daily_csv(rows, csv_path=csv_path, footer=footer)
+        result['format_version'] = service.format_version
         return result
-
-    @staticmethod
-    def export_daily_csv():
-        rows = OCHealthService.fetch_daily_data()
-        result = OCHealthService.output_daily_csv(rows)
-        return result
-
-    @staticmethod
-    def fetch_daily_data(url=None):
-        service = OCHealthService()
-        html = service.fetch_page_source(url)
-        new_tests = service.extract_new_tests(html)
-        new_cases = service.extract_new_cases(html)
-        hosps, icus = service.extract_hospitalizations(html)
-        rows = service.collate_daily_data(new_cases, new_tests, hosps, icus)
-        return rows
 
     @staticmethod
     def output_daily_csv(rows, csv_path=None, footer=None):
@@ -84,6 +82,9 @@ class OCHealthService:
     def __init__(self):
         self.url = SERVICE_URL
 
+        # To adjust for changes in OC HCA data formatting as embedded in page source.
+        self.format_version = None
+
     def fetch_page_source(self, source_url=None):
         if not source_url:
             source_url = self.url
@@ -94,9 +95,59 @@ class OCHealthService:
 
         return response.text
 
+    def extract_daily_data_rows(self, source_url=None):
+        html = self.fetch_page_source(source_url)
+        self.format_version = self.detect_format_version(html)
+
+        new_tests = self.extract_new_tests(html)
+        new_cases = self.extract_new_cases(html)
+        hosps, icus = self.extract_hospitalizations(html)
+        rows = self.collate_daily_data(new_cases, new_tests, hosps, icus)
+        return rows
+
+    def detect_format_version(self, html):
+        v1_needle = 'caseArr ='
+        v2_needle = '$cases ='  # update on 2020-06-03
+
+        if v1_needle in html:
+            return 1
+        elif v2_needle in html:
+            return 2
+        else:
+            raise OCServiceError('Page source formatting not recognized.')
+
+    def extract_new_cases(self, html):
+        new_cases = {}
+
+        # Default extract parameters
+        needle = '$cases ='
+        count_idx = 1
+
+        # Adjust extract parameters based on version
+        if self.format_version == 1:
+            needle = 'caseArr ='
+
+        _, tail = html.split(needle)
+        payload, _ = tail.split(';', 1)
+        daily_cases = json.loads(payload)
+
+        for case in daily_cases:
+            case_date = datetime.strptime(case[0], SERVICE_DATE_F).date()
+            case_count = case[count_idx]
+            new_cases[case_date] = case_count
+
+        return new_cases
+
     def extract_new_tests(self, html):
-        needle = 'testData ='
         new_tests = {}
+
+        # Default extract parameters
+        needle = '$pplData ='
+        count_idx = 2
+
+        # Adjust extract parameters based on version
+        if self.format_version == 1:
+            needle = 'testData ='
 
         try:
             _, tail = html.split(needle)
@@ -108,30 +159,23 @@ class OCHealthService:
 
         for test in daily_tests:
             test_date = datetime.strptime(test[0], SERVICE_DATE_F).date()
-            test_count = test[2]
+            test_count = test[count_idx]
             new_tests[test_date] = test_count
 
         return new_tests
 
-    def extract_new_cases(self, html):
-        needle = 'caseArr ='
-        new_cases = {}
-
-        _, tail = html.split(needle)
-        payload, _ = tail.split(';', 1)
-        daily_cases = json.loads(payload)
-
-        for case in daily_cases:
-            case_date = datetime.strptime(case[0], SERVICE_DATE_F).date()
-            case_count = case[1]
-            new_cases[case_date] = case_count
-
-        return new_cases
-
     def extract_hospitalizations(self, html):
-        needle = 'hospitalArr ='
         new_hospitalizations = {}
         new_icu_cases = {}
+
+        # Default extract parameters
+        needle = '$hospitalData ='
+        hosp_idx = 1
+        icu_idx = 2
+
+        # Adjust extract parameters based on version
+        if self.format_version == 1:
+            needle = 'hospitalArr ='
 
         try:
             _, tail = html.split(needle)
@@ -143,8 +187,8 @@ class OCHealthService:
 
         for daily in daily_hospitalizations:
             case_date = datetime.strptime(daily[0], SERVICE_DATE_F).date()
-            hosp_count = daily[1]
-            icu_count = daily[2]
+            hosp_count = daily[hosp_idx]
+            icu_count = daily[icu_idx]
             new_hospitalizations[case_date] = hosp_count
             new_icu_cases[case_date] = icu_count
 

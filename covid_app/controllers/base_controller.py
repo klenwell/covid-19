@@ -1,8 +1,6 @@
 from cement import Controller
 from cement import ex as expose
-import requests
-import json
-import csv
+
 
 from ..services.oc_health_service import OCHealthService
 
@@ -26,6 +24,7 @@ class BaseController(Controller):
         html = service.fetch_page_source()
         new_cases = service.extract_new_cases(html)
         latest_date = service.extract_latest_date_from_new_cases(new_cases)
+        print(latest_date)
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

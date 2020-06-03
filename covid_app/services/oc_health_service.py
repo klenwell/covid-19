@@ -18,6 +18,7 @@ SERVICE_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
 SERVICE_DATE_F = '%m/%d/%Y'
 START_DATE = '3/1/2020'
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
+OC_ARCHIVE_PATH = path_join(OC_DATA_PATH, 'daily')
 
 
 class OCHealthService:
@@ -25,15 +26,27 @@ class OCHealthService:
     # Static Methods
     #
     @staticmethod
+    def export_archive(archive_url):
+        rows = OCHealthService.fetch_daily_data(archive_url)
+
+        archive_date = rows[-1][0]
+        csv_fname = 'oc-hca-{}.csv'.format(archive_date.strftime('%Y%m%d'))
+        csv_path = path_join(OC_ARCHIVE_PATH, csv_fname)
+        footer = 'exported from {} at {}'.format(archive_url, datetime.now().isoformat())
+
+        result = OCHealthService.output_daily_csv(rows, csv_path=csv_path, footer=footer)
+        return result
+
+    @staticmethod
     def export_daily_csv():
         rows = OCHealthService.fetch_daily_data()
         result = OCHealthService.output_daily_csv(rows)
         return result
 
     @staticmethod
-    def fetch_daily_data():
+    def fetch_daily_data(url=None):
         service = OCHealthService()
-        html = service.fetch_page_source()
+        html = service.fetch_page_source(url)
         new_tests = service.extract_new_tests(html)
         new_cases = service.extract_new_cases(html)
         hosps, icus = service.extract_hospitalizations(html)
@@ -41,9 +54,10 @@ class OCHealthService:
         return rows
 
     @staticmethod
-    def output_daily_csv(rows):
-        csv_name = 'oc_hca.csv'
-        csv_path = path_join(OC_DATA_PATH, csv_name)
+    def output_daily_csv(rows, csv_path=None, footer=None):
+        if not csv_path:
+            csv_path = path_join(OC_DATA_PATH, 'oc-hca.csv')
+
         header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU']
         rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
 
@@ -53,10 +67,9 @@ class OCHealthService:
             for row in rows_by_most_recent:
                 writer.writerow(row)
 
-            # Add timestamp
-            timestamp = 'exported at {}'.format(datetime.now().isoformat())
-            writer.writerow([])
-            writer.writerow([timestamp])
+            if footer:
+                writer.writerow([])
+                writer.writerow([footer])
 
         return {
             'path': csv_path,
@@ -71,8 +84,10 @@ class OCHealthService:
     def __init__(self):
         self.url = SERVICE_URL
 
-    def fetch_page_source(self):
-        response = requests.get(self.url)
+    def fetch_page_source(self, source_url=None):
+        if not source_url:
+            source_url = self.url
+        response = requests.get(source_url)
 
         # This will raise a requests.exceptions.HTTPError error for caller to handle.
         response.raise_for_status()
@@ -83,9 +98,13 @@ class OCHealthService:
         needle = 'testData ='
         new_tests = {}
 
-        _, tail = html.split(needle)
-        payload, _ = tail.split(';', 1)
-        daily_tests = json.loads(payload)
+        try:
+            _, tail = html.split(needle)
+            payload, _ = tail.split(';', 1)
+            daily_tests = json.loads(payload)
+        except ValueError as e:
+            print("Failed to extract new tests: {}".format(e))
+            return {}
 
         for test in daily_tests:
             test_date = datetime.strptime(test[0], SERVICE_DATE_F).date()
@@ -114,9 +133,13 @@ class OCHealthService:
         new_hospitalizations = {}
         new_icu_cases = {}
 
-        _, tail = html.split(needle)
-        payload, _ = tail.split(';', 1)
-        daily_hospitalizations = json.loads(payload)
+        try:
+            _, tail = html.split(needle)
+            payload, _ = tail.split(';', 1)
+            daily_hospitalizations = json.loads(payload)
+        except ValueError as e:
+            print("Failed to extract hospitalizations: {}".format(e))
+            return {}, {}
 
         for daily in daily_hospitalizations:
             case_date = datetime.strptime(daily[0], SERVICE_DATE_F).date()
@@ -135,10 +158,10 @@ class OCHealthService:
         next_date = start_on
 
         while next_date <= end_on:
-            daily_cases = cases.get(next_date, 0)
-            daily_tests = tests.get(next_date, 0)
-            daily_hosps = hosps.get(next_date, 0)
-            daily_icus = icus.get(next_date, 0)
+            daily_cases = cases.get(next_date, '')
+            daily_tests = tests.get(next_date, '')
+            daily_hosps = hosps.get(next_date, '')
+            daily_icus = icus.get(next_date, '')
 
             row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus]
             rows.append(row)

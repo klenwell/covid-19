@@ -4,7 +4,7 @@ from .controllers.base_controller import BaseController
 
 class CovidApp(App):
     class Meta:
-        label = 'bad_axe'
+        label = 'covid_app'
 
         # Use views directory for output templates
         # https://docs.builtoncement.com/extensions/jinja2#application-meta-options

@@ -1,0 +1,27 @@
+#
+# Pip Requirements
+#
+# To Install:
+#   pip install -r requirements.txt
+#
+
+# Cement defaults
+# Cement is an advanced CLI Application Framework for Python.
+# For more info, see: http://builtoncement.com/
+cement
+jinja2
+
+# Requests for Website and API interactions
+requests
+
+# Test Dependencies
+nose
+coverage
+nose-exclude
+
+# Block and mock requests in tests
+pytest_socket
+requests-mock
+
+# Flake8 is a linter. For more info, see: https://gitlab.com/pycqa/flake8
+flake8

@@ -161,10 +161,10 @@ class OCHealthService:
         next_date = start_on
 
         while next_date <= end_on:
-            daily_cases = cases.get(next_date, 0)
-            daily_tests = tests.get(next_date, 0)
-            daily_hosps = hosps.get(next_date, 0)
-            daily_icus = icus.get(next_date, 0)
+            daily_cases = cases.get(next_date, '')
+            daily_tests = tests.get(next_date, '')
+            daily_hosps = hosps.get(next_date, '')
+            daily_icus = icus.get(next_date, '')
 
             row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus]
             rows.append(row)

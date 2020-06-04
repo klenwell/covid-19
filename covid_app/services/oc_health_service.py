@@ -33,9 +33,7 @@ class OCHealthService:
     def export_daily_csv():
         service = OCHealthService()
         rows = service.extract_daily_data_rows()
-
-        result = OCHealthService.output_daily_csv(rows)
-        result['format_version'] = service.format_version
+        result = service.output_daily_csv(rows)
         return result
 
     @staticmethod
@@ -86,16 +84,6 @@ class OCHealthService:
         # To adjust for changes in OC HCA data formatting as embedded in page source.
         self.format_version = None
 
-    def fetch_page_source(self, source_url=None):
-        if not source_url:
-            source_url = self.url
-        response = requests.get(source_url)
-
-        # This will raise a requests.exceptions.HTTPError error for caller to handle.
-        response.raise_for_status()
-
-        return response.text
-
     def extract_daily_data_rows(self, source_url=None):
         html = self.fetch_page_source(source_url)
         self.format_version = self.detect_format_version(html)
@@ -105,6 +93,41 @@ class OCHealthService:
         hosps, icus = self.extract_hospitalizations(html)
         rows = self.collate_daily_data(new_cases, new_tests, hosps, icus)
         return rows
+
+    def output_daily_csv(self, rows, csv_path=None, footer=None):
+        if not csv_path:
+            csv_path = path_join(OC_DATA_PATH, 'oc-hca.csv')
+
+        header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU']
+        rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
+
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(header_row)
+            for row in rows_by_most_recent:
+                writer.writerow(row)
+
+            if footer:
+                writer.writerow([])
+                writer.writerow([footer])
+
+        return {
+            'path': csv_path,
+            'rows': len(rows_by_most_recent),
+            'start_date': rows_by_most_recent[-1][0],
+            'end_date': rows_by_most_recent[0][0],
+            'format_version': self.format_version
+        }
+
+    def fetch_page_source(self, source_url=None):
+        if not source_url:
+            source_url = self.url
+        response = requests.get(source_url)
+
+        # This will raise a requests.exceptions.HTTPError error for caller to handle.
+        response.raise_for_status()
+
+        return response.text
 
     def detect_format_version(self, html):
         v1_needle = 'caseArr ='

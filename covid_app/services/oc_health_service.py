@@ -38,48 +38,19 @@ class OCHealthService:
 
     @staticmethod
     def export_archive(archive_url):
-        service = OCHealthService()
-        rows = service.extract_daily_data_rows(archive_url)
-
-        archive_date = rows[-1][0]
-        csv_fname = 'oc-hca-{}.csv'.format(archive_date.strftime('%Y%m%d'))
-        csv_path = path_join(OC_ARCHIVE_PATH, csv_fname)
-        footer = 'exported from {} at {}'.format(archive_url, datetime.now().isoformat())
-
-        result = OCHealthService.output_daily_csv(rows, csv_path=csv_path, footer=footer)
-        result['format_version'] = service.format_version
+        service = OCHealthService(archive=archive_url)
+        rows = service.extract_daily_data_rows()
+        result = service.output_archive_csv(rows)
         return result
-
-    @staticmethod
-    def output_daily_csv(rows, csv_path=None, footer=None):
-        if not csv_path:
-            csv_path = path_join(OC_DATA_PATH, 'oc-hca.csv')
-
-        header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU']
-        rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
-
-        with open(csv_path, 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(header_row)
-            for row in rows_by_most_recent:
-                writer.writerow(row)
-
-            if footer:
-                writer.writerow([])
-                writer.writerow([footer])
-
-        return {
-            'path': csv_path,
-            'rows': len(rows_by_most_recent),
-            'start_date': rows_by_most_recent[-1][0],
-            'end_date': rows_by_most_recent[0][0]
-        }
 
     #
     # Instance Method
     #
-    def __init__(self):
+    def __init__(self, archive=None):
         self.url = SERVICE_URL
+
+        if archive:
+            self.url = archive
 
         # To adjust for changes in OC HCA data formatting as embedded in page source.
         self.format_version = None
@@ -118,6 +89,14 @@ class OCHealthService:
             'end_date': rows_by_most_recent[0][0],
             'format_version': self.format_version
         }
+
+    def output_archive_csv(self, rows):
+        archive_date = rows[-1][0]
+        csv_fname = 'oc-hca-{}.csv'.format(archive_date.strftime('%Y%m%d'))
+        csv_path = path_join(OC_ARCHIVE_PATH, csv_fname)
+        footer = 'exported from {} at {}'.format(self.url, datetime.now().isoformat())
+
+        return self.output_daily_csv(rows, csv_path=csv_path, footer=footer)
 
     def fetch_page_source(self, source_url=None):
         if not source_url:

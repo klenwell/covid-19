@@ -3,6 +3,7 @@ from cement import ex as expose
 
 
 from ..services.oc_health_service import OCHealthService
+from ..extracts.ny_times_covid19 import NyTimesCovid19Extract
 
 
 class BaseController(Controller):
@@ -32,14 +33,8 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        url = None
-        use_archive = True
-        if use_archive:
-            url = '{}/{}'.format('https://web.archive.org/web/20200331224552',
-                                 'https://occovid19.ochealthinfo.com/coronavirus-in-oc')
-            print('Using archive ({}): {}'.format(self.app.pargs.archive, format(url)))
-        data = OCHealthService.fetch_daily_data(url)
-        print('Latest daily report: {}'.format(data[-1]))
+        oc_deaths = NyTimesCovid19Extract.oc_daily_deaths()
+        print(len(oc_deaths))
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

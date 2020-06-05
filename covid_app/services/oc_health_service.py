@@ -146,11 +146,15 @@ class OCHealthService:
 
         # Default extract parameters
         needle = '$pplData ='
-        count_idx = 2
+
+        # On 6/4/2020, OC HCA switched the index in v2 from 2 to 1. So this method
+        # will probably fail for archived versions of 6/3 days. Oh well.
+        count_idx = 1
 
         # Adjust extract parameters based on version
         if self.format_version == 1:
             needle = 'testData ='
+            count_idx = 2
 
         try:
             _, tail = html.split(needle)

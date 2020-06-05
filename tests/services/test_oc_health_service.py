@@ -41,4 +41,25 @@ class OrionAdvisorServiceTest(AppTestCase):
         self.assertEqual(service.format_version, 2)
 
     def test_expects_to_extract_daily_data_rows_from_archived_page(self):
-        pass
+        # Arrange
+        service = OCHealthService()
+        html_fname = 'oc-hca-dashboard-archive-20200524.html'
+        html_path = path_join(FILES_ROOT, html_fname)
+        expected_may_23_row = [date(2020, 5, 23), 216, '', '', '']
+        expected_may_22_row = [date(2020, 5, 22), 108, 1033, 249, 101]
+
+        # Mock fetch_page_source_method to return our test file
+        with open(html_path, 'r') as f:
+            html = f.read()
+            service.fetch_page_source = MagicMock(return_value=html)
+
+        # Act
+        rows = service.extract_daily_data_rows()
+        may_23_row = rows[-1]
+        may_22_row = rows[-2]
+
+        # Assert
+        self.assertEqual(len(rows), 84)
+        self.assertEqual(may_23_row, expected_may_23_row)
+        self.assertEqual(may_22_row, expected_may_22_row)
+        self.assertEqual(service.format_version, 1)

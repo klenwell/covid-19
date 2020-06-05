@@ -3,6 +3,7 @@ from cement import ex as expose
 
 
 from ..services.oc_health_service import OCHealthService
+from ..extracts.ny_times_covid19 import NyTimesCovid19Extract
 
 
 class BaseController(Controller):
@@ -32,26 +33,7 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        import requests, csv, codecs
-        from contextlib import closing
-        url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'
-        response = requests.get(url, stream=True)
-        oc_fips = '06059'
-        last_count = 0
-        oc_rows = []
-
-        # https://stackoverflow.com/a/38677650/1093087
-        with closing(response) as r:
-            str_iterator = codecs.iterdecode(r.iter_lines(), 'utf-8')
-            reader = csv.reader(str_iterator, delimiter=',', quotechar='"')
-            for row in reader:
-                date, _, _, fips, _, total_deaths = row
-                if fips == oc_fips:
-                    daily_count = int(total_deaths) - last_count
-                    last_count = int(total_deaths)
-                    oc_rows.append([date, daily_count, int(total_deaths)])
-
-        oc_deaths = dict([(row[0], row[1]) for row in oc_rows])
+        oc_deaths = NyTimesCovid19Extract.oc_daily_deaths()
         print(len(oc_deaths))
         breakpoint()
 

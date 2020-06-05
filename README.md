@@ -63,7 +63,11 @@ version: 1
 ```
 
 ## Testing
-There are no tests at this time.
+There are a few tests. At this time, they are focused mainly on making quick fixes for breaking changes in page source formatting.
+
+To run the full test suite:
+
+    nosetests
 
 
 ## Development

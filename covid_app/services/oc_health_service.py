@@ -147,8 +147,8 @@ class OCHealthService:
         # Default extract parameters
         needle = '$pplData ='
 
-        # On 6/4/2020, OC HCA switched the index in v2 from 2 to 1. So this method
-        # will probably fail for archived versions of 6/3 days. Oh well.
+        # On 6/4/2020, OC HCA switched the array index for daily count in v2 from 2 to 1. So
+        # this method will probably fail for archived versions of 6/3 page. Oh well.
         count_idx = 1
 
         # Adjust extract parameters based on version

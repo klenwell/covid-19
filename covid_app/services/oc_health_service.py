@@ -12,6 +12,7 @@ import csv
 import requests
 
 from config.app import DATA_ROOT
+from covid_app.extracts.ny_times_covid19 import NyTimesCovid19Extract
 
 
 SERVICE_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
@@ -56,20 +57,25 @@ class OCHealthService:
         self.format_version = None
 
     def extract_daily_data_rows(self, source_url=None):
+        # TODO: Extract this code into its own extract module.
         html = self.fetch_page_source(source_url)
         self.format_version = self.detect_format_version(html)
 
         new_tests = self.extract_new_tests(html)
         new_cases = self.extract_new_cases(html)
         hosps, icus = self.extract_hospitalizations(html)
-        rows = self.collate_daily_data(new_cases, new_tests, hosps, icus)
+
+        # Use NY Times for deaths since OC HCA doesn't provide daily data
+        deaths = NyTimesCovid19Extract.oc_daily_deaths()
+
+        rows = self.collate_daily_data(new_cases, new_tests, hosps, icus, deaths)
         return rows
 
     def output_daily_csv(self, rows, csv_path=None, footer=None):
         if not csv_path:
             csv_path = path_join(OC_DATA_PATH, 'oc-hca.csv')
 
-        header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU']
+        header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU', 'New Deaths']
         rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
 
         with open(csv_path, 'w', newline='') as f:
@@ -201,7 +207,7 @@ class OCHealthService:
 
         return new_hospitalizations, new_icu_cases
 
-    def collate_daily_data(self, cases, tests, hosps, icus):
+    def collate_daily_data(self, cases, tests, hosps, icus, deaths):
         rows = []
 
         start_on = datetime.strptime(START_DATE, SERVICE_DATE_F).date()
@@ -213,8 +219,9 @@ class OCHealthService:
             daily_tests = tests.get(next_date, '')
             daily_hosps = hosps.get(next_date, '')
             daily_icus = icus.get(next_date, '')
+            daily_deaths = deaths.get(next_date, '')
 
-            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus]
+            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus, daily_deaths]
             rows.append(row)
 
             next_date = next_date + timedelta(days=1)

@@ -36,10 +36,11 @@ When successful, it will generate a CSV file and output something like this:
 ```
 OC Daily COVID-19 Data Export
 
-path: /home/klenwell/projects/covid-19/data/oc/oc_hca.csv
-rows: 93
+path: /home/klenwell/projects/covid-19/data/oc/oc-hca.csv
 start: 2020-03-01
-end: 2020-06-01
+end: 2020-06-04
+rows: 96
+version: 2
 ```
 
 ### Export Past Data
@@ -58,10 +59,15 @@ path: /home/klenwell/projects/covid-19/data/oc/daily/oc-hca-20200503.csv
 rows: 64
 start: 2020-03-01
 end: 2020-05-03
+version: 1
 ```
 
 ## Testing
-There are no tests at this time.
+There are a few tests. At this time, they are focused mainly on making quick fixes for breaking changes in page source formatting.
+
+To run the full test suite:
+
+    nosetests
 
 
 ## Development

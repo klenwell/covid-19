@@ -33,27 +33,39 @@ class OCHealthService:
     def export_daily_csv():
         service = OCHealthService()
         rows = service.extract_daily_data_rows()
-
-        result = OCHealthService.output_daily_csv(rows)
-        result['format_version'] = service.format_version
+        result = service.output_daily_csv(rows)
         return result
 
     @staticmethod
     def export_archive(archive_url):
-        service = OCHealthService()
-        rows = service.extract_daily_data_rows(archive_url)
-
-        archive_date = rows[-1][0]
-        csv_fname = 'oc-hca-{}.csv'.format(archive_date.strftime('%Y%m%d'))
-        csv_path = path_join(OC_ARCHIVE_PATH, csv_fname)
-        footer = 'exported from {} at {}'.format(archive_url, datetime.now().isoformat())
-
-        result = OCHealthService.output_daily_csv(rows, csv_path=csv_path, footer=footer)
-        result['format_version'] = service.format_version
+        service = OCHealthService(archive=archive_url)
+        rows = service.extract_daily_data_rows()
+        result = service.output_archive_csv(rows)
         return result
 
-    @staticmethod
-    def output_daily_csv(rows, csv_path=None, footer=None):
+    #
+    # Instance Method
+    #
+    def __init__(self, archive=None):
+        self.url = SERVICE_URL
+
+        if archive:
+            self.url = archive
+
+        # To adjust for changes in OC HCA data formatting as embedded in page source.
+        self.format_version = None
+
+    def extract_daily_data_rows(self, source_url=None):
+        html = self.fetch_page_source(source_url)
+        self.format_version = self.detect_format_version(html)
+
+        new_tests = self.extract_new_tests(html)
+        new_cases = self.extract_new_cases(html)
+        hosps, icus = self.extract_hospitalizations(html)
+        rows = self.collate_daily_data(new_cases, new_tests, hosps, icus)
+        return rows
+
+    def output_daily_csv(self, rows, csv_path=None, footer=None):
         if not csv_path:
             csv_path = path_join(OC_DATA_PATH, 'oc-hca.csv')
 
@@ -74,17 +86,17 @@ class OCHealthService:
             'path': csv_path,
             'rows': len(rows_by_most_recent),
             'start_date': rows_by_most_recent[-1][0],
-            'end_date': rows_by_most_recent[0][0]
+            'end_date': rows_by_most_recent[0][0],
+            'format_version': self.format_version
         }
 
-    #
-    # Instance Method
-    #
-    def __init__(self):
-        self.url = SERVICE_URL
+    def output_archive_csv(self, rows):
+        archive_date = rows[-1][0]
+        csv_fname = 'oc-hca-{}.csv'.format(archive_date.strftime('%Y%m%d'))
+        csv_path = path_join(OC_ARCHIVE_PATH, csv_fname)
+        footer = 'exported from {} at {}'.format(self.url, datetime.now().isoformat())
 
-        # To adjust for changes in OC HCA data formatting as embedded in page source.
-        self.format_version = None
+        return self.output_daily_csv(rows, csv_path=csv_path, footer=footer)
 
     def fetch_page_source(self, source_url=None):
         if not source_url:
@@ -95,16 +107,6 @@ class OCHealthService:
         response.raise_for_status()
 
         return response.text
-
-    def extract_daily_data_rows(self, source_url=None):
-        html = self.fetch_page_source(source_url)
-        self.format_version = self.detect_format_version(html)
-
-        new_tests = self.extract_new_tests(html)
-        new_cases = self.extract_new_cases(html)
-        hosps, icus = self.extract_hospitalizations(html)
-        rows = self.collate_daily_data(new_cases, new_tests, hosps, icus)
-        return rows
 
     def detect_format_version(self, html):
         v1_needle = 'caseArr ='
@@ -144,11 +146,15 @@ class OCHealthService:
 
         # Default extract parameters
         needle = '$pplData ='
-        count_idx = 2
+
+        # On 6/4/2020, OC HCA switched the array index for daily count in v2 from 2 to 1. So
+        # this method will probably fail for archived versions of 6/3 page. Oh well.
+        count_idx = 1
 
         # Adjust extract parameters based on version
         if self.format_version == 1:
             needle = 'testData ='
+            count_idx = 2
 
         try:
             _, tail = html.split(needle)

@@ -32,14 +32,27 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        url = None
-        use_archive = True
-        if use_archive:
-            url = '{}/{}'.format('https://web.archive.org/web/20200331224552',
-                                 'https://occovid19.ochealthinfo.com/coronavirus-in-oc')
-            print('Using archive ({}): {}'.format(self.app.pargs.archive, format(url)))
-        data = OCHealthService.fetch_daily_data(url)
-        print('Latest daily report: {}'.format(data[-1]))
+        import requests, csv, codecs
+        from contextlib import closing
+        url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'
+        response = requests.get(url, stream=True)
+        oc_fips = '06059'
+        last_count = 0
+        oc_rows = []
+
+        # https://stackoverflow.com/a/38677650/1093087
+        with closing(response) as r:
+            str_iterator = codecs.iterdecode(r.iter_lines(), 'utf-8')
+            reader = csv.reader(str_iterator, delimiter=',', quotechar='"')
+            for row in reader:
+                date, _, _, fips, _, total_deaths = row
+                if fips == oc_fips:
+                    daily_count = int(total_deaths) - last_count
+                    last_count = int(total_deaths)
+                    oc_rows.append([date, daily_count, int(total_deaths)])
+
+        oc_deaths = dict([(row[0], row[1]) for row in oc_rows])
+        print(len(oc_deaths))
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

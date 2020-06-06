@@ -36,12 +36,6 @@ class BaseController(Controller):
         result = MiHealthService.export_daily_kent_csv()
         print(result)
 
-    # python app.py mi-daily
-    @expose(help="Export MI-6 data from NY Times repo to csv file.")
-    def mi6_daily(self):
-        result = MiHealthService.export_daily_region_6_csv()
-        print(result)
-
     # python app.py interactive
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")

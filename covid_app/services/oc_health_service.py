@@ -6,18 +6,19 @@ Uses OC HCA API. For more information, see:
 https://occovid19.ochealthinfo.com/coronavirus-in-oc
 """
 from os.path import join as path_join
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 import json
 import csv
 import requests
 
 from config.app import DATA_ROOT
+from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
 from covid_app.extracts.ny_times_covid19 import NyTimesCovid19Extract
 
 
 SERVICE_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
 SERVICE_DATE_F = '%m/%d/%Y'
-START_DATE = '3/1/2020'
+START_DATE = date(2020, 3, 1)
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ARCHIVE_PATH = path_join(OC_DATA_PATH, 'daily')
 
@@ -57,18 +58,29 @@ class OCHealthService:
         self.format_version = None
 
     def extract_daily_data_rows(self, source_url=None):
-        # TODO: Extract this code into its own extract module.
-        html = self.fetch_page_source(source_url)
-        self.format_version = self.detect_format_version(html)
-
-        new_tests = self.extract_new_tests(html)
-        new_cases = self.extract_new_cases(html)
-        hosps, icus = self.extract_hospitalizations(html)
-
-        # Use NY Times for deaths since OC HCA doesn't provide daily data
+        extract = DailyCovid19Extract.latest()
         deaths = NyTimesCovid19Extract.oc_daily_deaths()
+        rows = self.collate_daily_data(extract, deaths)
+        return rows
 
-        rows = self.collate_daily_data(new_cases, new_tests, hosps, icus, deaths)
+    def collate_daily_data(self, extract, deaths):
+        rows = []
+
+        start_on = START_DATE
+        next_date = start_on
+
+        while next_date <= extract.ends_on:
+            daily_cases = extract.new_cases.get(next_date, '')
+            daily_tests = extract.new_tests.get(next_date, '')
+            daily_hosps = extract.hospitalizations.get(next_date, '')
+            daily_icus = extract.icu_cases.get(next_date, '')
+            daily_deaths = deaths.get(next_date, '')
+
+            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus, daily_deaths]
+            rows.append(row)
+
+            next_date = next_date + timedelta(days=1)
+
         return rows
 
     def output_daily_csv(self, rows, csv_path=None, footer=None):
@@ -206,27 +218,6 @@ class OCHealthService:
             new_icu_cases[case_date] = icu_count
 
         return new_hospitalizations, new_icu_cases
-
-    def collate_daily_data(self, cases, tests, hosps, icus, deaths):
-        rows = []
-
-        start_on = datetime.strptime(START_DATE, SERVICE_DATE_F).date()
-        end_on = self.extract_latest_date_from_new_cases(cases)
-        next_date = start_on
-
-        while next_date <= end_on:
-            daily_cases = cases.get(next_date, '')
-            daily_tests = tests.get(next_date, '')
-            daily_hosps = hosps.get(next_date, '')
-            daily_icus = icus.get(next_date, '')
-            daily_deaths = deaths.get(next_date, '')
-
-            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus, daily_deaths]
-            rows.append(row)
-
-            next_date = next_date + timedelta(days=1)
-
-        return rows
 
     def extract_latest_date_from_new_cases(self, cases):
         dates = cases.keys()

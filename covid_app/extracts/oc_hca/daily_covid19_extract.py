@@ -1,3 +1,11 @@
+"""
+DailyCovid19Extract
+
+This class is a handler for the class that does the actual extraction. Those classes
+are versioned to simplify responding to updates or breakage in the underlying.
+
+See versions directory, for latest version of class doing actual extraction.
+"""
 import requests
 
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v1 import DailyCovid19ExtractV1
@@ -5,8 +13,6 @@ from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v2 import DailyCov
 
 
 EXTRACT_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
-SERVICE_DATE_F = '%m/%d/%Y'
-START_DATE = '3/1/2020'
 
 
 class ExtractError(Exception):
@@ -17,7 +23,7 @@ class DailyCovid19Extract:
     #
     # Static Methods
     #
-    def new():
+    def latest():
         handler = DailyCovid19Extract(EXTRACT_URL)
         html = handler.fetch_data_source()
         ExtractVersion = handler.detect_version(html)

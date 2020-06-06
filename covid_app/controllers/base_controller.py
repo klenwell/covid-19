@@ -4,7 +4,6 @@ from cement import ex as expose
 
 from ..services.oc_health_service import OCHealthService
 from ..services.mi_health_service import MiHealthService
-from ..extracts.ny_times_covid19 import NyTimesCovid19Extract
 
 
 class BaseController(Controller):
@@ -40,8 +39,9 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        kent_data = NyTimesCovid19Extract.kent_mi_daily_data()
-        print(len(kent_data))
+        service = OCHealthService()
+        rows = service.extract_daily_data_rows()
+        print(len(rows))
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

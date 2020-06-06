@@ -3,6 +3,7 @@ from cement import ex as expose
 
 
 from ..services.oc_health_service import OCHealthService
+from ..services.mi_health_service import MiHealthService
 from ..extracts.ny_times_covid19 import NyTimesCovid19Extract
 
 
@@ -28,6 +29,12 @@ class BaseController(Controller):
 
         vars = {'csv': csv}
         self.app.render(vars, 'oc_daily.jinja2')
+
+    # python app.py mi-daily
+    @expose(help="Export MI-6 data from NY Times repo to csv file.")
+    def mi6_daily(self):
+        result = MiHealthService.export_daily_region_6_csv()
+        print(result)
 
     # python app.py interactive
     # This command can be used for testing and development.

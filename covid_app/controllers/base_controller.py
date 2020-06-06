@@ -3,6 +3,7 @@ from cement import ex as expose
 
 
 from ..services.oc_health_service import OCHealthService
+from ..services.mi_health_service import MiHealthService
 from ..extracts.ny_times_covid19 import NyTimesCovid19Extract
 
 
@@ -29,12 +30,18 @@ class BaseController(Controller):
         vars = {'csv': csv}
         self.app.render(vars, 'oc_daily.jinja2')
 
+    # python app.py kent-daily
+    @expose(help="Export MI-6 data from NY Times repo to csv file.")
+    def kent_daily(self):
+        result = MiHealthService.export_daily_kent_csv()
+        print(result)
+
     # python app.py interactive
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        oc_deaths = NyTimesCovid19Extract.oc_daily_deaths()
-        print(len(oc_deaths))
+        kent_data = NyTimesCovid19Extract.kent_mi_daily_data()
+        print(len(kent_data))
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

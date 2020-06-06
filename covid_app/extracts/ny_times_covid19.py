@@ -8,6 +8,7 @@ from datetime import datetime
 EXTRACT_URL = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'
 DATE_F = '%Y-%m-%d'
 OC_FIPS = '06059'
+KENT_MI_FIPS = '26081'
 
 
 class NyTimesCovid19Extract:
@@ -16,12 +17,21 @@ class NyTimesCovid19Extract:
     #
     @staticmethod
     def oc_daily_deaths():
-        """Returns a dict: {date: count, ...}
+        """Returns a dict: {date: count, ...} for Orange County, CA.
         """
         extract = NyTimesCovid19Extract()
         source_stream = extract.fetch_source_stream()
         data = extract.filter_oc_deaths(source_stream)
         return data
+
+    @staticmethod
+    def kent_mi_daily_data():
+        """Returns list of tuples with daily Kent data.
+        """
+        extract = NyTimesCovid19Extract()
+        source_stream = extract.fetch_source_stream()
+        kent_rows = extract.filter_kent_mi_data(source_stream)
+        return kent_rows
 
     #
     # Instance Methods
@@ -54,6 +64,34 @@ class NyTimesCovid19Extract:
 
         oc_deaths = dict([(row[0], row[1]) for row in oc_rows])
         return oc_deaths
+
+    def filter_kent_mi_data(self, source_stream):
+        """Returns a list of daily data.
+        """
+        # Large stream pattern: https://stackoverflow.com/a/38677650/1093087
+        with closing(source_stream) as r:
+            str_iterator = codecs.iterdecode(r.iter_lines(), 'utf-8')
+            reader = csv.reader(str_iterator, delimiter=',', quotechar='"')
+            kent_data = []
+            last_data_row = (None, 0, 0, 0, 0)
+
+            for row in reader:
+                date_str, county, state, fips, total_cases, total_deaths = row
+
+                if fips != KENT_MI_FIPS:
+                    continue
+
+                date = datetime.strptime(date_str, DATE_F).date()
+                total_cases = int(total_cases)
+                total_deaths = int(total_deaths)
+                new_cases = total_cases - last_data_row[1]
+                new_deaths = total_deaths - last_data_row[2]
+
+                new_data_row = (date, total_cases, total_deaths, new_cases, new_deaths)
+                kent_data.append(new_data_row)
+                last_data_row = new_data_row
+
+        return kent_data
 
     def fetch_source_stream(self):
         response = requests.get(self.url, stream=True)

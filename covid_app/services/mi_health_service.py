@@ -24,11 +24,19 @@ class MiHealthService:
     # Static Methods
     #
     @staticmethod
+    def export_daily_kent_csv():
+        service = MiHealthService()
+        rows = NyTimesCovid19Extract.kent_mi_daily_data()
+        csv_path = path_join(MI_DATA_PATH, 'kent-daily.csv')
+        result = service.output_daily_csv(rows, csv_path=csv_path)
+        return result
+
+    @staticmethod
     def export_daily_region_6_csv():
         service = MiHealthService()
         data = NyTimesCovid19Extract.mi6_daily_data()
         csv_path = path_join(MI_DATA_PATH, 'mi6-daily.csv')
-        result = service.output_daily_csv(data, csv_path=csv_path)
+        result = service.output_daily_regional_csv(data, csv_path=csv_path)
         return result
 
     #
@@ -37,7 +45,29 @@ class MiHealthService:
     def __init__(self):
         pass
 
-    def output_daily_csv(self, data, csv_path=None, footer=None):
+    def output_daily_csv(self, rows, csv_path=None, footer=None):
+        header_row = ['Date', 'Total Cases', 'Total Deaths', 'New Cases', 'New Deaths']
+        rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
+
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(header_row)
+
+            for row in rows_by_most_recent:
+                writer.writerow(row)
+
+            if footer:
+                writer.writerow([])
+                writer.writerow([footer])
+
+        return {
+            'path': csv_path,
+            'rows': len(rows_by_most_recent),
+            'start_date': rows_by_most_recent[-1][0],
+            'end_date': rows_by_most_recent[0][0]
+        }
+
+    def output_daily_regional_csv(self, data, csv_path=None, footer=None):
         header_row = ['Date', 'New Cases', 'New Deaths']
 
         with open(csv_path, 'w', newline='') as f:

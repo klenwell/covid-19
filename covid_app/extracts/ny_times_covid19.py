@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 EXTRACT_URL = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'
 DATE_F = '%Y-%m-%d'
 OC_FIPS = '06059'
+KENT_MI_FIPS = '26081'
 MI6_FIPS = ['26035', '26067', '26073', '26081', '26085', '26105', '26107', '26117',
             '26121', '26123', '26127', '26133', '26139']
 
@@ -24,6 +25,16 @@ class NyTimesCovid19Extract:
         source_stream = extract.fetch_source_stream()
         data = extract.filter_oc_deaths(source_stream)
         return data
+
+    @staticmethod
+    def kent_mi_daily_data():
+        """Returns a dict: {date: {fip: [data], fip: [data]}, ...} for all counties in
+        MI-6 region.
+        """
+        extract = NyTimesCovid19Extract()
+        source_stream = extract.fetch_source_stream()
+        mi6_data = extract.filter_kent_mi_data(source_stream)
+        return mi6_data
 
     @staticmethod
     def mi6_daily_data():
@@ -66,6 +77,34 @@ class NyTimesCovid19Extract:
 
         oc_deaths = dict([(row[0], row[1]) for row in oc_rows])
         return oc_deaths
+
+    def filter_kent_mi_data(self, source_stream):
+        """Returns a dict: {date: {fip: [data], fip: [data]}, ...}
+        """
+        # Large stream pattern: https://stackoverflow.com/a/38677650/1093087
+        with closing(source_stream) as r:
+            str_iterator = codecs.iterdecode(r.iter_lines(), 'utf-8')
+            reader = csv.reader(str_iterator, delimiter=',', quotechar='"')
+            kent_data = []
+            last_data_row = (None, 0, 0, 0, 0)
+
+            for row in reader:
+                date_str, county, state, fips, total_cases, total_deaths = row
+
+                if fips != KENT_MI_FIPS:
+                    continue
+
+                date = datetime.strptime(date_str, DATE_F).date()
+                total_cases = int(total_cases)
+                total_deaths = int(total_deaths)
+                new_cases = total_cases - last_data_row[1]
+                new_deaths = total_deaths - last_data_row[2]
+
+                new_data_row = (date, total_cases, total_deaths, new_cases, new_deaths)
+                kent_data.append(new_data_row)
+                last_data_row = new_data_row
+
+        return kent_data
 
     def filter_mi6_data(self, source_stream):
         """Returns a dict: {date: {fip: [data], fip: [data]}, ...}

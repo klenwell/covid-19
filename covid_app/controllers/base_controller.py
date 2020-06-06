@@ -30,6 +30,12 @@ class BaseController(Controller):
         vars = {'csv': csv}
         self.app.render(vars, 'oc_daily.jinja2')
 
+    # python app.py kent-daily
+    @expose(help="Export MI-6 data from NY Times repo to csv file.")
+    def kent_daily(self):
+        result = MiHealthService.export_daily_kent_csv()
+        print(result)
+
     # python app.py mi-daily
     @expose(help="Export MI-6 data from NY Times repo to csv file.")
     def mi6_daily(self):
@@ -40,8 +46,8 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        daily_data = NyTimesCovid19Extract.mi6_daily_data()
-        print(len(daily_data))
+        kent_data = NyTimesCovid19Extract.kent_mi_daily_data()
+        print(len(kent_data))
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

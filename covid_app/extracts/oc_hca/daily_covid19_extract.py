@@ -29,6 +29,12 @@ class DailyCovid19Extract:
         ExtractVersion = handler.detect_version(html)
         return ExtractVersion(html)
 
+    def archive(url):
+        handler = DailyCovid19Extract(url)
+        html = handler.fetch_data_source()
+        ExtractVersion = handler.detect_version(html)
+        return ExtractVersion(html)
+
     #
     # Instance Methods
     #

@@ -34,6 +34,12 @@ class AppTestCase(TestCase):
     def tearDown(self):
         pass
 
+    def readFile(self, path):
+        with open(path, 'r') as f:
+            content = f.read()
+
+        return content
+
     def assertPathExists(self, path):
         self.assertTrue(path_exists(path))
 

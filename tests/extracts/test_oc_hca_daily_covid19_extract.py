@@ -5,7 +5,7 @@ from covid_app.extracts.oc_hca.daily_covid19_extract import (
     DailyCovid19Extract, DailyCovid19ExtractV1, DailyCovid19ExtractV2)
 
 
-class OcHcaDailyCovid19Extract(AppTestCase):
+class OcHcaDailyCovid19ExtractTest(AppTestCase):
     def test_expects_to_extract_data_for_version_2(self):
         # Arrange
         html_fname = 'oc-hca-dashboard-20200604.html'

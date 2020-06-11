@@ -39,9 +39,10 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        service = OCHealthService()
-        rows = service.extract_daily_data_rows()
-        print(len(rows))
+        from ..extracts.covid19_projections import Covid19ProjectionsExtract
+
+        daily_oc_rts = Covid19ProjectionsExtract.oc_effective_reproduction()
+        print(daily_oc_rts)
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

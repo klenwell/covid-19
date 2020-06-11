@@ -39,26 +39,10 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from os import path
-        from config.app import PROJECT_ROOT
-        import json
+        from ..extracts.covid19_projections import Covid19ProjectionsExtract
 
-        path = path.join(PROJECT_ROOT, 'tests/fixtures/files/oc-projections-20200610.html')
-
-        with open(path, 'r') as f:
-            html = f.read()
-
-        _, tail = html.split('Plotly.newPlot', 1)
-        _, tail = tail.split('[', 1)
-        head, _ = tail.split("\n", 1)
-        data, _ = head.rsplit(']', 1)
-        data = '[{}]'.format(data)
-        plot_data = json.loads(data)
-        rt_data = plot_data[-1]
-
-        rt = [(rt_data['x'][n], rt_data['y'][n]) for n in range(len(rt_data['x']))]
-
-        print(rt)
+        daily_oc_rts = Covid19ProjectionsExtract.oc_effective_reproduction()
+        print(daily_oc_rts)
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

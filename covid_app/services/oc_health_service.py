@@ -12,6 +12,7 @@ import csv
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
 from covid_app.extracts.ny_times_covid19 import NyTimesCovid19Extract
+from covid_app.extracts.covid19_projections import Covid19ProjectionsExtract
 
 
 SERVICE_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
@@ -54,17 +55,19 @@ class OCHealthService:
         extract = DailyCovid19Extract.latest()
         self.extract_version = extract.VERSION
         deaths = NyTimesCovid19Extract.oc_daily_deaths()
-        rows = self.collate_daily_data(extract, deaths)
+        rt_rates = Covid19ProjectionsExtract.oc_effective_reproduction()
+        rows = self.collate_daily_data(extract, deaths, rt_rates)
         return rows
 
     def extract_archive_data_rows(self):
         extract = DailyCovid19Extract.archive(self.archive_url)
         self.extract_version = extract.VERSION
         deaths = {}     # Skip deaths in archive.
-        rows = self.collate_daily_data(extract, deaths)
+        rt_rates = {}   # Skip in archive.
+        rows = self.collate_daily_data(extract, deaths, rt_rates)
         return rows
 
-    def collate_daily_data(self, extract, deaths):
+    def collate_daily_data(self, extract, deaths, rts):
         rows = []
 
         start_on = START_DATE
@@ -76,8 +79,10 @@ class OCHealthService:
             daily_hosps = extract.hospitalizations.get(next_date, '')
             daily_icus = extract.icu_cases.get(next_date, '')
             daily_deaths = deaths.get(next_date, '')
+            daily_rts = rts.get(next_date, '')
 
-            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus, daily_deaths]
+            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus, daily_deaths,
+                   daily_rts]
             rows.append(row)
 
             next_date = next_date + timedelta(days=1)
@@ -88,7 +93,8 @@ class OCHealthService:
         if not csv_path:
             csv_path = path_join(OC_DATA_PATH, 'oc-hca.csv')
 
-        header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU', 'New Deaths']
+        header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU', 'New Deaths',
+                      'Rt Rate']
         rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
 
         with open(csv_path, 'w', newline='') as f:

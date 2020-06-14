@@ -4,6 +4,7 @@ from cement import ex as expose
 
 from ..services.oc_health_service import OCHealthService
 from ..services.mi_health_service import MiHealthService
+from ..services.us_health_service import USHealthService
 
 
 class BaseController(Controller):
@@ -30,19 +31,24 @@ class BaseController(Controller):
         self.app.render(vars, 'oc_daily.jinja2')
 
     # python app.py kent-daily
-    @expose(help="Export MI-6 data from NY Times repo to csv file.")
+    @expose(help="Export Kent County data to csv file.")
     def kent_daily(self):
         result = MiHealthService.export_daily_kent_csv()
+        print(result)
+
+    # python app.py us-daily
+    @expose(help="Export US data to csv file.")
+    def us_daily(self):
+        result = USHealthService.export_daily_csv()
         print(result)
 
     # python app.py interactive
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from ..extracts.atlantic_covid_tracking import AtlanticCovidTrackingExtract
-        extract = AtlanticCovidTrackingExtract()
-        data = extract.fetch_data_source()
-        print(len(data))
+        service = USHealthService()
+        extract = service.extract_data()
+        print(len(extract.dates))
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

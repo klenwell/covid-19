@@ -39,9 +39,10 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from ..extracts.us_gov_covid19 import UsGovCovid19Extract
-        daily_tests = UsGovCovid19Extract.kent_daily_tests()
-        print(len(daily_tests))
+        from ..extracts.atlantic_covid_tracking import AtlanticCovidTrackingExtract
+        extract = AtlanticCovidTrackingExtract()
+        data = extract.fetch_data_source()
+        print(len(data))
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

@@ -2,7 +2,6 @@
 Michigan Health Service
 """
 from os.path import join as path_join
-from datetime import date
 import csv
 from functools import cached_property
 

@@ -5,7 +5,7 @@ from tests.helper import AppTestCase, FILES_ROOT, path_join
 from covid_app.services.oc_health_service import OCHealthService
 from covid_app.extracts.ny_times_covid19 import EXTRACT_URL as NY_TIMES_EXTRACT_URL
 from covid_app.extracts.oc_hca.daily_covid19_extract import EXTRACT_URL as OC_HCA_EXTRACT_URL
-from covid_app.extracts.covid19_projections import EXTRACT_URL as PROJECTION_EXTRACT_URL
+from covid_app.extracts.covid19_projections import BASE_URL as PROJECTION_EXTRACT_URL
 
 
 class OrionAdvisorServiceTest(AppTestCase):

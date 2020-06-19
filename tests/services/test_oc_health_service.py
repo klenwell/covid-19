@@ -1,11 +1,12 @@
 import requests_mock
 from datetime import date
+import re
 
 from tests.helper import AppTestCase, FILES_ROOT, path_join
 from covid_app.services.oc_health_service import OCHealthService
 from covid_app.extracts.ny_times_covid19 import EXTRACT_URL as NY_TIMES_EXTRACT_URL
 from covid_app.extracts.oc_hca.daily_covid19_extract import EXTRACT_URL as OC_HCA_EXTRACT_URL
-from covid_app.extracts.covid19_projections import EXTRACT_URL as PROJECTION_EXTRACT_URL
+from covid_app.extracts.covid19_projections import BASE_URL as PROJECTION_BASE_URL
 
 
 class OrionAdvisorServiceTest(AppTestCase):
@@ -21,9 +22,12 @@ class OrionAdvisorServiceTest(AppTestCase):
         webmock.get(NY_TIMES_EXTRACT_URL, text="\n".join(mock_content))
 
     def setUpProjectionExtractMock(self, webmock):
+        # See https://requests-mock.readthedocs.io/en/latest/matching.html#regular-expressions
+        url_pattern = '{}/.*'.format(PROJECTION_BASE_URL)
+        matcher = re.compile(url_pattern)
         html_fname = 'oc-projections-20200610.html'
         html_path = path_join(FILES_ROOT, html_fname)
-        webmock.get(PROJECTION_EXTRACT_URL, text=self.readFile(html_path))
+        webmock.get(matcher, text=self.readFile(html_path))
 
     def test_expects_instance_of_service_class(self):
         # Act

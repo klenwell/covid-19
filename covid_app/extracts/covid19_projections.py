@@ -1,9 +1,10 @@
+from datetime import datetime
+from urllib.parse import urljoin
 import requests
 import json
-from datetime import datetime
 
 
-EXTRACT_URL = 'https://covid19-projections.com/us-ca-orange'
+BASE_URL = 'https://covid19-projections.com'
 DATE_F = '%Y-%m-%d'
 
 
@@ -15,18 +16,31 @@ class Covid19ProjectionsExtract:
     def oc_effective_reproduction():
         """Returns a dict: {date: count, ...} for Orange County, CA.
         """
-        extract = Covid19ProjectionsExtract()
+        url_path = 'us-ca-orange'
+        url = urljoin(BASE_URL, url_path)
+        extract = Covid19ProjectionsExtract(url)
         html = extract.fetch_data_source()
-        daily_rts_dict = extract.filter_oc_rts(html)
+        daily_rts_dict = extract.filter_rts(html)
+        return daily_rts_dict
+
+    @staticmethod
+    def us_effective_reproduction():
+        """Returns a dict: {date: count, ...} for US.
+        """
+        url_path = 'us'
+        url = urljoin(BASE_URL, url_path)
+        extract = Covid19ProjectionsExtract(url)
+        html = extract.fetch_data_source()
+        daily_rts_dict = extract.filter_rts(html)
         return daily_rts_dict
 
     #
     # Instance Methods
     #
-    def __init__(self):
-        self.url = EXTRACT_URL
+    def __init__(self, url):
+        self.url = url
 
-    def filter_oc_rts(self, html):
+    def filter_rts(self, html):
         """Returns a dict: {date: count, ...}
         """
         daily_values = {}

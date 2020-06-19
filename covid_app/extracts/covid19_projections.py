@@ -4,7 +4,7 @@ import requests
 import json
 
 
-BASE_URL = 'https://covid19-projections.com/us-ca-orange'
+BASE_URL = 'https://covid19-projections.com'
 DATE_F = '%Y-%m-%d'
 
 

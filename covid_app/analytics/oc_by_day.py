@@ -8,6 +8,7 @@ from covid_app.models.oc_daily_log import OcDailyLog
 
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
+ANALYTICS_FILE = 'oc-by-day.csv'
 
 
 class OcByDayAnalysis:
@@ -71,4 +72,13 @@ class OcByDayAnalysis:
         ]
 
     def to_csv(self):
-        pass
+        csv_path = path_join(OC_ANALYTICS_DATA_PATH, ANALYTICS_FILE)
+
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(self.headers)
+
+            for day in self.days:
+                writer.writerow(self.data_to_csv_row(day))
+
+        return csv_path

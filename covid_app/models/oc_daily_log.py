@@ -69,3 +69,8 @@ class OcDailyLog:
         self.deaths = fields.get('deaths')
         self.rt = fields.get('rt')
         self.created_on = fields.get('created_on')
+
+    def __repr__(self):
+        f = '<OcDailyLog date={} tests={} cases={} rt={}>'
+        return f.format(self.created_on, self.tests, self.cases,
+                        self.effective_reproduction_number)

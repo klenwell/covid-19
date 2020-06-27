@@ -54,7 +54,13 @@ class OCHealthService:
     def extract_daily_data_rows(self, source_url=None):
         extract = DailyCovid19Extract.latest()
         self.extract_version = extract.VERSION
-        deaths = NyTimesCovid19Extract.oc_daily_deaths()
+
+        # v3 includes deaths
+        if hasattr(extract, 'new_deaths'):
+            deaths = extract.new_deaths
+        else:
+            deaths = NyTimesCovid19Extract.oc_daily_deaths()
+
         rt_rates = Covid19ProjectionsExtract.oc_effective_reproduction()
         rows = self.collate_daily_data(extract, deaths, rt_rates)
         return rows

@@ -2,6 +2,7 @@ from datetime import date
 from cement import Controller
 from cement import ex as expose
 
+from covid_app.services.oc_health_service import OCHealthService
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 
 
@@ -10,6 +11,13 @@ class OcController(Controller):
         label = 'oc'
         stacked_on = 'base'
         stacked_type = 'nested'
+
+    # python app.py oc daily
+    @expose(help="Export data from OC HCA site to csv file.")
+    def daily(self):
+        csv = OCHealthService.export_daily_csv()
+        vars = {'csv': csv}
+        self.app.render(vars, 'oc_daily.jinja2')
 
     # python app.py oc analyze-by-day
     @expose(help="Generate analysis of OC HCA data by day-of-week.")

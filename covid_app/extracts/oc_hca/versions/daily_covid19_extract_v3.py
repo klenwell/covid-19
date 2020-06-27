@@ -61,6 +61,24 @@ class DailyCovid19ExtractV3:
         key = 'daily_dth'
         return self.extract_from_daily_logs(key)
 
+    @property
+    def dates(self):
+        log_dates = []
+
+        for daily_log in self.daily_logs:
+            log_date = self.timestamp_to_date(daily_log['date'])
+            log_dates.append(log_date)
+
+        return sorted(log_dates)
+
+    @property
+    def starts_on(self):
+        return self.dates[0]
+
+    @property
+    def ends_on(self):
+        return self.dates[-1]
+
     #
     # Instance Methods
     #

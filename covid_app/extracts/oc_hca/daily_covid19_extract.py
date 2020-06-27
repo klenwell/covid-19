@@ -10,6 +10,7 @@ import requests
 
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v1 import DailyCovid19ExtractV1
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v2 import DailyCovid19ExtractV2
+from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
 
 
 EXTRACT_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
@@ -47,7 +48,9 @@ class DailyCovid19Extract:
         return response.text
 
     def detect_version(self, html):
-        if DailyCovid19ExtractV2.is_detected(html):
+        if DailyCovid19ExtractV3.is_detected():
+            return DailyCovid19ExtractV3
+        elif DailyCovid19ExtractV2.is_detected(html):
             return DailyCovid19ExtractV2
         elif DailyCovid19ExtractV1.is_detected(html):
             return DailyCovid19ExtractV1

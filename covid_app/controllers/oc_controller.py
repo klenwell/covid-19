@@ -28,8 +28,19 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
+        from ..extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
+        print(DailyCovid19ExtractV3.is_detected())
 
         extract = DailyCovid19ExtractV3()
         print(len(extract.daily_logs))
+
+        from datetime import date, timedelta
+        today = date.today()
+        yesterday = today - timedelta(days=1)
+
+        print({
+            'today': extract.by_date(today),
+            'yesterday': extract.by_date(yesterday)
+        })
+
         breakpoint()

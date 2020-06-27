@@ -1,6 +1,6 @@
 import requests
 from functools import cached_property
-from datetime import datetime
+from datetime import datetime, date
 
 
 EXTRACT_URL = ('https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/'
@@ -34,13 +34,8 @@ class DailyCovid19ExtractV3:
         return response.json()
 
     #
-    # Instance Methods
+    # Properties
     #
-    def __init__(self, html=None):
-        json_data = DailyCovid19ExtractV3.get_json_data()
-        daily_logs = self.extract_from_json_data(json_data)
-        self.daily_logs = self.filter_future_dates(daily_logs)
-
     @cached_property
     def new_cases(self):
         key = 'daily_cases'
@@ -67,6 +62,24 @@ class DailyCovid19ExtractV3:
         return self.extract_from_daily_logs(key)
 
     #
+    # Instance Methods
+    #
+    def __init__(self, html=None):
+        json_data = DailyCovid19ExtractV3.get_json_data()
+        daily_logs = self.extract_from_json_data(json_data)
+        self.daily_logs = self.exclude_future_dates(daily_logs)
+
+    def by_date(self, dated):
+        return {
+            'date': str(dated),
+            'cases': self.new_cases.get(dated),
+            'tests': self.new_tests.get(dated),
+            'hospitalizations': self.hospitalizations.get(dated),
+            'icu_cases': self.icu_cases.get(dated),
+            'deaths': self.new_deaths.get(dated)
+        }
+
+    #
     # Private
     #
     def extract_from_json_data(self, json_data):
@@ -78,14 +91,22 @@ class DailyCovid19ExtractV3:
         daily_values = {}
 
         for daily_log in self.daily_logs:
-            date = self.timestamp_to_date(daily_log['date'])
+            log_date = self.timestamp_to_date(daily_log['date'])
             value = daily_log[key]
-            daily_values[date] = value
+            daily_values[log_date] = value
 
         return daily_values
 
     def timestamp_to_date(self, timestamp):
         return datetime.utcfromtimestamp(timestamp/1000).date()
 
-    def filter_future_dates(self, daily_logs):
-        return daily_logs
+    def exclude_future_dates(self, daily_logs):
+        filtered_logs = []
+        today = date.today()
+
+        for daily_log in daily_logs:
+            log_date = self.timestamp_to_date(daily_log['date'])
+            if log_date <= today:
+                filtered_logs.append(daily_log)
+
+        return filtered_logs

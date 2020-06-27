@@ -28,4 +28,10 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        print('dev')
+        import requests
+        url = "https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_main_csv/FeatureServer/0/query?where=0%3D0&objectIds=&time=&resultType=none&outFields=date%2Cdaily_tests%2Cdaily_cases%2Cdaily_dth%2Cdaily_hosp%2Cdaily_icu&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnDistinctValues=false&cacheHint=false&orderByFields=date&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&sqlFormat=none&f=pjson&token="
+        response = requests.get(url)
+        response.raise_for_status()
+        payload = response.json()
+        data = [f['attributes'] for f in payload['features'] if f.get('attributes')]
+        breakpoint()

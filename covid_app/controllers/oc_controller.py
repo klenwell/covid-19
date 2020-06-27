@@ -24,3 +24,8 @@ class OcController(Controller):
 
         for day in report.days:
             print(report.data_to_csv_row(day))
+
+    # python app.py oc dev
+    @expose(help="For rapid testing and development.")
+    def dev(self):
+        print('dev')

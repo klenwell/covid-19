@@ -13,7 +13,7 @@ EXTRACT_URL_F = ("{}/{}/FeatureServer/0/query?where={}+IS+NOT+NULL"
 
 
 class DailyCovid19ExtractV3:
-    VERSION = 3.1
+    VERSION = 3.2
     ACTIVE_DATE = '2020-06-26'
 
     #
@@ -35,13 +35,6 @@ class DailyCovid19ExtractV3:
     # Properties
     #
     @cached_property
-    def daily_logs(self):
-        endpoint = 'occovid_main_csv'
-        where_not_null_field = 'daily_cases'
-        json_data = self.fetch_json_data(endpoint, where_not_null_field)
-        return self.extract_from_json_data(json_data)
-
-    @cached_property
     def daily_case_logs(self):
         endpoint = 'occovid_cases_csv'
         where_not_null_field = 'daily_cases_repo'
@@ -57,9 +50,10 @@ class DailyCovid19ExtractV3:
 
     @cached_property
     def daily_hospitalization_logs(self):
-        # TODO: Get data from https://data.ca.gov/dataset/covid-19-hospital-data/resource ...
-        # /42d33765-20fd-44b8-a978-b083b7542225
-        pass
+        endpoint = 'occovid_hospicu_csv'
+        where_not_null_field = 'hospital'
+        json_data = self.fetch_json_data(endpoint, where_not_null_field)
+        return self.extract_from_json_data(json_data)
 
     @cached_property
     def daily_death_logs(self):
@@ -82,16 +76,14 @@ class DailyCovid19ExtractV3:
 
     @cached_property
     def hospitalizations(self):
-        # TODO: Use daily_hospitalization_logs property when ready. daily_logs no longer updated.
-        key = 'daily_hosp'
-        daily_logs = self.daily_logs
+        key = 'hospital'
+        daily_logs = self.daily_hospitalization_logs
         return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property
     def icu_cases(self):
-        # TODO: Use daily_hospitalization_logs property when ready. daily_logs no longer updated.
-        key = 'daily_icu'
-        daily_logs = self.daily_logs
+        key = 'icu'
+        daily_logs = self.daily_hospitalization_logs
         return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property

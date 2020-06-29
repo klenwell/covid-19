@@ -1,75 +1,108 @@
 import requests
 from functools import cached_property
-from datetime import datetime, date
+from datetime import datetime
 
 
-EXTRACT_URL = ('https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/'
-               'occovid_main_csv/FeatureServer/0/query?where=0%3D0&objectIds=&time=&resultType=none'
-               '&outFields=date%2Cdaily_tests%2Cdaily_cases%2Cdaily_dth%2Cdaily_hosp%2Cdaily_icu'
-               '&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false'
-               '&returnDistinctValues=false&cacheHint=false'
-               '&orderByFields=date'
-               '&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset='
-               '&resultRecordCount=&sqlFormat=none&f=pjson&token=')
+EXTRACT_URL = 'https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services'
+EXTRACT_URL_F = ("{}/{}/FeatureServer/0/query?where={}+IS+NOT+NULL"
+                 "&objectIds=&time=&resultType=none&outFields=*"
+                 "&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false"
+                 "&returnDistinctValues=false&cacheHint=false&orderByFields=date&"
+                 "groupByFieldsForStatistics=&outStatistics=&having=&resultOffset="
+                 "&resultRecordCount=&sqlFormat=none&f=pjson&token=")
 
 
 class DailyCovid19ExtractV3:
-    VERSION = 3
+    VERSION = 3.1
     ACTIVE_DATE = '2020-06-26'
 
     #
     # Static Methods
     #
     def is_detected():
+        tell = 'features'
+        url = EXTRACT_URL_F.format(EXTRACT_URL, 'occovid_main_csv', 'daily_cases')
+
         try:
-            tell = 'features'
-            json_data = DailyCovid19ExtractV3.get_json_data()
+            response = requests.get(url)
+            response.raise_for_status()
+            json_data = response.json()
             return tell in json_data.keys()
         except Exception:
             return False
-
-    def get_json_data():
-        response = requests.get(EXTRACT_URL)
-        response.raise_for_status()
-        return response.json()
 
     #
     # Properties
     #
     @cached_property
+    def daily_logs(self):
+        endpoint = 'occovid_main_csv'
+        where_not_null_field = 'daily_cases'
+        json_data = self.fetch_json_data(endpoint, where_not_null_field)
+        return self.extract_from_json_data(json_data)
+
+    @cached_property
+    def daily_case_logs(self):
+        endpoint = 'occovid_cases_csv'
+        where_not_null_field = 'daily_cases_repo'
+        json_data = self.fetch_json_data(endpoint, where_not_null_field)
+        return self.extract_from_json_data(json_data)
+
+    @cached_property
+    def daily_test_logs(self):
+        endpoint = 'occovid_testing_csv'
+        where_not_null_field = 'daily_test_repo'
+        json_data = self.fetch_json_data(endpoint, where_not_null_field)
+        return self.extract_from_json_data(json_data)
+
+    @cached_property
+    def daily_hospitalization_logs(self):
+        # TODO: Get data from https://data.ca.gov/dataset/covid-19-hospital-data/resource ...
+        # /42d33765-20fd-44b8-a978-b083b7542225
+        pass
+
+    @cached_property
+    def daily_death_logs(self):
+        endpoint = 'occovid_deaths_csv'
+        where_not_null_field = 'daily_dth'
+        json_data = self.fetch_json_data(endpoint, where_not_null_field)
+        return self.extract_from_json_data(json_data)
+
+    @cached_property
     def new_cases(self):
-        key = 'daily_cases'
-        return self.extract_from_daily_logs(key)
+        key = 'daily_cases_repo'
+        daily_logs = self.daily_case_logs
+        return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property
     def new_tests(self):
-        key = 'daily_tests'
-        return self.extract_from_daily_logs(key)
+        key = 'daily_test_repo'
+        daily_logs = self.daily_test_logs
+        return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property
     def hospitalizations(self):
+        # TODO: Use daily_hospitalization_logs property when ready. daily_logs no longer updated.
         key = 'daily_hosp'
-        return self.extract_from_daily_logs(key)
+        daily_logs = self.daily_logs
+        return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property
     def icu_cases(self):
+        # TODO: Use daily_hospitalization_logs property when ready. daily_logs no longer updated.
         key = 'daily_icu'
-        return self.extract_from_daily_logs(key)
+        daily_logs = self.daily_logs
+        return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property
     def new_deaths(self):
         key = 'daily_dth'
-        return self.extract_from_daily_logs(key)
+        daily_logs = self.daily_death_logs
+        return self.extract_from_daily_logs(daily_logs, key)
 
     @property
     def dates(self):
-        log_dates = []
-
-        for daily_log in self.daily_logs:
-            log_date = self.timestamp_to_date(daily_log['date'])
-            log_dates.append(log_date)
-
-        return sorted(log_dates)
+        return sorted(self.new_cases.keys())
 
     @property
     def starts_on(self):
@@ -83,9 +116,7 @@ class DailyCovid19ExtractV3:
     # Instance Methods
     #
     def __init__(self, html=None):
-        json_data = DailyCovid19ExtractV3.get_json_data()
-        daily_logs = self.extract_from_json_data(json_data)
-        self.daily_logs = self.exclude_future_dates(daily_logs)
+        pass
 
     def by_date(self, dated):
         return {
@@ -100,16 +131,29 @@ class DailyCovid19ExtractV3:
     #
     # Private
     #
+    def fetch_json_data(self, endpoint, where_not_null_field):
+        url = EXTRACT_URL_F.format(EXTRACT_URL, endpoint, where_not_null_field)
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+
     def extract_from_json_data(self, json_data):
         features = json_data['features']
         data = [f['attributes'] for f in features if f.get('attributes')]
         return data
 
-    def extract_from_daily_logs(self, key):
+    def extract_from_daily_logs(self, daily_logs, key):
         daily_values = {}
 
-        for daily_log in self.daily_logs:
-            log_date = self.timestamp_to_date(daily_log['date'])
+        # Normalize the timestamp key. In cases feed, it's "Date", in tests feed "date".
+        if 'Date' in daily_logs[0]:
+            timestamp_key = 'Date'
+        else:
+            timestamp_key = 'date'
+
+        for daily_log in daily_logs:
+            timestamp = daily_log[timestamp_key]
+            log_date = self.timestamp_to_date(timestamp)
             value = daily_log[key]
             daily_values[log_date] = value
 
@@ -117,14 +161,3 @@ class DailyCovid19ExtractV3:
 
     def timestamp_to_date(self, timestamp):
         return datetime.utcfromtimestamp(timestamp/1000).date()
-
-    def exclude_future_dates(self, daily_logs):
-        filtered_logs = []
-        today = date.today()
-
-        for daily_log in daily_logs:
-            log_date = self.timestamp_to_date(daily_log['date'])
-            if log_date <= today:
-                filtered_logs.append(daily_log)
-
-        return filtered_logs

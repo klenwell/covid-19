@@ -56,7 +56,7 @@ class OCHealthService:
         self.extract_version = extract.VERSION
 
         # v3 includes deaths
-        if hasattr(extract, 'new_deaths'):
+        if self.extract_version >= 3:
             deaths = extract.new_deaths
         else:
             deaths = NyTimesCovid19Extract.oc_daily_deaths()

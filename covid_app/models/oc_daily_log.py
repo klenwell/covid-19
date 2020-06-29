@@ -3,6 +3,7 @@ from datetime import datetime
 import csv
 
 from config.app import DATA_ROOT
+from covid_app.models import int_or_none, float_or_none
 
 
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
@@ -31,8 +32,6 @@ class OcDailyLog:
 
     @staticmethod
     def from_export_row(row):
-        int_or_none = lambda v: int(v) if v != '' else None
-        float_or_none = lambda v: float(v) if v != '' else None
         created_on = datetime.strptime(row[0], '%Y-%m-%d').date()
         return OcDailyLog(created_on=created_on,
                           cases=int_or_none(row[1]),

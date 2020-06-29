@@ -40,7 +40,6 @@ class OcController(Controller):
         print(DailyCovid19ExtractV3.is_detected())
 
         extract = DailyCovid19ExtractV3()
-        breakpoint()
         print(len(extract.daily_logs))
 
         from datetime import date, timedelta

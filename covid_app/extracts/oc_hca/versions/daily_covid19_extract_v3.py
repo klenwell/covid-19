@@ -43,7 +43,10 @@ class DailyCovid19ExtractV3:
 
     @cached_property
     def daily_case_logs(self):
-        pass
+        endpoint = 'occovid_cases_csv'
+        where_not_null_field = 'daily_cases_repo'
+        json_data = self.fetch_json_data(endpoint, where_not_null_field)
+        return self.extract_from_json_data(json_data)
 
     @cached_property
     def daily_test_logs(self):
@@ -53,9 +56,16 @@ class DailyCovid19ExtractV3:
         return self.extract_from_json_data(json_data)
 
     @cached_property
+    def daily_death_logs(self):
+        endpoint = 'occovid_deaths_csv'
+        where_not_null_field = 'daily_dth'
+        json_data = self.fetch_json_data(endpoint, where_not_null_field)
+        return self.extract_from_json_data(json_data)
+
+    @cached_property
     def new_cases(self):
-        key = 'daily_cases'
-        daily_logs = self.daily_logs
+        key = 'daily_cases_repo'
+        daily_logs = self.daily_case_logs
         return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property
@@ -79,18 +89,12 @@ class DailyCovid19ExtractV3:
     @cached_property
     def new_deaths(self):
         key = 'daily_dth'
-        daily_logs = self.daily_logs
+        daily_logs = self.daily_death_logs
         return self.extract_from_daily_logs(daily_logs, key)
 
     @property
     def dates(self):
-        log_dates = []
-
-        for daily_log in self.daily_logs:
-            log_date = self.timestamp_to_date(daily_log['date'])
-            log_dates.append(log_date)
-
-        return sorted(log_dates)
+        return sorted(self.new_cases.keys())
 
     @property
     def starts_on(self):
@@ -133,8 +137,15 @@ class DailyCovid19ExtractV3:
     def extract_from_daily_logs(self, daily_logs, key):
         daily_values = {}
 
+        # Normalize the timestamp key. In cases feed, it's "Date", in tests feed "date"
+        if 'Date' in daily_logs[0]:
+            timestamp_key = 'Date'
+        else:
+            timestamp_key = 'date'
+
         for daily_log in daily_logs:
-            log_date = self.timestamp_to_date(daily_log['date'])
+            timestamp = daily_log[timestamp_key]
+            log_date = self.timestamp_to_date(timestamp)
             value = daily_log[key]
             daily_values[log_date] = value
 

@@ -37,35 +37,6 @@ class OrionAdvisorServiceTest(AppTestCase):
         self.assertIsInstance(orion, OCHealthService)
 
     @requests_mock.mock()
-    def test_expects_to_extract_daily_data_rows_from_latest_version_of_page(self, webmock):
-        # Arrange
-        service = OCHealthService()
-
-        # Mock Web Services
-        self.setUpOcHcaExtractMock('oc-hca-dashboard-20200604.html', webmock)
-        self.setUpNyTimesExtractMock(webmock)
-        self.setUpProjectionExtractMock(webmock)
-
-        # Expected Data
-        expected_june_4_row = [date(2020, 6, 4), 107, '', '', '', '']
-        expected_june_3_row = [date(2020, 6, 3), 137, 1658, '', '', 158]
-        expected_june_2_row = [date(2020, 6, 2), 99, 2302, 293, 129, '']
-
-        # Act
-        rows = service.extract_daily_data_rows()
-        june_4_row_sans_rt = rows[-1][:6]
-        june_3_row_sans_rt = rows[-2][:6]
-        june_2_row_sans_rt = rows[-3][:6]
-        june_4_rt = rows[-1][-1]
-
-        # Assert
-        self.assertEqual(len(rows), 96)
-        self.assertEqual(june_4_row_sans_rt, expected_june_4_row)
-        self.assertEqual(june_3_row_sans_rt, expected_june_3_row)
-        self.assertEqual(june_2_row_sans_rt, expected_june_2_row)
-        self.assertAlmostEqual(june_4_rt, 1.09, 2)
-
-    @requests_mock.mock()
     def test_expects_to_extract_daily_data_rows_from_archived_page(self, webmock):
         # Arrange
         service = OCHealthService()
@@ -80,7 +51,7 @@ class OrionAdvisorServiceTest(AppTestCase):
         expected_may_22_row = [date(2020, 5, 22), 108, 1033, 249, 101, '']
 
         # Act
-        rows = service.extract_daily_data_rows()
+        rows = service.extract_archive_data_rows()
         may_23_row_sans_rt = rows[-1][:6]
         may_22_row_sans_rt = rows[-2][:6]
 

@@ -56,6 +56,12 @@ class DailyCovid19ExtractV3:
         return self.extract_from_json_data(json_data)
 
     @cached_property
+    def daily_hospitalization_logs(self):
+        # TODO: Get data from https://data.ca.gov/dataset/covid-19-hospital-data/resource ...
+        # /42d33765-20fd-44b8-a978-b083b7542225
+        pass
+
+    @cached_property
     def daily_death_logs(self):
         endpoint = 'occovid_deaths_csv'
         where_not_null_field = 'daily_dth'
@@ -76,12 +82,14 @@ class DailyCovid19ExtractV3:
 
     @cached_property
     def hospitalizations(self):
+        # TODO: Use daily_hospitalization_logs property when ready. daily_logs no longer updated.
         key = 'daily_hosp'
         daily_logs = self.daily_logs
         return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property
     def icu_cases(self):
+        # TODO: Use daily_hospitalization_logs property when ready. daily_logs no longer updated.
         key = 'daily_icu'
         daily_logs = self.daily_logs
         return self.extract_from_daily_logs(daily_logs, key)
@@ -137,7 +145,7 @@ class DailyCovid19ExtractV3:
     def extract_from_daily_logs(self, daily_logs, key):
         daily_values = {}
 
-        # Normalize the timestamp key. In cases feed, it's "Date", in tests feed "date"
+        # Normalize the timestamp key. In cases feed, it's "Date", in tests feed "date".
         if 'Date' in daily_logs[0]:
             timestamp_key = 'Date'
         else:

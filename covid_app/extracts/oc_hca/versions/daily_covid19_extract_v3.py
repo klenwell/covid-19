@@ -1,6 +1,6 @@
 import requests
 from functools import cached_property
-from datetime import datetime, date
+from datetime import datetime
 
 
 EXTRACT_URL = 'https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services'

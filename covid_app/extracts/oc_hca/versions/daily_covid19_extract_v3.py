@@ -107,7 +107,7 @@ class DailyCovid19ExtractV3:
     #
     # Instance Methods
     #
-    def __init__(self, html=None):
+    def __init__(self):
         pass
 
     def by_date(self, dated):

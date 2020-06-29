@@ -29,7 +29,7 @@ I use it to help maintain this COVID-19 spreadsheet:
 ### Export Current Data
 To export the latest Orange County COVID-19 data from the [OC Health Care Agency](https://occovid19.ochealthinfo.com/coronavirus-in-oc):
 
-    python app.py oc-daily
+    python app.py oc daily
 
 When successful, it will generate a CSV file and output something like this:
 
@@ -38,12 +38,11 @@ OC Daily COVID-19 Data Export
 
 path: /home/klenwell/projects/covid-19/data/oc/oc-hca.csv
 start: 2020-03-01
-end: 2020-06-04
-rows: 96
-version: 2
+end: 2020-06-28
+rows: 120
+version: 3.2
 ```
 
-**Note: Due to [changes in the OC HCA website and data sources](https://www.reddit.com/r/CoronavirusCA/comments/hgwb0t/where_can_you_and_i_find_countylevel_historical/), this extract is not currently able to import the latest data.**
 
 ## Testing
 There are a few tests. At this time, they are focused mainly on making quick fixes for breaking changes in page source formatting.

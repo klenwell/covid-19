@@ -60,7 +60,7 @@ class OcHcaDailyCovid19ExtractTest(AppTestCase):
         handler = DailyCovid19Extract()
 
         # Act
-        Extract = handler.detect_version(html)
+        Extract = handler.detect_archive_version(html)
 
         # Assert
         self.assertEqual(Extract.VERSION, 2)
@@ -73,7 +73,7 @@ class OcHcaDailyCovid19ExtractTest(AppTestCase):
         handler = DailyCovid19Extract()
 
         # Act
-        Extract = handler.detect_version(html)
+        Extract = handler.detect_archive_version(html)
 
         # Assert
         self.assertEqual(Extract.VERSION, 1)
@@ -85,7 +85,7 @@ class OcHcaDailyCovid19ExtractTest(AppTestCase):
 
         # Act
         with self.assertRaises(Exception) as context:
-            handler.detect_version(bad_source)
+            handler.detect_archive_version(bad_source)
 
         # Assert
         self.assertEqual(str(context.exception), 'Valid extract source not detected.')

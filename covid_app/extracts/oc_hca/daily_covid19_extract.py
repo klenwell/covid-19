@@ -25,15 +25,12 @@ class DailyCovid19Extract:
     # Static Methods
     #
     def latest():
-        handler = DailyCovid19Extract(EXTRACT_URL)
-        html = handler.fetch_data_source()
-        ExtractVersion = handler.detect_version(html)
-        return ExtractVersion(html)
+        return DailyCovid19ExtractV3()
 
     def archive(url):
         handler = DailyCovid19Extract(url)
         html = handler.fetch_data_source()
-        ExtractVersion = handler.detect_version(html)
+        ExtractVersion = handler.detect_archive_version(html)
         return ExtractVersion(html)
 
     #
@@ -47,10 +44,8 @@ class DailyCovid19Extract:
         response.raise_for_status()  # will raise a requests.exceptions.HTTPError error
         return response.text
 
-    def detect_version(self, html):
-        if not html and DailyCovid19ExtractV3.is_detected():
-            return DailyCovid19ExtractV3
-        elif DailyCovid19ExtractV2.is_detected(html):
+    def detect_archive_version(self, html):
+        if DailyCovid19ExtractV2.is_detected(html):
             return DailyCovid19ExtractV2
         elif DailyCovid19ExtractV1.is_detected(html):
             return DailyCovid19ExtractV1

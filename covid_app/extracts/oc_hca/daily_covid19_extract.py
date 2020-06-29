@@ -48,7 +48,7 @@ class DailyCovid19Extract:
         return response.text
 
     def detect_version(self, html):
-        if DailyCovid19ExtractV3.is_detected():
+        if not html and DailyCovid19ExtractV3.is_detected():
             return DailyCovid19ExtractV3
         elif DailyCovid19ExtractV2.is_detected(html):
             return DailyCovid19ExtractV2

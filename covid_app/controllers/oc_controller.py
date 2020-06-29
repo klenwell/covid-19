@@ -19,6 +19,19 @@ class OcController(Controller):
         vars = {'csv': csv}
         self.app.render(vars, 'oc_daily.jinja2')
 
+    # python app.py oc archive -a https://web.archive.org/web/20200503202327/https://occovid19.ochealthinfo.com/coronavirus-in-oc # noqa: E501
+    @expose(
+        help="Export data from archived version of OC HCA site to csv file.",
+        arguments=[
+            (['-a'], dict(dest='archive', action='store', help='URL for archived web page.'))
+        ]
+    )
+    def archive(self):
+        archive_url = self.app.pargs.archive
+        csv = OCHealthService.export_archive(archive_url)
+        vars = {'csv': csv}
+        self.app.render(vars, 'oc_daily.jinja2')
+
     # python app.py oc analyze-by-day
     @expose(help="Generate analysis of OC HCA data by day-of-week.")
     def analyze_by_day(self):

@@ -2,7 +2,6 @@ from cement import Controller
 from cement import ex as expose
 
 
-from ..services.oc_health_service import OCHealthService
 from ..services.mi_health_service import MiHealthService
 from ..services.us_health_service import USHealthService
 
@@ -10,25 +9,6 @@ from ..services.us_health_service import USHealthService
 class BaseController(Controller):
     class Meta:
         label = 'base'
-
-    # python app.py oc-daily
-    @expose(
-        help="Export data from OC HCA site to csv file.",
-        arguments=[
-            (['-a'], dict(dest='archive', action='store',
-                          help='Extract data from provided URL for archived web page.'))
-        ]
-    )
-    def oc_daily(self):
-        archive_url = self.app.pargs.archive
-
-        if archive_url:
-            csv = OCHealthService.export_archive(archive_url)
-        else:
-            csv = OCHealthService.export_daily_csv()
-
-        vars = {'csv': csv}
-        self.app.render(vars, 'oc_daily.jinja2')
 
     # python app.py kent-daily
     @expose(help="Export Kent County data to csv file.")

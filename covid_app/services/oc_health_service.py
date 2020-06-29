@@ -35,9 +35,11 @@ class OCHealthService:
 
     @staticmethod
     def export_archive(archive_url):
-        service = OCHealthService(archive_url=archive_url)
-        rows = service.extract_archive_data_rows()
-        result = service.output_archive_csv(rows)
+        extract = DailyCovid19Extract.archive(archive_url)
+        service = OCHealthService()
+        rows = service.extract_archive_rows(extract)
+        result = service.output_archive_csv(rows, archive_url, extract.VERSION)
+
         return result
 
     #
@@ -94,8 +96,8 @@ class OCHealthService:
     #
     # Instance Method
     #
-    def __init__(self, archive_url=None):
-        self.archive_url = archive_url
+    def __init__(self):
+        pass
 
     def output_daily_csv(self):
         with open(self.daily_csv_path, 'w', newline='') as f:
@@ -124,15 +126,7 @@ class OCHealthService:
             self.daily_rts.get(dated)
         ]
 
-    def extract_archive_data_rows(self):
-        extract = DailyCovid19Extract.archive(self.archive_url)
-        self.extract_version = extract.VERSION
-        deaths = {}     # Skip deaths in archive.
-        rt_rates = {}   # Skip in archive.
-        rows = self.collate_archive_data(extract, deaths, rt_rates)
-        return rows
-
-    def collate_archive_data(self, extract, deaths, rts):
+    def extract_archive_rows(self, extract):
         rows = []
 
         # Start on 3/1/2020.
@@ -143,21 +137,39 @@ class OCHealthService:
             daily_tests = extract.new_tests.get(next_date, '')
             daily_hosps = extract.hospitalizations.get(next_date, '')
             daily_icus = extract.icu_cases.get(next_date, '')
-            daily_deaths = deaths.get(next_date, '')
-            daily_rts = rts.get(next_date, '')
 
-            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus, daily_deaths,
-                   daily_rts]
+            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus]
             rows.append(row)
 
             next_date = next_date + timedelta(days=1)
 
         return rows
 
-    def output_archive_csv(self, rows):
-        archive_date = rows[-1][0]
-        csv_fname = 'oc-hca-{}.csv'.format(archive_date.strftime('%Y%m%d'))
-        csv_path = path_join(OC_ARCHIVE_PATH, csv_fname)
-        footer = 'exported from {} at {}'.format(self.archive_url, datetime.now().isoformat())
+    def output_archive_csv(self, rows, archive_url, extract_version):
+        archive_headers = ['Date', 'New Cases', 'New Tests', 'Hosp', 'ICU']
 
-        return self.output_daily_csv(rows, csv_path=csv_path, footer=footer)
+        rows = sorted(rows, key=lambda r: r[0], reverse=True)
+        start_date = rows[-1][0]
+        end_date = rows[0][0]
+
+        csv_fname = 'oc-hca-{}.csv'.format(end_date.strftime('%Y%m%d'))
+        csv_path = path_join(OC_ARCHIVE_PATH, csv_fname)
+        footer = 'exported from {} at {}'.format(archive_url, datetime.now().isoformat())
+
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(archive_headers)
+
+            for row in rows:
+                writer.writerow(row)
+
+            writer.writerow([])
+            writer.writerow([footer])
+
+        return {
+            'path': csv_path,
+            'rows': len(rows),
+            'start_date': start_date,
+            'end_date': end_date,
+            'extract_version': extract_version
+        }

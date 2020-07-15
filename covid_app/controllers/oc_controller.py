@@ -46,6 +46,14 @@ class OcController(Controller):
         for day in report.days:
             print(report.data_to_csv_row(day))
 
+    # python app.py oc analyze-test-delays
+    @expose(help="Analyze testing delays based on data.")
+    def analyze_test_delays(self):
+        #from covid_app.analytics.oc_by_day import OcByDayAnalysis
+        #analysis = OcTestingAnalysis()
+        #analysis.simulate_delays()
+        print('hello')
+
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):

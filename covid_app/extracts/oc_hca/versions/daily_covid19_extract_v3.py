@@ -13,8 +13,8 @@ EXTRACT_URL_F = ("{}/{}/FeatureServer/0/query?where={}+IS+NOT+NULL"
 
 
 class DailyCovid19ExtractV3:
-    VERSION = 3.2
-    ACTIVE_DATE = '2020-06-26'
+    VERSION = 3.3
+    ACTIVE_DATE = '2020-07-15'
 
     #
     # Static Methods
@@ -36,14 +36,14 @@ class DailyCovid19ExtractV3:
     #
     @cached_property
     def daily_case_logs(self):
-        endpoint = 'occovid_cases_csv'
+        endpoint = 'occovid_case_csv'
         where_not_null_field = 'daily_cases_repo'
         json_data = self.fetch_json_data(endpoint, where_not_null_field)
         return self.extract_from_json_data(json_data)
 
     @cached_property
     def daily_test_logs(self):
-        endpoint = 'occovid_testing_csv'
+        endpoint = 'occovid_pcr_csv'
         where_not_null_field = 'daily_test_repo'
         json_data = self.fetch_json_data(endpoint, where_not_null_field)
         return self.extract_from_json_data(json_data)
@@ -57,7 +57,7 @@ class DailyCovid19ExtractV3:
 
     @cached_property
     def daily_death_logs(self):
-        endpoint = 'occovid_deaths_csv'
+        endpoint = 'occovid_death_csv'
         where_not_null_field = 'daily_dth'
         json_data = self.fetch_json_data(endpoint, where_not_null_field)
         return self.extract_from_json_data(json_data)

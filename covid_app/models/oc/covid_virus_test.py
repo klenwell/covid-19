@@ -3,6 +3,13 @@ from datetime import datetime
 
 class CovidVirusTest:
     #
+    # Static Methods
+    #
+    @staticmethod
+    def from_hsa():
+        pass
+
+    #
     # Properties
     #
     @property

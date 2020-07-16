@@ -4,6 +4,7 @@ from cement import ex as expose
 
 from covid_app.services.oc_health_service import OCHealthService
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
+from covid_app.analytics.oc_testing import OcTestingAnalysis
 
 
 class OcController(Controller):
@@ -49,59 +50,7 @@ class OcController(Controller):
     # python app.py oc analyze-test-delays
     @expose(help="Analyze testing delays based on data.")
     def analyze_test_delays(self):
-        import queue
-        from math import floor
-        from covid_app.models.oc.covid_virus_test import CovidVirusTest
-        from ..extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
-
-        virus_tests = []
-        extract = DailyCovid19ExtractV3()
-
-        # Control for multiple positive tests per case
-        total_pos_specs = extract.daily_test_logs[-1]['tot_pcr_pos']
-        total_cases = extract.daily_case_logs[-1]['total_cases_repo']
-        duplicate_specs = total_pos_specs - total_cases
-        dupe_ratio = floor(1 / (duplicate_specs / total_pos_specs))
-        print('duplicate_specs: {}'.format(duplicate_specs))
-        print('dupe_ratio: {}'.format(dupe_ratio))
-
-        # A simple FIFO queue
-        testing_queue = queue.SimpleQueue()
-        pos_specs_counted = 0
-        skipped_dupes = 0
-
-        # Loop through daily test logs
-        for test_log in extract.daily_test_logs:
-            timestamp = test_log['date']
-            new_pos_tests_administered = test_log['daily_pos_spec']
-
-            # Collect non-duplicate positive specs for this day
-            for n in range(new_pos_tests_administered):
-                pos_specs_counted += 1
-
-                # Skip if a duplicate
-                if skipped_dupes < duplicate_specs:
-                    is_dupe = pos_specs_counted % dupe_ratio == 0
-                    if is_dupe:
-                        skipped_dupes += 1
-                        continue
-
-                virus_test = CovidVirusTest(spec_timestamp=timestamp, result='positive')
-                testing_queue.put(virus_test)
-
-        # Loop through daily case logs to estimate reporting delays
-        for case_log in extract.daily_case_logs:
-            timestamp = case_log['Date']
-            new_pos_tests_reported = case_log['daily_cases_repo']
-
-            # Collect non-duplicate positive specs for this day
-            for n in range(new_pos_tests_reported):
-                waiting_test = testing_queue.get()
-                waiting_test.reported_at = timestamp
-                virus_tests.append(waiting_test)
-
-        print('testing_queue size: {}'.format(testing_queue.qsize()))
-        print('total_cases: {}'.format(total_cases))
+        virus_tests = OcTestingAnalysis.project_specs_forward()
         print('virus_tests: {}'.format(len(virus_tests)))
         breakpoint()
 

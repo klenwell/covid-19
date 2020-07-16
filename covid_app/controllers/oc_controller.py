@@ -54,6 +54,7 @@ class OcController(Controller):
         from covid_app.models.oc.covid_virus_test import CovidVirusTest
         from ..extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
 
+        virus_tests = []
         extract = DailyCovid19ExtractV3()
 
         # Control for multiple positive tests per case
@@ -88,8 +89,20 @@ class OcController(Controller):
                 virus_test = CovidVirusTest(spec_timestamp=timestamp, result='positive')
                 testing_queue.put(virus_test)
 
-        print('total_cases: {}'.format(total_cases))
+        # Loop through daily case logs to estimate reporting delays
+        for case_log in extract.daily_case_logs:
+            timestamp = case_log['Date']
+            new_pos_tests_reported = case_log['daily_cases_repo']
+
+            # Collect non-duplicate positive specs for this day
+            for n in range(new_pos_tests_reported):
+                waiting_test = testing_queue.get()
+                waiting_test.reported_at = timestamp
+                virus_tests.append(waiting_test)
+
         print('testing_queue size: {}'.format(testing_queue.qsize()))
+        print('total_cases: {}'.format(total_cases))
+        print('virus_tests: {}'.format(len(virus_tests)))
         breakpoint()
 
     # python app.py oc dev

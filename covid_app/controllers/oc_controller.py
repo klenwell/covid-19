@@ -58,7 +58,7 @@ class OcController(Controller):
         analysis = OcTestingAnalysis()
         recent_tests = []
 
-        # Put reported cases for in queue
+        # Queue positive cases by reported date DESC
         case_queue = deque()
 
         for case_log in reversed(analysis.daily_case_logs):

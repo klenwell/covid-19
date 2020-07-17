@@ -50,8 +50,63 @@ class OcController(Controller):
     # python app.py oc analyze-test-delays
     @expose(help="Analyze testing delays based on data.")
     def analyze_test_delays(self):
-        virus_tests = OcTestingAnalysis.project_specs_forward()
-        print('virus_tests: {}'.format(len(virus_tests)))
+        import queue
+        from math import floor
+        from covid_app.models.oc.covid_virus_test import CovidVirusTest
+
+        analysis = OcTestingAnalysis()
+        recent_tests = []
+
+        # Put reported cases for in queue
+        case_queue = queue.SimpleQueue()
+
+        for case_log in reversed(analysis.daily_case_logs):
+            timestamp = case_log['Date']
+            new_pos_tests_reported = case_log['daily_cases_repo']
+
+            for n in range(new_pos_tests_reported):
+                virus_test = CovidVirusTest(repo_timestamp=timestamp, result='positive')
+                case_queue.put(virus_test)
+
+        # Extrapolate date test was administered
+        queue_empty = False
+        for test_log in reversed(analysis.daily_test_logs):
+            if queue_empty:
+                break
+
+            administered_at = test_log['date']
+            daily_pos_spec = test_log['daily_pos_spec']
+
+            if not daily_pos_spec:
+                continue
+
+            # Control for cases with multiple positive tests
+            dupe_tests = floor(analysis.duplicate_test_ratio * daily_pos_spec)
+            none_dupe_pos_tests = daily_pos_spec - dupe_tests
+
+            # Collect non-duplicate positive specs for this day
+            for n in range(none_dupe_pos_tests):
+                try:
+                    pos_case = case_queue.get(block=False)
+                    pos_case.administered_at = administered_at
+                    recent_tests.append(pos_case)
+                except queue.Empty:
+                    print('case_queue empty!')
+                    queue_empty = True
+                    break
+
+        # Analyze
+        wait_times = [t.days_to_result for t in recent_tests]
+        avg_wait = sum(wait_times) / len(wait_times)
+
+        # Dump
+        print('case_queue size: {}'.format(case_queue.qsize()))
+        print('recent_tests: {}'.format(len(recent_tests)))
+        print('avg_wait: {}'.format(avg_wait))
+
+        from collections import Counter
+        wait_times_freq = Counter(wait_times)
+        print(wait_times_freq)
         breakpoint()
 
     # python app.py oc dev

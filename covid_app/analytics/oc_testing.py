@@ -20,9 +20,7 @@ class OcTestingAnalysis:
     def project_specs_forward():
         virus_tests = []
 
-        # Control for multiple positive tests per case
         analysis = OcTestingAnalysis()
-        dupe_ratio = floor(1 / (analysis.duplicate_specimens / analysis.total_positive_specimens))
 
         # A simple FIFO queue
         testing_queue = queue.SimpleQueue()
@@ -38,9 +36,9 @@ class OcTestingAnalysis:
             for n in range(new_pos_tests_administered):
                 pos_specs_counted += 1
 
-                # Skip if a duplicate
+                # Control for multiple positive tests per case
                 if skipped_dupes < analysis.duplicate_specimens:
-                    is_dupe = pos_specs_counted % dupe_ratio == 0
+                    is_dupe = pos_specs_counted % analysis.duplicate_test_odds == 0
                     if is_dupe:
                         skipped_dupes += 1
                         continue
@@ -87,6 +85,14 @@ class OcTestingAnalysis:
     @property
     def duplicate_specimens(self):
         return self.total_positive_specimens - self.total_cases
+
+    @property
+    def duplicate_test_ratio(self):
+        return self.duplicate_specimens / self.total_positive_specimens
+
+    @property
+    def duplicate_test_odds(self):
+        return floor(1 / self.duplicate_test_ratio)
 
     #
     # Instance Method

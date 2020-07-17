@@ -50,23 +50,24 @@ class OcController(Controller):
     # python app.py oc analyze-test-delays
     @expose(help="Analyze testing delays based on data.")
     def analyze_test_delays(self):
-        import queue
+        from collections import deque
         from math import floor
+        from collections import Counter
         from covid_app.models.oc.covid_virus_test import CovidVirusTest
 
         analysis = OcTestingAnalysis()
         recent_tests = []
 
         # Put reported cases for in queue
-        case_queue = queue.SimpleQueue()
+        case_queue = deque()
 
         for case_log in reversed(analysis.daily_case_logs):
-            timestamp = case_log['Date']
+            reported_at = case_log['Date']
             new_pos_tests_reported = case_log['daily_cases_repo']
 
             for n in range(new_pos_tests_reported):
-                virus_test = CovidVirusTest(repo_timestamp=timestamp, result='positive')
-                case_queue.put(virus_test)
+                virus_test = CovidVirusTest(repo_timestamp=reported_at, result='positive')
+                case_queue.append(virus_test)
 
         # Extrapolate date test was administered
         queue_empty = False
@@ -87,26 +88,35 @@ class OcController(Controller):
             # Collect non-duplicate positive specs for this day
             for n in range(none_dupe_pos_tests):
                 try:
-                    pos_case = case_queue.get(block=False)
-                    pos_case.administered_at = administered_at
-                    recent_tests.append(pos_case)
-                except queue.Empty:
+                    pos_case = case_queue.popleft()
+
+                    # test must be administered before it can be reported
+                    timing_nigo = administered_at >= pos_case.reported_at
+
+                    if timing_nigo:
+                        print('timing_nigo: {}'.format(pos_case))
+                        case_queue.appendleft(pos_case)
+                    else:
+                        pos_case.administered_at = administered_at
+                        recent_tests.append(pos_case)
+                except IndexError:
                     print('case_queue empty!')
                     queue_empty = True
                     break
 
         # Analyze
         wait_times = [t.days_to_result for t in recent_tests]
+        reported_on_dates = [t.reported_on for t in recent_tests]
+        admin_on_dates = [t.administered_on for t in recent_tests]
         avg_wait = sum(wait_times) / len(wait_times)
 
         # Dump
-        print('case_queue size: {}'.format(case_queue.qsize()))
+        print('case_queue size: {}'.format(len(case_queue)))
         print('recent_tests: {}'.format(len(recent_tests)))
         print('avg_wait: {}'.format(avg_wait))
-
-        from collections import Counter
-        wait_times_freq = Counter(wait_times)
-        print(wait_times_freq)
+        print('wait_times_freq: {}'.format(Counter(wait_times)))
+        print('reported_on_dates: {}'.format(Counter(reported_on_dates)))
+        print('admin_on_dates: {}'.format(Counter(admin_on_dates)))
         breakpoint()
 
     # python app.py oc dev

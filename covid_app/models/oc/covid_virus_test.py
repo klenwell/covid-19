@@ -3,13 +3,6 @@ from datetime import datetime
 
 class CovidVirusTest:
     #
-    # Static Methods
-    #
-    @staticmethod
-    def from_hsa():
-        pass
-
-    #
     # Properties
     #
     @property
@@ -34,10 +27,10 @@ class CovidVirusTest:
     # Instance Method
     #
     def __init__(self, **fields):
-        self.reported_at = fields.get('repo_timestamp')
-        self.administered_at = fields.get('spec_timestamp')
+        self.reported_at = fields.get('reported_at')
+        self.administered_at = fields.get('administered_at')
         self.result = fields.get('result')
 
     def __repr__(self):
-        f = '<ColdVirusTest administered={} reported={} result={} days={}>'
+        f = '<CovidVirusTest administered={} reported={} result={} days={}>'
         return f.format(self.administered_on, self.reported_on, self.result, self.days_to_result)

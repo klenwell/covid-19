@@ -50,21 +50,18 @@ class OcController(Controller):
     # python app.py oc analyze-test-delays
     @expose(help="Analyze testing delays based on data.")
     def analyze_test_delays(self):
-        from collections import Counter
-
+        # Generate CSV
         analysis = OcTestingAnalysis()
         ordered_tests = analysis.dated_virus_tests
         csv_path = analysis.to_csv()
 
-        # Analyze
-        wait_times = [t.days_to_report for t in ordered_tests]
-        avg_wait = sum(wait_times) / len(wait_times)
-
-        # Dump
-        print('virus_tests: {}'.format(len(ordered_tests)))
-        print('avg_wait: {}'.format(avg_wait))
-        print('wait_times_freq: {}'.format(Counter(wait_times)))
-        print('Analysis: {}'.format(csv_path))
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'num_tests': len(ordered_tests),
+            'analysis': analysis
+        }
+        self.app.render(vars, 'oc/test-delays-analysis.jinja2')
 
     # python app.py oc dev
     @expose(help="For rapid testing and development.")

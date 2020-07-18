@@ -1,6 +1,6 @@
 from os.path import join as path_join
 import queue
-from collections import deque
+from collections import deque, Counter
 from math import floor
 from functools import cached_property
 from statistics import mean, stdev
@@ -134,6 +134,18 @@ class OcTestingAnalysis:
         administered_dates = set(self.administered_tests_by_date.keys())
         reported_dates = set(self.reported_tests_by_date.keys())
         return sorted(list(administered_dates | reported_dates))
+
+    @property
+    def wait_times(self):
+        return [vt.days_to_report for vt in self.dated_virus_tests]
+
+    @property
+    def wait_time_frequencies(self):
+        return Counter(self.wait_times)
+
+    @property
+    def average_days_to_report(self):
+        return sum(self.wait_times) / len(self.wait_times)
 
     #
     # Instance Method

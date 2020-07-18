@@ -18,7 +18,7 @@ class CovidVirusTest:
         return datetime.utcfromtimestamp(self.reported_at/1000).date()
 
     @property
-    def days_to_result(self):
+    def days_to_report(self):
         if not (self.reported_on and self.administered_on):
             return None
         return (self.reported_on - self.administered_on).days

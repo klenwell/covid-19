@@ -3,6 +3,8 @@ import queue
 from collections import deque
 from math import floor
 from functools import cached_property
+from statistics import mean, stdev
+import csv
 
 from config.app import DATA_ROOT
 from covid_app.models.oc.covid_virus_test import CovidVirusTest
@@ -11,6 +13,9 @@ from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCov
 
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
+ANALYTICS_FILE = 'oc-tests-reporting.csv'
+CSV_COLUMNS = ['Date', 'Administered', 'Reported', 'Avg Days Wait', 'Wait Std Dev',
+               'Wait Min', 'Wait Max']
 
 
 class OcTestingAnalysis:
@@ -95,14 +100,79 @@ class OcTestingAnalysis:
     def duplicate_test_odds(self):
         return floor(1 / self.duplicate_test_ratio)
 
+    @cached_property
+    def dated_virus_tests(self):
+        virus_tests = self.backdate_tests_by_date_reported()
+        return sorted(virus_tests, key=lambda t: t.administered_on)
+
+    @cached_property
+    def administered_tests_by_date(self):
+        tests_grouped_by_date = {}
+
+        for virus_test in self.dated_virus_tests:
+            if tests_grouped_by_date.get(virus_test.administered_on):
+                tests_grouped_by_date[virus_test.administered_on].append(virus_test)
+            else:
+                tests_grouped_by_date[virus_test.administered_on] = [virus_test]
+
+        return tests_grouped_by_date
+
+    @cached_property
+    def reported_tests_by_date(self):
+        tests_grouped_by_date = {}
+
+        for virus_test in self.dated_virus_tests:
+            if tests_grouped_by_date.get(virus_test.reported_on):
+                tests_grouped_by_date[virus_test.reported_on].append(virus_test)
+            else:
+                tests_grouped_by_date[virus_test.reported_on] = [virus_test]
+
+        return tests_grouped_by_date
+
+    @cached_property
+    def dates(self):
+        administered_dates = set(self.administered_tests_by_date.keys())
+        reported_dates = set(self.reported_tests_by_date.keys())
+        return sorted(list(administered_dates | reported_dates))
+
     #
     # Instance Method
     #
     def __init__(self):
-        self.headers = []
+        pass
 
     def to_csv(self):
-        pass
+        csv_path = path_join(OC_ANALYTICS_DATA_PATH, ANALYTICS_FILE)
+
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(CSV_COLUMNS)
+
+            for dated in reversed(self.dates):
+                writer.writerow(self.data_to_csv_row(dated))
+
+        return csv_path
+
+    def data_to_csv_row(self, dated):
+        administered_tests = self.administered_tests_by_date.get(dated, [])
+        days_to_report = [t.days_to_report for t in administered_tests]
+
+        tests_administered = len(administered_tests)
+        tests_reported = len(self.reported_tests_by_date.get(dated, []))
+        days_mean = mean(days_to_report) if len(days_to_report) > 0 else None
+        days_stddev = stdev(days_to_report) if len(days_to_report) > 1 else None
+        days_min = min(days_to_report) if len(days_to_report) > 0 else None
+        days_max = max(days_to_report) if len(days_to_report) > 0 else None
+
+        return [
+            dated,
+            tests_administered,
+            tests_reported,
+            days_mean,
+            days_stddev,
+            days_min,
+            days_max
+        ]
 
     def backdate_tests_by_date_reported(self):
         dated_tests = []

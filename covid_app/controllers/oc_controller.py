@@ -53,22 +53,18 @@ class OcController(Controller):
         from collections import Counter
 
         analysis = OcTestingAnalysis()
-        virus_tests = analysis.backdate_tests_by_date_reported()
-        ordered_tests = sorted(virus_tests, key=lambda t: t.administered_on)
+        ordered_tests = analysis.dated_virus_tests
+        csv_path = analysis.to_csv()
 
         # Analyze
-        wait_times = [t.days_to_result for t in ordered_tests]
-        reported_on_dates = [t.reported_on for t in ordered_tests]
-        admin_on_dates = [t.administered_on for t in ordered_tests]
+        wait_times = [t.days_to_report for t in ordered_tests]
         avg_wait = sum(wait_times) / len(wait_times)
 
         # Dump
         print('virus_tests: {}'.format(len(ordered_tests)))
         print('avg_wait: {}'.format(avg_wait))
         print('wait_times_freq: {}'.format(Counter(wait_times)))
-        print('reported_on_dates: {}'.format(Counter(reported_on_dates)))
-        print('admin_on_dates: {}'.format(Counter(admin_on_dates)))
-        breakpoint()
+        print('Analysis: {}'.format(csv_path))
 
     # python app.py oc dev
     @expose(help="For rapid testing and development.")

@@ -4,6 +4,7 @@ from cement import ex as expose
 
 from covid_app.services.oc_health_service import OCHealthService
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
+from covid_app.analytics.oc_testing import OcTestingAnalysis
 
 
 class OcController(Controller):
@@ -46,6 +47,22 @@ class OcController(Controller):
         for day in report.days:
             print(report.data_to_csv_row(day))
 
+    # python app.py oc analyze-test-delays
+    @expose(help="Analyze testing delays based on data.")
+    def analyze_test_delays(self):
+        # Generate CSV
+        analysis = OcTestingAnalysis()
+        ordered_tests = analysis.dated_virus_tests
+        csv_path = analysis.to_csv()
+
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'num_tests': len(ordered_tests),
+            'analysis': analysis
+        }
+        self.app.render(vars, 'oc/test-delays-analysis.jinja2')
+
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
@@ -53,7 +70,7 @@ class OcController(Controller):
         print(DailyCovid19ExtractV3.is_detected())
 
         extract = DailyCovid19ExtractV3()
-        print(len(extract.daily_logs))
+        print(len(extract.daily_case_logs))
 
         from datetime import date, timedelta
         today = date.today()
@@ -63,5 +80,8 @@ class OcController(Controller):
             'today': extract.by_date(today),
             'yesterday': extract.by_date(yesterday)
         })
+
+        print(len(extract.daily_case_logs))
+        print(len(extract.daily_test_logs))
 
         breakpoint()

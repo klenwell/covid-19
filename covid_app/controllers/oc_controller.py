@@ -66,22 +66,21 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from ..extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
-        print(DailyCovid19ExtractV3.is_detected())
+        import requests
+        url = "https://covid19-scoreboard-api.unacastapis.com/api/search/covidcountyaggregates_v3"
+        endpoint = "{}?q=countyFips:06059&size=4000".format(url)
 
-        extract = DailyCovid19ExtractV3()
-        print(len(extract.daily_case_logs))
+        response = requests.get(endpoint)
+        response.raise_for_status()
+        data = response.json()
+        daily_logs = data['hits']['hits'][0]['_source']['data']
+        daily_log = daily_logs[0]
+        encounters = [dl['encountersMetric'] for dl in daily_logs]
 
-        from datetime import date, timedelta
-        today = date.today()
-        yesterday = today - timedelta(days=1)
-
-        print({
-            'today': extract.by_date(today),
-            'yesterday': extract.by_date(yesterday)
-        })
-
-        print(len(extract.daily_case_logs))
-        print(len(extract.daily_test_logs))
+        print(data.keys())
+        print(len(daily_logs))
+        print(daily_log.keys())
+        print(daily_log)
+        print(encounters)
 
         breakpoint()

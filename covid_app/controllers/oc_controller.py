@@ -66,21 +66,14 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        import requests
-        url = "https://covid19-scoreboard-api.unacastapis.com/api/search/covidcountyaggregates_v3"
-        endpoint = "{}?q=countyFips:06059&size=4000".format(url)
+        from covid_app.extracts.unacast_social_distancing import UnacastSocialDistancingExtract
 
-        response = requests.get(endpoint)
-        response.raise_for_status()
-        data = response.json()
-        daily_logs = data['hits']['hits'][0]['_source']['data']
-        daily_log = daily_logs[0]
-        encounters = [dl['encountersMetric'] for dl in daily_logs]
+        extract = UnacastSocialDistancingExtract.oc()
+        daily_logs = extract.daily_logs
+        daily_log = list(daily_logs.values())[0]
 
-        print(data.keys())
         print(len(daily_logs))
         print(daily_log.keys())
         print(daily_log)
-        print(encounters)
 
         breakpoint()

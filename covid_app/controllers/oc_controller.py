@@ -66,15 +66,7 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.extracts.unacast_social_distancing import UnacastSocialDistancingExtract
-
-        extract = UnacastSocialDistancingExtract.oc()
-        extract.fail_fast()
-        daily_logs = extract.daily_logs
-        daily_log = list(daily_logs.values())[0]
-
-        print(len(daily_logs))
-        print(daily_log.keys())
-        print(daily_log)
-
+        service = OCHealthService()
+        csv_path = service.to_csv()
+        print('new csv: {}'.format(csv_path))
         breakpoint()

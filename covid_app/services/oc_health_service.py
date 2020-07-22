@@ -13,6 +13,7 @@ from functools import cached_property
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
 from covid_app.extracts.covid19_projections import Covid19ProjectionsExtract
+from covid_app.extracts.unacast_social_distancing import UnacastSocialDistancingExtract
 
 
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
@@ -54,7 +55,11 @@ class OCHealthService:
             'Hospitalizations',
             'ICU',
             'New Deaths',
-            'Rt Rate'
+            'Rt Rate',
+            'Travel Distance',
+            'Visitation',
+            'Encounter Density',
+            'Social Distance Grade'
         ]
 
     @property
@@ -62,12 +67,16 @@ class OCHealthService:
         return path_join(OC_DATA_PATH, 'oc-hca.csv')
 
     @cached_property
-    def daily_extract(self):
+    def oc_hca_extract(self):
         return DailyCovid19Extract.latest()
 
     @cached_property
+    def unacast_extract(self):
+        return UnacastSocialDistancingExtract.oc()
+
+    @cached_property
     def extract_version(self):
-        return self.daily_extract.VERSION
+        return self.oc_hca_extract.VERSION
 
     @cached_property
     def daily_rts(self):
@@ -87,17 +96,46 @@ class OCHealthService:
 
     @cached_property
     def daily_csv_start_date(self):
-        return self.daily_extract.starts_on
+        return self.oc_hca_extract.starts_on
 
     @cached_property
     def daily_csv_end_date(self):
-        return self.daily_extract.ends_on
+        return self.oc_hca_extract.ends_on
+
+    @property
+    def dates(self):
+        return sorted(self.oc_hca_extract.new_cases.keys())
 
     #
     # Instance Method
     #
     def __init__(self):
         pass
+
+    def to_csv(self):
+        with open(self.daily_csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(self.daily_csv_headers)
+
+            for dated in reversed(self.dates):
+                writer.writerow(self.data_to_csv_row(dated))
+
+        return self.daily_csv_path
+
+    def data_to_csv_row(self, dated):
+        return [
+            dated,
+            self.oc_hca_extract.new_cases.get(dated),
+            self.oc_hca_extract.new_tests.get(dated),
+            self.oc_hca_extract.hospitalizations.get(dated),
+            self.oc_hca_extract.icu_cases.get(dated),
+            self.oc_hca_extract.new_deaths.get(dated),
+            self.daily_rts.get(dated),
+            self.unacast_extract.travel_distance_scores.get(dated),
+            self.unacast_extract.visitation_scores.get(dated),
+            self.unacast_extract.encounter_densities.get(dated),
+            self.unacast_extract.grades.get(dated)
+        ]
 
     def output_daily_csv(self):
         with open(self.daily_csv_path, 'w', newline='') as f:
@@ -118,11 +156,11 @@ class OCHealthService:
     def daily_csv_row_for_date(self, dated):
         return [
             dated,
-            self.daily_extract.new_cases.get(dated),
-            self.daily_extract.new_tests.get(dated),
-            self.daily_extract.hospitalizations.get(dated),
-            self.daily_extract.icu_cases.get(dated),
-            self.daily_extract.new_deaths.get(dated),
+            self.oc_hca_extract.new_cases.get(dated),
+            self.oc_hca_extract.new_tests.get(dated),
+            self.oc_hca_extract.hospitalizations.get(dated),
+            self.oc_hca_extract.icu_cases.get(dated),
+            self.oc_hca_extract.new_deaths.get(dated),
             self.daily_rts.get(dated)
         ]
 

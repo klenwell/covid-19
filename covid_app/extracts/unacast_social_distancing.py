@@ -19,7 +19,8 @@ class UnacastSocialDistancingExtract:
     #
     def oc():
         fips_code = FIPS_CODES['oc']
-        return UnacastSocialDistancingExtract(fips_code)
+        extract = UnacastSocialDistancingExtract(fips_code)
+        return extract
 
     #
     # Properties
@@ -101,6 +102,15 @@ class UnacastSocialDistancingExtract:
             'encounter-density': self.encounter_densities.get(dated),
             'grade': self.grades.get(dated)
         }
+
+    def pre_cache(self):
+        # This method simply invokes a property that will fetch remote data.
+        return self.daily_logs
+
+    def fail_fast(self):
+        # This should raise an Exception if there are issue with extract data source.
+        self.pre_cache()
+        return False    # i.e. no failure
 
     #
     # Private

@@ -69,6 +69,7 @@ class OcController(Controller):
         from covid_app.extracts.unacast_social_distancing import UnacastSocialDistancingExtract
 
         extract = UnacastSocialDistancingExtract.oc()
+        extract.fail_fast()
         daily_logs = extract.daily_logs
         daily_log = list(daily_logs.values())[0]
 

@@ -25,14 +25,16 @@ class OCServiceError(Exception):
 
 
 class OCHealthService:
+    VERSION = '1.1'
+
     #
     # Static Methods
     #
     @staticmethod
     def export_daily_csv():
         service = OCHealthService()
-        result = service.output_daily_csv()
-        return result
+        service.to_csv()
+        return service
 
     @staticmethod
     def export_archive(archive_url):
@@ -40,7 +42,6 @@ class OCHealthService:
         service = OCHealthService()
         rows = service.extract_archive_rows(extract)
         result = service.output_archive_csv(rows, archive_url, extract.VERSION)
-
         return result
 
     #
@@ -75,11 +76,7 @@ class OCHealthService:
         return UnacastSocialDistancingExtract.oc()
 
     @cached_property
-    def extract_version(self):
-        return self.oc_hca_extract.VERSION
-
-    @cached_property
-    def daily_rts(self):
+    def rts_extract(self):
         return Covid19ProjectionsExtract.oc_effective_reproduction()
 
     @cached_property
@@ -100,6 +97,14 @@ class OCHealthService:
 
     @cached_property
     def daily_csv_end_date(self):
+        return self.oc_hca_extract.ends_on
+
+    @property
+    def start_date(self):
+        return self.oc_hca_extract.starts_on
+
+    @property
+    def end_date(self):
         return self.oc_hca_extract.ends_on
 
     @property
@@ -130,40 +135,16 @@ class OCHealthService:
             self.oc_hca_extract.hospitalizations.get(dated),
             self.oc_hca_extract.icu_cases.get(dated),
             self.oc_hca_extract.new_deaths.get(dated),
-            self.daily_rts.get(dated),
+            self.rts_extract.get(dated),
             self.unacast_extract.travel_distance_scores.get(dated),
             self.unacast_extract.visitation_scores.get(dated),
             self.unacast_extract.encounter_densities.get(dated),
             self.unacast_extract.grades.get(dated)
         ]
 
-    def output_daily_csv(self):
-        with open(self.daily_csv_path, 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(self.daily_csv_headers)
-
-            for row in self.daily_csv_rows:
-                writer.writerow(row)
-
-        return {
-            'path': self.daily_csv_path,
-            'rows': len(self.daily_csv_rows),
-            'start_date': self.daily_csv_start_date,
-            'end_date': self.daily_csv_end_date,
-            'extract_version': self.extract_version
-        }
-
-    def daily_csv_row_for_date(self, dated):
-        return [
-            dated,
-            self.oc_hca_extract.new_cases.get(dated),
-            self.oc_hca_extract.new_tests.get(dated),
-            self.oc_hca_extract.hospitalizations.get(dated),
-            self.oc_hca_extract.icu_cases.get(dated),
-            self.oc_hca_extract.new_deaths.get(dated),
-            self.daily_rts.get(dated)
-        ]
-
+    #
+    # Archive Methods
+    #
     def extract_archive_rows(self, extract):
         rows = []
 

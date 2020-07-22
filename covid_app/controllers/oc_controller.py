@@ -16,9 +16,9 @@ class OcController(Controller):
     # python app.py oc daily
     @expose(help="Export data from OC HCA site to csv file.")
     def daily(self):
-        csv = OCHealthService.export_daily_csv()
-        vars = {'csv': csv}
-        self.app.render(vars, 'oc_daily.jinja2')
+        service = OCHealthService.export_daily_csv()
+        vars = {'service': service}
+        self.app.render(vars, 'oc/daily.jinja2')
 
     # python app.py oc archive -a https://web.archive.org/web/20200503202327/https://occovid19.ochealthinfo.com/coronavirus-in-oc # noqa: E501
     @expose(

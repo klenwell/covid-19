@@ -1,4 +1,4 @@
-Date,New Cases,New Tests,Hospitalizations,ICU,New Deaths,Rt Rate
+Date,New Cases,New Tests,Hospitalizations,ICU,New Deaths,Rt Rate,Travel Distance,Visitation,Encounter Density,Social Distance Grade
 2020-07-21,990,,,,20,1.0356302847399999
 2020-07-20,560,6684,700,234,1,1.04034563194
 2020-07-19,415,7443,666,213,-2,1.04533305203

@@ -16,9 +16,9 @@ class OcController(Controller):
     # python app.py oc daily
     @expose(help="Export data from OC HCA site to csv file.")
     def daily(self):
-        csv = OCHealthService.export_daily_csv()
-        vars = {'csv': csv}
-        self.app.render(vars, 'oc_daily.jinja2')
+        service = OCHealthService.export_daily_csv()
+        vars = {'service': service}
+        self.app.render(vars, 'oc/daily.jinja2')
 
     # python app.py oc archive -a https://web.archive.org/web/20200503202327/https://occovid19.ochealthinfo.com/coronavirus-in-oc # noqa: E501
     @expose(
@@ -66,22 +66,7 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from ..extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
-        print(DailyCovid19ExtractV3.is_detected())
-
-        extract = DailyCovid19ExtractV3()
-        print(len(extract.daily_case_logs))
-
-        from datetime import date, timedelta
-        today = date.today()
-        yesterday = today - timedelta(days=1)
-
-        print({
-            'today': extract.by_date(today),
-            'yesterday': extract.by_date(yesterday)
-        })
-
-        print(len(extract.daily_case_logs))
-        print(len(extract.daily_test_logs))
-
+        service = OCHealthService()
+        csv_path = service.to_csv()
+        print('new csv: {}'.format(csv_path))
         breakpoint()

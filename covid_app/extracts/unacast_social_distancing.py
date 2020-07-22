@@ -11,7 +11,7 @@ FIPS_CODES = {
 
 
 class UnacastSocialDistancingExtract:
-    VERSION = '0.3'
+    VERSION = '1.0'
     ACTIVE_DATE = '2020-07-20'
 
     #

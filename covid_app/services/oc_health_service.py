@@ -51,8 +51,8 @@ class OCHealthService:
     def daily_csv_headers(self):
         return [
             'Date',
-            'New Cases',
             'New Tests',
+            'New Cases',
             'Hospitalizations',
             'ICU',
             'New Deaths',
@@ -76,7 +76,7 @@ class OCHealthService:
         return UnacastSocialDistancingExtract.oc()
 
     @cached_property
-    def rts_extract(self):
+    def rt_extract(self):
         return Covid19ProjectionsExtract.oc_effective_reproduction()
 
     @cached_property
@@ -130,12 +130,12 @@ class OCHealthService:
     def data_to_csv_row(self, dated):
         return [
             dated,
-            self.oc_hca_extract.new_cases.get(dated),
             self.oc_hca_extract.new_tests.get(dated),
+            self.oc_hca_extract.new_cases.get(dated),
             self.oc_hca_extract.hospitalizations.get(dated),
             self.oc_hca_extract.icu_cases.get(dated),
             self.oc_hca_extract.new_deaths.get(dated),
-            self.rts_extract.get(dated),
+            self.rt_extract.get(dated),
             self.unacast_extract.travel_distance_scores.get(dated),
             self.unacast_extract.visitation_scores.get(dated),
             self.unacast_extract.encounter_densities.get(dated),

@@ -5,6 +5,7 @@ from cement import ex as expose
 from covid_app.services.oc_health_service import OCHealthService
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
+from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 
 
 class OcController(Controller):
@@ -66,7 +67,5 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        service = OCHealthService()
-        csv_path = service.to_csv()
-        print('new csv: {}'.format(csv_path))
+        analysis = OcHospitalizationsAnalysis()
         breakpoint()

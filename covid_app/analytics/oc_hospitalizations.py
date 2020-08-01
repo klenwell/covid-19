@@ -14,9 +14,17 @@ from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCov
 
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
-ANALYTICS_FILE = 'oc-tests-reporting.csv'
-CSV_COLUMNS = ['Date', 'Administered', 'Reported', 'Avg Days Wait', 'Wait Std Dev',
-               'Wait Min', 'Wait Max']
+ANALYTICS_FILE = 'oc-hospitalizations-daily.csv'
+CSV_COLUMNS = ['Date',
+               'Reported New Tests',
+               'Administered New Tests',
+               'Administered Postive Tests',
+               'Test Positive Rate',
+               'New Cases',
+               'Projected Cases at 10k Tests',
+               'Hospitalizations',
+               'ICU Cases',
+               'New Deaths']
 
 
 class OcHospitalizationsAnalysis:
@@ -51,17 +59,9 @@ class OcHospitalizationsAnalysis:
         return self.daily_case_logs[-1]['total_cases_repo']
 
     @cached_property
-    def administered_tests_by_date(self):
-        pass
-
-    @cached_property
-    def reported_tests_by_date(self):
-        pass
-
-    @cached_property
     def dates(self):
-        administered_dates = set(self.administered_tests_by_date.keys())
-        reported_dates = set(self.reported_tests_by_date.keys())
+        administered_dates = set(self.extract.new_tests_administered.keys())
+        reported_dates = set(self.extract.new_tests_reported.keys())
         return sorted(list(administered_dates | reported_dates))
 
     #
@@ -83,11 +83,43 @@ class OcHospitalizationsAnalysis:
         return csv_path
 
     def data_to_csv_row(self, dated):
-        tests_administered = self.administered_tests_by_date.get(dated)
-        tests_reported = self.reported_tests_by_date.get(dated)
+        tests_reported = self.extract.new_tests_reported.get(dated)
+        tests_administered = self.extract.new_tests_administered.get(dated)
+        pos_tests_administered = self.extract.new_positive_tests_administered.get(dated)
+        pos_rate = self.compute_positive_rate(tests_administered, pos_tests_administered)
+        new_cases = self.extract.new_cases.get(dated)
+        projected_cases = self.project_cases_by_case_rate(10000, tests_administered,
+                                                          pos_tests_administered)
+        hospitalizations = self.extract.hospitalizations.get(dated)
+        icu_cases = self.extract.icu_cases.get(dated)
+        new_deaths = self.extract.new_deaths.get(dated)
 
         return [
             dated,
+            tests_reported,
             tests_administered,
-            tests_reported
+            pos_tests_administered,
+            pos_rate,
+            new_cases,
+            projected_cases,
+            hospitalizations,
+            icu_cases,
+            new_deaths
         ]
+
+    def compute_positive_rate(self, tests_administered, pos_tests_administered):
+        if pos_tests_administered is None:
+            return None
+
+        if not tests_administered:
+            return None
+
+        return pos_tests_administered / tests_administered
+
+    def project_cases_by_case_rate(self, target, tests_administered, pos_tests_administered):
+        positive_rate = self.compute_positive_rate(tests_administered, pos_tests_administered)
+
+        if positive_rate is None:
+            return None
+
+        return positive_rate * target

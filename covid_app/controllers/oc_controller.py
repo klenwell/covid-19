@@ -64,8 +64,25 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/test-delays-analysis.jinja2')
 
+    # python app.py oc analyze-hospitalizations
+    @expose(help="Analyze hospitalizations based on data.")
+    def analyze_hospitalizations(self):
+        # Generate CSV
+        analysis = OcHospitalizationsAnalysis()
+        csv_path = analysis.to_csv()
+
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'analysis': analysis
+        }
+        print(vars)
+
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        analysis = OcHospitalizationsAnalysis()
+        from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 \
+            import DailyCovid19ExtractV3
+        extract = DailyCovid19ExtractV3()
+        print(extract)
         breakpoint()

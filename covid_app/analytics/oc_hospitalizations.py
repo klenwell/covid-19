@@ -7,6 +7,7 @@ https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_pcr_c
 from os.path import join as path_join
 from functools import cached_property
 import csv
+from datetime import timedelta
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
@@ -16,10 +17,10 @@ OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
 ANALYTICS_FILE = 'oc-hospitalizations-daily.csv'
 CSV_COLUMNS = ['Date',
-               'Reported New Tests',
                'Administered New Tests',
                'Administered Postive Tests',
                'Test Positive Rate',
+               '7-Day Test Positive Rate',
                'New Cases',
                'Projected Cases at 10k Tests',
                'Hospitalizations',
@@ -83,23 +84,22 @@ class OcHospitalizationsAnalysis:
         return csv_path
 
     def data_to_csv_row(self, dated):
-        tests_reported = self.extract.new_tests_reported.get(dated)
         tests_administered = self.extract.new_tests_administered.get(dated)
         pos_tests_administered = self.extract.new_positive_tests_administered.get(dated)
-        pos_rate = self.compute_positive_rate(tests_administered, pos_tests_administered)
+        pos_rate = self.compute_positive_rate_for_date(dated)
+        pos_rate_7d = self.compute_7d_positive_rate_for_date(dated)
         new_cases = self.extract.new_cases.get(dated)
-        projected_cases = self.project_cases_by_case_rate(10000, tests_administered,
-                                                          pos_tests_administered)
+        projected_cases = self.project_cases_by_case_rate_for_date(10000, dated)
         hospitalizations = self.extract.hospitalizations.get(dated)
         icu_cases = self.extract.icu_cases.get(dated)
         new_deaths = self.extract.new_deaths.get(dated)
 
         return [
             dated,
-            tests_reported,
             tests_administered,
             pos_tests_administered,
             pos_rate,
+            pos_rate_7d,
             new_cases,
             projected_cases,
             hospitalizations,
@@ -107,7 +107,10 @@ class OcHospitalizationsAnalysis:
             new_deaths
         ]
 
-    def compute_positive_rate(self, tests_administered, pos_tests_administered):
+    def compute_positive_rate_for_date(self, dated):
+        tests_administered = self.extract.new_tests_administered.get(dated)
+        pos_tests_administered = self.extract.new_positive_tests_administered.get(dated)
+
         if pos_tests_administered is None:
             return None
 
@@ -116,10 +119,27 @@ class OcHospitalizationsAnalysis:
 
         return pos_tests_administered / tests_administered
 
-    def project_cases_by_case_rate(self, target, tests_administered, pos_tests_administered):
-        positive_rate = self.compute_positive_rate(tests_administered, pos_tests_administered)
+    def compute_7d_positive_rate_for_date(self, dated):
+        test_counts = []
+        positive_counts = []
+
+        for days_ago in range(7):
+            on_date = dated - timedelta(days=days_ago)
+            tests_administered = self.extract.new_tests_administered.get(on_date)
+            pos_tests_administered = self.extract.new_positive_tests_administered.get(on_date)
+
+            if tests_administered is None or pos_tests_administered is None:
+                return None
+
+            test_counts.append(tests_administered)
+            positive_counts.append(pos_tests_administered)
+
+        return sum(positive_counts) / sum(test_counts)
+
+    def project_cases_by_case_rate_for_date(self, project_targeted, dated):
+        positive_rate = self.compute_7d_positive_rate_for_date(dated)
 
         if positive_rate is None:
             return None
 
-        return positive_rate * target
+        return positive_rate * project_targeted

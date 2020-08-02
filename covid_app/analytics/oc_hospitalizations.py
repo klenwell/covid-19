@@ -25,6 +25,7 @@ CSV_COLUMNS = ['Date',
                'Projected Cases at 10k Tests',
                'Hospitalizations',
                'ICU Cases',
+               'SNF Cases',
                'New Deaths']
 
 
@@ -42,22 +43,6 @@ class OcHospitalizationsAnalysis:
     @cached_property
     def extract(self):
         return DailyCovid19ExtractV3()
-
-    @cached_property
-    def daily_test_logs(self):
-        return self.extract.daily_test_logs
-
-    @cached_property
-    def daily_case_logs(self):
-        return self.extract.daily_case_logs
-
-    @cached_property
-    def total_positive_specimens(self):
-        return self.daily_test_logs[-1]['tot_pcr_pos']
-
-    @cached_property
-    def total_cases(self):
-        return self.daily_case_logs[-1]['total_cases_repo']
 
     @cached_property
     def dates(self):
@@ -92,6 +77,7 @@ class OcHospitalizationsAnalysis:
         projected_cases = self.project_cases_by_case_rate_for_date(10000, dated)
         hospitalizations = self.extract.hospitalizations.get(dated)
         icu_cases = self.extract.icu_cases.get(dated)
+        snf_cases = self.new_snf_cases_by_date(dated)
         new_deaths = self.extract.new_deaths.get(dated)
 
         return [
@@ -104,6 +90,7 @@ class OcHospitalizationsAnalysis:
             projected_cases,
             hospitalizations,
             icu_cases,
+            snf_cases,
             new_deaths
         ]
 
@@ -143,3 +130,17 @@ class OcHospitalizationsAnalysis:
             return None
 
         return positive_rate * project_targeted
+
+    def new_snf_cases_by_date(self, dated):
+        day_before = dated - timedelta(days=1)
+
+        snf_cases = self.extract.total_snf_cases.get(dated)
+        snf_cases_day_before = self.extract.total_snf_cases.get(day_before)
+
+        if snf_cases is None:
+            return None
+
+        if snf_cases_day_before is None:
+            snf_cases_day_before = 0
+
+        return snf_cases - snf_cases_day_before

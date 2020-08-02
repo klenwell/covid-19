@@ -110,6 +110,13 @@ class DailyCovid19ExtractV3:
         return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property
+    def total_snf_cases(self):
+        # SNF refers to Skilled Nursing Facilities
+        key = 'snf_cases'
+        daily_logs = self.daily_case_logs
+        return self.extract_from_daily_logs(daily_logs, key)
+
+    @cached_property
     def new_deaths(self):
         key = 'daily_dth'
         daily_logs = self.daily_death_logs

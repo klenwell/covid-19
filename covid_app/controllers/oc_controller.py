@@ -5,6 +5,7 @@ from cement import ex as expose
 from covid_app.services.oc_health_service import OCHealthService
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
+from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 
 
 class OcController(Controller):
@@ -63,10 +64,25 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/test-delays-analysis.jinja2')
 
+    # python app.py oc analyze-hospitalizations
+    @expose(help="Analyze hospitalizations based on data.")
+    def analyze_hospitalizations(self):
+        # Generate CSV
+        analysis = OcHospitalizationsAnalysis()
+        csv_path = analysis.to_csv()
+
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'analysis': analysis
+        }
+        print(vars)
+
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        service = OCHealthService()
-        csv_path = service.to_csv()
-        print('new csv: {}'.format(csv_path))
+        from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 \
+            import DailyCovid19ExtractV3
+        extract = DailyCovid19ExtractV3()
+        print(extract)
         breakpoint()

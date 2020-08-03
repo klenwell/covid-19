@@ -1,3 +1,9 @@
+"""
+OC Health Care Agency Data v3
+
+For info on data source, see:
+https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services
+"""
 import requests
 from functools import cached_property
 from datetime import datetime
@@ -70,7 +76,24 @@ class DailyCovid19ExtractV3:
 
     @cached_property
     def new_tests(self):
+        # TODO: remove and use method below.
+        return self.new_tests_reported
+
+    @cached_property
+    def new_tests_reported(self):
         key = 'daily_test_repo'
+        daily_logs = self.daily_test_logs
+        return self.extract_from_daily_logs(daily_logs, key)
+
+    @cached_property
+    def new_tests_administered(self):
+        key = 'daily_spec'
+        daily_logs = self.daily_test_logs
+        return self.extract_from_daily_logs(daily_logs, key)
+
+    @cached_property
+    def new_positive_tests_administered(self):
+        key = 'daily_pos_spec'
         daily_logs = self.daily_test_logs
         return self.extract_from_daily_logs(daily_logs, key)
 
@@ -84,6 +107,13 @@ class DailyCovid19ExtractV3:
     def icu_cases(self):
         key = 'icu'
         daily_logs = self.daily_hospitalization_logs
+        return self.extract_from_daily_logs(daily_logs, key)
+
+    @cached_property
+    def total_snf_cases(self):
+        # SNF refers to Skilled Nursing Facilities
+        key = 'snf_cases'
+        daily_logs = self.daily_case_logs
         return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property

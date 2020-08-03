@@ -51,7 +51,9 @@ class OCHealthService:
     def daily_csv_headers(self):
         return [
             'Date',
-            'New Tests',
+            'New Tests Administered',
+            'Pos Tests Administered',
+            'New Tests Reported',
             'New Cases',
             'Hospitalizations',
             'ICU',
@@ -60,7 +62,8 @@ class OCHealthService:
             'Travel Distance',
             'Visitation',
             'Encounter Density',
-            'Social Distance Grade'
+            'Social Distance Grade',
+            'SNF Cases'
         ]
 
     @property
@@ -130,7 +133,9 @@ class OCHealthService:
     def data_to_csv_row(self, dated):
         return [
             dated,
-            self.oc_hca_extract.new_tests.get(dated),
+            self.oc_hca_extract.new_tests_administered.get(dated),
+            self.oc_hca_extract.new_positive_tests_administered.get(dated),
+            self.oc_hca_extract.new_tests_reported.get(dated),
             self.oc_hca_extract.new_cases.get(dated),
             self.oc_hca_extract.hospitalizations.get(dated),
             self.oc_hca_extract.icu_cases.get(dated),
@@ -139,7 +144,8 @@ class OCHealthService:
             self.unacast_extract.travel_distance_scores.get(dated),
             self.unacast_extract.visitation_scores.get(dated),
             self.unacast_extract.encounter_densities.get(dated),
-            self.unacast_extract.grades.get(dated)
+            self.unacast_extract.grades.get(dated),
+            self.oc_hca_extract.new_snf_cases.get(dated)
         ]
 
     #

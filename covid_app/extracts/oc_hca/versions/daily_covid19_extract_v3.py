@@ -6,7 +6,7 @@ https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services
 """
 import requests
 from functools import cached_property
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 EXTRACT_URL = 'https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services'
@@ -75,11 +75,6 @@ class DailyCovid19ExtractV3:
         return self.extract_from_daily_logs(daily_logs, key)
 
     @cached_property
-    def new_tests(self):
-        # TODO: remove and use method below.
-        return self.new_tests_reported
-
-    @cached_property
     def new_tests_reported(self):
         key = 'daily_test_repo'
         daily_logs = self.daily_test_logs
@@ -115,6 +110,26 @@ class DailyCovid19ExtractV3:
         key = 'snf_cases'
         daily_logs = self.daily_case_logs
         return self.extract_from_daily_logs(daily_logs, key)
+
+    @cached_property
+    def new_snf_cases(self):
+        daily_snf_cases = {}
+        dates = sorted(self.total_snf_cases.keys())
+
+        for dated in dates:
+            day_before = dated - timedelta(days=1)
+            snf_cases = self.total_snf_cases.get(dated)
+            snf_cases_day_before = self.total_snf_cases.get(day_before)
+
+            if snf_cases is None:
+                snf_cases = 0
+
+            if snf_cases_day_before is None:
+                snf_cases_day_before = 0
+
+            daily_snf_cases[dated] = snf_cases - snf_cases_day_before
+
+        return daily_snf_cases
 
     @cached_property
     def new_deaths(self):

@@ -1,6 +1,7 @@
 import requests
 import json
 from datetime import datetime
+from functools import cached_property
 
 
 EXTRACT_URL = 'https://wabi-us-gov-iowa-api.analysis.usgovcloudapi.net/public/reports/querydata'
@@ -14,7 +15,17 @@ class UsGovCovid19Extract:
     def kent_daily_tests():
         """Returns a dict: {date: count, ...} for Kent, MI.
         """
-        # headers and body were simply copy-pasted from Firefox console.
+        extract = UsGovCovid19Extract()
+        json_data = extract.daily_kent_json_data
+        daily_tests_dict = extract.filter_kent_tests(json_data)
+        return daily_tests_dict
+
+    #
+    # Property
+    #
+    @property
+    def request_headers(self):
+        # headers were simply copy-pasted from Firefox console.
         headers = {
             'Host': 'wabi-us-gov-iowa-api.analysis.usgovcloudapi.net',
             'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv',
@@ -30,8 +41,11 @@ class UsGovCovid19Extract:
             'DNT': '1',
             'Connection': 'keep-alive'
         }
+        return headers
 
-        body = (
+    @property
+    def kent_request_data(self):
+        data_str = (
             '{"version":"1.0.0","queries":[{"Query":{"Commands":[{"SemanticQueryDataShapeCommand":'
             '{"Query":{"Version":2,"From":[{"Name":"t1","Entity":"Testing_Data"},{"Name":"c",'
             '"Entity":"Cases by County"}],"Select":[{"Column":{"Expression":{"SourceRef":'
@@ -48,12 +62,11 @@ class UsGovCovid19Extract:
             '{"DatasetId":"3538771d-70f8-4399-9760-267975e37f65","Sources":[{"ReportId":'
             '"f489615d-c09e-43f9-b6bb-db2832eb0e0d"}]}}],"cancelQueries":[],"modelId":282246}'
         )
-        json_data = json.loads(body)
+        return json.loads(data_str)
 
-        extract = UsGovCovid19Extract()
-        json_data = extract.fetch_data_source(json_data, headers)
-        daily_tests_dict = extract.filter_kent_tests(json_data)
-        return daily_tests_dict
+    @cached_property
+    def daily_kent_json_data(self):
+        return self.fetch_data_source(self.kent_request_data, self.request_headers)
 
     #
     # Instance Methods
@@ -86,3 +99,6 @@ class UsGovCovid19Extract:
         response = requests.post(self.url, json=json_data, headers=headers)
         response.raise_for_status()  # will raise a requests.exceptions.HTTPError error
         return response.json()
+
+    def timestamp_to_date(self, ts):
+        return datetime.utcfromtimestamp(ts/1000).date()

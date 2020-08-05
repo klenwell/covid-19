@@ -26,27 +26,18 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from covid_app.models.oc_daily_log import OcDailyLog
-        from datetime import date
-        start_on = date(2020, 4, 26)
-        end_on = date(2020, 6, 20)
+        service = MiHealthService()
+        extract = service.us_gov_extract
+        json_data = extract.daily_kent_json_data
+        print(json_data.keys())
 
-        logs = OcDailyLog.all()
-        logs_by_day = {}
-        cases_by_day = {}
+        results_data = json_data['results'][0]['result']['data']
+        test_data = results_data['dsr']['DS'][0]['PH'][0]['DM0'][1:]
+        last_report = test_data[-1]
+        date = extract.timestamp_to_date(last_report['G0'])
+        viral_tests = last_report['X'][0]['M0']
 
-        for log in logs:
-            if log.created_on < start_on or log.created_on > end_on:
-                continue
-
-            day_group = logs_by_day.get(log.day_of_week, [])
-            day_group.append(log)
-            logs_by_day[log.day_of_week] = day_group
-
-        for day in logs_by_day.keys():
-            cases_by_day[day] = sum([log.cases for log in logs_by_day[day]])
-
-        print(cases_by_day)
+        print({date: viral_tests})
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

@@ -4,6 +4,7 @@ Michigan Health Service
 from os.path import join as path_join
 from datetime import date
 import csv
+from functools import cached_property
 
 from config.app import DATA_ROOT
 from covid_app.extracts.ny_times_covid19 import NyTimesCovid19Extract
@@ -30,6 +31,13 @@ class MiHealthService:
         rows = service.extract_daily_data_rows()
         result = service.output_daily_csv(rows, csv_path=csv_path)
         return result
+
+    #
+    # Properties
+    #
+    @cached_property
+    def us_gov_extract(self):
+        return UsGovCovid19Extract()
 
     #
     # Instance Method

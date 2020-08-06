@@ -29,7 +29,7 @@ class MiHealthService:
         service = MiHealthService()
         csv_path = service.to_csv()
         return {
-            'CSV Path': str(csv_path),
+            'CSV Path': csv_path,
             'Rows': len(service.dates),
             'Last Date': service.dates[-1]
         }

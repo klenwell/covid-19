@@ -113,15 +113,3 @@ class MiHealthService:
             ny_times_log.get('total_cases'),
             ny_times_log.get('total_deaths')
         ]
-
-    def extract_daily_data_rows(self):
-        daily_cases = NyTimesCovid19Extract.kent_mi_daily_data()
-
-        try:
-            daily_tests = UsGovCovid19Extract.kent_daily_tests()
-        except Exception as e:
-            print('Failed to fetch tests: {}'.format(e))
-            daily_tests = {}
-
-        rows = self.collate_daily_data(daily_cases, daily_tests)
-        return rows

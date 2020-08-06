@@ -9,18 +9,6 @@ EXTRACT_URL = 'https://wabi-us-gov-iowa-api.analysis.usgovcloudapi.net/public/re
 
 class UsGovCovid19Extract:
     #
-    # Static Methods
-    #
-    @staticmethod
-    def kent_daily_tests():
-        """Returns a dict: {date: count, ...} for Kent, MI.
-        """
-        extract = UsGovCovid19Extract()
-        json_data = extract.daily_kent_json_data
-        daily_tests_dict = extract.filter_kent_tests(json_data)
-        return daily_tests_dict
-
-    #
     # Property
     #
     @property

@@ -28,16 +28,7 @@ class BaseController(Controller):
     def interactive(self):
         service = MiHealthService()
         extract = service.us_gov_extract
-        json_data = extract.daily_kent_json_data
-        print(json_data.keys())
-
-        results_data = json_data['results'][0]['result']['data']
-        test_data = results_data['dsr']['DS'][0]['PH'][0]['DM0'][1:]
-        last_report = test_data[-1]
-        date = extract.timestamp_to_date(last_report['G0'])
-        viral_tests = last_report['X'][0]['M0']
-
-        print({date: viral_tests})
+        print(extract.daily_kent_tests)
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

@@ -27,7 +27,12 @@ class MiHealthService:
     @staticmethod
     def export_daily_kent_csv():
         service = MiHealthService()
-        service.to_csv()
+        csv_path = service.to_csv()
+        return {
+            'CSV Path': str(csv_path),
+            'Rows': len(service.dates),
+            'Last Date': service.dates[-1]
+        }
 
     #
     # Properties
@@ -36,11 +41,11 @@ class MiHealthService:
     def daily_csv_headers(self):
         return [
             'Date',
-            'Total Cases',
-            'Total Deaths',
+            'New Tests',
             'New Cases',
             'New Deaths',
-            'New Tests'
+            'Total Cases',
+            'Total Deaths'
         ]
 
     @property
@@ -102,11 +107,11 @@ class MiHealthService:
 
         return [
             dated,
-            ny_times_log.get('total_cases'),
-            ny_times_log.get('total_deaths'),
+            self.us_gov_extract.daily_kent_tests.get(dated),
             ny_times_log.get('new_cases'),
             ny_times_log.get('new_deaths'),
-            self.us_gov_extract.daily_kent_tests.get(dated)
+            ny_times_log.get('total_cases'),
+            ny_times_log.get('total_deaths')
         ]
 
     def extract_daily_data_rows(self):

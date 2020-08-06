@@ -26,24 +26,88 @@ class MiHealthService:
     #
     @staticmethod
     def export_daily_kent_csv():
-        csv_path = path_join(MI_DATA_PATH, 'kent-daily.csv')
         service = MiHealthService()
-        rows = service.extract_daily_data_rows()
-        result = service.output_daily_csv(rows, csv_path=csv_path)
-        return result
+        service.to_csv()
 
     #
     # Properties
     #
+    @property
+    def daily_csv_headers(self):
+        return [
+            'Date',
+            'Total Cases',
+            'Total Deaths',
+            'New Cases',
+            'New Deaths',
+            'New Tests'
+        ]
+
+    @property
+    def daily_csv_path(self):
+        return path_join(MI_DATA_PATH, 'kent-daily.csv')
+
     @cached_property
     def us_gov_extract(self):
         return UsGovCovid19Extract()
+
+    @cached_property
+    def ny_times_extract(self):
+        return NyTimesCovid19Extract()
+
+    @cached_property
+    def daily_ny_times_logs_for_kent_county(self):
+        daily_logs = {}
+
+        source_stream = self.ny_times_extract.fetch_source_stream()
+        daily_rows = self.ny_times_extract.filter_kent_mi_data(source_stream)
+
+        for row in daily_rows:
+            date, total_cases, total_deaths, new_cases, new_deaths = row
+            daily_data = {
+                'new_cases': new_cases,
+                'new_deaths': new_deaths,
+                'total_cases': total_cases,
+                'total_deaths': total_deaths
+            }
+            daily_logs[date] = daily_data
+
+        return daily_logs
+
+    @property
+    def dates(self):
+        return sorted(self.daily_ny_times_logs_for_kent_county.keys())
 
     #
     # Instance Method
     #
     def __init__(self):
         pass
+
+    def to_csv(self):
+        with open(self.daily_csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(self.daily_csv_headers)
+
+            for dated in reversed(self.dates):
+                writer.writerow(self.data_to_csv_row(dated))
+
+        return self.daily_csv_path
+
+    #
+    # Private
+    #
+    def data_to_csv_row(self, dated):
+        ny_times_log = self.daily_ny_times_logs_for_kent_county.get(dated, {})
+
+        return [
+            dated,
+            ny_times_log.get('total_cases'),
+            ny_times_log.get('total_deaths'),
+            ny_times_log.get('new_cases'),
+            ny_times_log.get('new_deaths'),
+            self.us_gov_extract.daily_kent_tests.get(dated)
+        ]
 
     def extract_daily_data_rows(self):
         daily_cases = NyTimesCovid19Extract.kent_mi_daily_data()
@@ -55,47 +119,4 @@ class MiHealthService:
             daily_tests = {}
 
         rows = self.collate_daily_data(daily_cases, daily_tests)
-        return rows
-
-    def output_daily_csv(self, rows, csv_path=None, footer=None):
-        header_row = ['Date', 'Total Cases', 'Total Deaths', 'New Cases', 'New Deaths',
-                      'New Tests']
-        rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
-
-        with open(csv_path, 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(header_row)
-
-            for row in rows_by_most_recent:
-                writer.writerow(row)
-
-            if footer:
-                writer.writerow([])
-                writer.writerow([footer])
-
-        return {
-            'path': csv_path,
-            'rows': len(rows_by_most_recent),
-            'start_date': rows_by_most_recent[-1][0],
-            'end_date': rows_by_most_recent[0][0]
-        }
-
-    #
-    # Private
-    #
-    def collate_daily_data(self, daily_cases, daily_tests):
-        """daily_cases are ordered row. daily_tests is a dict with dates as keys.
-        """
-        rows = []
-
-        # See NyTimesCovid19.filter_kent_mi_data for row data
-        for next_date, total_cases, total_deaths, new_cases, new_deaths in daily_cases:
-            if next_date < START_DATE:
-                continue
-
-            new_tests = daily_tests.get(next_date, '')
-
-            row = [next_date, total_cases, total_deaths, new_cases, new_deaths, new_tests]
-            rows.append(row)
-
         return rows

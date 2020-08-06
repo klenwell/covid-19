@@ -24,15 +24,6 @@ class NyTimesCovid19Extract:
         data = extract.filter_oc_deaths(source_stream)
         return data
 
-    @staticmethod
-    def kent_mi_daily_data():
-        """Returns list of tuples with daily Kent data.
-        """
-        extract = NyTimesCovid19Extract()
-        source_stream = extract.fetch_source_stream()
-        kent_rows = extract.filter_kent_mi_data(source_stream)
-        return kent_rows
-
     #
     # Instance Methods
     #

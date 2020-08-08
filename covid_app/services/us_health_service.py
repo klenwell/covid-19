@@ -1,7 +1,7 @@
 from os.path import join as path_join
 import csv
 from functools import cached_property
-from datetime import date, timedelta
+from datetime import date
 
 from config.app import DATA_ROOT
 from covid_app.extracts.atlantic_covid_tracking import AtlanticCovidTrackingExtract
@@ -24,86 +24,71 @@ class USHealthService:
     @staticmethod
     def export_daily_csv():
         service = USHealthService()
-        rows = service.extract_daily_data_rows()
-        result = service.output_daily_csv(rows)
-        return result
+        csv_path = service.to_csv()
+        return {
+            'CSV Path': csv_path,
+            'Rows': len(service.dates),
+            'Start Date': service.dates[0],
+            'Last Date': service.dates[-1]
+        }
 
     #
     # Properties
     #
+    @property
+    def daily_csv_headers(self):
+        return [
+            'Date',
+            'New Tests',
+            'New Cases',
+            'New Deaths',
+            'Hospital Cases',
+            'ICU Cases',
+            'Rt'
+        ]
+
+    @property
+    def daily_csv_path(self):
+        return path_join(US_DATA_PATH, 'us-daily.csv')
+
     @cached_property
-    def ordered_extract_rows(self):
-        """Ordered by most recent date first
-        """
-        rows = []
-        ordered_dates = sorted(self.extract.dates, reverse=True)
+    def atlantic_extract(self):
+        return AtlanticCovidTrackingExtract()
 
-        for dated in ordered_dates:
-            row = self.extract.to_csv_row_by_date(dated)
-            rows.append(row)
+    @cached_property
+    def rt_rates(self):
+        return Covid19ProjectionsExtract.us_effective_reproduction()
 
-        return rows
+    @property
+    def dates(self):
+        return sorted(self.atlantic_extract.dates)
 
     #
     # Instance Method
     #
     def __init__(self):
-        self.extract = None
+        pass
 
-    def extract_daily_data_rows(self):
-        self.extract = AtlanticCovidTrackingExtract.us_daily_extract()
-        rt_rates = Covid19ProjectionsExtract.us_effective_reproduction()
-        rows = self.collate_daily_data(self.extract, rt_rates)
-        return rows
-
-    def output_daily_csv(self, rows, footer=None):
-        header_row = ['Date', 'New Cases', 'New Tests', 'Hospitalizations', 'ICU', 'New Deaths',
-                      'Rt Rate']
-        rows_by_most_recent = sorted(rows, key=lambda r: r[0], reverse=True)
-        end_date = rows_by_most_recent[0][0]
-
-        csv_file = 'daily-{}.csv'.format(end_date.strftime('%Y%m%d'))
-        csv_path = path_join(US_DATA_PATH, csv_file)
-
-        with open(csv_path, 'w', newline='') as f:
+    def to_csv(self):
+        with open(self.daily_csv_path, 'w', newline='') as f:
             writer = csv.writer(f)
-            writer.writerow(header_row)
+            writer.writerow(self.daily_csv_headers)
 
-            for row in rows_by_most_recent:
-                writer.writerow(row)
+            for dated in reversed(self.dates):
+                writer.writerow(self.data_to_csv_row(dated))
 
-            if footer:
-                writer.writerow([])
-                writer.writerow([footer])
-
-        return {
-            'path': csv_path,
-            'rows': len(rows),
-            'start_date': rows[-1][0],
-            'end_date': end_date
-        }
+        return self.daily_csv_path
 
     #
     # Private
     #
-    def collate_daily_data(self, extract, rts):
-        rows = []
-
-        start_on = START_DATE
-        next_date = start_on
-
-        while next_date <= extract.last_date:
-            daily_cases = extract.new_cases.get(next_date, '')
-            daily_tests = extract.new_tests.get(next_date, '')
-            daily_hosps = extract.hospitalizations.get(next_date, '')
-            daily_icus = extract.icu_cases.get(next_date, '')
-            daily_deaths = extract.new_deaths.get(next_date, '')
-            daily_rts = rts.get(next_date, '')
-
-            row = [next_date, daily_cases, daily_tests, daily_hosps, daily_icus, daily_deaths,
-                   daily_rts]
-            rows.append(row)
-
-            next_date = next_date + timedelta(days=1)
-
-        return rows
+    def data_to_csv_row(self, dated):
+        return [
+            dated,
+            self.atlantic_extract.new_tests.get(dated),
+            self.atlantic_extract.new_cases.get(dated),
+            self.atlantic_extract.new_deaths.get(dated),
+            self.atlantic_extract.hospitalizations.get(dated),
+            self.atlantic_extract.icu_cases.get(dated),
+            self.rt_rates.get(dated),
+        ]

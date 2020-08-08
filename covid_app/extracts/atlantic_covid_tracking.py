@@ -23,11 +23,6 @@ class AtlanticCovidTrackingExtract:
     # Properties
     #
     @cached_property
-    def header_row(self):
-        return ['Dates', 'New Tests', 'New Cases', 'New Deaths', 'Hospitalizations',
-                'ICU Cases']
-
-    @cached_property
     def data_dict(self):
         data_dict = {}
         for daily_data in self.json:
@@ -96,19 +91,6 @@ class AtlanticCovidTrackingExtract:
         response.raise_for_status()  # will raise a requests.exceptions.HTTPError error
         self.json = response.json()
         return self.json
-
-    def filter_us_data(self, html):
-        pass
-
-    def to_csv_row_by_date(self, dated):
-        return [
-            dated,
-            self.new_tests.get(dated),
-            self.new_cases.get(dated),
-            self.new_deaths.get(dated),
-            self.hospitalizations.get(dated),
-            self.icu_cases.get(dated)
-        ]
 
     #
     # Private

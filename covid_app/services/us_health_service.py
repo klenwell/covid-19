@@ -1,7 +1,6 @@
 from os.path import join as path_join
 import csv
 from functools import cached_property
-from datetime import date
 
 from config.app import DATA_ROOT
 from covid_app.extracts.atlantic_covid_tracking import AtlanticCovidTrackingExtract
@@ -10,7 +9,6 @@ from covid_app.extracts.covid19_projections import Covid19ProjectionsExtract
 
 US_DATA_PATH = path_join(DATA_ROOT, 'us')
 US_ARCHIVE_PATH = path_join(US_DATA_PATH, 'daily')
-START_DATE = date(2020, 3, 1)
 
 
 class USServiceError(Exception):
@@ -53,7 +51,7 @@ class USHealthService:
 
     @cached_property
     def atlantic_extract(self):
-        return AtlanticCovidTrackingExtract()
+        return AtlanticCovidTrackingExtract.us_daily_extract()
 
     @cached_property
     def rt_rates(self):

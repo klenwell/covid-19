@@ -26,9 +26,9 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        service = MiHealthService()
-        extract = service.us_gov_extract
-        print(extract.daily_kent_tests)
+        from ..extracts.san_diego_county import SanDiegoCountyDailyExtract
+        extract = SanDiegoCountyDailyExtract()
+        print(extract.ends_on)
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

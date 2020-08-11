@@ -27,8 +27,15 @@ class BaseController(Controller):
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
         from ..extracts.san_diego_county import SanDiegoCountyDailyExtract
+        from config.app import DATA_ROOT
+        from os.path import join as path_join
+
+        file_name = 'sd-county-daily-export.csv'
+        csv_path = path_join(DATA_ROOT, 'ca', file_name)
+
         extract = SanDiegoCountyDailyExtract()
-        print(extract.ends_on)
+        csv_path = extract.to_csv(csv_path)
+        print(csv_path)
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

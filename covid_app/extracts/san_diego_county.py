@@ -8,6 +8,7 @@ import requests
 from functools import cached_property
 from datetime import datetime, timedelta
 from collections import deque
+import csv
 
 
 EXTRACT_URL = 'https://services1.arcgis.com/1vIhDJwtG5eNmiqX/ArcGIS/rest/services'
@@ -99,7 +100,7 @@ class SanDiegoCountyDailyExtract:
         return self.break_out_count_by_day(self.total_hospitalizations)
 
     @cached_property
-    def hospitalizations(self):
+    def estimated_hospitalizations(self):
         active_hospitalizations = {}
         hospital_queue = deque([0] * MEDIAN_LENGTH_OF_HOSPITALIZATION)
 
@@ -122,7 +123,7 @@ class SanDiegoCountyDailyExtract:
         return self.break_out_count_by_day(self.total_icu_cases)
 
     @cached_property
-    def icu_cases(self):
+    def estimated_icu_cases(self):
         active_icu_cases = {}
         icu_queue = deque([0] * MEDIAN_LENGTH_OF_ICU_STAY)
 
@@ -156,11 +157,46 @@ class SanDiegoCountyDailyExtract:
     def ends_on(self):
         return self.dates[-1]
 
+    @property
+    def csv_headers(self):
+        return [
+            'Date',
+            'New Tests Reported',
+            'New Cases',
+            'New Hospitalizations',
+            'Estimated Hospitalizations',
+            'New ICU Cases',
+            'Estimated ICU Cases',
+            'New Deaths'
+        ]
+
     #
     # Instance Methods
     #
     def __init__(self):
         pass
+
+    def to_csv(self, csv_path):
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(self.csv_headers)
+
+            for dated in reversed(self.dates):
+                writer.writerow(self.data_to_csv_row(dated))
+
+        return csv_path
+
+    def data_to_csv_row(self, dated):
+        return [
+            dated,
+            self.new_tests_reported.get(dated),
+            self.new_cases.get(dated),
+            self.new_hospitalizations.get(dated),
+            self.estimated_hospitalizations.get(dated),
+            self.new_icu_cases.get(dated),
+            self.estimated_icu_cases.get(dated),
+            self.new_deaths.get(dated)
+        ]
 
     #
     # Private

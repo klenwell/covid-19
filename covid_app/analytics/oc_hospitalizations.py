@@ -17,26 +17,18 @@ OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
 ANALYTICS_FILE = 'oc-hospitalizations-daily.csv'
 CSV_COLUMNS = ['Date',
-               'Administered New Tests',
-               'Administered Postive Tests',
-               'Test Positive Rate',
-               '7-Day Test Positive Rate',
-               'New Cases',
-               'Projected Cases at 10k Tests',
                'Hospitalizations',
-               'ICU Cases',
-               'SNF Cases',
-               'New Deaths']
+               'New SNF Cases',
+               'Estimated SNF Cases at 10d per Case',
+               'Estimated SNF Cases at 30d per Case',
+               'Estimated SNF Cases at 90d per Case',
+               '7-Day Hospitalization Avg',
+               '7-Day 10d SNF Avg',
+               '7-Day Total Hospital Avg',
+               '7-Day Test Positive Rate']
 
 
 class OcHospitalizationsAnalysis:
-    #
-    # Static Methods
-    #
-    @staticmethod
-    def predict_by_positive_rate():
-        pass
-
     #
     # Properties
     #
@@ -69,42 +61,38 @@ class OcHospitalizationsAnalysis:
         return csv_path
 
     def data_to_csv_row(self, dated):
-        tests_administered = self.extract.new_tests_administered.get(dated)
-        pos_tests_administered = self.extract.new_positive_tests_administered.get(dated)
-        pos_rate = self.compute_positive_rate_for_date(dated)
-        pos_rate_7d = self.compute_7d_positive_rate_for_date(dated)
-        new_cases = self.extract.new_cases.get(dated)
-        projected_cases = self.project_cases_by_case_rate_for_date(10000, dated)
         hospitalizations = self.extract.hospitalizations.get(dated)
-        icu_cases = self.extract.icu_cases.get(dated)
         snf_cases = self.new_snf_cases_by_date(dated)
-        new_deaths = self.extract.new_deaths.get(dated)
+        estimated_snf_cases_10d = self.estimate_active_snf_cases_by_date(dated, 10)
+        estimated_snf_cases_30d = self.estimate_active_snf_cases_by_date(dated, 30)
+        estimated_snf_cases_90d = self.estimate_active_snf_cases_by_date(dated, 90)
+        hospital_avg_7d = self.compute_7d_hospital_avg_for_date(dated)
+        snf_10d_avg_7d = self.compute_7d_snf_10d_avg_for_date(dated)
+        total_hospital_avg_7d = hospital_avg_7d + snf_10d_avg_7d if \
+            (hospital_avg_7d and snf_10d_avg_7d) else None
+        pos_rate_7d = self.compute_7d_positive_rate_for_date(dated)
 
         return [
             dated,
-            tests_administered,
-            pos_tests_administered,
-            pos_rate,
-            pos_rate_7d,
-            new_cases,
-            projected_cases,
             hospitalizations,
-            icu_cases,
             snf_cases,
-            new_deaths
+            estimated_snf_cases_10d,
+            estimated_snf_cases_30d,
+            estimated_snf_cases_90d,
+            hospital_avg_7d,
+            snf_10d_avg_7d,
+            total_hospital_avg_7d,
+            pos_rate_7d
         ]
 
-    def compute_positive_rate_for_date(self, dated):
-        tests_administered = self.extract.new_tests_administered.get(dated)
-        pos_tests_administered = self.extract.new_positive_tests_administered.get(dated)
+    def estimate_active_snf_cases_by_date(self, dated, duration):
+        pass
 
-        if pos_tests_administered is None:
-            return None
+    def compute_7d_hospital_avg_for_date(self, dated):
+        pass
 
-        if not tests_administered:
-            return None
-
-        return pos_tests_administered / tests_administered
+    def compute_7d_snf_10d_avg_for_date(self, dated):
+        pass
 
     def compute_7d_positive_rate_for_date(self, dated):
         test_counts = []
@@ -122,14 +110,6 @@ class OcHospitalizationsAnalysis:
             positive_counts.append(pos_tests_administered)
 
         return sum(positive_counts) / sum(test_counts)
-
-    def project_cases_by_case_rate_for_date(self, project_targeted, dated):
-        positive_rate = self.compute_7d_positive_rate_for_date(dated)
-
-        if positive_rate is None:
-            return None
-
-        return positive_rate * project_targeted
 
     def new_snf_cases_by_date(self, dated):
         day_before = dated - timedelta(days=1)

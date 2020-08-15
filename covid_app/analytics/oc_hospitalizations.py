@@ -19,6 +19,7 @@ OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
 ANALYTICS_FILE = 'oc-hospitalizations-daily.csv'
 CSV_COLUMNS = ['Date',
                'Hospitalizations',
+               'Total SNF Cases',
                'New SNF Cases',
                'Estimated SNF Cases at 10d per Case',
                'Estimated SNF Cases at 30d per Case',
@@ -91,6 +92,7 @@ class OcHospitalizationsAnalysis:
 
     def data_to_csv_row(self, dated):
         hospitalizations = self.extract.hospitalizations.get(dated)
+        total_snf_cases = self.extract.total_snf_cases.get(dated)
         snf_cases = self.new_snf_cases.get(dated)
         estimated_snf_cases_10d = self.estimated_snf_cases_when_10d_long.get(dated)
         estimated_snf_cases_30d = self.estimated_snf_cases_when_30d_long.get(dated)
@@ -104,6 +106,7 @@ class OcHospitalizationsAnalysis:
         return [
             dated,
             hospitalizations,
+            total_snf_cases,
             snf_cases,
             estimated_snf_cases_10d,
             estimated_snf_cases_30d,

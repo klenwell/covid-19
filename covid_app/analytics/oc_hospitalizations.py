@@ -68,9 +68,8 @@ class OcHospitalizationsAnalysis:
 
     @cached_property
     def dates(self):
-        administered_dates = set(self.extract.new_tests_administered.keys())
-        reported_dates = set(self.extract.new_tests_reported.keys())
-        return sorted(list(administered_dates | reported_dates))
+        hospitalization_dates = set(self.extract.hospitalizations.keys())
+        return sorted(hospitalization_dates)
 
     #
     # Instance Method

@@ -8,7 +8,6 @@ from os.path import join as path_join
 from functools import cached_property
 import csv
 from datetime import datetime, timedelta
-from collections import deque
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
@@ -27,10 +26,10 @@ CSV_COLUMNS = ['Date',
                'Daily Positive Rate',
                'Hospital Cases',
                'ICU Cases',
-               'Annotations'
+               'Annotations',
                '(Blank)',
                'New Tests',
-               'Positive Tests'
+               'Positive Tests',
                'New Deaths']
 
 ANNOTATIONS = (
@@ -97,6 +96,7 @@ class OcSummerSurgeAnalysis:
         density_7d = None
         tests_7d = self.compute_7d_tests_avg_for_date(dated)
         pos_tests_7d = self.compute_7d_positive_tests_avg_for_date(dated)
+        daily_pos_rate = self.compute_daily_positive_rate_for_date(dated)
         hospital_7d = self.compute_7d_hospital_avg_for_date(dated)
         icu_7d = self.compute_7d_icu_avg_for_date(dated)
         annotation = self.annotations.get(dated)
@@ -104,7 +104,6 @@ class OcSummerSurgeAnalysis:
         new_tests = self.extract.new_tests_administered.get(dated)
         pos_tests = self.extract.new_positive_tests_administered.get(dated)
         new_deaths = self.extract.new_deaths.get(dated)
-        daily_pos_rate = new_tests / pos_tests
 
         return [
             dated,
@@ -145,6 +144,18 @@ class OcSummerSurgeAnalysis:
             return None
 
         return sum(positive_counts) / sum(test_counts)
+
+    def compute_daily_positive_rate_for_date(self, dated):
+        tests_administered = self.extract.new_tests_administered.get(dated)
+        pos_tests_administered = self.extract.new_positive_tests_administered.get(dated)
+
+        if not tests_administered:
+            return None
+
+        if pos_tests_administered is None:
+            pos_tests_administered = 0
+
+        return pos_tests_administered / tests_administered
 
     def compute_7d_tests_avg_for_date(self, dated):
         test_counts = []

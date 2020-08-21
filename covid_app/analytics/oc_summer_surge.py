@@ -74,8 +74,8 @@ class OcSummerSurgeAnalysis:
 
     @cached_property
     def dates(self):
-        hospitalization_dates = set(self.extract.new_tests_administered.keys())
-        return sorted(hospitalization_dates)
+        dates = set(self.extract.new_tests_administered.keys())
+        return sorted(dates)
 
     #
     # Instance Method

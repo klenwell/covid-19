@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
+from covid_app.extracts.unacast_social_distancing import UnacastSocialDistancingExtract
 
 
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
@@ -19,7 +20,7 @@ ANALYTICS_FILE = 'oc-summer-surge.csv'
 
 CSV_COLUMNS = ['Date',
                '7d Positive Rate',
-               '7d Distancing',
+               '7d Wander Rate',
                '7d Density',
                '7d Tests',
                '7d Positive Tests',
@@ -48,6 +49,10 @@ class OcSummerSurgeAnalysis:
     @cached_property
     def extract(self):
         return DailyCovid19ExtractV3()
+
+    @cached_property
+    def unacast_extract(self):
+        return UnacastSocialDistancingExtract.oc()
 
     @cached_property
     def annotations(self):
@@ -92,8 +97,8 @@ class OcSummerSurgeAnalysis:
 
     def data_to_csv_row(self, dated):
         pos_rate_7d = self.compute_7d_positive_rate_for_date(dated)
-        distancing_7d = None
-        density_7d = None
+        wander_rate_7d = self.compute_7d_wander_rate_for_date(dated)
+        density_7d = self.compute_7d_encounter_density_for_date(dated)
         tests_7d = self.compute_7d_tests_avg_for_date(dated)
         pos_tests_7d = self.compute_7d_positive_tests_avg_for_date(dated)
         daily_pos_rate = self.compute_daily_positive_rate_for_date(dated)
@@ -108,7 +113,7 @@ class OcSummerSurgeAnalysis:
         return [
             dated,
             pos_rate_7d,
-            distancing_7d,
+            wander_rate_7d,
             density_7d,
             tests_7d,
             pos_tests_7d,
@@ -157,6 +162,38 @@ class OcSummerSurgeAnalysis:
 
         return pos_tests_administered / tests_administered
 
+    def compute_7d_wander_rate_for_date(self, dated):
+        values = []
+
+        for days_ago in range(7):
+            on_date = dated - timedelta(days=days_ago)
+
+            # Minimum (ideal) would -100 for each of these, meaning people fully locked down.
+            travel_score = self.unacast_extract.travel_distance_scores.get(on_date)
+            visitation_score = self.unacast_extract.visitation_scores.get(on_date)
+
+            if travel_score is None or visitation_score is None:
+                return None
+
+            distancing_score = 100 + ((travel_score + visitation_score) * 100 / 2)
+            values.append(distancing_score)
+
+        return sum(values) / len(values)
+
+    def compute_7d_encounter_density_for_date(self, dated):
+        values = []
+
+        for days_ago in range(7):
+            on_date = dated - timedelta(days=days_ago)
+            value = self.unacast_extract.encounter_densities.get(on_date)
+
+            if value is None:
+                return None
+
+            values.append(value)
+
+        return sum(values) / len(values)
+
     def compute_7d_tests_avg_for_date(self, dated):
         test_counts = []
 
@@ -169,7 +206,7 @@ class OcSummerSurgeAnalysis:
 
             test_counts.append(tests_administered)
 
-        return sum(test_counts)
+        return sum(test_counts) / len(test_counts)
 
     def compute_7d_positive_tests_avg_for_date(self, dated):
         positive_test_counts = []
@@ -183,7 +220,7 @@ class OcSummerSurgeAnalysis:
 
             positive_test_counts.append(positive_tests)
 
-        return sum(positive_test_counts)
+        return sum(positive_test_counts) / len(positive_test_counts)
 
     def compute_7d_hospital_avg_for_date(self, dated):
         case_counts = []

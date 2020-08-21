@@ -175,8 +175,8 @@ class OcSummerSurgeAnalysis:
             if travel_score is None or visitation_score is None:
                 return None
 
-            distancing_score = 100 + ((travel_score + visitation_score) * 100 / 2)
-            values.append(distancing_score)
+            wander_score = 100 + ((travel_score + visitation_score) * 100 / 2)
+            values.append(wander_score)
 
         return sum(values) / len(values)
 

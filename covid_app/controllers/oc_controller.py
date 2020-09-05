@@ -7,6 +7,7 @@ from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 from covid_app.analytics.oc_summer_surge import OcSummerSurgeAnalysis
+from covid_app.analytics.oc_august_testing import OcAugustTestAnalysis
 
 
 class OcController(Controller):
@@ -84,6 +85,20 @@ class OcController(Controller):
     def analyze_surge(self):
         # Generate CSV
         analysis = OcSummerSurgeAnalysis()
+        csv_path = analysis.to_csv()
+
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'analysis': analysis
+        }
+        print(vars)
+
+    # python app.py oc analyze-aug-tests
+    @expose(help="Analyze test patterns in OC for August 2020.")
+    def analyze_aug_tests(self):
+        # Generate CSV
+        analysis = OcAugustTestAnalysis()
         csv_path = analysis.to_csv()
 
         # Render view

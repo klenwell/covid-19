@@ -71,7 +71,12 @@ class OcAugustTestAnalysis:
     #
     @cached_property
     def start_date(self):
-        return date(self.month, 1, self.year)
+        return date(self.year, self.month, 1)
+
+    @cached_property
+    def end_date(self):
+        next_month = self.month + 1
+        return date(self.year, next_month, 1)
 
     @cached_property
     def dates(self):
@@ -84,8 +89,24 @@ class OcAugustTestAnalysis:
         return month_dates
 
     @cached_property
+    def daily_extracts(self):
+        dated_extracts = {}
+
+        # Tests are reported next day, so we actually want to offset a day to go from
+        # 2 Aug to 1 Sep.
+        for dated in self.dates:
+            next_day = dated + timedelta(days=1)
+            extract = OcDailyDataExtract(next_day)
+            dated_extracts[next_day] = extract
+
+        return dated_extracts
+
+    @cached_property
     def total_tests_time_series(self):
-        pass
+        time_series = {}
+        for dated in self.dates:
+            time_series[dated] = self.extract_total_tests_time_series_for_date(dated)
+        return time_series
 
     @cached_property
     def total_positives_time_series(self):
@@ -107,14 +128,22 @@ class OcAugustTestAnalysis:
         self.year = 2020
         self.days_in_month = 31
 
-    def extract_data(self):
-        for dated in self.dates:
-            # Extract data
-            pass
-
-            # Update test time series
-
-            # Update positive time series
-
     def to_csv(self):
         pass
+
+    #
+    # Private
+    #
+    def extract_total_tests_time_series_for_date(self, dated):
+        series = []
+        num_days = (self.end_date - dated).days
+
+        for n in range(num_days):
+            # Remember offset since tests are reported next day
+            next_day = n + 1
+            extract_date = dated + timedelta(next_day)
+            extract = self.daily_extracts[extract_date]
+            total_tests = extract.admin_tests.get(dated)
+            series.append(total_tests)
+
+        return series

@@ -7,7 +7,7 @@ https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_pcr_c
 from os.path import join as path_join
 from functools import cached_property
 import csv
-from datetime import date, timedelta
+from datetime import datetime, date, timedelta
 
 from config.app import DATA_ROOT
 
@@ -36,19 +36,16 @@ class OcDailyDataExtract:
         return self.csv_rows[1:]
 
     @cached_property
-    def dates(self):
-        dates = []
-        for row in self.data_rows:
-            dates.append(row[0])
-        return dates
-
-    @cached_property
     def dated_rows(self):
         dated_rows = {}
         for row in self.data_rows:
-            dated = row[0]
+            dated = datetime.strptime(row[0], '%Y-%m-%d').date()
             dated_rows[dated] = row
         return dated_rows
+
+    @cached_property
+    def dates(self):
+        return self.dated_rows.keys()
 
     @cached_property
     def admin_tests(self):
@@ -63,6 +60,9 @@ class OcDailyDataExtract:
         self.date = dated
         self.file_name = 'oc-hca-{}.csv'.format(dated.strftime('%Y%m%d'))
         self.file_path = path_join(OC_DATA_PATH, 'daily', self.file_name)
+
+    def __repr__(self):
+        return '<OcDailyDataExtract date={} rows={}>'.format(self.date, len(self.csv_rows))
 
 
 class OcAugustTestAnalysis:

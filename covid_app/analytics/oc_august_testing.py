@@ -109,11 +109,14 @@ class OcAugustTestAnalysis:
         return time_series
 
     @cached_property
-    def total_positives_time_series(self):
-        pass
+    def new_tests_time_series(self):
+        time_series = {}
+        for dated in self.dates:
+            time_series[dated] = self.extract_new_tests_time_series_for_date(dated)
+        return time_series
 
     @cached_property
-    def new_tests_time_series(self):
+    def total_positives_time_series(self):
         pass
 
     @cached_property
@@ -144,6 +147,21 @@ class OcAugustTestAnalysis:
             extract_date = dated + timedelta(next_day)
             extract = self.daily_extracts[extract_date]
             total_tests = extract.admin_tests.get(dated)
-            series.append(total_tests)
+            series.append(int(total_tests))
+
+        return series
+
+    def extract_new_tests_time_series_for_date(self, dated):
+        series = []
+        total_tests_series = self.total_tests_time_series.get(dated)
+
+        for n, total_tests in enumerate(total_tests_series):
+            if n == 0:
+                series.append(total_tests)
+                continue
+
+            prev = total_tests_series[n-1]
+            new_tests = total_tests - prev
+            series.append(int(new_tests))
 
         return series

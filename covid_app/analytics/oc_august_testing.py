@@ -15,6 +15,55 @@ from config.app import DATA_ROOT
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
 
+CSV_HEADER = ['DATE', '+1d', '+2d', '+3d', '+4d', '+5d', '+6d', '+7d', '+8-14d',
+              '+15-30d', 'TOTAL (9/1)']
+
+
+class OcDailyDataExtract:
+    @cached_property
+    def csv_rows(self):
+        with open(self.file_path, newline='') as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+        return rows
+
+    @cached_property
+    def header(self):
+        return self.csv_rows[0]
+
+    @cached_property
+    def data_rows(self):
+        return self.csv_rows[1:]
+
+    @cached_property
+    def dates(self):
+        dates = []
+        for row in self.data_rows:
+            dates.append(row[0])
+        return dates
+
+    @cached_property
+    def dated_rows(self):
+        dated_rows = {}
+        for row in self.data_rows:
+            dated = row[0]
+            dated_rows[dated] = row
+        return dated_rows
+
+    @cached_property
+    def admin_tests(self):
+        ADMIN_TEST_COL = 1
+        dated_tests = {}
+        for dated in self.dates:
+            row = self.dated_rows.get(dated)
+            dated_tests[dated] = row[ADMIN_TEST_COL]
+        return dated_tests
+
+    def __init__(self, dated):
+        self.date = dated
+        self.file_name = 'oc-hca-{}.csv'.format(dated.strftime('%Y%m%d'))
+        self.file_path = path_join(OC_DATA_PATH, 'daily', self.file_name)
+
 
 class OcAugustTestAnalysis:
     #
@@ -35,11 +84,19 @@ class OcAugustTestAnalysis:
         return month_dates
 
     @cached_property
-    def tests_time_series(self):
+    def total_tests_time_series(self):
         pass
 
     @cached_property
-    def positives_time_series(self):
+    def total_positives_time_series(self):
+        pass
+
+    @cached_property
+    def new_tests_time_series(self):
+        pass
+
+    @cached_property
+    def new_positives_time_series(self):
         pass
 
     #

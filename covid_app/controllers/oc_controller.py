@@ -111,8 +111,10 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 \
-            import DailyCovid19ExtractV3
-        extract = DailyCovid19ExtractV3()
-        print(extract)
+        from covid_app.analytics.oc_august_testing import OcDailyDataExtract
+        from datetime import date
+
+        aug_15 = date(2020, 8, 15)
+        extract = OcDailyDataExtract(aug_15)
+        print(extract.admin_tests)
         breakpoint()

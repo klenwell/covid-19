@@ -49,11 +49,20 @@ class OcDailyDataExtract:
 
     @cached_property
     def admin_tests(self):
-        ADMIN_TEST_COL = 1
+        CSV_COL = 1
         dated_tests = {}
         for dated in self.dates:
             row = self.dated_rows.get(dated)
-            dated_tests[dated] = row[ADMIN_TEST_COL]
+            dated_tests[dated] = row[CSV_COL]
+        return dated_tests
+
+    @cached_property
+    def positive_tests(self):
+        CSV_COL = 2
+        dated_tests = {}
+        for dated in self.dates:
+            row = self.dated_rows.get(dated)
+            dated_tests[dated] = row[CSV_COL]
         return dated_tests
 
     def __init__(self, dated):
@@ -117,11 +126,17 @@ class OcAugustTestAnalysis:
 
     @cached_property
     def total_positives_time_series(self):
-        pass
+        time_series = {}
+        for dated in self.dates:
+            time_series[dated] = self.extract_total_positives_time_series_for_date(dated)
+        return time_series
 
     @cached_property
     def new_positives_time_series(self):
-        pass
+        time_series = {}
+        for dated in self.dates:
+            time_series[dated] = self.extract_new_positives_time_series_for_date(dated)
+        return time_series
 
     #
     # Instance Method
@@ -163,5 +178,34 @@ class OcAugustTestAnalysis:
             prev = total_tests_series[n-1]
             new_tests = total_tests - prev
             series.append(int(new_tests))
+
+        return series
+
+    def extract_total_positives_time_series_for_date(self, dated):
+        series = []
+        num_days = (self.end_date - dated).days
+
+        for n in range(num_days):
+            # Remember offset since tests are reported next day
+            next_day = n + 1
+            extract_date = dated + timedelta(next_day)
+            extract = self.daily_extracts[extract_date]
+            total_tests = extract.positive_tests.get(dated)
+            series.append(int(total_tests))
+
+        return series
+
+    def extract_new_positives_time_series_for_date(self, dated):
+        series = []
+        totals_series = self.total_positives_time_series.get(dated)
+
+        for n, totals in enumerate(totals_series):
+            if n == 0:
+                series.append(totals)
+                continue
+
+            prev = totals_series[n-1]
+            new_positives = totals - prev
+            series.append(int(new_positives))
 
         return series

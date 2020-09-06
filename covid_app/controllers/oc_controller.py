@@ -117,6 +117,13 @@ class OcController(Controller):
         analysis = OcAugustTestAnalysis()
         aug_15_extract = analysis.daily_extracts[aug_15]
         print(aug_15_extract.admin_tests)
-        print(analysis.total_tests_time_series[aug_15])
-        print(analysis.new_tests_time_series[aug_15])
+        print(aug_15_extract.positive_tests)
+
         breakpoint()
+
+        for dated in analysis.dates:
+            print(dated)
+            print(analysis.total_tests_time_series[dated])
+            print(analysis.new_tests_time_series[dated])
+            print(analysis.total_positives_time_series[dated])
+            print(analysis.new_positives_time_series[dated])

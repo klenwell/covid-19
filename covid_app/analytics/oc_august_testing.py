@@ -14,9 +14,10 @@ from config.app import DATA_ROOT
 
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
+ANALYTICS_FILE_NAME_F = 'oc-aug-analysis-{}.csv'
 
-CSV_HEADER = ['DATE', '+1d', '+2d', '+3d', '+4d', '+5d', '+6d', '+7d', '+8-14d',
-              '+15-30d', 'TOTAL (9/1)']
+CSV_HEADER = ['Date', '+1d', '+2d', '+3d', '+4d', '+5d', '+6d', '+7d', '+8-14d',
+              '+15d+', 'TOTAL (9/1)']
 
 
 class OcDailyDataExtract:
@@ -147,11 +148,68 @@ class OcAugustTestAnalysis:
         self.days_in_month = 31
 
     def to_csv(self):
-        pass
+        tests_csv = self.series_to_csv('tests', self.new_tests_time_series)
+        positives_csv = self.series_to_csv('positives', self.new_positives_time_series)
+        return [tests_csv, positives_csv]
 
     #
     # Private
     #
+    def series_to_csv(self, name, series):
+        file_name = ANALYTICS_FILE_NAME_F.format(name)
+        csv_path = path_join(OC_ANALYTICS_DATA_PATH, file_name)
+
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(CSV_HEADER)
+
+            for dated in reversed(self.dates):
+                writer.writerow(self.series_data_to_csv_row(series, dated))
+
+        return csv_path
+
+    def series_data_to_csv_row(self, series, dated):
+        dated_dataset = series[dated]
+        plus_1d = self.get_series_value_by_day_offset(dated_dataset, 1)
+        plus_2d = self.get_series_value_by_day_offset(dated_dataset, 2)
+        plus_3d = self.get_series_value_by_day_offset(dated_dataset, 3)
+        plus_4d = self.get_series_value_by_day_offset(dated_dataset, 4)
+        plus_5d = self.get_series_value_by_day_offset(dated_dataset, 5)
+        plus_6d = self.get_series_value_by_day_offset(dated_dataset, 6)
+        plus_7d = self.get_series_value_by_day_offset(dated_dataset, 7)
+        plus_8_to_14d = self.get_series_value_by_day_offset_range(dated_dataset, 8, 14)
+        plus_15d_and_more = self.get_series_value_by_day_offset_range(dated_dataset, 15, -1)
+        total = sum(dated_dataset)
+
+        return [
+            dated,
+            plus_1d,
+            plus_2d,
+            plus_3d,
+            plus_4d,
+            plus_5d,
+            plus_6d,
+            plus_7d,
+            plus_8_to_14d,
+            plus_15d_and_more,
+            total
+        ]
+
+    def get_series_value_by_day_offset(self, series, day):
+        index = day - 1
+        if len(series) >= day:
+            return series[index]
+        else:
+            return None
+
+    def get_series_value_by_day_offset_range(self, series, start, end):
+        index = start - 1
+        if len(series) >= start:
+            subset = series[index:end]
+            return sum(subset)
+        else:
+            return None
+
     def extract_total_tests_time_series_for_date(self, dated):
         series = []
         num_days = (self.end_date - dated).days

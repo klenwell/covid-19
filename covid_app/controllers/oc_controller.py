@@ -7,6 +7,7 @@ from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 from covid_app.analytics.oc_summer_surge import OcSummerSurgeAnalysis
+from covid_app.analytics.oc_august_testing import OcAugustTestAnalysis
 
 
 class OcController(Controller):
@@ -93,11 +94,36 @@ class OcController(Controller):
         }
         print(vars)
 
+    # python app.py oc analyze-aug-tests
+    @expose(help="Analyze test patterns in OC for August 2020.")
+    def analyze_aug_tests(self):
+        # Generate CSV
+        analysis = OcAugustTestAnalysis()
+        csv_path = analysis.to_csv()
+
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'analysis': analysis
+        }
+        print(vars)
+
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 \
-            import DailyCovid19ExtractV3
-        extract = DailyCovid19ExtractV3()
-        print(extract)
+        from datetime import date
+        aug_15 = date(2020, 8, 15)
+
+        analysis = OcAugustTestAnalysis()
+        aug_15_extract = analysis.daily_extracts[aug_15]
+        print(aug_15_extract.admin_tests)
+        print(aug_15_extract.positive_tests)
+
         breakpoint()
+
+        for dated in analysis.dates:
+            print(dated)
+            print(analysis.total_tests_time_series[dated])
+            print(analysis.new_tests_time_series[dated])
+            print(analysis.total_positives_time_series[dated])
+            print(analysis.new_positives_time_series[dated])

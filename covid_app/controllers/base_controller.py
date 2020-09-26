@@ -26,9 +26,25 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        service = MiHealthService()
-        extract = service.us_gov_extract
-        print(extract.daily_kent_tests)
+        from covid_app.extracts.covid19_projections import Covid19ProjectionsExtract, BASE_URL
+        from urllib.parse import urljoin
+        import json
+
+        url_path = 'us-ca-orange'
+        url = urljoin(BASE_URL, url_path)
+
+        extract = Covid19ProjectionsExtract(url)
+        html = extract.fetch_data_source()
+
+        # Need to fix this to snip at right spot.
+        data_str = extract.extract_json_data_from_embedded_js(html)
+        data_str = data_str[0:96474]
+
+        plot_data = json.loads(data_str)
+        rt_data = plot_data[-1]
+
+        print(rt_data['x'][-40], rt_data['y'][-40])
+
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

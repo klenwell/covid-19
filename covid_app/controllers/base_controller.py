@@ -38,7 +38,7 @@ class BaseController(Controller):
 
         # Need to fix this to snip at right spot.
         data_str = extract.extract_json_data_from_embedded_js(html)
-        data_str = data_str[0:96474]
+        #data_str = data_str[0:96474]
 
         plot_data = json.loads(data_str)
         rt_data = plot_data[-1]

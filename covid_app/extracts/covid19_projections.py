@@ -73,6 +73,23 @@ class Covid19ProjectionsExtract:
         return response.text
 
     def extract_json_data_from_embedded_js(self, html):
+        # Isolate the start of the embedded data string.
+        _, tail = html.split('Plotly.newPlot', 1)
+        _, tail = tail.split('[', 1)
+
+        # Find a slice point for end of Rt data.
+        end_marker = 'Deaths per day'
+        head, _ = tail.split(end_marker, 1)
+
+        # Now backtrack to end of the data list.
+        data, _ = head.rsplit(']', 1)
+
+        # Lost containing bracket during parsing. Restores them.
+        json_list = '[{}]'.format(data)
+
+        return json_list
+
+    def broken_extract_json_data_from_embedded_js(self, html):
         _, tail = html.split('Plotly.newPlot', 1)
         _, tail = tail.split('[', 1)
         head, _ = tail.split("\n", 1)

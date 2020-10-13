@@ -8,6 +8,7 @@ from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 from covid_app.analytics.oc_summer_surge import OcSummerSurgeAnalysis
 from covid_app.analytics.oc_august_testing import OcAugustTestAnalysis
+from covid_app.analytics.oc_monthly_testing import OcMonthlyTestAnalysis
 
 
 class OcController(Controller):
@@ -99,6 +100,29 @@ class OcController(Controller):
     def analyze_aug_tests(self):
         # Generate CSV
         analysis = OcAugustTestAnalysis()
+        csv_path = analysis.to_csv()
+
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'analysis': analysis
+        }
+        print(vars)
+
+    # python app.py oc analyze-monthly-tests YEAR MONTH
+    @expose(
+        help="Analyze test patterns in OC for given month year.",
+        arguments=[
+            (['year'], dict(action='store')),
+            (['month'], dict(action='store'))
+        ]
+    )
+    def analyze_monthly_tests(self):
+        # Generate CSV
+        year = int(self.app.pargs.year)
+        month = int(self.app.pargs.month)
+
+        analysis = OcMonthlyTestAnalysis(year, month)
         csv_path = analysis.to_csv()
 
         # Render view

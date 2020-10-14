@@ -102,12 +102,9 @@ class OcMonthlyTestAnalysis:
     def daily_extracts(self):
         dated_extracts = {}
 
-        # Tests are reported next day, so we actually want to offset a day to go from
-        # second day of month to first day of next month.
-        for dated in self.dates:
-            next_day = dated + timedelta(days=1)
-            extract = OcDailyDataExtract(next_day)
-            dated_extracts[next_day] = extract
+        for extract_date in self.extract_dates:
+            extract = OcDailyDataExtract(extract_date)
+            dated_extracts[extract_date] = extract
 
         return dated_extracts
 
@@ -143,6 +140,27 @@ class OcMonthlyTestAnalysis:
     def days_in_month(self):
         # https://stackoverflow.com/a/4938459/1093087
         return monthrange(self.year, self.month)[-1]
+
+    @property
+    def yesterday(self):
+        return date.today() - timedelta(days=1)
+
+    @property
+    def extract_dates(self):
+        """Returns dates to pull extracts spanning from beginning of month requested
+        to yesterday.
+
+        Tests are reported next day, so we actually want to offset a day to go from
+        second day of month to yesterday.
+        """
+        extract_dates = []
+        num_days = (self.yesterday - self.start_date).days
+
+        for n in range(1, num_days+1):
+            dated = self.start_date + timedelta(days=n)
+            extract_dates.append(dated)
+
+        return extract_dates
 
     #
     # Instance Method
@@ -216,8 +234,10 @@ class OcMonthlyTestAnalysis:
             return None
 
     def extract_total_tests_time_series_for_date(self, dated):
+        """Extract all total tests values ranging from dated to last daily extract.
+        """
         series = []
-        num_days = (self.end_date - dated).days
+        num_days = (self.yesterday - dated).days
 
         for n in range(num_days):
             # Remember offset since tests are reported next day
@@ -246,7 +266,7 @@ class OcMonthlyTestAnalysis:
 
     def extract_total_positives_time_series_for_date(self, dated):
         series = []
-        num_days = (self.end_date - dated).days
+        num_days = (self.yesterday - dated).days
 
         for n in range(num_days):
             # Remember offset since tests are reported next day

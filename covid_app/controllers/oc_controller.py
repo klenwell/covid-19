@@ -135,19 +135,6 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from datetime import date
-        aug_15 = date(2020, 8, 15)
-
-        analysis = OcAugustTestAnalysis()
-        aug_15_extract = analysis.daily_extracts[aug_15]
-        print(aug_15_extract.admin_tests)
-        print(aug_15_extract.positive_tests)
-
+        analysis = OcMonthlyTestAnalysis(2020, 9)
+        print(analysis)
         breakpoint()
-
-        for dated in analysis.dates:
-            print(dated)
-            print(analysis.total_tests_time_series[dated])
-            print(analysis.new_tests_time_series[dated])
-            print(analysis.total_positives_time_series[dated])
-            print(analysis.new_positives_time_series[dated])

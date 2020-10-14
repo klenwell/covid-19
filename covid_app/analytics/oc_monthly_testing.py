@@ -18,7 +18,7 @@ OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
 ANALYTICS_FILE_NAME_F = 'oc-test-analysis-{}-{}.csv'
 
 CSV_HEADER = ['Date', '+1d', '+2d', '+3d', '+4d', '+5d', '+6d', '+7d', '+8-14d',
-              '+15d+', 'TOTAL ({})']
+              '+15d+', 'TOTAL (as of {})']
 
 
 class OcDailyDataExtract:
@@ -181,6 +181,9 @@ class OcMonthlyTestAnalysis:
         year_month = '{}{:02}'.format(self.year, self.month)
         file_name = ANALYTICS_FILE_NAME_F.format(name, year_month)
         csv_path = path_join(OC_ANALYTICS_DATA_PATH, file_name)
+
+        # Add data to last column
+        CSV_HEADER[-1] = CSV_HEADER[-1].format(self.yesterday)
 
         with open(csv_path, 'w', newline='') as f:
             writer = csv.writer(f)

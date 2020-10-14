@@ -130,7 +130,7 @@ class OcController(Controller):
             'csv_path': csv_path,
             'analysis': analysis
         }
-        print(vars)
+        self.app.render(vars, 'oc/monthly-tests-analysis.jinja2')
 
     # python app.py oc dev
     @expose(help="For rapid testing and development.")

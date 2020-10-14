@@ -8,7 +8,7 @@ from os.path import join as path_join
 from functools import cached_property
 import csv
 from datetime import datetime, date, timedelta
-from calendar import monthrange
+from calendar import monthrange, month_name
 
 from config.app import DATA_ROOT
 
@@ -98,6 +98,23 @@ class OcMonthlyTestAnalysis:
 
         return month_dates
 
+    @property
+    def extract_dates(self):
+        """Returns dates to pull extracts spanning from beginning of month requested
+        to yesterday.
+
+        Tests are reported next day, so we actually want to offset a day to go from
+        second day of month to yesterday.
+        """
+        extract_dates = []
+        num_days = (self.yesterday - self.start_date).days
+
+        for n in range(1, num_days+1):
+            dated = self.start_date + timedelta(days=n)
+            extract_dates.append(dated)
+
+        return extract_dates
+
     @cached_property
     def daily_extracts(self):
         dated_extracts = {}
@@ -146,21 +163,58 @@ class OcMonthlyTestAnalysis:
         return date.today() - timedelta(days=1)
 
     @property
-    def extract_dates(self):
-        """Returns dates to pull extracts spanning from beginning of month requested
-        to yesterday.
+    def month_name(self):
+        return month_name[self.month]
 
-        Tests are reported next day, so we actually want to offset a day to go from
-        second day of month to yesterday.
-        """
-        extract_dates = []
-        num_days = (self.yesterday - self.start_date).days
+    @property
+    def average_test_delay(self):
+        test_delay_days = []
+        tests = []
 
-        for n in range(1, num_days+1):
-            dated = self.start_date + timedelta(days=n)
-            extract_dates.append(dated)
+        for dated in self.dates:
+            series = self.new_tests_time_series.get(dated)
+            if not series:
+                continue
 
-        return extract_dates
+            for n, count in enumerate(series):
+                delay = n + 1
+                if count > 0:
+                    tests.append(count)
+                    test_delay_days.append(count * delay)
+
+        return sum(test_delay_days) / sum(tests)
+
+    @property
+    def average_positive_test_delay(self):
+        test_delay_days = []
+        tests = []
+
+        for dated in self.dates:
+            series = self.new_positives_time_series.get(dated)
+            if not series:
+                continue
+
+            for n, count in enumerate(series):
+                delay = n + 1
+                if count > 0:
+                    tests.append(count)
+                    test_delay_days.append(count * delay)
+
+        return sum(test_delay_days) / sum(tests)
+
+    @property
+    def longest_test_delay(self):
+        max_delay = 0
+        test_date = None
+
+        for dated, series in self.new_tests_time_series.items():
+            delay = len(self.truncate_time_series(series))
+
+            if delay > max_delay:
+                test_date = dated
+                max_delay = delay
+
+        return (test_date, max_delay)
 
     #
     # Instance Method
@@ -295,3 +349,21 @@ class OcMonthlyTestAnalysis:
             series.append(int(new_positives))
 
         return series
+
+    def truncate_time_series(self, series):
+        """Truncates time series at last positive value.
+        """
+        tail = 0
+
+        for value in reversed(series):
+            if value <= 0:
+                tail -= 1
+            else:
+                break
+
+        if tail == 0:
+            truncated_series = series
+        else:
+            truncated_series = series[0:tail]
+
+        return truncated_series

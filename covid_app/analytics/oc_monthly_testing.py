@@ -160,7 +160,7 @@ class OcMonthlyTestAnalysis:
     # Private
     #
     def series_to_csv(self, name, series):
-        year_month = '{}{}'.format(self.year, self.month)
+        year_month = '{}{:02}'.format(self.year, self.month)
         file_name = ANALYTICS_FILE_NAME_F.format(name, year_month)
         csv_path = path_join(OC_ANALYTICS_DATA_PATH, file_name)
 

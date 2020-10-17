@@ -1,0 +1,11 @@
+OC COVID-19 Monthly Tests Analysis
+{{ analysis.month_name }} {{ analysis.year }}
+Latest Update: {{ analysis.extract_dates[-1] }}
+
+Longest Delay: {{ analysis.longest_test_delay[1] }} days ({{ analysis.longest_test_delay[0].strftime('%Y-%m-%d') }})
+Average Test Delay: {{ '%0.1f'| format(analysis.average_test_delay) }} days
+Average Positive Test Delay: {{ '%0.1f'| format(analysis.average_positive_test_delay) }} days
+
+CSV Paths
+Tests: {{ csv_path[0] }}
+Positive Tests: {{ csv_path[1] }}

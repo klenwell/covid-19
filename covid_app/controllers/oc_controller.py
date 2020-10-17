@@ -8,6 +8,7 @@ from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 from covid_app.analytics.oc_summer_surge import OcSummerSurgeAnalysis
 from covid_app.analytics.oc_august_testing import OcAugustTestAnalysis
+from covid_app.analytics.oc_monthly_testing import OcMonthlyTestAnalysis
 
 
 class OcController(Controller):
@@ -108,22 +109,32 @@ class OcController(Controller):
         }
         print(vars)
 
+    # python app.py oc analyze-monthly-tests YEAR MONTH
+    @expose(
+        help="Analyze test patterns in OC for given month year.",
+        arguments=[
+            (['year'], dict(action='store')),
+            (['month'], dict(action='store'))
+        ]
+    )
+    def analyze_monthly_tests(self):
+        # Generate CSV
+        year = int(self.app.pargs.year)
+        month = int(self.app.pargs.month)
+
+        analysis = OcMonthlyTestAnalysis(year, month)
+        csv_path = analysis.to_csv()
+
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'analysis': analysis
+        }
+        self.app.render(vars, 'oc/monthly-tests-analysis.jinja2')
+
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from datetime import date
-        aug_15 = date(2020, 8, 15)
-
-        analysis = OcAugustTestAnalysis()
-        aug_15_extract = analysis.daily_extracts[aug_15]
-        print(aug_15_extract.admin_tests)
-        print(aug_15_extract.positive_tests)
-
+        analysis = OcMonthlyTestAnalysis(2020, 9)
+        print(analysis)
         breakpoint()
-
-        for dated in analysis.dates:
-            print(dated)
-            print(analysis.total_tests_time_series[dated])
-            print(analysis.new_tests_time_series[dated])
-            print(analysis.total_positives_time_series[dated])
-            print(analysis.new_positives_time_series[dated])

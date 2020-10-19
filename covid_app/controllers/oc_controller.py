@@ -17,6 +17,34 @@ class OcController(Controller):
         stacked_on = 'base'
         stacked_type = 'nested'
 
+    # python app.py oc analyze-daily-tests YEAR MONTH
+    @expose(
+        help="Analyze test patterns in OC for given month year.",
+        arguments=[
+            (['year'], dict(action='store')),
+            (['month'], dict(action='store'))
+        ]
+    )
+    def analyze_daily_tests(self):
+        # Command Line Arguments
+        year = int(self.app.pargs.year)
+        month = int(self.app.pargs.month)
+
+        from covid_app.extracts.oc_hca.daily_archive_extract import OcDailyArchiveExtract
+        from datetime import date
+        extract = OcDailyArchiveExtract(date(2020, year, month))
+        print(extract.reported_total_admin_tests, extract.reported_new_tests)
+        print(extract.reported_total_positive_tests, extract.reported_new_cases,
+              extract.reported_new_cases_for_yesterday)
+        print(extract.increased_admin_tests)
+        print(len(extract.increased_admin_tests))
+        print(extract.updated_positive_tests)
+        print(len(extract.updated_positive_tests))
+        print(extract.reported_test_positive_rate, extract.reported_case_positive_rate)
+        print(extract.average_test_delay)
+
+        #breakpoint()
+
     # python app.py oc daily
     @expose(help="Export data from OC HCA site to csv file.")
     def daily(self):
@@ -131,21 +159,6 @@ class OcController(Controller):
             'analysis': analysis
         }
         self.app.render(vars, 'oc/monthly-tests-analysis.jinja2')
-
-    # python app.py oc analyze-daily-tests YEAR MONTH
-    @expose(
-        help="Analyze test patterns in OC for given month year.",
-        arguments=[
-            (['year'], dict(action='store')),
-            (['month'], dict(action='store'))
-        ]
-    )
-    def analyze_daily_tests(self):
-        # Generate CSV
-        year = int(self.app.pargs.year)
-        month = int(self.app.pargs.month)
-
-        print("TODO", year, month)
 
     # python app.py oc dev
     @expose(help="For rapid testing and development.")

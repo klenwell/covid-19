@@ -132,6 +132,21 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/monthly-tests-analysis.jinja2')
 
+    # python app.py oc analyze-daily-tests YEAR MONTH
+    @expose(
+        help="Analyze test patterns in OC for given month year.",
+        arguments=[
+            (['year'], dict(action='store')),
+            (['month'], dict(action='store'))
+        ]
+    )
+    def analyze_daily_tests(self):
+        # Generate CSV
+        year = int(self.app.pargs.year)
+        month = int(self.app.pargs.month)
+
+        print("TODO", year, month)
+
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):

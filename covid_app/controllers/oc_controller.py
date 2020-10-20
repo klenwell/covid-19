@@ -9,6 +9,7 @@ from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 from covid_app.analytics.oc_summer_surge import OcSummerSurgeAnalysis
 from covid_app.analytics.oc_august_testing import OcAugustTestAnalysis
 from covid_app.analytics.oc_monthly_testing import OcMonthlyTestAnalysis
+from covid_app.analytics.oc_daily_testing import OcDailyTestingAnalysis
 
 
 class OcController(Controller):
@@ -30,20 +31,15 @@ class OcController(Controller):
         year = int(self.app.pargs.year)
         month = int(self.app.pargs.month)
 
-        from covid_app.extracts.oc_hca.daily_archive_extract import OcDailyArchiveExtract
-        from datetime import date
-        extract = OcDailyArchiveExtract(date(2020, year, month))
-        print(extract.reported_total_admin_tests, extract.reported_new_tests)
-        print(extract.reported_total_positive_tests, extract.reported_new_cases,
-              extract.reported_new_cases_for_yesterday)
-        print(extract.increased_admin_tests)
-        print(len(extract.increased_admin_tests))
-        print(extract.updated_positive_tests)
-        print(len(extract.updated_positive_tests))
-        print(extract.reported_test_positive_rate, extract.reported_case_positive_rate)
-        print(extract.average_test_delay)
+        analysis = OcDailyTestingAnalysis(year, month)
+        csv_path = analysis.to_csv()
 
-        #breakpoint()
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'analysis': analysis
+        }
+        self.app.render(vars, 'oc/daily-testing-analysis.jinja2')
 
     # python app.py oc daily
     @expose(help="Export data from OC HCA site to csv file.")

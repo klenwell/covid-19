@@ -10,6 +10,8 @@ from os.path import join as path_join
 from datetime import datetime, timedelta
 from functools import cached_property
 import csv
+from statistics import stdev
+
 from config.app import DATA_ROOT
 
 
@@ -93,7 +95,6 @@ class OcDailyArchiveExtract:
         for dated in list(self.dates)[1:]:
             today = self.admin_tests.get(dated, 0) or 0
             yesterday = self.previous_date_extract.admin_tests.get(dated, 0) or 0
-            #print(dated, today, yesterday)
             change = int(today) - int(yesterday)
             new_admin_tests[dated] = change
 
@@ -200,6 +201,26 @@ class OcDailyArchiveExtract:
             total_tests.append(count)
 
         return sum(delayed_days) / sum(total_tests)
+
+    @property
+    def delays_as_list(self):
+        test_delays = []
+
+        for dated, count in self.increased_admin_tests.items():
+            days = (self.date - dated).days
+            daily_test_delays = [days] * count
+            test_delays += daily_test_delays
+
+        return test_delays
+
+    @property
+    def test_delay_stdev(self):
+        return stdev(self.delays_as_list)
+
+    @property
+    def oldest_updated_admin_test(self):
+        test_dates = self.increased_admin_tests.keys()
+        return min(test_dates)
 
     #
     # Instance Methods

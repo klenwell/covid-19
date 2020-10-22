@@ -1,10 +1,37 @@
+"""
+Programmatically extracts Michigan Kent County COVID-19 data from US government API.
+Testing data is available on MI website here:
+
+https://www.michigan.gov/coronavirus/0,9753,7-406-98163_98173---,00.html
+
+The request data constants below may need to be updated from time to time. To retrieve
+values, do the following:
+
+1. In Firefox, go here: https://www.michigan.gov/coronavirus/0,9753,7-406-98163_98173---,00.html
+2. Click TOTAL TESTING tab in dashboard
+3. Open Firefox console and go to Network tab. Click trashcan icon to clear log.
+4. In County field, select Kent
+5. Look for a POST request to the following URL, size will be ~12kb:
+   https://wabi-us-gov-iowa-api.analysis.usgovcloudapi.net/public/reports/querydata?synchronous=true
+6. Right click the item > Copy > Copy as cURL. This will provide the request header and body
+   data for the API request.
+7. Values for WABI constants below will be found in the --data-raw parameter.
+"""
 import requests
 import json
 from datetime import datetime
 from functools import cached_property
 
 
+#
+# Constants
+#
 EXTRACT_URL = 'https://wabi-us-gov-iowa-api.analysis.usgovcloudapi.net/public/reports/querydata'
+
+# US Gov API request parameters
+WABI_DATASET_ID = '59638bad-f747-4eeb-9e60-02fdca2acfcd'
+WABI_REPORT_ID = '1e588afe-f0c7-4140-8350-e1212396c270'
+WABI_MODEL_ID = '303803'
 
 
 class UsGovCovid19Extract:
@@ -20,12 +47,12 @@ class UsGovCovid19Extract:
             'Accept': 'application/json, text/plain, */*',
             'Accept-Language': 'en-US,en;q=0.5',
             'Accept-Encoding': 'gzip, deflate, br',
-            'Referer': 'https',
+            'Referer': 'https://app.powerbigov.us',
             'ActivityId': '34d568b0-c29e-4f30-9cf0-f04afd959aca',
             'RequestId': '8ea32a6f-d19c-c4b7-79b2-641759d959df',
             'X-PowerBI-ResourceKey': '1ccb55ad-71e0-47fe-8762-bd11b89b00f5',
             'Content-Type': 'application/json;charset=UTF-8',
-            'Origin': 'https',
+            'Origin': 'https://app.powerbigov.us',
             'DNT': '1',
             'Connection': 'keep-alive'
         }
@@ -47,10 +74,10 @@ class UsGovCovid19Extract:
             '"Binding":{"Primary":{"Groupings":[{"Projections":[1,2]}]},"Secondary":{"Groupings":'
             '[{"Projections":[0]}]},"DataReduction":{"DataVolume":4,"Primary":{"Sample":{}},'
             '"Secondary":{"Top":{}}},"Version":1}}}]},"QueryId":"","ApplicationContext":'
-            '{"DatasetId":"3538771d-70f8-4399-9760-267975e37f65","Sources":[{"ReportId":'
-            '"f489615d-c09e-43f9-b6bb-db2832eb0e0d"}]}}],"cancelQueries":[],"modelId":282246}'
+            '{"DatasetId":"%s","Sources":[{"ReportId":"%s"}]}}],"cancelQueries":[],"modelId":%s}'
         )
-        return json.loads(data_str)
+        raw_data = data_str % (WABI_DATASET_ID, WABI_REPORT_ID, WABI_MODEL_ID)
+        return json.loads(raw_data)
 
     @cached_property
     def daily_kent_json_data(self):

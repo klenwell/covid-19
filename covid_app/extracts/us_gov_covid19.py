@@ -6,6 +6,7 @@ https://www.michigan.gov/coronavirus/0,9753,7-406-98163_98173---,00.html
 
 The request data constants below may need to be updated from time to time. To retrieve
 values, do the following:
+
 1. In Firefox, go here: https://www.michigan.gov/coronavirus/0,9753,7-406-98163_98173---,00.html
 2. Click TOTAL TESTING tab in dashboard
 3. Open Firefox console and go to Network tab. Click trashcan icon to clear log.
@@ -76,7 +77,6 @@ class UsGovCovid19Extract:
             '{"DatasetId":"%s","Sources":[{"ReportId":"%s"}]}}],"cancelQueries":[],"modelId":%s}'
         )
         raw_data = data_str % (WABI_DATASET_ID, WABI_REPORT_ID, WABI_MODEL_ID)
-        breakpoint()
         return json.loads(raw_data)
 
     @cached_property

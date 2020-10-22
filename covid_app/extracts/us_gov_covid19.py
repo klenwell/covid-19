@@ -4,7 +4,7 @@ from datetime import datetime
 from functools import cached_property
 
 
-EXTRACT_URL = 'https://wabi-us-gov-iowa-api.analysis.usgovcloudapi.net/public/reports/querydata'
+EXTRACT_URL = 'https://wabi-us-gov-iowa-api.analysis.usgovcloudapi.net/public/reports/querydata?synchronous=true'
 
 
 class UsGovCovid19Extract:
@@ -20,12 +20,12 @@ class UsGovCovid19Extract:
             'Accept': 'application/json, text/plain, */*',
             'Accept-Language': 'en-US,en;q=0.5',
             'Accept-Encoding': 'gzip, deflate, br',
-            'Referer': 'https',
-            'ActivityId': '34d568b0-c29e-4f30-9cf0-f04afd959aca',
-            'RequestId': '8ea32a6f-d19c-c4b7-79b2-641759d959df',
-            'X-PowerBI-ResourceKey': '1ccb55ad-71e0-47fe-8762-bd11b89b00f5',
+            'Referer': 'https://app.powerbigov.us/view?r=eyJrIjoiNDY0ZGVlMDItMzUzNC00ZGE5LWFjYzQtNzliOGJkZWQ4YTgzIiwidCI6ImQ1ZmI3MDg3LTM3NzctNDJhZC05NjZhLTg5MmVmNDcyMjVkMSJ9',
+            'ActivityId': '75b492ea-c96c-4e99-a956-5ab5fef9d1e6',
+            'RequestId': 'ca0f3948-e675-198c-bcaa-0cdf77e0c15b',
+            'X-PowerBI-ResourceKey': '464dee02-3534-4da9-acc4-79b8bded8a83',
             'Content-Type': 'application/json;charset=UTF-8',
-            'Origin': 'https',
+            'Origin': 'https://app.powerbigov.us',
             'DNT': '1',
             'Connection': 'keep-alive'
         }
@@ -47,8 +47,8 @@ class UsGovCovid19Extract:
             '"Binding":{"Primary":{"Groupings":[{"Projections":[1,2]}]},"Secondary":{"Groupings":'
             '[{"Projections":[0]}]},"DataReduction":{"DataVolume":4,"Primary":{"Sample":{}},'
             '"Secondary":{"Top":{}}},"Version":1}}}]},"QueryId":"","ApplicationContext":'
-            '{"DatasetId":"3538771d-70f8-4399-9760-267975e37f65","Sources":[{"ReportId":'
-            '"f489615d-c09e-43f9-b6bb-db2832eb0e0d"}]}}],"cancelQueries":[],"modelId":282246}'
+            '{"DatasetId":"59638bad-f747-4eeb-9e60-02fdca2acfcd","Sources":[{"ReportId":'
+            '"1e588afe-f0c7-4140-8350-e1212396c270"}]}}],"cancelQueries":[],"modelId":303803}'
         )
         return json.loads(data_str)
 

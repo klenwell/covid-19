@@ -9,6 +9,7 @@ from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 from covid_app.analytics.oc_summer_surge import OcSummerSurgeAnalysis
 from covid_app.analytics.oc_august_testing import OcAugustTestAnalysis
 from covid_app.analytics.oc_monthly_testing import OcMonthlyTestAnalysis
+from covid_app.analytics.oc_daily_testing import OcDailyTestingAnalysis
 
 
 class OcController(Controller):
@@ -16,6 +17,29 @@ class OcController(Controller):
         label = 'oc'
         stacked_on = 'base'
         stacked_type = 'nested'
+
+    # python app.py oc analyze-daily-tests YEAR MONTH
+    @expose(
+        help="Analyze test patterns in OC for given month year.",
+        arguments=[
+            (['year'], dict(action='store')),
+            (['month'], dict(action='store'))
+        ]
+    )
+    def analyze_daily_tests(self):
+        # Command Line Arguments
+        year = int(self.app.pargs.year)
+        month = int(self.app.pargs.month)
+
+        analysis = OcDailyTestingAnalysis(year, month)
+        csv_path = analysis.to_csv()
+
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'analysis': analysis
+        }
+        self.app.render(vars, 'oc/daily-testing-analysis.jinja2')
 
     # python app.py oc daily
     @expose(help="Export data from OC HCA site to csv file.")

@@ -25,6 +25,9 @@ OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 # Classes
 #
 class OcDailyArchiveExtract:
+    #
+    # CSV Data
+    #
     @cached_property
     def csv_rows(self):
         with open(self.file_path, newline='') as f:
@@ -48,9 +51,72 @@ class OcDailyArchiveExtract:
             dated_rows[dated] = row
         return dated_rows
 
+    #
+    # Dates
+    #
     @cached_property
     def dates(self):
         return self.dated_rows.keys()
+
+    @cached_property
+    def previous_date(self):
+        return self.date - timedelta(days=1)
+
+    #
+    # Delays
+    #
+    @property
+    def average_test_delay(self):
+        delayed_days = []
+        total_tests = []
+
+        for dated, count in self.increased_admin_tests.items():
+            days = (self.date - dated).days
+            delayed_days.append(days * count)
+            total_tests.append(count)
+
+        return sum(delayed_days) / sum(total_tests)
+
+    @property
+    def delays_as_list(self):
+        test_delays = []
+
+        for dated, count in self.increased_admin_tests.items():
+            days = (self.date - dated).days
+            daily_test_delays = [days] * count
+            test_delays += daily_test_delays
+
+        return test_delays
+
+    @property
+    def test_delay_stdev(self):
+        return stdev(self.delays_as_list)
+
+    @property
+    def oldest_updated_admin_test(self):
+        test_dates = self.increased_admin_tests.keys()
+        return min(test_dates)
+
+    #
+    # Test Counts
+    #
+    @cached_property
+    def dated_reported_new_tests(self):
+        CSV_COL = 3
+        dated_tests = {}
+        for dated in self.dates:
+            row = self.dated_rows.get(dated)
+            dated_tests[dated] = row[CSV_COL]
+        return dated_tests
+
+    @property
+    def reported_new_tests(self):
+        # Repo tests come a day late
+        return self.dated_reported_new_tests.get(self.previous_date)
+
+    @property
+    def reported_total_admin_tests(self):
+        return sum(self.updated_admin_tests.values())
 
     @cached_property
     def admin_tests(self):
@@ -60,32 +126,6 @@ class OcDailyArchiveExtract:
             row = self.dated_rows.get(dated)
             dated_tests[dated] = row[CSV_COL]
         return dated_tests
-
-    @cached_property
-    def positive_tests(self):
-        CSV_COL = 2
-        dated_tests = {}
-        for dated in self.dates:
-            row = self.dated_rows.get(dated)
-            dated_tests[dated] = row[CSV_COL]
-        return dated_tests
-
-    @property
-    def file_name(self):
-        yyyymmdd = self.date.strftime('%Y%m%d')
-        return 'oc-hca-{}.csv'.format(yyyymmdd)
-
-    @property
-    def file_path(self):
-        return path_join(OC_DATA_PATH, 'daily', self.file_name)
-
-    @cached_property
-    def previous_date(self):
-        return self.date - timedelta(days=1)
-
-    @cached_property
-    def previous_date_extract(self):
-        return OcDailyArchiveExtract(self.previous_date)
 
     @cached_property
     def new_admin_tests(self):
@@ -130,6 +170,36 @@ class OcDailyArchiveExtract:
 
         return decreased_admin_tests
 
+    #
+    # Positive Counts
+    #
+    @cached_property
+    def dated_reported_new_cases(self):
+        CSV_COL = 4
+        dated_tests = {}
+        for dated in self.dates:
+            row = self.dated_rows.get(dated)
+            dated_tests[dated] = row[CSV_COL]
+        return dated_tests
+
+    @property
+    def reported_new_cases(self):
+        # Repo tests come a day late
+        return self.dated_reported_new_tests.get(self.previous_date)
+
+    @property
+    def reported_total_positive_tests(self):
+        return sum(self.updated_positive_tests.values())
+
+    @cached_property
+    def positive_tests(self):
+        CSV_COL = 2
+        dated_tests = {}
+        for dated in self.dates:
+            row = self.dated_rows.get(dated)
+            dated_tests[dated] = row[CSV_COL]
+        return dated_tests
+
     @cached_property
     def new_positive_tests(self):
         new_positive_tests = {}
@@ -154,34 +224,15 @@ class OcDailyArchiveExtract:
         return updated_positive_tests
 
     @property
-    def reported_new_tests(self):
-        # Repo tests come a day late
-        FOR_YESTERDAY = 2
-        REPO_COL = 3
-        return int(self.csv_rows[FOR_YESTERDAY][REPO_COL])
-
-    @property
-    def reported_new_cases(self):
-        # Repo tests come a day late
-        FOR_TODAY = 1
-        CASE_COL = 4
-        return int(self.csv_rows[FOR_TODAY][CASE_COL])
-
-    @property
     def reported_new_cases_for_yesterday(self):
         # Repo tests come a day late
         FOR_YESTERDAY = 2
         CASE_COL = 4
         return int(self.csv_rows[FOR_YESTERDAY][CASE_COL])
 
-    @property
-    def reported_total_admin_tests(self):
-        return sum(self.updated_admin_tests.values())
-
-    @property
-    def reported_total_positive_tests(self):
-        return sum(self.updated_positive_tests.values())
-
+    #
+    # Positive Rate
+    #
     @property
     def reported_test_positive_rate(self):
         return self.reported_total_positive_tests / self.reported_total_admin_tests
@@ -190,37 +241,101 @@ class OcDailyArchiveExtract:
     def reported_case_positive_rate(self):
         return self.reported_new_cases_for_yesterday / self.reported_new_tests
 
+    #
+    # 7-Day Averages
+    #
+    @cached_property
+    def dated_7d_avg_test_specs(self):
+        dated_avgs = {}
+
+        for dated in list(self.dates):
+            data_set = self.admin_tests
+            avg = self.compute_7d_avg_for_data_set_on_date(data_set, dated)
+            dated_avgs[dated] = avg
+
+        return dated_avgs
+
+    @cached_property
+    def dated_7d_avg_positive_specs(self):
+        dated_avgs = {}
+
+        for dated in list(self.dates):
+            data_set = self.positive_tests
+            avg = self.compute_7d_avg_for_data_set_on_date(data_set, dated)
+            dated_avgs[dated] = avg
+
+        return dated_avgs
+
+    @cached_property
+    def dated_7d_avg_spec_positive_rate(self):
+        dated_avgs = {}
+
+        for dated in list(self.dates):
+            tests = self.dated_7d_avg_test_specs[dated]
+            positives = self.dated_7d_avg_positive_specs[dated]
+
+            if not (tests and positives):
+                dated_avgs[dated] = None
+            else:
+                dated_avgs[dated] = positives / tests
+
+        return dated_avgs
+
+    @cached_property
+    def dated_7d_avg_reported_tests(self):
+        dated_avgs = {}
+
+        for dated in list(self.dates):
+            data_set = self.dated_reported_new_tests
+            avg = self.compute_7d_avg_for_data_set_on_date(data_set, dated)
+            dated_avgs[dated] = avg
+
+        return dated_avgs
+
+    @cached_property
+    def dated_7d_avg_new_cases(self):
+        dated_avgs = {}
+
+        for dated in list(self.dates):
+            data_set = self.dated_reported_new_cases
+            avg = self.compute_7d_avg_for_data_set_on_date(data_set, dated)
+            dated_avgs[dated] = avg
+
+        return dated_avgs
+
     @property
-    def average_test_delay(self):
-        delayed_days = []
-        total_tests = []
+    def dated_7d_avg_positive_case_rate(self):
+        dated_avgs = {}
 
-        for dated, count in self.increased_admin_tests.items():
-            days = (self.date - dated).days
-            delayed_days.append(days * count)
-            total_tests.append(count)
+        for dated in list(self.dates):
+            tests = self.dated_7d_avg_reported_tests[dated]
+            positives = self.dated_7d_avg_new_cases[dated]
 
-        return sum(delayed_days) / sum(total_tests)
+            if not (tests and positives):
+                dated_avgs[dated] = None
+            else:
+                dated_avgs[dated] = positives / tests
+
+        return dated_avgs
+
+    #
+    # File Info
+    #
+    @property
+    def file_name(self):
+        yyyymmdd = self.date.strftime('%Y%m%d')
+        return 'oc-hca-{}.csv'.format(yyyymmdd)
 
     @property
-    def delays_as_list(self):
-        test_delays = []
+    def file_path(self):
+        return path_join(OC_DATA_PATH, 'daily', self.file_name)
 
-        for dated, count in self.increased_admin_tests.items():
-            days = (self.date - dated).days
-            daily_test_delays = [days] * count
-            test_delays += daily_test_delays
-
-        return test_delays
-
-    @property
-    def test_delay_stdev(self):
-        return stdev(self.delays_as_list)
-
-    @property
-    def oldest_updated_admin_test(self):
-        test_dates = self.increased_admin_tests.keys()
-        return min(test_dates)
+    #
+    # Etc.
+    #
+    @cached_property
+    def previous_date_extract(self):
+        return OcDailyArchiveExtract(self.previous_date)
 
     #
     # Instance Methods
@@ -228,5 +343,25 @@ class OcDailyArchiveExtract:
     def __init__(self, dated):
         self.date = dated
 
+    #
+    # Private Methods
+    #
+    def compute_7d_avg_for_data_set_on_date(self, data_set, dated):
+        counts = []
+
+        for days_ago in range(7):
+            on_date = dated - timedelta(days=days_ago)
+            daily_count = data_set.get(on_date)
+
+            if daily_count in [None, '']:
+                return None
+
+            counts.append(float(daily_count))
+
+        return sum(counts) / len(counts)
+
+    #
+    # Magic Methods
+    #
     def __repr__(self):
         return '<OcDailyDataExtract date={} rows={}>'.format(self.date, len(self.csv_rows))

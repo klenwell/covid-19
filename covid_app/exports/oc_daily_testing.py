@@ -16,23 +16,34 @@ from covid_app.extracts.oc_hca.daily_archive_extract import OcDailyArchiveExtrac
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 EXPORT_FILE_NAME = 'oc-hca-testing.csv'
 
+# First date I started archiving spec data.
 START_DATE = '2020-08-03'
 
 CSV_HEADER = [
     'Date',
+
+    # Delays
     '7d Avg Test Delay (Days)',
     'Effective Reporting Date',
+    'Oldest Test Reported',
+
+    # Test Counts
     'Tests Reported (Repo)',
     'Test Specs Reported',
+    'Test Specs Adminstered',
+
+    # Positive Counts
     'Pos Specs Reported',
     'New Cases Reported',
-    'Test Specs Dated Today',
-    'Pos Specs Dated Today',
-    'Oldest Test Reported',
+    'Pos Specs Adminstered',
+
+    # Averages
     '7d Avg Test Specs',
     '7d Avg Pos Specs',
     '7d Avg Spec Pos Rate',
     '7d Avg Case Rate',
+
+    # Delay Distributions
     'Tests Delayed 1-2d',
     'Tests Delayed 3-4d',
     'Tests Delayed 5-7d',
@@ -112,25 +123,36 @@ class OcDailyTestsExport:
     #
     def extract_data_to_csv_row(self, extract_date):
         extract = self.daily_extracts[extract_date]
+        latest_extract = self.most_recent_daily_extract
 
         # Remember: the extract will be reporting values from the day previous.
         reporting_date = extract_date - timedelta(days=1)
 
         return [
             reporting_date,
+
+            # Delays
             '7d Avg Test Delay (Days)',
             'Effective Reporting Date',
+            extract.oldest_updated_admin_test,
+
+            # Test Counts
             extract.reported_new_tests,
             extract.reported_total_admin_tests,
+            self.most_recent_daily_extract.admin_tests.get(reporting_date, 'N/A'),
+
+            # Positive Counts
             extract.reported_total_positive_tests,
             extract.reported_new_cases_for_yesterday,
-            self.most_recent_daily_extract.admin_tests.get(reporting_date, 'N/A'),
-            self.most_recent_daily_extract.positive_tests.get(reporting_date, 'N/A'),
-            extract.oldest_updated_admin_test,
-            '7d Avg Test Specs',
-            '7d Avg Pos Specs',
-            '7d Avg Spec Pos Rate',
-            '7d Avg Case Rate',
+            latest_extract.positive_tests.get(reporting_date, 'N/A'),
+
+            # Averages
+            latest_extract.dated_7d_avg_test_specs.get(reporting_date, 'N/A'),
+            latest_extract.dated_7d_avg_positive_specs.get(reporting_date, 'N/A'),
+            latest_extract.dated_7d_avg_spec_positive_rate.get(reporting_date, 'N/A'),
+            latest_extract.dated_7d_avg_positive_case_rate.get(reporting_date, 'N/A'),
+
+            # Delay Distributions
             'Tests Delayed 1-2d',
             'Tests Delayed 3-4d',
             'Tests Delayed 5-7d',

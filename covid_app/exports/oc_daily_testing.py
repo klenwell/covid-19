@@ -23,8 +23,8 @@ CSV_HEADER = [
     'Date',
 
     # Delays
-    '7d Avg Test Delay (Days)',
-    'Effective Reporting Date',
+    'Avg Test Delay (Days)',
+    'Effective Admin Date',
     'Oldest Test Reported',
 
     # Test Counts
@@ -45,15 +45,16 @@ CSV_HEADER = [
 
     # Delay Distributions
     'Tests Delayed 1-2d',
-    'Tests Delayed 3-4d',
-    'Tests Delayed 5-7d',
-    'Tests Delayed 8-14d',
-    'Tests Delayed 15+d',
+    '3-4d',
+    '5-7d',
+    '8-14d',
+    '15+d',
+
     'Pos Tests Delayed 1-2d',
-    'Pos Tests Delayed 3-4d',
-    'Pos Tests Delayed 5-7d',
-    'Pos Tests Delayed 8-14d',
-    'Pos Tests Delayed 15+d'
+    '3-4d',
+    '5-7d',
+    '8-14d',
+    '15+d'
 ]
 
 
@@ -103,6 +104,39 @@ class OcDailyTestsExport:
         return date.today() - timedelta(days=1)
 
     #
+    # Time Series
+    #
+    @cached_property
+    def total_tests_time_series(self):
+        # Note: The extract for a given date will only report tests through the previous day.
+        time_series = {}
+        for dated in self.dates:
+
+            time_series[dated] = self.extract_total_tests_time_series_for_date(dated)
+        return time_series
+
+    @cached_property
+    def new_tests_time_series(self):
+        time_series = {}
+        for dated in self.dates:
+            time_series[dated] = self.extract_new_tests_time_series_for_date(dated)
+        return time_series
+
+    @cached_property
+    def total_positives_time_series(self):
+        time_series = {}
+        for dated in self.dates:
+            time_series[dated] = self.extract_total_positives_time_series_for_date(dated)
+        return time_series
+
+    @cached_property
+    def new_positives_time_series(self):
+        time_series = {}
+        for dated in self.dates:
+            time_series[dated] = self.extract_new_positives_time_series_for_date(dated)
+        return time_series
+
+    #
     # Instance Method
     #
     def __init__(self):
@@ -128,12 +162,34 @@ class OcDailyTestsExport:
         # Remember: the extract will be reporting values from the day previous.
         reporting_date = extract_date - timedelta(days=1)
 
+        # Distributions
+        tests_series = self.new_tests_time_series.get(reporting_date, [])
+        tests_delayed_1_to_2d = self.get_series_value_by_day_offset_range(tests_series, 1, 2)
+        tests_delayed_3_to_4d = self.get_series_value_by_day_offset_range(tests_series, 3, 4)
+        tests_delayed_5_to_7d = self.get_series_value_by_day_offset_range(tests_series, 5, 6)
+        tests_delayed_8_to_14d = self.get_series_value_by_day_offset_range(tests_series, 8, 14)
+        tests_delayed_15d_plus = self.get_series_value_by_day_offset_range(tests_series, 15, -1)
+
+        def avg_delay(series):
+            tests = []
+            test_delay_days = []
+            for n, count in enumerate(series):
+                delay = n + 1
+                if count > 0:
+                    tests.append(count)
+                    test_delay_days.append(count * delay)
+
+            if sum(tests) < 1:
+                return 0
+
+            return sum(test_delay_days) / sum(tests)
+
         return [
             reporting_date,
 
             # Delays
-            '7d Avg Test Delay (Days)',
-            'Effective Reporting Date',
+            avg_delay(tests_series),
+            reporting_date - timedelta(days=avg_delay(tests_series)),
             extract.oldest_updated_admin_test,
 
             # Test Counts
@@ -152,15 +208,85 @@ class OcDailyTestsExport:
             latest_extract.dated_7d_avg_spec_positive_rate.get(reporting_date, 'N/A'),
             latest_extract.dated_7d_avg_positive_case_rate.get(reporting_date, 'N/A'),
 
-            # Delay Distributions
-            'Tests Delayed 1-2d',
-            'Tests Delayed 3-4d',
-            'Tests Delayed 5-7d',
-            'Tests Delayed 8-14d',
-            'Tests Delayed 15+d',
+            # Delay Distributions for Tests
+            tests_delayed_1_to_2d,
+            tests_delayed_3_to_4d,
+            tests_delayed_5_to_7d,
+            tests_delayed_8_to_14d,
+            tests_delayed_15d_plus,
+
+            # Delay Distributions for Positive Tests
             'Pos Tests Delayed 1-2d',
             'Pos Tests Delayed 3-4d',
             'Pos Tests Delayed 5-7d',
             'Pos Tests Delayed 8-14d',
             'Pos Tests Delayed 15+d'
         ]
+
+    def get_series_value_by_day_offset_range(self, series, start, end):
+        index = start - 1
+        if len(series) >= start:
+            subset = series[index:end]
+            return sum(subset)
+        else:
+            return None
+
+    def extract_total_tests_time_series_for_date(self, dated):
+        """Extract all total tests values ranging from dated to last daily extract.
+        """
+        series = []
+        num_days = (self.end_date - dated).days
+
+        for n in range(num_days):
+            # Remember offset since tests are reported next day
+            next_day = n + 1
+            extract_date = dated + timedelta(next_day)
+            extract = self.daily_extracts[extract_date]
+            total_tests = extract.admin_tests.get(dated)
+            series.append(int(total_tests))
+
+        return series
+
+    def extract_new_tests_time_series_for_date(self, dated):
+        series = []
+        total_tests_series = self.total_tests_time_series.get(dated)
+
+        for n, total_tests in enumerate(total_tests_series):
+            if n == 0:
+                series.append(total_tests)
+                continue
+
+            prev = total_tests_series[n-1]
+            new_tests = total_tests - prev
+            series.append(int(new_tests))
+
+        return series
+
+    def extract_total_positives_time_series_for_date(self, dated):
+        series = []
+        num_days = (self.end_date - dated).days
+
+        for n in range(num_days):
+            # Remember offset since tests are reported next day
+            next_day = n + 1
+            extract_date = dated + timedelta(next_day)
+            extract = self.daily_extracts[extract_date]
+            total_tests = extract.positive_tests.get(dated)
+            series.append(int(total_tests))
+
+        return series
+
+    def extract_new_positives_time_series_for_date(self, dated):
+        series = []
+        totals_series = self.total_positives_time_series.get(dated)
+
+        for n, totals in enumerate(totals_series):
+            if n == 0:
+                series.append(totals)
+                continue
+
+            prev = totals_series[n-1]
+            new_positives = totals - prev
+            series.append(int(new_positives))
+
+        return series

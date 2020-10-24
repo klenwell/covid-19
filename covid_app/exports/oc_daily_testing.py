@@ -162,34 +162,33 @@ class OcDailyTestsExport:
         # Remember: the extract will be reporting values from the day previous.
         reporting_date = extract_date - timedelta(days=1)
 
-        # Distributions
+        # Test Series
         tests_series = self.new_tests_time_series.get(reporting_date, [])
+        pos_series = self.new_positives_time_series.get(reporting_date, [])
+
+        # Delays
+        daily_avg_delay = self.average_delay_for_series(tests_series)
+        effective_reporting_date = reporting_date - timedelta(days=daily_avg_delay)
+
+        # Distributions
         tests_delayed_1_to_2d = self.get_series_value_by_day_offset_range(tests_series, 1, 2)
         tests_delayed_3_to_4d = self.get_series_value_by_day_offset_range(tests_series, 3, 4)
         tests_delayed_5_to_7d = self.get_series_value_by_day_offset_range(tests_series, 5, 6)
         tests_delayed_8_to_14d = self.get_series_value_by_day_offset_range(tests_series, 8, 14)
         tests_delayed_15d_plus = self.get_series_value_by_day_offset_range(tests_series, 15, -1)
 
-        def avg_delay(series):
-            tests = []
-            test_delay_days = []
-            for n, count in enumerate(series):
-                delay = n + 1
-                if count > 0:
-                    tests.append(count)
-                    test_delay_days.append(count * delay)
-
-            if sum(tests) < 1:
-                return 0
-
-            return sum(test_delay_days) / sum(tests)
+        pos_delayed_1_to_2d = self.get_series_value_by_day_offset_range(pos_series, 1, 2)
+        pos_delayed_3_to_4d = self.get_series_value_by_day_offset_range(pos_series, 3, 4)
+        pos_delayed_5_to_7d = self.get_series_value_by_day_offset_range(pos_series, 5, 6)
+        pos_delayed_8_to_14d = self.get_series_value_by_day_offset_range(pos_series, 8, 14)
+        pos_delayed_15d_plus = self.get_series_value_by_day_offset_range(pos_series, 15, -1)
 
         return [
             reporting_date,
 
             # Delays
-            avg_delay(tests_series),
-            reporting_date - timedelta(days=avg_delay(tests_series)),
+            daily_avg_delay,
+            effective_reporting_date,
             extract.oldest_updated_admin_test,
 
             # Test Counts
@@ -216,12 +215,27 @@ class OcDailyTestsExport:
             tests_delayed_15d_plus,
 
             # Delay Distributions for Positive Tests
-            'Pos Tests Delayed 1-2d',
-            'Pos Tests Delayed 3-4d',
-            'Pos Tests Delayed 5-7d',
-            'Pos Tests Delayed 8-14d',
-            'Pos Tests Delayed 15+d'
+            pos_delayed_1_to_2d,
+            pos_delayed_3_to_4d,
+            pos_delayed_5_to_7d,
+            pos_delayed_8_to_14d,
+            pos_delayed_15d_plus
         ]
+
+    def average_delay_for_series(self, series):
+        tests = []
+        test_delay_days = []
+
+        for n, count in enumerate(series):
+            delay = n + 1
+            if count > 0:
+                tests.append(count)
+                test_delay_days.append(count * delay)
+
+        if sum(tests) < 1:
+            return 0
+
+        return sum(test_delay_days) / sum(tests)
 
     def get_series_value_by_day_offset_range(self, series, start, end):
         index = start - 1

@@ -4,6 +4,9 @@ OC Daily Testing Export
 For info on OC HCA data sources, see:
 https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_pcr_csv/FeatureServer/0
 """
+#
+# Imports
+#
 from os.path import join as path_join
 from functools import cached_property
 import csv
@@ -13,6 +16,9 @@ from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.daily_archive_extract import OcDailyArchiveExtract
 
 
+#
+# Constants
+#
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 EXPORT_FILE_NAME = 'oc-hca-testing.csv'
 
@@ -29,13 +35,13 @@ CSV_HEADER = [
 
     # Test Counts
     'Tests Reported (Repo)',
-    'Test Specs Reported',
-    'Test Specs Adminstered',
+    'Test Specs Repo',
+    'Test Specs Admin',
 
     # Positive Counts
-    'Pos Specs Reported',
-    'New Cases Reported',
-    'Pos Specs Adminstered',
+    'Pos Specs Repo',
+    'New Cases Repo',
+    'Pos Specs Admin',
 
     # Averages
     '7d Avg Test Specs',
@@ -58,10 +64,14 @@ CSV_HEADER = [
 ]
 
 
+#
+# Export Class
+#
 class OcDailyTestsExport:
     #
     # Properties
     #
+    # Dates
     @cached_property
     def start_date(self):
         return datetime.strptime(START_DATE, '%Y-%m-%d').date()
@@ -69,6 +79,10 @@ class OcDailyTestsExport:
     @cached_property
     def end_date(self):
         return self.yesterday
+
+    @property
+    def yesterday(self):
+        return date.today() - timedelta(days=1)
 
     @cached_property
     def dates(self):
@@ -81,6 +95,12 @@ class OcDailyTestsExport:
 
         return dates
 
+    # File Info
+    @cached_property
+    def csv_path(self):
+        return path_join(OC_DATA_PATH, EXPORT_FILE_NAME)
+
+    # Extracts
     @cached_property
     def daily_extracts(self):
         dated_extracts = {}
@@ -95,17 +115,7 @@ class OcDailyTestsExport:
     def most_recent_daily_extract(self):
         return self.daily_extracts[self.end_date]
 
-    @cached_property
-    def csv_path(self):
-        return path_join(OC_DATA_PATH, EXPORT_FILE_NAME)
-
-    @property
-    def yesterday(self):
-        return date.today() - timedelta(days=1)
-
-    #
     # Time Series
-    #
     @cached_property
     def total_tests_time_series(self):
         # Note: The extract for a given date will only report tests through the previous day.
@@ -137,7 +147,7 @@ class OcDailyTestsExport:
         return time_series
 
     #
-    # Instance Method
+    # Instance Methods
     #
     def __init__(self):
         pass

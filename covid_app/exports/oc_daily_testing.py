@@ -35,13 +35,11 @@ CSV_HEADER = [
     'Oldest Test Reported',
 
     # Test Counts
-    'Tests Reported (Repo)',
     'Test Specs Repo',
     'Test Specs Admin',
 
     # Positive Counts
     'Pos Specs Repo',
-    'New Cases Repo',
     'Pos Specs Admin',
 
     # Averages
@@ -63,7 +61,11 @@ CSV_HEADER = [
     '3-4d',
     '5-7d',
     '8-14d',
-    '15+d'
+    '15+d',
+
+    # Reporting Columns
+    'Tests Reported (Repo)',
+    'New Cases Repo'
 ]
 
 
@@ -222,13 +224,11 @@ class OcDailyTestsExport:
             extract.oldest_updated_admin_test,
 
             # Test Counts
-            extract.reported_new_tests,
             extract.reported_total_admin_tests,
             self.most_recent_daily_extract.admin_tests.get(reporting_date, 'N/A'),
 
             # Positive Counts
             extract.reported_total_positive_tests,
-            extract.reported_new_cases_for_yesterday,
             latest_extract.positive_tests.get(reporting_date, 'N/A'),
 
             # Averages
@@ -251,7 +251,11 @@ class OcDailyTestsExport:
             pos_delayed_3_to_4d,
             pos_delayed_5_to_7d,
             pos_delayed_8_to_14d,
-            pos_delayed_15d_plus
+            pos_delayed_15d_plus,
+
+            # Reporting Columns
+            extract.reported_new_tests,
+            extract.reported_new_cases_for_yesterday
         ]
 
     def average_delay_for_series(self, series):

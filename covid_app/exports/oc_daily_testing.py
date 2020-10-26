@@ -46,6 +46,7 @@ CSV_HEADER = [
 
     # Averages
     '7d Avg Test Delay',
+    '7d Avg Pos Delay',
     '7d Avg Test Specs',
     '7d Avg Pos Specs',
     '7d Avg Spec Pos Rate',
@@ -197,6 +198,7 @@ class OcDailyTestsExport:
         daily_avg_delay = self.average_delay_for_series(tests_series)
         effective_reporting_date = reporting_date - timedelta(days=daily_avg_delay)
         avg_test_delay_7d = self.average_7d_test_delay_for_date(reporting_date)
+        avg_pos_delay_7d = self.average_7d_pos_test_delay_for_date(reporting_date)
 
         # Distributions
         tests_delayed_1_to_2d = self.get_series_value_by_day_offset_range(tests_series, 1, 2)
@@ -231,6 +233,7 @@ class OcDailyTestsExport:
 
             # Averages
             avg_test_delay_7d,
+            avg_pos_delay_7d,
             latest_extract.dated_7d_avg_test_specs.get(reporting_date, 'N/A'),
             latest_extract.dated_7d_avg_positive_specs.get(reporting_date, 'N/A'),
             latest_extract.dated_7d_avg_spec_positive_rate.get(reporting_date, 'N/A'),
@@ -273,6 +276,25 @@ class OcDailyTestsExport:
         for n in range(7):
             dated = reporting_date - timedelta(days=n)
             tests_series = self.new_tests_time_series.get(dated)
+
+            if not tests_series:
+                return None
+
+            for n, count in enumerate(tests_series):
+                delay = n + 1
+                if count > 0:
+                    tests.append(count)
+                    test_delay_days.append(count * delay)
+
+        return sum(test_delay_days) / sum(tests)
+
+    def average_7d_pos_test_delay_for_date(self, reporting_date):
+        tests = []
+        test_delay_days = []
+
+        for n in range(7):
+            dated = reporting_date - timedelta(days=n)
+            tests_series = self.new_positives_time_series.get(dated)
 
             if not tests_series:
                 return None

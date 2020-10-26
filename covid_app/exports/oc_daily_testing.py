@@ -7,7 +7,8 @@ https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_pcr_c
 #
 # Imports
 #
-from os.path import join as path_join
+from os import listdir
+from os.path import join as path_join, isfile
 from functools import cached_property
 import csv
 from datetime import date, datetime, timedelta
@@ -78,7 +79,22 @@ class OcDailyTestsExport:
 
     @cached_property
     def end_date(self):
-        return self.yesterday
+        return max(self.extract_dates)
+
+    @cached_property
+    def extract_dates(self):
+        extract_dates = []
+        archive_path = path_join(OC_DATA_PATH, 'daily')
+
+        for fname in listdir(archive_path):
+            extract_path = path_join(archive_path, fname)
+
+            if isfile(extract_path):
+                yyyymmdd = ''.join(c for c in fname if c.isdigit())
+                extract_date = datetime.strptime(yyyymmdd, '%Y%m%d').date()
+                extract_dates.append(extract_date)
+
+        return extract_dates
 
     @property
     def yesterday(self):

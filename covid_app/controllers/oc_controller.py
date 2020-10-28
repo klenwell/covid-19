@@ -3,6 +3,7 @@ from cement import Controller
 from cement import ex as expose
 
 from covid_app.services.oc_health_service import OCHealthService
+from covid_app.exports.oc_daily_testing import OcDailyTestsExport
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
@@ -18,6 +19,27 @@ class OcController(Controller):
         stacked_on = 'base'
         stacked_type = 'nested'
 
+    #
+    # Daily Commands
+    #
+    # python app.py oc daily
+    @expose(help="Export data from OC HCA site to csv file.")
+    def daily(self):
+        service = OCHealthService.export_daily_csv()
+        vars = {'service': service}
+        self.app.render(vars, 'oc/daily.jinja2')
+
+    # python app.py oc daily-tests
+    @expose(help="Export daily OC HCA testing data to csv file.")
+    def daily_tests(self):
+        export = OcDailyTestsExport()
+        export.to_csv()
+        vars = {'export': export}
+        self.app.render(vars, 'oc/daily-tests.jinja2')
+
+    #
+    # Analytics
+    #
     # python app.py oc analyze-daily-tests YEAR MONTH
     @expose(
         help="Analyze test patterns in OC for given month year.",
@@ -40,26 +62,6 @@ class OcController(Controller):
             'analysis': analysis
         }
         self.app.render(vars, 'oc/daily-testing-analysis.jinja2')
-
-    # python app.py oc daily
-    @expose(help="Export data from OC HCA site to csv file.")
-    def daily(self):
-        service = OCHealthService.export_daily_csv()
-        vars = {'service': service}
-        self.app.render(vars, 'oc/daily.jinja2')
-
-    # python app.py oc archive -a https://web.archive.org/web/20200503202327/https://occovid19.ochealthinfo.com/coronavirus-in-oc # noqa: E501
-    @expose(
-        help="Export data from archived version of OC HCA site to csv file.",
-        arguments=[
-            (['-a'], dict(dest='archive', action='store', help='URL for archived web page.'))
-        ]
-    )
-    def archive(self):
-        archive_url = self.app.pargs.archive
-        csv = OCHealthService.export_archive(archive_url)
-        vars = {'csv': csv}
-        self.app.render(vars, 'oc_daily.jinja2')
 
     # python app.py oc analyze-by-day
     @expose(help="Generate analysis of OC HCA data by day-of-week.")
@@ -155,6 +157,22 @@ class OcController(Controller):
             'analysis': analysis
         }
         self.app.render(vars, 'oc/monthly-tests-analysis.jinja2')
+
+    #
+    # Other Commands
+    #
+    # python app.py oc archive -a https://web.archive.org/web/20200503202327/https://occovid19.ochealthinfo.com/coronavirus-in-oc # noqa: E501
+    @expose(
+        help="Export data from archived version of OC HCA site to csv file.",
+        arguments=[
+            (['-a'], dict(dest='archive', action='store', help='URL for archived web page.'))
+        ]
+    )
+    def archive(self):
+        archive_url = self.app.pargs.archive
+        csv = OCHealthService.export_archive(archive_url)
+        vars = {'csv': csv}
+        self.app.render(vars, 'oc_daily.jinja2')
 
     # python app.py oc dev
     @expose(help="For rapid testing and development.")

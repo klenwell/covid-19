@@ -78,6 +78,13 @@ class OcController(Controller):
         }
         print(vars)
 
+    # python app.py oc vs-sd
+    @expose(
+        aliases=['vs-sd'],
+        help="Analyze hospitalizations based on data.")
+    def compare_san_diego_county(self):
+        print('TODO')
+
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):

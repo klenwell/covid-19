@@ -36,21 +36,21 @@ CSV_HEADER = [
     '(Blank)',
 
     # 7-Day Averages / Diffs
-    'SD Tests 7d',
     'OC Tests 7d',
-    'SD/OC Tests Diff',
+    'SD Tests 7d',
+    'OC/SD Tests Diff',
 
     '(Blank)',
 
-    'SD Cases 7d',
     'OC Cases 7d',
-    'SD/OC Cases Diff',
+    'SD Cases 7d',
+    'OC/SD Cases Diff',
 
     '(Blank)',
 
-    'SD Case Pos Rate 7d',
     'OC Case Pos Rate 7d',
-    'SD/OC Case Pos Diff'
+    'SD Case Pos Rate 7d',
+    'OC/SD Case Pos Diff'
 ]
 
 
@@ -95,6 +95,51 @@ class OrangeCoVsSanDiegoAnalysis:
     def csv_path(self):
         return path_join(OC_ANALYTICS_PATH, EXPORT_FILE_NAME)
 
+    # Per 100k data
+    @cached_property
+    def oc_tests_per_100k(self):
+        date_series = {}
+
+        for dated in self.dates:
+            tests = self.oc_extract.new_tests_reported[dated]
+            per_100k = tests / OC_POPULATION * 100000
+            date_series[dated] = per_100k
+
+        return date_series
+
+    @cached_property
+    def sd_tests_per_100k(self):
+        date_series = {}
+
+        for dated in self.dates:
+            tests = self.sd_extract.new_tests_reported[dated]
+            per_100k = tests / SD_POPULATION * 100000
+            date_series[dated] = per_100k
+
+        return date_series
+
+    @cached_property
+    def oc_cases_per_100k(self):
+        date_series = {}
+
+        for dated in self.dates:
+            cases = self.oc_extract.new_cases[dated]
+            per_100k = cases / OC_POPULATION * 100000
+            date_series[dated] = per_100k
+
+        return date_series
+
+    @cached_property
+    def sd_cases_per_100k(self):
+        date_series = {}
+
+        for dated in self.dates:
+            cases = self.sd_extract.new_cases[dated]
+            per_100k = cases / SD_POPULATION * 100000
+            date_series[dated] = per_100k
+
+        return date_series
+
     #
     # Instance Methods
     #
@@ -118,15 +163,31 @@ class OrangeCoVsSanDiegoAnalysis:
         def format_1f(value):
             return '{0:.1f}'.format(value)
 
-        oc_tests = self.oc_extract.new_tests_reported.get(dated)
-        sd_tests = self.sd_extract.new_tests_reported.get(dated)
-        oc_tests_per_100k = oc_tests / OC_POPULATION * 100000
-        sd_tests_per_100k = sd_tests / SD_POPULATION * 100000
+        def format_pct_1f(value):
+            return '{0:.1f}%'.format(value * 100)
 
-        oc_cases = self.oc_extract.new_cases.get(dated)
-        sd_cases = self.sd_extract.new_cases.get(dated)
-        oc_cases_per_100k = oc_cases / OC_POPULATION * 100000
-        sd_cases_per_100k = sd_cases / SD_POPULATION * 100000
+        def diff(v1, v2):
+            diffed = (v1 - v2) / v2
+            return '{0:+.1f}%'.format(diffed * 100)
+
+        oc_tests_per_100k = self.oc_tests_per_100k[dated]
+        sd_tests_per_100k = self.sd_tests_per_100k[dated]
+        oc_cases_per_100k = self.oc_cases_per_100k[dated]
+        sd_cases_per_100k = self.sd_cases_per_100k[dated]
+
+        # Use extract values for avg rather than per_100k to avoid None values.
+        oc_tests_7d_avg = self.compute_7d_avg(self.oc_extract.new_tests_reported, dated)
+        oc_tests_7d_avg_per_100k = oc_tests_7d_avg / OC_POPULATION * 100000
+        sd_tests_7d_avg = self.compute_7d_avg(self.sd_extract.new_tests_reported, dated)
+        sd_tests_7d_avg_per_100k = sd_tests_7d_avg / SD_POPULATION * 100000
+
+        oc_cases_7d_avg = self.compute_7d_avg(self.oc_extract.new_cases, dated)
+        oc_cases_7d_avg_per_100k = oc_cases_7d_avg / OC_POPULATION * 100000
+        sd_cases_7d_avg = self.compute_7d_avg(self.sd_extract.new_cases, dated)
+        sd_cases_7d_avg_per_100k = sd_cases_7d_avg / SD_POPULATION * 100000
+
+        oc_pos_rate_7d_avg = oc_cases_7d_avg / oc_tests_7d_avg
+        sd_pos_rate_7d_avg = sd_cases_7d_avg / sd_tests_7d_avg
 
         return [
             dated,
@@ -140,19 +201,33 @@ class OrangeCoVsSanDiegoAnalysis:
             '',
 
             # 7-Day Averages / Diffs
-            'SD Tests 7d',
-            'OC Tests 7d',
-            'SD/OC Tests Diff',
+            format_1f(oc_tests_7d_avg_per_100k),
+            format_1f(sd_tests_7d_avg_per_100k),
+            diff(oc_tests_7d_avg_per_100k, sd_tests_7d_avg_per_100k),
 
             '',
 
-            'SD Cases 7d',
-            'OC Cases 7d',
-            'SD/OC Cases Diff',
+            format_1f(oc_cases_7d_avg_per_100k),
+            format_1f(sd_cases_7d_avg_per_100k),
+            diff(oc_cases_7d_avg_per_100k, sd_cases_7d_avg_per_100k),
 
             '',
 
-            'SD Case Pos Rate 7d',
-            'OC Case Pos Rate 7d',
-            'SD/OC Case Pos Diff'
+            format_pct_1f(oc_pos_rate_7d_avg),
+            format_pct_1f(sd_pos_rate_7d_avg),
+            diff(oc_pos_rate_7d_avg, sd_pos_rate_7d_avg)
         ]
+
+    def compute_7d_avg(self, dataset, dated):
+        values = []
+
+        for days_ago in range(7):
+            on_date = dated - timedelta(days=days_ago)
+            value = dataset.get(on_date)
+
+            if value is None:
+                return None
+
+            values.append(value)
+
+        return sum(values) / len(values)

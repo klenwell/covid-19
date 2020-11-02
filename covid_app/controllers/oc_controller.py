@@ -6,6 +6,7 @@ from covid_app.services.oc_health_service import OCHealthService
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
+from covid_app.analytics.oc_vs_sd_analysis import OrangeCoVsSanDiegoAnalysis
 
 
 class OcController(Controller):
@@ -83,7 +84,15 @@ class OcController(Controller):
         aliases=['vs-sd'],
         help="Analyze hospitalizations based on data.")
     def compare_san_diego_county(self):
-        print('TODO')
+        analysis = OrangeCoVsSanDiegoAnalysis()
+        csv_path = analysis.to_csv()
+
+        # Render view
+        vars = {
+            'csv_path': csv_path,
+            'analysis': analysis
+        }
+        print(vars)
 
     # python app.py oc dev
     @expose(help="For rapid testing and development.")

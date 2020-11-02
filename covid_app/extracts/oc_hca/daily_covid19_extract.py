@@ -14,6 +14,7 @@ from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCov
 
 
 EXTRACT_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
+OC_POPULATION = 3222498
 
 
 class ExtractError(Exception):

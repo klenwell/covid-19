@@ -1,9 +1,12 @@
+from config.app import DATA_ROOT
+from os.path import join as path_join
+
 from cement import Controller
 from cement import ex as expose
 
-
 from ..services.mi_health_service import MiHealthService
 from ..services.us_health_service import USHealthService
+from ..extracts.san_diego_county import SanDiegoCountyDailyExtract
 
 
 class BaseController(Controller):
@@ -21,6 +24,16 @@ class BaseController(Controller):
     def us_daily(self):
         result = USHealthService.export_daily_csv()
         print(result)
+
+    # python app.py sd-daily
+    @expose(help="Export San Diego data to csv file.")
+    def sd_daily(self):
+        file_name = 'sd-county-daily-export.csv'
+        csv_path = path_join(DATA_ROOT, 'ca', file_name)
+
+        extract = SanDiegoCountyDailyExtract()
+        csv_path = extract.to_csv(csv_path)
+        print(csv_path)
 
     # python app.py interactive
     # This command can be used for testing and development.
@@ -43,7 +56,6 @@ class BaseController(Controller):
         rt_data = plot_data[-1]
 
         print(rt_data['x'][-40], rt_data['y'][-40])
-
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

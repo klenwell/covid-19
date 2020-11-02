@@ -1,215 +1,215 @@
-Date,OC Tests per 100k,SD Tests per 100k,OC Cases per 100k,SD Cases per 100k,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-31,285.3,284.3,5.1,10.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-30,331.1,385.8,8.6,11.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-29,223.1,449.7,7.1,14.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-28,282.5,399.5,7.2,10.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-27,220.0,333.0,7.9,9.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-26,260.7,313.2,4.7,8.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-25,170.6,234.5,7.7,10.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-24,194.3,324.1,9.8,8.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-23,313.2,323.0,5.0,11.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-22,376.6,400.2,6.6,12.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-21,210.9,588.3,8.1,7.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-20,469.4,313.0,9.4,7.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-19,318.7,265.1,6.3,7.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-18,214.3,265.1,6.1,11.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-17,294.5,581.8,2.6,11.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-16,270.7,581.8,4.7,6.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-15,165.6,201.4,4.7,9.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-14,205.5,249.1,6.6,4.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-13,178.4,289.4,5.5,9.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-12,284.5,301.9,3.6,8.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-11,139.8,226.8,7.6,5.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-10,200.1,295.8,5.8,12.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-09,263.1,340.6,5.0,9.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-08,335.8,1658.0,4.4,10.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-07,219.0,327.0,4.5,8.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-06,188.2,318.0,4.3,10.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-05,164.0,263.2,3.7,4.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-04,105.3,197.0,8.8,6.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-03,171.1,263.5,7.4,7.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-02,312.6,273.9,6.5,12.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-10-01,328.0,276.1,4.9,9.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-30,171.1,350.7,6.0,9.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-29,219.2,320.8,3.4,5.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-28,245.1,269.5,4.1,7.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-27,95.9,180.0,7.6,3.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-26,274.7,256.1,5.1,8.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-25,309.9,231.0,8.8,9.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-24,271.5,231.0,2.6,12.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-23,260.8,407.7,4.8,5.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-22,177.4,152.5,5.6,8.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-21,217.3,243.5,4.3,6.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-20,139.2,190.9,5.9,10.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-19,229.8,272.5,7.0,8.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-18,274.4,277.5,7.7,8.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-17,374.6,306.6,4.3,11.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-16,297.9,284.4,4.2,5.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-15,187.9,258.9,4.7,7.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-14,263.1,178.8,1.4,8.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-13,114.5,177.4,5.3,6.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-12,159.4,248.1,4.6,7.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-11,265.6,255.5,4.4,13.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-10,225.0,275.8,8.7,10.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-09,183.2,249.0,6.0,8.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-08,212.7,203.3,4.7,7.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-07,104.4,141.6,3.5,6.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-06,137.9,203.3,6.9,6.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-05,164.6,127.9,7.8,9.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-04,229.0,223.0,9.7,13.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-03,234.4,226.3,9.3,13.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-02,343.3,270.5,9.8,9.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-09-01,236.0,227.8,8.9,7.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-31,196.7,209.3,2.9,8.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-30,400.8,171.7,7.9,9.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-29,405.6,160.6,12.7,7.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-28,25.2,203.6,10.0,7.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-27,220.1,264.2,11.5,8.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-26,179.0,156.8,13.9,8.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-25,175.3,249.4,10.4,6.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-24,251.6,165.8,11.0,8.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-23,102.6,220.2,4.7,5.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-22,160.2,203.2,15.3,10.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-21,234.6,264.3,11.5,8.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-20,292.6,196.7,13.3,9.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-19,203.1,295.5,9.2,6.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-18,163.9,203.1,8.9,6.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-17,194.9,167.3,6.7,6.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-16,214.3,191.0,10.6,8.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-15,242.7,211.1,15.9,10.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-14,357.3,337.5,21.2,8.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-13,295.2,284.8,10.8,12.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-12,419.1,240.2,7.6,8.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-11,183.6,219.8,32.6,7.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-10,429.4,169.8,27.5,5.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-09,330.8,226.8,17.5,6.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-08,455.1,186.8,10.0,12.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-07,213.2,283.7,1.3,16.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-06,140.3,344.5,18.0,19.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-05,103.3,332.7,2.0,7.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-04,157.5,209.1,7.9,10.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-03,116.5,124.9,13.1,8.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-02,531.7,195.8,17.3,10.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-08-01,98.5,169.4,19.8,7.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-31,197.3,274.4,13.0,15.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-30,180.3,271.6,15.7,11.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-29,-41.5,246.8,13.6,11.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-28,166.5,206.7,5.8,8.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-27,189.3,198.4,8.5,14.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-26,65.7,193.4,13.0,15.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-25,56.7,224.8,18.5,8.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-24,145.5,492.1,22.0,18.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-23,125.2,208.9,28.1,14.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-22,203.0,248.7,23.8,15.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-21,233.7,248.0,30.7,17.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-20,207.4,270.5,17.4,11.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-19,231.0,236.2,12.9,13.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-18,198.2,267.9,21.8,17.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-17,154.4,308.2,12.6,18.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-16,219.9,276.3,27.1,19.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-15,155.5,312.6,28.3,12.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-14,140.3,252.7,26.8,16.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-13,319.3,217.1,16.8,16.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-12,210.7,196.0,25.3,12.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-11,130.3,254.8,38.8,16.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-10,213.8,248.4,35.2,15.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-09,227.0,252.3,40.1,13.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-08,109.0,268.1,41.4,16.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-07,210.6,227.9,31.3,7.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-06,249.4,165.7,31.9,17.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-05,129.0,229.7,20.6,8.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-04,175.3,242.5,12.8,16.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-03,212.9,219.3,22.1,14.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-02,185.0,218.9,20.2,14.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-07-01,217.3,254.9,17.7,17.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-30,240.4,234.4,24.2,14.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-29,307.8,221.1,14.2,9.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-28,189.5,206.9,4.5,14.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-27,246.8,248.7,16.7,14.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-26,49.1,274.7,14.8,13.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-25,39.1,204.4,15.5,13.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-24,94.8,283.7,10.9,10.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-23,133.3,209.1,4.3,9.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-22,124.1,204.3,5.3,5.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-21,126.6,174.7,13.0,9.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-20,162.3,132.2,12.3,9.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-19,151.8,167.6,8.7,4.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-18,156.3,315.8,3.9,7.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-17,160.7,301.6,6.1,7.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-16,125.1,203.2,7.5,3.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-15,120.1,144.9,6.1,3.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-14,130.0,156.0,9.0,5.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-13,118.4,202.2,3.9,3.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-12,146.2,173.2,5.0,5.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-11,111.9,191.2,7.6,4.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-10,131.4,149.7,4.4,4.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-09,113.5,115.4,2.6,3.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-08,96.4,118.7,3.4,3.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-07,103.4,115.1,3.4,4.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-06,112.8,171.7,8.0,3.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-05,146.2,115.7,8.5,4.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-04,149.6,177.8,3.2,7.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-03,103.7,111.3,4.0,4.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-02,90.6,148.0,2.8,3.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-06-01,98.7,118.0,6.2,3.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-31,101.8,109.5,4.7,2.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-30,103.3,117.7,5.3,2.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-29,121.8,128.8,5.1,4.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-28,107.9,138.5,2.7,4.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-27,84.3,110.8,3.5,3.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-26,71.7,90.5,3.3,3.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-25,78.7,117.1,3.7,2.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-24,90.2,110.8,5.3,2.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-23,86.7,136.2,6.3,4.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-22,97.0,113.7,3.2,3.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-21,82.5,121.5,2.9,3.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-20,98.3,141.4,7.4,5.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-19,73.6,143.8,1.8,3.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-18,47.4,78.2,1.4,2.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-17,31.9,102.1,4.6,3.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-16,49.1,130.7,2.7,5.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-15,80.1,134.9,4.5,4.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-14,66.0,121.5,6.7,4.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-13,65.4,119.8,4.7,3.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-12,66.2,106.1,1.7,3.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-11,51.4,73.1,1.6,2.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-10,49.0,79.0,3.6,4.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-09,52.6,103.1,4.4,4.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-08,63.7,101.9,4.3,3.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-07,55.4,107.0,2.6,7.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-06,68.1,99.6,3.8,3.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-05,67.7,67.7,2.0,4.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-04,56.1,69.1,2.6,4.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-03,45.3,38.7,3.2,2.8,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-02,51.1,68.2,2.8,2.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-05-01,64.2,72.0,4.6,3.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-30,47.8,78.6,3.8,4.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-29,50.0,69.0,3.1,4.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-28,41.6,58.9,1.0,3.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-27,32.6,76.2,1.5,5.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-26,36.0,24.7,3.0,2.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-25,37.2,38.9,3.7,3.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-24,42.8,54.7,0.9,3.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-23,38.7,93.5,2.1,5.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-22,41.6,67.5,2.0,4.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-21,35.5,45.4,0.7,1.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-20,23.1,30.4,1.1,3.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-19,24.5,39.2,2.1,1.7,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-18,27.6,28.6,1.7,1.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-17,32.2,41.7,2.2,1.6,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-16,33.5,33.4,1.6,2.1,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-15,31.3,37.4,2.6,2.2,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-14,23.4,25.0,0.7,2.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-13,15.3,27.5,0.2,2.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-12,18.8,26.9,1.5,1.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-11,27.9,24.1,2.5,1.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-10,29.5,32.3,1.8,2.0,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-09,23.7,37.6,2.0,1.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-08,30.1,27.6,2.8,2.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-07,23.4,25.2,1.2,2.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-06,15.8,55.3,1.5,1.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-05,19.5,24.8,1.5,2.3,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-04,22.7,24.2,2.2,3.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-03,27.7,30.7,1.7,2.9,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-02,36.5,56.4,1.7,4.4,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
-2020-04-01,33.5,78.1,3.2,3.5,(Blank),SD Tests 7d,OC Tests 7d,SD/OC Tests Diff,SD Cases 7d,OC Cases 7d,SD/OC Cases Diff,SD Case Pos Rate 7d,OC Case Pos Rate 7d,SD/OC Case Pos Diff
+Date,OC Tests per 100k,SD Tests per 100k,OC Cases per 100k,SD Cases per 100k,(Blank),OC Tests 7d,SD Tests 7d,OC/SD Tests Diff,(Blank),OC Cases 7d,SD Cases 7d,OC/SD Cases Diff,(Blank),OC Case Pos Rate 7d,SD Case Pos Rate 7d,OC/SD Case Pos Diff
+2020-10-31,285.3,284.3,5.1,10.5,,253.3,342.9,-26.1%,,6.9,10.8,-36.0%,,2.7%,3.1%,-13.4%
+2020-10-30,331.1,385.8,8.6,11.4,,240.3,348.5,-31.0%,,7.6,10.4,-27.4%,,3.2%,3.0%,+5.3%
+2020-10-29,223.1,449.7,7.1,14.1,,237.8,339.6,-30.0%,,7.1,10.4,-32.4%,,3.0%,3.1%,-3.4%
+2020-10-28,282.5,399.5,7.2,10.7,,259.7,332.5,-21.9%,,7.0,10.3,-31.9%,,2.7%,3.1%,-12.8%
+2020-10-27,220.0,333.0,7.9,9.9,,249.5,359.5,-30.6%,,7.1,9.7,-26.9%,,2.9%,2.7%,+5.3%
+2020-10-26,260.7,313.2,4.7,8.1,,285.1,356.6,-20.1%,,7.3,9.5,-22.5%,,2.6%,2.7%,-3.0%
+2020-10-25,170.6,234.5,7.7,10.7,,293.4,349.7,-16.1%,,7.6,9.4,-19.9%,,2.6%,2.7%,-4.6%
+2020-10-24,194.3,324.1,9.8,8.1,,299.6,354.1,-15.4%,,7.3,9.5,-23.1%,,2.4%,2.7%,-9.1%
+2020-10-23,313.2,323.0,5.0,11.6,,313.9,390.9,-19.7%,,6.3,10.0,-36.8%,,2.0%,2.6%,-21.3%
+2020-10-22,376.6,400.2,6.6,12.9,,307.9,427.9,-28.1%,,6.3,9.2,-31.9%,,2.0%,2.1%,-5.3%
+2020-10-21,210.9,588.3,8.1,7.0,,277.7,399.5,-30.5%,,6.0,8.7,-30.9%,,2.2%,2.2%,-0.7%
+2020-10-20,469.4,313.0,9.4,7.9,,277.0,351.0,-21.1%,,5.8,8.3,-30.3%,,2.1%,2.4%,-11.6%
+2020-10-19,318.7,265.1,6.3,7.9,,235.4,347.7,-32.3%,,5.2,8.5,-38.2%,,2.2%,2.4%,-8.7%
+2020-10-18,214.3,265.1,6.1,11.4,,230.5,352.9,-34.7%,,4.8,8.5,-43.1%,,2.1%,2.4%,-12.8%
+2020-10-17,294.5,581.8,2.6,11.2,,219.9,347.5,-36.7%,,5.1,7.7,-34.5%,,2.3%,2.2%,+3.6%
+2020-10-16,270.7,581.8,4.7,6.0,,206.4,306.6,-32.7%,,5.5,7.9,-30.0%,,2.7%,2.6%,+3.9%
+2020-10-15,165.6,201.4,4.7,9.3,,205.3,272.2,-24.6%,,5.6,8.4,-33.7%,,2.7%,3.1%,-12.1%
+2020-10-14,205.5,249.1,6.6,4.3,,229.6,480.2,-52.2%,,5.5,8.6,-35.8%,,2.4%,1.8%,+34.2%
+2020-10-13,178.4,289.4,5.5,9.1,,231.5,491.4,-52.9%,,5.2,9.2,-43.6%,,2.2%,1.9%,+19.7%
+2020-10-12,284.5,301.9,3.6,8.3,,232.9,495.4,-53.0%,,5.0,9.4,-46.8%,,2.2%,1.9%,+13.2%
+2020-10-11,139.8,226.8,7.6,5.8,,215.7,489.9,-56.0%,,5.0,8.9,-43.6%,,2.3%,1.8%,+28.0%
+2020-10-10,200.1,295.8,5.8,12.2,,210.8,485.7,-56.6%,,5.2,9.1,-42.5%,,2.5%,1.9%,+32.5%
+2020-10-09,263.1,340.6,5.0,9.6,,206.6,481.0,-57.0%,,5.4,8.3,-34.6%,,2.6%,1.7%,+52.3%
+2020-10-08,335.8,1658.0,4.4,10.7,,213.7,471.5,-54.7%,,5.6,8.7,-35.0%,,2.6%,1.8%,+43.3%
+2020-10-07,219.0,327.0,4.5,8.7,,212.6,274.1,-22.4%,,5.7,8.5,-32.5%,,2.7%,3.1%,-13.0%
+2020-10-06,188.2,318.0,4.3,10.6,,205.8,277.5,-25.8%,,5.9,8.5,-30.4%,,2.9%,3.1%,-6.1%
+2020-10-05,164.0,263.2,3.7,4.8,,210.2,277.9,-24.4%,,5.8,7.9,-26.0%,,2.8%,2.8%,-2.1%
+2020-10-04,105.3,197.0,8.8,6.7,,221.8,278.8,-20.5%,,5.9,8.2,-28.7%,,2.6%,3.0%,-10.4%
+2020-10-03,171.1,263.5,7.4,7.1,,220.4,276.4,-20.2%,,5.7,7.8,-26.9%,,2.6%,2.8%,-8.4%
+2020-10-02,312.6,273.9,6.5,12.3,,235.2,275.3,-14.6%,,5.4,8.0,-32.7%,,2.3%,2.9%,-21.2%
+2020-10-01,328.0,276.1,4.9,9.2,,234.8,269.2,-12.8%,,5.7,7.7,-25.5%,,2.4%,2.8%,-14.6%
+2020-09-30,171.1,350.7,6.0,9.1,,226.8,262.8,-13.7%,,5.4,8.1,-33.5%,,2.4%,3.1%,-22.9%
+2020-09-29,219.2,320.8,3.4,5.8,,239.6,270.9,-11.6%,,5.2,7.5,-30.6%,,2.2%,2.8%,-21.6%
+2020-09-28,245.1,269.5,4.1,7.5,,233.6,246.8,-5.4%,,5.5,7.9,-29.7%,,2.4%,3.2%,-25.7%
+2020-09-27,95.9,180.0,7.6,3.7,,229.6,243.1,-5.6%,,5.6,7.7,-28.3%,,2.4%,3.2%,-24.1%
+2020-09-26,274.7,256.1,5.1,8.4,,235.8,244.7,-3.6%,,5.3,8.7,-39.1%,,2.2%,3.6%,-36.8%
+2020-09-25,309.9,231.0,8.8,9.9,,229.4,247.0,-7.1%,,5.6,8.7,-36.1%,,2.4%,3.5%,-31.1%
+2020-09-24,271.5,231.0,2.6,12.1,,224.3,253.7,-11.6%,,5.4,8.5,-36.5%,,2.4%,3.4%,-28.2%
+2020-09-23,260.8,407.7,4.8,5.1,,239.1,264.5,-9.6%,,5.7,8.5,-33.0%,,2.4%,3.2%,-25.9%
+2020-09-22,177.4,152.5,5.6,8.3,,244.4,246.9,-1.0%,,5.6,8.5,-34.2%,,2.3%,3.4%,-33.5%
+2020-09-21,217.3,243.5,4.3,6.7,,245.9,262.1,-6.2%,,5.4,8.4,-35.3%,,2.2%,3.2%,-31.1%
+2020-09-20,139.2,190.9,5.9,10.4,,252.4,252.8,-0.2%,,5.0,8.7,-42.4%,,2.0%,3.4%,-42.3%
+2020-09-19,229.8,272.5,7.0,8.5,,248.9,250.9,-0.8%,,4.9,8.1,-39.3%,,2.0%,3.2%,-38.8%
+2020-09-18,274.4,277.5,7.7,8.6,,238.8,247.4,-3.5%,,4.6,8.0,-43.0%,,1.9%,3.3%,-41.0%
+2020-09-17,374.6,306.6,4.3,11.6,,237.6,244.2,-2.7%,,4.1,8.7,-52.8%,,1.7%,3.6%,-51.5%
+2020-09-16,297.9,284.4,4.2,5.2,,216.2,239.9,-9.9%,,4.7,8.6,-44.9%,,2.2%,3.6%,-38.9%
+2020-09-15,187.9,258.9,4.7,7.9,,199.8,234.8,-14.9%,,5.0,9.1,-44.9%,,2.5%,3.9%,-35.3%
+2020-09-14,263.1,178.8,1.4,8.8,,203.4,226.8,-10.4%,,5.0,9.0,-44.4%,,2.5%,4.0%,-38.0%
+2020-09-13,114.5,177.4,5.3,6.2,,180.7,221.5,-18.4%,,5.3,8.6,-38.6%,,2.9%,3.9%,-24.7%
+2020-09-12,159.4,248.1,4.6,7.9,,184.0,225.2,-18.3%,,5.5,8.7,-36.1%,,3.0%,3.9%,-21.8%
+2020-09-11,265.6,255.5,4.4,13.3,,184.8,208.1,-11.2%,,6.0,8.9,-32.3%,,3.3%,4.3%,-23.7%
+2020-09-10,225.0,275.8,8.7,10.8,,179.5,203.4,-11.7%,,6.8,8.9,-23.6%,,3.8%,4.4%,-13.5%
+2020-09-09,183.2,249.0,6.0,8.5,,180.9,196.4,-7.9%,,6.8,9.3,-26.0%,,3.8%,4.7%,-19.7%
+2020-09-08,212.7,203.3,4.7,7.4,,203.8,199.4,+2.2%,,7.4,9.4,-21.6%,,3.6%,4.7%,-23.3%
+2020-09-07,104.4,141.6,3.5,6.3,,207.1,202.9,+2.1%,,8.0,9.4,-15.3%,,3.9%,4.7%,-17.0%
+2020-09-06,137.9,203.3,6.9,6.5,,220.3,212.6,+3.6%,,7.9,9.7,-18.3%,,3.6%,4.6%,-21.1%
+2020-09-05,164.6,127.9,7.8,9.2,,257.8,208.1,+23.9%,,8.0,10.1,-20.0%,,3.1%,4.8%,-35.4%
+2020-09-04,229.0,223.0,9.7,13.3,,292.3,212.7,+37.4%,,8.7,9.8,-11.0%,,3.0%,4.6%,-35.2%
+2020-09-03,234.4,226.3,9.3,13.6,,263.1,210.0,+25.3%,,8.8,9.1,-2.9%,,3.3%,4.3%,-22.5%
+2020-09-02,343.3,270.5,9.8,9.7,,261.1,215.4,+21.2%,,9.1,8.3,+9.2%,,3.5%,3.9%,-9.9%
+2020-09-01,236.0,227.8,8.9,7.5,,237.6,199.1,+19.3%,,9.7,8.1,+19.1%,,4.1%,4.1%,-0.2%
+2020-08-31,196.7,209.3,2.9,8.0,,228.9,202.2,+13.2%,,9.9,8.0,+23.1%,,4.3%,4.0%,+8.8%
+2020-08-30,400.8,171.7,7.9,9.1,,236.8,196.0,+20.8%,,11.0,8.0,+37.4%,,4.7%,4.1%,+13.8%
+2020-08-29,405.6,160.6,12.7,7.6,,194.2,202.9,-4.3%,,10.6,7.5,+40.6%,,5.5%,3.7%,+47.0%
+2020-08-28,25.2,203.6,10.0,7.9,,159.1,209.0,-23.9%,,11.0,7.9,+39.0%,,6.9%,3.8%,+82.6%
+2020-08-27,220.1,264.2,11.5,8.5,,189.0,217.7,-13.2%,,11.2,8.0,+39.6%,,5.9%,3.7%,+60.8%
+2020-08-26,179.0,156.8,13.9,8.3,,199.4,208.1,-4.2%,,11.5,8.1,+41.5%,,5.7%,3.9%,+47.7%
+2020-08-25,175.3,249.4,10.4,6.8,,202.9,227.9,-11.0%,,10.8,7.9,+36.4%,,5.3%,3.5%,+53.2%
+2020-08-24,251.6,165.8,11.0,8.0,,201.2,221.3,-9.1%,,10.6,7.8,+34.7%,,5.2%,3.5%,+48.1%
+2020-08-23,102.6,220.2,4.7,5.6,,193.1,221.5,-12.8%,,10.0,7.6,+31.6%,,5.2%,3.4%,+50.9%
+2020-08-22,160.2,203.2,15.3,10.1,,209.1,217.3,-3.8%,,10.8,8.0,+35.4%,,5.2%,3.7%,+40.7%
+2020-08-21,234.6,264.3,11.5,8.7,,220.9,218.4,+1.1%,,10.9,8.0,+36.8%,,4.9%,3.6%,+35.2%
+2020-08-20,292.6,196.7,13.3,9.1,,238.4,228.9,+4.2%,,12.3,7.9,+55.1%,,5.1%,3.5%,+48.9%
+2020-08-19,203.1,295.5,9.2,6.9,,238.8,241.5,-1.1%,,11.9,8.3,+42.7%,,5.0%,3.5%,+44.3%
+2020-08-18,163.9,203.1,8.9,6.4,,269.7,233.6,+15.4%,,11.7,8.5,+37.6%,,4.3%,3.6%,+19.2%
+2020-08-17,194.9,167.3,6.7,6.1,,272.5,236.0,+15.5%,,15.1,8.6,+75.6%,,5.5%,3.6%,+52.1%
+2020-08-16,214.3,191.0,10.6,8.4,,306.0,236.3,+29.5%,,18.0,8.5,+112.3%,,5.9%,3.6%,+64.0%
+2020-08-15,242.7,211.1,15.9,10.0,,322.6,241.4,+33.6%,,19.0,8.3,+130.2%,,5.9%,3.4%,+72.3%
+2020-08-14,357.3,337.5,21.2,8.4,,352.9,238.0,+48.3%,,18.2,8.6,+110.9%,,5.1%,3.6%,+42.2%
+2020-08-13,295.2,284.8,10.8,12.2,,332.4,230.3,+44.3%,,15.3,9.8,+56.8%,,4.6%,4.2%,+8.6%
+2020-08-12,419.1,240.2,7.6,8.0,,310.2,238.8,+29.9%,,16.4,10.8,+51.1%,,5.3%,4.5%,+16.3%
+2020-08-11,183.6,219.8,32.6,7.1,,265.1,252.0,+5.2%,,15.6,10.8,+43.9%,,5.9%,4.3%,+36.8%
+2020-08-10,429.4,169.8,27.5,5.5,,261.4,250.5,+4.3%,,12.0,11.3,+6.5%,,4.6%,4.5%,+2.0%
+2020-08-09,330.8,226.8,17.5,6.8,,216.7,244.1,-11.2%,,10.0,11.8,-15.2%,,4.6%,4.8%,-4.5%
+2020-08-08,455.1,186.8,10.0,12.5,,245.4,239.6,+2.4%,,9.9,12.3,-18.9%,,4.1%,5.1%,-20.8%
+2020-08-07,213.2,283.7,1.3,16.5,,194.4,237.2,-18.0%,,11.3,11.6,-2.0%,,5.8%,4.9%,+19.6%
+2020-08-06,140.3,344.5,18.0,19.5,,192.1,235.8,-18.5%,,13.0,11.5,+13.3%,,6.8%,4.9%,+39.1%
+2020-08-05,103.3,332.7,2.0,7.9,,197.9,225.4,-12.2%,,12.7,10.3,+22.9%,,6.4%,4.6%,+40.1%
+2020-08-04,157.5,209.1,7.9,10.4,,177.2,213.1,-16.9%,,14.3,10.8,+32.5%,,8.1%,5.1%,+59.4%
+2020-08-03,116.5,124.9,13.1,8.7,,178.5,212.8,-16.1%,,14.0,10.5,+33.3%,,7.9%,4.9%,+58.9%
+2020-08-02,531.7,195.8,17.3,10.3,,188.9,223.3,-15.4%,,13.4,11.4,+17.1%,,7.1%,5.1%,+38.5%
+2020-08-01,98.5,169.4,19.8,7.7,,122.3,222.9,-45.1%,,12.8,12.2,+4.7%,,10.4%,5.5%,+90.9%
+2020-07-31,197.3,274.4,13.0,15.8,,116.3,230.9,-49.6%,,12.6,12.3,+2.2%,,10.8%,5.3%,+102.9%
+2020-07-30,180.3,271.6,15.7,11.4,,108.9,262.0,-58.4%,,13.9,12.6,+9.9%,,12.7%,4.8%,+164.3%
+2020-07-29,-41.5,246.8,13.6,11.4,,101.1,253.0,-60.1%,,15.6,13.1,+19.5%,,15.5%,5.2%,+199.1%
+2020-07-28,166.5,206.7,5.8,8.4,,136.0,253.3,-46.3%,,17.1,13.6,+25.6%,,12.6%,5.4%,+134.0%
+2020-07-27,189.3,198.4,8.5,14.9,,145.6,259.2,-43.8%,,20.7,14.9,+38.5%,,14.2%,5.8%,+146.6%
+2020-07-26,65.7,193.4,13.0,15.7,,148.2,269.5,-45.0%,,21.9,14.4,+52.0%,,14.8%,5.4%,+176.4%
+2020-07-25,56.7,224.8,18.5,8.5,,171.8,275.6,-37.7%,,21.9,14.1,+55.0%,,12.8%,5.1%,+148.8%
+2020-07-24,145.5,492.1,22.0,18.1,,192.0,281.8,-31.9%,,22.4,15.3,+45.8%,,11.7%,5.4%,+114.0%
+2020-07-23,125.2,208.9,28.1,14.7,,193.3,255.5,-24.4%,,21.0,15.4,+36.2%,,10.9%,6.0%,+80.0%
+2020-07-22,203.0,248.7,23.8,15.0,,206.8,265.1,-22.0%,,20.9,16.1,+30.1%,,10.1%,6.1%,+66.8%
+2020-07-21,233.7,248.0,30.7,17.6,,200.0,274.2,-27.1%,,21.5,15.7,+37.4%,,10.8%,5.7%,+88.4%
+2020-07-20,207.4,270.5,17.4,11.5,,186.7,274.9,-32.1%,,21.0,15.5,+34.9%,,11.2%,5.7%,+98.7%
+2020-07-19,231.0,236.2,12.9,13.6,,202.6,267.3,-24.2%,,20.9,16.2,+28.9%,,10.3%,6.1%,+70.0%
+2020-07-18,198.2,267.9,21.8,17.0,,199.7,261.5,-23.6%,,22.7,16.1,+41.1%,,11.3%,6.1%,+84.7%
+2020-07-17,154.4,308.2,12.6,18.7,,190.0,259.7,-26.8%,,25.1,16.0,+56.6%,,13.2%,6.2%,+114.0%
+2020-07-16,219.9,276.3,27.1,19.0,,198.5,251.1,-20.9%,,28.3,15.5,+82.5%,,14.3%,6.2%,+130.8%
+2020-07-15,155.5,312.6,28.3,12.3,,199.6,247.7,-19.4%,,30.2,14.8,+104.2%,,15.1%,6.0%,+153.4%
+2020-07-14,140.3,252.7,26.8,16.7,,192.9,241.3,-20.1%,,32.0,15.4,+107.8%,,16.6%,6.4%,+159.9%
+2020-07-13,319.3,217.1,16.8,16.1,,203.0,237.8,-14.6%,,32.7,14.2,+130.8%,,16.1%,6.0%,+170.4%
+2020-07-12,210.7,196.0,25.3,12.6,,193.0,230.4,-16.3%,,34.8,14.3,+143.2%,,18.1%,6.2%,+190.4%
+2020-07-11,130.3,254.8,38.8,16.7,,181.3,235.3,-22.9%,,34.2,13.7,+149.4%,,18.9%,5.8%,+223.6%
+2020-07-10,213.8,248.4,35.2,15.2,,187.7,233.5,-19.6%,,30.5,13.7,+122.0%,,16.2%,5.9%,+176.1%
+2020-07-09,227.0,252.3,40.1,13.8,,187.6,229.3,-18.2%,,28.6,13.6,+111.0%,,15.2%,5.9%,+158.0%
+2020-07-08,109.0,268.1,41.4,16.8,,181.6,224.6,-19.1%,,25.8,13.7,+88.4%,,14.2%,6.1%,+133.0%
+2020-07-07,210.6,227.9,31.3,7.9,,197.1,222.7,-11.5%,,22.4,13.8,+62.5%,,11.4%,6.2%,+83.6%
+2020-07-06,249.4,165.7,31.9,17.3,,201.3,223.6,-10.0%,,21.4,14.7,+45.6%,,10.6%,6.6%,+61.7%
+2020-07-05,129.0,229.7,20.6,8.2,,209.7,231.5,-9.4%,,18.8,13.6,+38.8%,,9.0%,5.9%,+53.3%
+2020-07-04,175.3,242.5,12.8,16.8,,218.3,228.3,-4.4%,,16.5,14.5,+13.9%,,7.6%,6.4%,+19.1%
+2020-07-03,212.9,219.3,22.1,14.0,,228.5,229.2,-0.3%,,17.1,14.2,+20.0%,,7.5%,6.2%,+20.4%
+2020-07-02,185.0,218.9,20.2,14.6,,205.1,237.1,-13.5%,,16.0,14.1,+13.8%,,7.8%,5.9%,+31.5%
+2020-07-01,217.3,254.9,17.7,17.5,,184.3,235.0,-21.6%,,15.4,13.9,+10.7%,,8.3%,5.9%,+41.2%
+2020-06-30,240.4,234.4,24.2,14.2,,166.8,239.1,-30.3%,,14.4,12.8,+12.3%,,8.6%,5.4%,+61.0%
+2020-06-29,307.8,221.1,14.2,9.5,,151.5,235.5,-35.7%,,11.6,12.2,-5.3%,,7.6%,5.2%,+47.2%
+2020-06-28,189.5,206.9,4.5,14.9,,125.3,233.1,-46.3%,,10.3,11.7,-12.0%,,8.2%,5.0%,+63.8%
+2020-06-27,246.8,248.7,16.7,14.9,,116.3,228.5,-49.1%,,11.5,10.9,+6.0%,,9.9%,4.8%,+108.2%
+2020-06-26,49.1,274.7,14.8,13.1,,104.2,211.9,-50.8%,,10.9,10.1,+8.1%,,10.4%,4.8%,+119.8%
+2020-06-25,39.1,204.4,15.5,13.2,,118.9,196.6,-39.5%,,10.0,8.8,+14.0%,,8.4%,4.5%,+88.6%
+2020-06-24,94.8,283.7,10.9,10.0,,135.6,212.5,-36.2%,,8.4,8.0,+4.4%,,6.2%,3.8%,+63.6%
+2020-06-23,133.3,209.1,4.3,9.9,,145.0,215.0,-32.6%,,7.7,7.6,+1.1%,,5.3%,3.5%,+50.0%
+2020-06-22,124.1,204.3,5.3,5.9,,143.8,214.2,-32.8%,,8.1,6.7,+21.3%,,5.6%,3.1%,+80.6%
+2020-06-21,126.6,174.7,13.0,9.0,,143.3,205.7,-30.4%,,8.2,6.4,+29.4%,,5.7%,3.1%,+85.8%
+2020-06-20,162.3,132.2,12.3,9.3,,143.7,203.0,-29.2%,,7.7,5.8,+32.1%,,5.3%,2.9%,+86.5%
+2020-06-19,151.8,167.6,8.7,4.0,,137.5,213.0,-35.5%,,6.5,5.0,+29.0%,,4.7%,2.4%,+99.9%
+2020-06-18,156.3,315.8,3.9,7.7,,136.7,213.9,-36.1%,,5.9,5.2,+13.5%,,4.3%,2.4%,+77.6%
+2020-06-17,160.7,301.6,6.1,7.1,,130.3,196.1,-33.5%,,6.5,4.7,+37.9%,,5.0%,2.4%,+107.4%
+2020-06-16,125.1,203.2,7.5,3.7,,126.1,174.3,-27.6%,,6.2,4.4,+42.9%,,4.9%,2.5%,+97.5%
+2020-06-15,120.1,144.9,6.1,3.6,,124.5,161.8,-23.1%,,5.5,4.3,+28.8%,,4.4%,2.6%,+67.5%
+2020-06-14,130.0,156.0,9.0,5.1,,121.1,158.1,-23.4%,,5.1,4.2,+20.9%,,4.2%,2.7%,+57.9%
+2020-06-13,118.4,202.2,3.9,3.8,,117.3,152.2,-22.9%,,4.3,4.1,+4.9%,,3.7%,2.7%,+36.1%
+2020-06-12,146.2,173.2,5.0,5.5,,116.5,147.9,-21.2%,,4.9,4.1,+18.3%,,4.2%,2.8%,+50.2%
+2020-06-11,111.9,191.2,7.6,4.0,,116.5,139.7,-16.6%,,5.4,4.1,+33.1%,,4.6%,2.9%,+59.6%
+2020-06-10,131.4,149.7,4.4,4.8,,121.9,137.7,-11.5%,,4.8,4.5,+5.5%,,3.9%,3.3%,+19.2%
+2020-06-09,113.5,115.4,2.6,3.2,,118.0,132.3,-10.8%,,4.7,4.4,+5.9%,,4.0%,3.4%,+18.7%
+2020-06-08,96.4,118.7,3.4,3.3,,114.7,136.9,-16.2%,,4.7,4.5,+4.9%,,4.1%,3.3%,+25.2%
+2020-06-07,103.4,115.1,3.4,4.3,,115.0,136.8,-15.9%,,5.1,4.6,+12.8%,,4.5%,3.3%,+34.2%
+2020-06-06,112.8,171.7,8.0,3.9,,114.8,136.0,-15.6%,,5.3,4.3,+25.0%,,4.6%,3.1%,+48.1%
+2020-06-05,146.2,115.7,8.5,4.9,,113.4,128.3,-11.6%,,4.9,4.1,+20.1%,,4.4%,3.2%,+35.8%
+2020-06-04,149.6,177.8,3.2,7.2,,109.9,130.1,-15.5%,,4.4,4.0,+10.4%,,4.0%,3.1%,+30.7%
+2020-06-03,103.7,111.3,4.0,4.3,,104.0,124.5,-16.5%,,4.4,3.6,+21.7%,,4.2%,2.9%,+45.8%
+2020-06-02,90.6,148.0,2.8,3.7,,101.2,124.5,-18.7%,,4.3,3.5,+23.4%,,4.3%,2.8%,+51.8%
+2020-06-01,98.7,118.0,6.2,3.6,,98.5,116.3,-15.3%,,4.4,3.4,+29.1%,,4.4%,2.9%,+52.4%
+2020-05-31,101.8,109.5,4.7,2.2,,95.6,116.1,-17.6%,,4.0,3.2,+24.1%,,4.2%,2.8%,+50.7%
+2020-05-30,103.3,117.7,5.3,2.9,,94.0,116.3,-19.2%,,4.1,3.3,+23.1%,,4.4%,2.9%,+52.4%
+2020-05-29,121.8,128.8,5.1,4.3,,91.6,119.0,-23.0%,,4.3,3.5,+20.3%,,4.6%,3.0%,+56.2%
+2020-05-28,107.9,138.5,2.7,4.2,,88.1,116.8,-24.6%,,4.0,3.4,+15.7%,,4.5%,3.0%,+53.4%
+2020-05-27,84.3,110.8,3.5,3.5,,84.5,114.4,-26.2%,,4.0,3.4,+19.8%,,4.8%,2.9%,+62.3%
+2020-05-26,71.7,90.5,3.3,3.0,,86.5,118.8,-27.2%,,4.6,3.6,+27.3%,,5.3%,3.0%,+74.9%
+2020-05-25,78.7,117.1,3.7,2.5,,86.7,126.4,-31.4%,,4.4,3.7,+19.7%,,5.1%,2.9%,+74.4%
+2020-05-24,90.2,110.8,5.3,2.9,,82.2,120.8,-31.9%,,4.1,3.6,+11.4%,,4.9%,3.0%,+63.6%
+2020-05-23,86.7,136.2,6.3,4.3,,73.9,119.6,-38.2%,,4.0,3.7,+6.8%,,5.3%,3.1%,+72.8%
+2020-05-22,97.0,113.7,3.2,3.7,,68.5,118.8,-42.3%,,3.4,3.8,-10.3%,,5.0%,3.2%,+55.5%
+2020-05-21,82.5,121.5,2.9,3.6,,66.1,121.8,-45.7%,,3.6,3.9,-7.0%,,5.5%,3.2%,+71.4%
+2020-05-20,98.3,141.4,7.4,5.2,,63.8,121.8,-47.7%,,4.2,4.0,+5.3%,,6.5%,3.2%,+101.1%
+2020-05-19,73.6,143.8,1.8,3.4,,59.1,118.7,-50.2%,,3.8,3.7,+2.3%,,6.4%,3.1%,+105.6%
+2020-05-18,47.4,78.2,1.4,2.4,,58.0,113.3,-48.8%,,3.8,3.7,+1.4%,,6.5%,3.3%,+98.2%
+2020-05-17,31.9,102.1,4.6,3.3,,58.6,112.6,-48.0%,,3.8,3.8,+0.4%,,6.5%,3.3%,+93.0%
+2020-05-16,49.1,130.7,2.7,5.2,,61.0,109.3,-44.2%,,3.6,3.9,-6.4%,,6.0%,3.6%,+67.6%
+2020-05-15,80.1,134.9,4.5,4.2,,61.5,105.4,-41.6%,,3.9,3.8,+2.4%,,6.3%,3.6%,+75.4%
+2020-05-14,66.0,121.5,6.7,4.0,,59.2,100.6,-41.2%,,3.9,3.7,+4.7%,,6.5%,3.7%,+77.9%
+2020-05-13,65.4,119.8,4.7,3.4,,57.7,98.6,-41.5%,,3.3,4.1,-20.5%,,5.7%,4.2%,+35.8%
+2020-05-12,66.2,106.1,1.7,3.5,,58.1,95.7,-39.3%,,3.1,4.1,-23.4%,,5.4%,4.3%,+26.2%
+2020-05-11,51.4,73.1,1.6,2.9,,58.3,90.2,-35.4%,,3.2,4.3,-25.4%,,5.5%,4.7%,+15.5%
+2020-05-10,49.0,79.0,3.6,4.2,,59.0,89.6,-34.2%,,3.3,4.5,-25.5%,,5.7%,5.0%,+13.3%
+2020-05-09,52.6,103.1,4.4,4.5,,58.4,83.9,-30.3%,,3.3,4.3,-23.4%,,5.6%,5.1%,+10.0%
+2020-05-08,63.7,101.9,4.3,3.4,,58.2,78.9,-26.2%,,3.0,4.0,-23.7%,,5.2%,5.1%,+3.4%
+2020-05-07,55.4,107.0,2.6,7.0,,58.3,74.6,-21.9%,,3.1,4.1,-24.0%,,5.3%,5.5%,-2.6%
+2020-05-06,68.1,99.6,3.8,3.3,,57.2,70.6,-18.9%,,3.3,3.7,-11.9%,,5.7%,5.2%,+8.7%
+2020-05-05,67.7,67.7,2.0,4.8,,54.6,66.2,-17.5%,,3.2,3.8,-16.7%,,5.8%,5.7%,+0.9%
+2020-05-04,56.1,69.1,2.6,4.2,,50.9,64.9,-21.6%,,3.0,3.6,-16.9%,,5.9%,5.6%,+6.1%
+2020-05-03,45.3,38.7,3.2,2.8,,47.5,65.9,-27.9%,,2.9,3.8,-24.2%,,6.0%,5.7%,+5.2%
+2020-05-02,51.1,68.2,2.8,2.5,,46.2,63.9,-27.7%,,2.8,3.8,-25.1%,,6.1%,5.9%,+3.6%
+2020-05-01,64.2,72.0,4.6,3.9,,44.2,59.7,-26.0%,,3.0,3.8,-23.1%,,6.7%,6.4%,+3.9%
+2020-04-30,47.8,78.6,3.8,4.4,,41.2,57.3,-28.1%,,2.4,3.8,-35.9%,,5.9%,6.6%,-10.7%
+2020-04-29,50.0,69.0,3.1,4.0,,39.9,59.4,-32.9%,,2.2,3.9,-44.5%,,5.5%,6.6%,-17.4%
+2020-04-28,41.6,58.9,1.0,3.5,,38.7,59.2,-34.7%,,2.0,4.0,-49.5%,,5.3%,6.8%,-22.6%
+2020-04-27,32.6,76.2,1.5,5.2,,37.8,57.3,-34.0%,,2.0,3.8,-46.9%,,5.3%,6.6%,-19.5%
+2020-04-26,36.0,24.7,3.0,2.9,,36.4,50.7,-28.2%,,1.9,3.5,-44.3%,,5.3%,6.9%,-22.4%
+2020-04-25,37.2,38.9,3.7,3.0,,34.8,52.8,-34.1%,,1.8,3.3,-45.3%,,5.2%,6.3%,-17.0%
+2020-04-24,42.8,54.7,0.9,3.5,,33.4,51.3,-34.9%,,1.5,3.1,-50.8%,,4.6%,6.1%,-24.3%
+2020-04-23,38.7,93.5,2.1,5.5,,31.9,49.5,-35.6%,,1.7,2.9,-39.7%,,5.4%,5.8%,-6.4%
+2020-04-22,41.6,67.5,2.0,4.6,,31.1,40.9,-23.9%,,1.6,2.4,-30.7%,,5.3%,5.8%,-9.0%
+2020-04-21,35.5,45.4,0.7,1.7,,29.7,36.6,-18.9%,,1.7,2.0,-15.9%,,5.8%,5.6%,+3.7%
+2020-04-20,23.1,30.4,1.1,3.3,,27.9,33.7,-17.1%,,1.7,2.2,-20.7%,,6.1%,6.4%,-4.3%
+2020-04-19,24.5,39.2,2.1,1.7,,26.8,33.3,-19.3%,,1.6,2.0,-22.6%,,5.9%,6.1%,-4.1%
+2020-04-18,27.6,28.6,1.7,1.6,,26.0,31.5,-17.4%,,1.5,2.0,-24.5%,,5.8%,6.3%,-8.6%
+2020-04-17,32.2,41.7,2.2,1.6,,26.1,30.9,-15.6%,,1.6,1.9,-17.0%,,6.2%,6.3%,-1.7%
+2020-04-16,33.5,33.4,1.6,2.1,,25.7,29.5,-13.0%,,1.5,2.0,-22.7%,,6.0%,6.7%,-11.1%
+2020-04-15,31.3,37.4,2.6,2.2,,24.3,30.1,-19.4%,,1.6,2.0,-18.7%,,6.6%,6.5%,+0.8%
+2020-04-14,23.4,25.0,0.7,2.5,,24.1,28.7,-16.1%,,1.6,2.1,-21.3%,,6.7%,7.2%,-6.3%
+2020-04-13,15.3,27.5,0.2,2.5,,24.1,28.7,-16.1%,,1.7,2.0,-16.2%,,7.1%,7.1%,-0.1%
+2020-04-12,18.8,26.9,1.5,1.3,,24.2,32.7,-26.1%,,1.9,1.9,-0.1%,,7.8%,5.8%,+35.1%
+2020-04-11,27.9,24.1,2.5,1.3,,24.3,32.4,-25.1%,,1.9,2.0,-7.9%,,7.8%,6.3%,+22.9%
+2020-04-10,29.5,32.3,1.8,2.0,,23.5,32.4,-27.4%,,1.8,2.4,-22.1%,,7.8%,7.3%,+7.3%
+2020-04-09,23.7,37.6,2.0,1.9,,23.3,32.2,-27.7%,,1.8,2.5,-26.4%,,7.9%,7.7%,+1.8%
+2020-04-08,30.1,27.6,2.8,2.9,,25.1,34.9,-28.0%,,1.8,2.8,-36.8%,,7.1%,8.1%,-12.2%
+2020-04-07,23.4,25.2,1.2,2.3,,25.6,42.1,-39.2%,,1.9,2.9,-36.3%,,7.3%,6.9%,+4.9%
+2020-04-06,15.8,55.3,1.5,1.5,,25.1,42.7,-41.3%,,1.8,3.1,-40.0%,,7.4%,7.2%,+2.2%
+2020-04-05,19.5,24.8,1.5,2.3,,26.0,41.4,-37.1%,,1.8,3.4,-48.1%,,6.8%,8.3%,-17.6%
+2020-04-04,22.7,24.2,2.2,3.5,,26.6,40.8,-34.9%,,1.7,3.5,-51.5%,,6.3%,8.5%,-25.5%
+2020-04-03,27.7,30.7,1.7,2.9,,27.4,42.8,-36.0%,,1.7,3.1,-44.4%,,6.3%,7.2%,-13.2%
+2020-04-02,36.5,56.4,1.7,4.4,,26.9,41.7,-35.5%,,1.8,3.0,-40.7%,,6.6%,7.1%,-8.0%
+2020-04-01,33.5,78.1,3.2,3.5,,25.8,38.1,-32.2%,,1.8,2.7,-32.4%,,7.0%,7.0%,-0.2%

@@ -8,6 +8,7 @@ from os.path import join as path_join
 from functools import cached_property
 import csv
 from datetime import timedelta
+from collections import deque
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
@@ -17,26 +18,19 @@ OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 OC_ANALYTICS_DATA_PATH = path_join(OC_DATA_PATH, 'analytics')
 ANALYTICS_FILE = 'oc-hospitalizations-daily.csv'
 CSV_COLUMNS = ['Date',
-               'Administered New Tests',
-               'Administered Postive Tests',
-               'Test Positive Rate',
-               '7-Day Test Positive Rate',
-               'New Cases',
-               'Projected Cases at 10k Tests',
                'Hospitalizations',
-               'ICU Cases',
-               'SNF Cases',
-               'New Deaths']
+               'Total SNF Cases',
+               'New SNF Cases',
+               'Estimated SNF Cases at 10d per Case',
+               'Estimated SNF Cases at 30d per Case',
+               '7-Day Hospitalization Avg',
+               '7-Day New SNF Cases Avg',
+               '7-Day 10d SNF Avg',
+               '7-Day Total Hospital Avg',
+               '7-Day Test Positive Rate']
 
 
 class OcHospitalizationsAnalysis:
-    #
-    # Static Methods
-    #
-    @staticmethod
-    def predict_by_positive_rate():
-        pass
-
     #
     # Properties
     #
@@ -45,10 +39,38 @@ class OcHospitalizationsAnalysis:
         return DailyCovid19ExtractV3()
 
     @cached_property
+    def new_snf_cases(self):
+        daily_snf_cases = {}
+
+        for dated in self.dates:
+            day_before = dated - timedelta(days=1)
+
+            snf_cases_today = self.extract.total_snf_cases.get(dated)
+            snf_cases_yesterday = self.extract.total_snf_cases.get(day_before)
+
+            if snf_cases_today is None:
+                continue
+
+            if snf_cases_yesterday is None:
+                snf_cases_yesterday = 0
+
+            new_cases = snf_cases_today - snf_cases_yesterday
+            daily_snf_cases[dated] = new_cases
+
+        return daily_snf_cases
+
+    @cached_property
+    def estimated_snf_cases_when_10d_long(self):
+        return self.estimate_active_snf_cases_by_duration(10)
+
+    @cached_property
+    def estimated_snf_cases_when_30d_long(self):
+        return self.estimate_active_snf_cases_by_duration(30)
+
+    @cached_property
     def dates(self):
-        administered_dates = set(self.extract.new_tests_administered.keys())
-        reported_dates = set(self.extract.new_tests_reported.keys())
-        return sorted(list(administered_dates | reported_dates))
+        hospitalization_dates = set(self.extract.hospitalizations.keys())
+        return sorted(hospitalization_dates)
 
     #
     # Instance Method
@@ -69,42 +91,85 @@ class OcHospitalizationsAnalysis:
         return csv_path
 
     def data_to_csv_row(self, dated):
-        tests_administered = self.extract.new_tests_administered.get(dated)
-        pos_tests_administered = self.extract.new_positive_tests_administered.get(dated)
-        pos_rate = self.compute_positive_rate_for_date(dated)
-        pos_rate_7d = self.compute_7d_positive_rate_for_date(dated)
-        new_cases = self.extract.new_cases.get(dated)
-        projected_cases = self.project_cases_by_case_rate_for_date(10000, dated)
         hospitalizations = self.extract.hospitalizations.get(dated)
-        icu_cases = self.extract.icu_cases.get(dated)
-        snf_cases = self.new_snf_cases_by_date(dated)
-        new_deaths = self.extract.new_deaths.get(dated)
+        total_snf_cases = self.extract.total_snf_cases.get(dated)
+        snf_cases = self.new_snf_cases.get(dated)
+        estimated_snf_cases_10d = self.estimated_snf_cases_when_10d_long.get(dated)
+        estimated_snf_cases_30d = self.estimated_snf_cases_when_30d_long.get(dated)
+        hospital_avg_7d = self.compute_7d_hospital_avg_for_date(dated)
+        new_snf_avg_7d = self.compute_7d_new_snf_avg_for_date(dated)
+        snf_10d_avg_7d = self.compute_7d_snf_10d_avg_for_date(dated)
+        total_hospital_avg_7d = hospital_avg_7d + snf_10d_avg_7d if \
+            (hospital_avg_7d and snf_10d_avg_7d) else None
+        pos_rate_7d = self.compute_7d_positive_rate_for_date(dated)
 
         return [
             dated,
-            tests_administered,
-            pos_tests_administered,
-            pos_rate,
-            pos_rate_7d,
-            new_cases,
-            projected_cases,
             hospitalizations,
-            icu_cases,
+            total_snf_cases,
             snf_cases,
-            new_deaths
+            estimated_snf_cases_10d,
+            estimated_snf_cases_30d,
+            hospital_avg_7d,
+            new_snf_avg_7d,
+            snf_10d_avg_7d,
+            total_hospital_avg_7d,
+            pos_rate_7d
         ]
 
-    def compute_positive_rate_for_date(self, dated):
-        tests_administered = self.extract.new_tests_administered.get(dated)
-        pos_tests_administered = self.extract.new_positive_tests_administered.get(dated)
+    def estimate_active_snf_cases_by_duration(self, duration):
+        active_snf_cases = {}
+        snf_queue = deque([0] * duration)
 
-        if pos_tests_administered is None:
-            return None
+        for dated in self.dates:
+            new_snf_cases = self.new_snf_cases.get(dated, 0)
+            snf_queue.pop()
+            snf_queue.appendleft(new_snf_cases)
+            active_snf_cases[dated] = sum(snf_queue)
 
-        if not tests_administered:
-            return None
+        return active_snf_cases
 
-        return pos_tests_administered / tests_administered
+    def compute_7d_hospital_avg_for_date(self, dated):
+        case_counts = []
+
+        for days_ago in range(7):
+            on_date = dated - timedelta(days=days_ago)
+            cases = self.extract.hospitalizations.get(on_date)
+
+            if cases is None:
+                return None
+
+            case_counts.append(cases)
+
+        return sum(case_counts) / len(case_counts)
+
+    def compute_7d_new_snf_avg_for_date(self, dated):
+        case_counts = []
+
+        for days_ago in range(7):
+            on_date = dated - timedelta(days=days_ago)
+            cases = self.new_snf_cases.get(on_date)
+
+            if cases is None:
+                return None
+
+            case_counts.append(cases)
+
+        return sum(case_counts) / len(case_counts)
+
+    def compute_7d_snf_10d_avg_for_date(self, dated):
+        case_counts = []
+
+        for days_ago in range(7):
+            on_date = dated - timedelta(days=days_ago)
+            cases = self.estimated_snf_cases_when_10d_long.get(on_date)
+
+            if cases is None:
+                return None
+
+            case_counts.append(cases)
+
+        return sum(case_counts) / len(case_counts)
 
     def compute_7d_positive_rate_for_date(self, dated):
         test_counts = []
@@ -121,26 +186,7 @@ class OcHospitalizationsAnalysis:
             test_counts.append(tests_administered)
             positive_counts.append(pos_tests_administered)
 
+        if not sum(test_counts):
+            return None
+
         return sum(positive_counts) / sum(test_counts)
-
-    def project_cases_by_case_rate_for_date(self, project_targeted, dated):
-        positive_rate = self.compute_7d_positive_rate_for_date(dated)
-
-        if positive_rate is None:
-            return None
-
-        return positive_rate * project_targeted
-
-    def new_snf_cases_by_date(self, dated):
-        day_before = dated - timedelta(days=1)
-
-        snf_cases = self.extract.total_snf_cases.get(dated)
-        snf_cases_day_before = self.extract.total_snf_cases.get(day_before)
-
-        if snf_cases is None:
-            return None
-
-        if snf_cases_day_before is None:
-            snf_cases_day_before = 0
-
-        return snf_cases - snf_cases_day_before

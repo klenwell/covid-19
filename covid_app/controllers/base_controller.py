@@ -45,6 +45,7 @@ class BaseController(Controller):
         print(extract.json_data.keys())
         print(extract.metrics_timeseries[extract.last_date])
         print(extract.actuals_timeseries[extract.last_date])
+        print(extract.infection_rates[extract.last_date])
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

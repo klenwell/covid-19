@@ -53,13 +53,37 @@ class CovidActNowExtract:
             timeseries[reported_on] = daily_data
         return timeseries
 
-    @cached_property
+    @property
     def dates(self):
         return sorted(self.actuals_timeseries.keys())
 
-    @cached_property
+    @property
     def last_date(self):
         return self.dates[-1]
+
+    @property
+    def infection_rates(self):
+        timeseries = {}
+        for dated in self.dates:
+            daily_data = self.metrics_timeseries.get(dated, {})
+            timeseries[dated] = daily_data.get('infectionRate')
+        return timeseries
+
+    @property
+    def hospital_beds(self):
+        timeseries = {}
+        for dated in self.dates:
+            daily_data = self.actuals_timeseries.get(dated, {})
+            timeseries[dated] = daily_data.get('hospitalBeds')
+        return timeseries
+
+    @property
+    def icu_beds(self):
+        timeseries = {}
+        for dated in self.dates:
+            daily_data = self.actuals_timeseries.get(dated, {})
+            timeseries[dated] = daily_data.get('icuBeds')
+        return timeseries
 
     #
     # Instance Methods

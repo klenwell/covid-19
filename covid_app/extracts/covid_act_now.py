@@ -7,7 +7,6 @@ from config.secrets import COVID_ACT_NOW_API_KEY as API_KEY
 
 BASE_URL = 'https://api.covidactnow.org'
 COUNTY_API_PATH = "/v2/county/{fips}.timeseries.json?apiKey={api_key}"
-COUNTRY_API_PATH = "/v2/TBA.json?apiKey={api_key}"
 DATE_F = '%Y-%m-%d'
 
 
@@ -31,7 +30,7 @@ class CovidActNowExtract:
     def us_effective_reproduction():
         """Returns extract with data for US.
         """
-        return CovidActNowExtract()
+        raise ValueError("API does not currently support country level data.")
 
     #
     # Properties
@@ -41,13 +40,12 @@ class CovidActNowExtract:
         if self.fips:
             url_path = COUNTY_API_PATH.format(fips=self.fips, api_key=API_KEY)
         else:
-            url_path = COUNTRY_API_PATH.format(api_key=API_KEY)
+            raise ValueError("Expects fips setting.")
 
         return urljoin(BASE_URL, url_path)
 
     @cached_property
     def json_data(self):
-        print(self.api_url)
         response = requests.get(self.api_url)
         response.raise_for_status()  # will raise a requests.exceptions.HTTPError error
         return response.json()

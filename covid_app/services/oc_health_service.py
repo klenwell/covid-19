@@ -12,7 +12,7 @@ from functools import cached_property
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
-from covid_app.extracts.covid19_projections import Covid19ProjectionsExtract
+from covid_app.extracts.covid_act_now import CovidActNowExtract
 from covid_app.extracts.unacast_social_distancing import UnacastSocialDistancingExtract
 
 
@@ -80,7 +80,7 @@ class OCHealthService:
 
     @cached_property
     def rt_extract(self):
-        return Covid19ProjectionsExtract.oc_effective_reproduction()
+        return CovidActNowExtract.oc_effective_reproduction()
 
     @cached_property
     def daily_csv_rows(self):
@@ -140,7 +140,7 @@ class OCHealthService:
             self.oc_hca_extract.hospitalizations.get(dated),
             self.oc_hca_extract.icu_cases.get(dated),
             self.oc_hca_extract.new_deaths.get(dated),
-            self.rt_extract.get(dated),
+            self.rt_extract.infection_rates.get(dated),
             self.unacast_extract.travel_distance_scores.get(dated),
             self.unacast_extract.visitation_scores.get(dated),
             self.unacast_extract.encounter_densities.get(dated),

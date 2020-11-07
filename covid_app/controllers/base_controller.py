@@ -41,12 +41,15 @@ class BaseController(Controller):
     def interactive(self):
         from covid_app.extracts.covid_act_now import CovidActNowExtract
 
-        extract = CovidActNowExtract.oc_effective_reproduction()
-        print(extract.json_data.keys())
+        extract = CovidActNowExtract.kent_effective_reproduction()
+        data = extract.json_data
+        print(data.keys())
+        breakpoint()
+
         print(extract.metrics_timeseries[extract.last_date])
         print(extract.actuals_timeseries[extract.last_date])
         print(extract.infection_rates[extract.last_date])
-        breakpoint()
+
 
     # python app.py test -f foo arg1 extra1 extra2
     @expose(

@@ -50,7 +50,6 @@ class BaseController(Controller):
         print(extract.actuals_timeseries[extract.last_date])
         print(extract.infection_rates[extract.last_date])
 
-
     # python app.py test -f foo arg1 extra1 extra2
     @expose(
         help="Test Cement framework and CLI.",

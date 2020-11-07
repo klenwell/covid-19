@@ -2,9 +2,11 @@ from datetime import datetime
 from urllib.parse import urljoin
 import requests
 from functools import cached_property
+from config.secrets import COVID_ACT_NOW_API_KEY as API_KEY
 
 
-BASE_URL = 'https://data.covidactnow.org'
+BASE_URL = 'https://api.covidactnow.org'
+COUNTY_API_PATH = "/v2/county/{fips}.timeseries.json?apiKey={api_key}"
 DATE_F = '%Y-%m-%d'
 
 
@@ -16,9 +18,7 @@ class CovidActNowExtract:
     def oc_effective_reproduction():
         """Returns extract with data for Orange County, CA.
         """
-        url_path = '/snapshot/1290/v2/county/06059.timeseries.json'
-        url = urljoin(BASE_URL, url_path)
-        return CovidActNowExtract(url)
+        return CovidActNowExtract(fips="06059")
 
     @staticmethod
     def us_effective_reproduction():
@@ -29,9 +29,18 @@ class CovidActNowExtract:
     #
     # Properties
     #
+    @property
+    def api_url(self):
+        if self.fips:
+            url_path = COUNTY_API_PATH.format(fips=self.fips, api_key=API_KEY)
+        else:
+            raise ValueError("Missing fips code")
+
+        return urljoin(BASE_URL, url_path)
+
     @cached_property
     def json_data(self):
-        response = requests.get(self.url)
+        response = requests.get(self.api_url)
         response.raise_for_status()  # will raise a requests.exceptions.HTTPError error
         return response.json()
 
@@ -88,8 +97,8 @@ class CovidActNowExtract:
     #
     # Instance Methods
     #
-    def __init__(self, url):
-        self.url = url
+    def __init__(self, **keywords):
+        self.fips = keywords.get("fips")
 
     #
     # Private

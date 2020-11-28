@@ -39,12 +39,18 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
-        from covid_app.services.oc_health_service import OCHealthService
+        from covid_app.extracts.oc_hca.daily_archive_extract import OcDailyArchiveExtract
         from datetime import date
-
         thanksgiving = date(2020, 11, 26)
         black_friday = date(2020, 11, 27)
+
+        thurs_extract = OcDailyArchiveExtract(thanksgiving)
+        print(thurs_extract.new_admin_tests)
+        print(thurs_extract.oldest_updated_admin_test)
+        breakpoint()
+
+        from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+        from covid_app.services.oc_health_service import OCHealthService
 
         extract = DailyCovid19Extract.latest()
         service = OCHealthService()

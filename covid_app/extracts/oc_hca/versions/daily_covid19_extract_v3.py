@@ -130,18 +130,6 @@ class DailyCovid19ExtractV3:
 
         return daily_snf_cases
 
-    def get_previous_total_snf_cases(self, dated):
-        # Look up to a week in past in case there were missing date reports.
-        week_ago = 8
-
-        for ago in range(1, week_ago):
-            previous_date = dated - timedelta(days=ago)
-            cases = self.total_snf_cases.get(previous_date)
-            if cases:
-                return cases
-
-        return None
-
     @cached_property
     def new_deaths(self):
         key = 'daily_dth'
@@ -155,7 +143,9 @@ class DailyCovid19ExtractV3:
     @property
     def dates(self):
         dates = []
-        for n in range(int((self.ends_on - self.starts_on).days)):
+
+        # Fencepost alert: Don't forget to add one to range to include final day.
+        for n in range(int((self.ends_on - self.starts_on).days) + 1):
             date = self.starts_on + timedelta(n)
             dates.append(date)
         return dates
@@ -204,6 +194,18 @@ class DailyCovid19ExtractV3:
             daily_values[log_date] = value
 
         return daily_values
+
+    def get_previous_total_snf_cases(self, dated):
+        # Look up to a week in past in case there were missing date reports.
+        week_ago = 8
+
+        for ago in range(1, week_ago):
+            previous_date = dated - timedelta(days=ago)
+            cases = self.total_snf_cases.get(previous_date)
+            if cases:
+                return cases
+
+        return None
 
     def timestamp_to_date(self, timestamp):
         return datetime.utcfromtimestamp(timestamp/1000).date()

@@ -40,24 +40,29 @@ class BaseController(Controller):
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
         from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+        from covid_app.services.oc_health_service import OCHealthService
         from datetime import date
 
         thanksgiving = date(2020, 11, 26)
         black_friday = date(2020, 11, 27)
 
-        oc = DailyCovid19Extract.latest()
+        extract = DailyCovid19Extract.latest()
+        service = OCHealthService()
 
         for dated in [thanksgiving, black_friday]:
             print(
-                oc.new_tests_administered.get(dated),
-                oc.new_positive_tests_administered.get(dated),
-                oc.new_tests_reported.get(dated),
-                oc.new_cases.get(dated),
-                oc.hospitalizations.get(dated),
-                oc.icu_cases.get(dated),
-                oc.new_deaths.get(dated),
-                oc.new_snf_cases.get(dated)
+                dated,
+                extract.new_tests_administered.get(dated),
+                extract.new_positive_tests_administered.get(dated),
+                extract.new_tests_reported.get(dated),
+                extract.new_cases.get(dated),
+                extract.hospitalizations.get(dated),
+                extract.icu_cases.get(dated),
+                extract.new_deaths.get(dated),
+                extract.new_snf_cases.get(dated)
             )
+        print(extract.starts_on, extract.ends_on)
+        print(service.start_date, service.end_date, service.dates[-1])
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

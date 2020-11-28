@@ -39,16 +39,26 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from covid_app.extracts.covid_act_now import CovidActNowExtract
+        from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+        from datetime import date
 
-        extract = CovidActNowExtract.kent_effective_reproduction()
-        data = extract.json_data
-        print(data.keys())
+        thanksgiving = date(2020, 11, 26)
+        black_friday = date(2020, 11, 27)
+
+        oc = DailyCovid19Extract.latest()
+
+        for dated in [thanksgiving, black_friday]:
+            print(
+                oc.new_tests_administered.get(dated),
+                oc.new_positive_tests_administered.get(dated),
+                oc.new_tests_reported.get(dated),
+                oc.new_cases.get(dated),
+                oc.hospitalizations.get(dated),
+                oc.icu_cases.get(dated),
+                oc.new_deaths.get(dated),
+                oc.new_snf_cases.get(dated)
+            )
         breakpoint()
-
-        print(extract.metrics_timeseries[extract.last_date])
-        print(extract.actuals_timeseries[extract.last_date])
-        print(extract.infection_rates[extract.last_date])
 
     # python app.py test -f foo arg1 extra1 extra2
     @expose(

@@ -22,6 +22,17 @@ OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
 
 
 #
+# Helpers
+#
+def to_int(value):
+    try:
+        int_value = int(value)
+    except (TypeError, ValueError):
+        int_value = 0
+    return int_value
+
+
+#
 # Classes
 #
 class OcDailyArchiveExtract:
@@ -95,6 +106,11 @@ class OcDailyArchiveExtract:
     @property
     def oldest_updated_admin_test(self):
         test_dates = self.increased_admin_tests.keys()
+
+        # May be none if OC HCA didn't report data for a day (i.e. no updates).
+        if not test_dates:
+            return None
+
         return min(test_dates)
 
     #
@@ -228,7 +244,7 @@ class OcDailyArchiveExtract:
         # Repo tests come a day late
         FOR_YESTERDAY = 2
         CASE_COL = 4
-        return int(self.csv_rows[FOR_YESTERDAY][CASE_COL])
+        return to_int(self.csv_rows[FOR_YESTERDAY][CASE_COL])
 
     #
     # Positive Rate

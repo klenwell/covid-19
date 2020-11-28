@@ -112,7 +112,7 @@ class OCHealthService:
 
     @property
     def dates(self):
-        return sorted(self.oc_hca_extract.new_cases.keys())
+        return self.oc_hca_extract.dates
 
     #
     # Instance Method

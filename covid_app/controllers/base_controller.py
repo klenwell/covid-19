@@ -39,16 +39,37 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from covid_app.extracts.covid_act_now import CovidActNowExtract
+        from covid_app.extracts.oc_hca.daily_archive_extract import OcDailyArchiveExtract
+        from datetime import date
+        thanksgiving = date(2020, 11, 26)
+        black_friday = date(2020, 11, 27)
 
-        extract = CovidActNowExtract.kent_effective_reproduction()
-        data = extract.json_data
-        print(data.keys())
+        thurs_extract = OcDailyArchiveExtract(thanksgiving)
+        print(thurs_extract.new_admin_tests)
+        print(thurs_extract.oldest_updated_admin_test)
         breakpoint()
 
-        print(extract.metrics_timeseries[extract.last_date])
-        print(extract.actuals_timeseries[extract.last_date])
-        print(extract.infection_rates[extract.last_date])
+        from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+        from covid_app.services.oc_health_service import OCHealthService
+
+        extract = DailyCovid19Extract.latest()
+        service = OCHealthService()
+
+        for dated in [thanksgiving, black_friday]:
+            print(
+                dated,
+                extract.new_tests_administered.get(dated),
+                extract.new_positive_tests_administered.get(dated),
+                extract.new_tests_reported.get(dated),
+                extract.new_cases.get(dated),
+                extract.hospitalizations.get(dated),
+                extract.icu_cases.get(dated),
+                extract.new_deaths.get(dated),
+                extract.new_snf_cases.get(dated)
+            )
+        print(extract.starts_on, extract.ends_on)
+        print(service.start_date, service.end_date, service.dates[-1])
+        breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2
     @expose(

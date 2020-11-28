@@ -330,8 +330,8 @@ class OcDailyTestsExport:
             next_day = n + 1
             extract_date = dated + timedelta(next_day)
             extract = self.daily_extracts[extract_date]
-            total_tests = extract.admin_tests.get(dated)
-            series.append(int(total_tests))
+            total_tests = self.to_int(extract.admin_tests.get(dated))
+            series.append(total_tests)
 
         return series
 
@@ -359,8 +359,8 @@ class OcDailyTestsExport:
             next_day = n + 1
             extract_date = dated + timedelta(next_day)
             extract = self.daily_extracts[extract_date]
-            total_tests = extract.positive_tests.get(dated)
-            series.append(int(total_tests))
+            total_tests = self.to_int(extract.positive_tests.get(dated))
+            series.append(total_tests)
 
         return series
 
@@ -378,3 +378,10 @@ class OcDailyTestsExport:
             series.append(int(new_positives))
 
         return series
+
+    def to_int(self, value):
+        try:
+            int_value = int(value)
+        except (TypeError, ValueError):
+            int_value = 0
+        return int_value

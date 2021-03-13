@@ -39,36 +39,32 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from covid_app.extracts.oc_hca.daily_archive_extract import OcDailyArchiveExtract
-        from datetime import date
-        thanksgiving = date(2020, 11, 26)
-        black_friday = date(2020, 11, 27)
+        from sodapy import Socrata
+        from datetime import date, datetime, timedelta
 
-        thurs_extract = OcDailyArchiveExtract(thanksgiving)
-        print(thurs_extract.new_admin_tests)
-        print(thurs_extract.oldest_updated_admin_test)
-        breakpoint()
+        # https://dev.socrata.com/foundry/data.cdc.gov/9mfq-cb36
+        dataset_id = '9mfq-cb36'
+        yesterday = date.today() - timedelta(days=1)
+        yesterday_iso = datetime.combine(yesterday, datetime.min.time()).isoformat()
+        parameters = {
+            'submission_date': yesterday_iso
+        }
+        print(parameters)
 
-        from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
-        from covid_app.services.oc_health_service import OCHealthService
+        # https://github.com/xmunoz/sodapy
+        client = Socrata("sandbox.demo.socrata.com", None)
+        data = client.get(dataset_id, **parameters)
+        states = [row['state'] for row in data]
+        print(sorted(states))
 
-        extract = DailyCovid19Extract.latest()
-        service = OCHealthService()
+        cases = [int(float(row['new_case'])) for row in data]
+        deaths = [int(float(row['new_death'])) for row in data]
+        print({
+            'date': yesterday,
+            'cases': sum(cases),
+            'deaths': sum(deaths)
+        })
 
-        for dated in [thanksgiving, black_friday]:
-            print(
-                dated,
-                extract.new_tests_administered.get(dated),
-                extract.new_positive_tests_administered.get(dated),
-                extract.new_tests_reported.get(dated),
-                extract.new_cases.get(dated),
-                extract.hospitalizations.get(dated),
-                extract.icu_cases.get(dated),
-                extract.new_deaths.get(dated),
-                extract.new_snf_cases.get(dated)
-            )
-        print(extract.starts_on, extract.ends_on)
-        print(service.start_date, service.end_date, service.dates[-1])
         breakpoint()
 
     # python app.py test -f foo arg1 extra1 extra2

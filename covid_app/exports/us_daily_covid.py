@@ -5,6 +5,7 @@ from functools import cached_property
 from config.app import DATA_ROOT
 from covid_app.extracts.cdc.us_daily_cases_extract import CdcDailyCasesExtract
 from covid_app.extracts.hhs.us_daily_tests_extract import HHSDailyTestsExtract
+from covid_app.extracts.hhs.us_daily_patients_extract import HHSDailyPatientsExtract
 from covid_app.extracts.covid19_projections import Covid19ProjectionsExtract
 
 
@@ -44,18 +45,6 @@ class USDailyCovidExport:
     # Properties
     #
     @property
-    def daily_csv_headers(self):
-        return [
-            'Date',
-            'New Tests',
-            'New Cases',
-            'New Deaths',
-            'Hospital Cases',
-            'ICU Cases',
-            'Rt'
-        ]
-
-    @property
     def csv_path(self):
         return path_join(CSV_DATA_PATH, EXPORT_FILE_NAME)
 
@@ -66,6 +55,10 @@ class USDailyCovidExport:
     @cached_property
     def hhs_daily_test_extract(self):
         return HHSDailyTestsExtract()
+
+    @cached_property
+    def hhs_daily_patient_extract(self):
+        return HHSDailyPatientsExtract()
 
     @cached_property
     def rt_rates(self):
@@ -100,9 +93,7 @@ class USDailyCovidExport:
             self.hhs_daily_test_extract.new_tests.get(dated),
             self.cdc_daily_case_extract.new_cases.get(dated),
             self.cdc_daily_case_extract.new_deaths.get(dated),
-            #self.cdc_daily_case_extract.hospitalizations.get(dated),
-            'N/A',
-            #self.cdc_daily_case_extract.icu_cases.get(dated),
-            'N/A',
+            self.hhs_daily_patient_extract.hospitalizations.get(dated),
+            self.hhs_daily_patient_extract.icu_cases.get(dated),
             self.rt_rates.get(dated),
         ]

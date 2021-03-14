@@ -40,34 +40,11 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from sodapy import Socrata
-        from datetime import date, datetime
+        from covid_app.extracts.hhs.us_daily_patients_extract import HHSDailyPatientsExtract
 
-        # https://dev.socrata.com/foundry/healthdata.gov/g62h-syeh
-        dataset_id = 'g62h-syeh'
-        start_date = date(2021,3,5)
-        start_date_iso = datetime.combine(start_date, datetime.min.time()).isoformat()
-        parameters = {
-            'date': start_date_iso
-            #'$where': "date >= '{}'".format(start_date_iso),
-        }
-        print(parameters)
-
-        # https://github.com/xmunoz/sodapy
-        to_int = lambda s: int(float(s))
-        client = Socrata("sandbox.demo.socrata.com", None)
-        data = client.get(dataset_id, **parameters)
-        hospitalized = 'total_adult_patients_hospitalized_confirmed_and_suspected_covid'
-        icued = 'staffed_icu_adult_patients_confirmed_and_suspected_covid'
-        hospital_cases = [to_int(d[hospitalized]) for d in data]
-        icu_cases = [to_int(d[icued]) for d in data]
-        print([d for d in data if d['state'] == 'CA'])
-        print({
-            'date': datetime.fromisoformat(data[0]['date']).date(),
-            'rows': len(data),
-            'hospital_cases': sum(hospital_cases),
-            'icu_cases': sum(icu_cases)
-        })
+        extract = HHSDailyPatientsExtract()
+        print(extract.hospitalizations[extract.ends_on])
+        print(extract.icu_cases[extract.ends_on])
 
         breakpoint()
 

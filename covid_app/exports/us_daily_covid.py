@@ -4,6 +4,7 @@ from functools import cached_property
 
 from config.app import DATA_ROOT
 from covid_app.extracts.cdc.us_daily_cases_extract import CdcDailyCasesExtract
+from covid_app.extracts.hhs.us_daily_tests_extract import HHSDailyTestsExtract
 from covid_app.extracts.covid19_projections import Covid19ProjectionsExtract
 
 
@@ -63,6 +64,10 @@ class USDailyCovidExport:
         return CdcDailyCasesExtract()
 
     @cached_property
+    def hhs_daily_test_extract(self):
+        return HHSDailyTestsExtract()
+
+    @cached_property
     def rt_rates(self):
         return Covid19ProjectionsExtract.us_effective_reproduction()
 
@@ -92,8 +97,7 @@ class USDailyCovidExport:
     def extract_data_to_csv_row(self, dated):
         return [
             dated,
-            #self.cdc_daily_case_extract.new_tests.get(dated),
-            'N/A',
+            self.hhs_daily_test_extract.new_tests.get(dated),
             self.cdc_daily_case_extract.new_cases.get(dated),
             self.cdc_daily_case_extract.new_deaths.get(dated),
             #self.cdc_daily_case_extract.hospitalizations.get(dated),

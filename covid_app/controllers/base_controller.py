@@ -4,9 +4,9 @@ from os.path import join as path_join
 from cement import Controller
 from cement import ex as expose
 
-from ..services.mi_health_service import MiHealthService
-from ..services.us_health_service import USHealthService
-from ..extracts.san_diego_county import SanDiegoCountyDailyExtract
+from covid_app.services.mi_health_service import MiHealthService
+from covid_app.extracts.san_diego_county import SanDiegoCountyDailyExtract
+from covid_app.exports.us_daily_covid import USDailyCovidExport
 
 
 class BaseController(Controller):
@@ -22,7 +22,8 @@ class BaseController(Controller):
     # python app.py us-daily
     @expose(help="Export US data to csv file.")
     def us_daily(self):
-        result = USHealthService.export_daily_csv()
+        export = USDailyCovidExport()
+        result = export.to_csv()
         print(result)
 
     # python app.py sd-daily
@@ -39,31 +40,11 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from sodapy import Socrata
-        from datetime import date, datetime, timedelta
+        from ..extracts.cdc.us_daily_cases_extract import CdcDailyCasesExtract
 
-        # https://dev.socrata.com/foundry/data.cdc.gov/9mfq-cb36
-        dataset_id = '9mfq-cb36'
-        yesterday = date.today() - timedelta(days=1)
-        yesterday_iso = datetime.combine(yesterday, datetime.min.time()).isoformat()
-        parameters = {
-            'submission_date': yesterday_iso
-        }
-        print(parameters)
-
-        # https://github.com/xmunoz/sodapy
-        client = Socrata("sandbox.demo.socrata.com", None)
-        data = client.get(dataset_id, **parameters)
-        states = [row['state'] for row in data]
-        print(sorted(states))
-
-        cases = [int(float(row['new_case'])) for row in data]
-        deaths = [int(float(row['new_death'])) for row in data]
-        print({
-            'date': yesterday,
-            'cases': sum(cases),
-            'deaths': sum(deaths)
-        })
+        extract = CdcDailyCasesExtract()
+        print(extract.new_cases[extract.ends_on])
+        print(extract.new_deaths[extract.ends_on])
 
         breakpoint()
 

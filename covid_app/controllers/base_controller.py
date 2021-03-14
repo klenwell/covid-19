@@ -40,11 +40,36 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from ..extracts.cdc.us_daily_cases_extract import CdcDailyCasesExtract
+        from sodapy import Socrata
+        from datetime import date, datetime
 
-        extract = CdcDailyCasesExtract()
-        print(extract.new_cases[extract.ends_on])
-        print(extract.new_deaths[extract.ends_on])
+        # https://dev.socrata.com/foundry/healthdata.gov/j8mb-icvb
+        dataset_id = 'j8mb-icvb'
+        start_date = date(2021,3,5)
+        start_date_iso = datetime.combine(start_date, datetime.min.time()).isoformat()
+        parameters = {
+            'date': start_date_iso
+            #'$where': "date >= '{}'".format(start_date_iso),
+        }
+        print(parameters)
+
+        # https://github.com/xmunoz/sodapy
+        to_int = lambda s: int(float(s))
+        client = Socrata("sandbox.demo.socrata.com", None)
+        data = client.get(dataset_id, **parameters)
+        positives = [to_int(d['new_results_reported']) for d in data if d['overall_outcome'] == 'Positive']
+        negatives = [to_int(d['new_results_reported']) for d in data if d['overall_outcome'] == 'Negative']
+        blanks = [to_int(d['new_results_reported']) for d in data if d['overall_outcome'] == 'Inconclusive']
+        print([d for d in data if d['state'] == 'AL'])
+        print({
+            'date': datetime.fromisoformat(data[0]['date']).date(),
+            'rows': len(data),
+            'positives': sum(positives),
+            'negatives': sum(negatives),
+            'inconclusives': sum(blanks),
+            'total': sum(positives) + sum(negatives)
+        })
+
 
         breakpoint()
 

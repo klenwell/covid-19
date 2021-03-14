@@ -28,20 +28,6 @@ CSV_HEADER = [
 
 class USDailyCovidExport:
     #
-    # Static Methods
-    #
-    @staticmethod
-    def export_daily_csv():
-        export = USDailyCovidExport()
-        csv_path = service.to_csv()
-        return {
-            'CSV Path': csv_path,
-            'Rows': len(export.dates),
-            'Start Date': export.starts_on,
-            'Last Date': export.ends_on
-        }
-
-    #
     # Properties
     #
     @property

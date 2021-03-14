@@ -14,6 +14,9 @@ jinja2
 # Requests for Website and API interactions
 requests
 
+# Client for the Socrata Open Data API (CDC data)
+sodapy
+
 # Test Dependencies
 nose
 coverage

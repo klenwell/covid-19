@@ -43,8 +43,8 @@ class BaseController(Controller):
         from sodapy import Socrata
         from datetime import date, datetime
 
-        # https://dev.socrata.com/foundry/healthdata.gov/j8mb-icvb
-        dataset_id = 'j8mb-icvb'
+        # https://dev.socrata.com/foundry/healthdata.gov/g62h-syeh
+        dataset_id = 'g62h-syeh'
         start_date = date(2021,3,5)
         start_date_iso = datetime.combine(start_date, datetime.min.time()).isoformat()
         parameters = {
@@ -57,19 +57,17 @@ class BaseController(Controller):
         to_int = lambda s: int(float(s))
         client = Socrata("sandbox.demo.socrata.com", None)
         data = client.get(dataset_id, **parameters)
-        positives = [to_int(d['new_results_reported']) for d in data if d['overall_outcome'] == 'Positive']
-        negatives = [to_int(d['new_results_reported']) for d in data if d['overall_outcome'] == 'Negative']
-        blanks = [to_int(d['new_results_reported']) for d in data if d['overall_outcome'] == 'Inconclusive']
-        print([d for d in data if d['state'] == 'AL'])
+        hospitalized = 'total_adult_patients_hospitalized_confirmed_and_suspected_covid'
+        icued = 'staffed_icu_adult_patients_confirmed_and_suspected_covid'
+        hospital_cases = [to_int(d[hospitalized]) for d in data]
+        icu_cases = [to_int(d[icued]) for d in data]
+        print([d for d in data if d['state'] == 'CA'])
         print({
             'date': datetime.fromisoformat(data[0]['date']).date(),
             'rows': len(data),
-            'positives': sum(positives),
-            'negatives': sum(negatives),
-            'inconclusives': sum(blanks),
-            'total': sum(positives) + sum(negatives)
+            'hospital_cases': sum(hospital_cases),
+            'icu_cases': sum(icu_cases)
         })
-
 
         breakpoint()
 

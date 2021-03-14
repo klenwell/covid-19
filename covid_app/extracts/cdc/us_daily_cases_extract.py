@@ -7,6 +7,7 @@ https://github.com/xmunoz/sodapy
 from sodapy import Socrata
 from datetime import date, datetime
 from functools import cached_property
+from config.secrets import SODA_APP_TOKEN
 
 
 EXTRACT_URL = 'sandbox.demo.socrata.com'
@@ -47,7 +48,7 @@ class CdcDailyCasesExtract:
             '$where': "submission_date >= '{}'".format(start_date_iso),
         }
 
-        client = Socrata(EXTRACT_URL, None)
+        client = Socrata(EXTRACT_URL, SODA_APP_TOKEN)
         return client.get_all(DATASET_ID, **parameters)
 
     @cached_property

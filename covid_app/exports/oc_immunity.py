@@ -121,7 +121,7 @@ class OCImmunityExport:
 
     def vaccinated_on_date(self, dated):
         vaccinated = []
-        start_date = self.dates[0]
+        start_date = dated - timedelta(days=IMMUNITY_WINDOW)
         end_date = dated
         days = (end_date - start_date).days
 

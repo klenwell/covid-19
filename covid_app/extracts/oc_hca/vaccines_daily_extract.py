@@ -18,25 +18,52 @@ EXTRACT_URL_F = ("{}/{}/FeatureServer/0/query?where={}+IS+NOT+NULL"
                  "&resultRecordCount=&sqlFormat=none&f=pjson&token=")
 
 
-class OCVaccinationsSummaryExtract:
-    VERSION = 0.1
-
+class OCVaccinesDailyExtract:
     #
     # Properties
     #
     @cached_property
-    def categories(self):
-        return self.rows_by_category.keys()
+    def daily_doses(self):
+        key = 'valid_admin'
+        daily_logs = self.daily_dose_logs
+        return self.extract_from_daily_logs(daily_logs, key)
 
-    @cached_property
-    def rows_by_category(self):
-        category_rows = {}
+    @property
+    def total_doses(self):
+        return sum(self.daily_doses.values())
 
-        for row in self.rows:
-            category = row['category']
-            category_rows[category] = row
+    @property
+    def daily_doses_7d_average(self):
+        last_7_dates = self.dose_dates[-7:]
+        total_doses_7d = 0
 
-        return category_rows
+        for dated in last_7_dates:
+            total_doses_7d += self.daily_doses[dated]
+
+        avg_per_day = 1.0 * total_doses_7d / len(last_7_dates)
+        return '{:.2f}'.format(avg_per_day)
+
+    @property
+    def dose_dates(self):
+        return sorted(self.daily_doses.keys())
+
+    @property
+    def starts_on(self):
+        return self.dose_dates[0]
+
+    @property
+    def ends_on(self):
+        return self.dose_dates[-1]
+
+    @property
+    def dates(self):
+        dates = []
+
+        # Fencepost alert: Don't forget to add one to range to include final day.
+        for n in range(int((self.ends_on - self.starts_on).days) + 1):
+            date = self.starts_on + timedelta(n)
+            dates.append(date)
+        return dates
 
     #
     # Instance Methods
@@ -44,21 +71,18 @@ class OCVaccinationsSummaryExtract:
     def __init__(self):
         pass
 
-    def by_category(self, category):
-        return self.rows_by_category.get(category)
-
     #
     # Private
     #
     @cached_property
     def json_data(self):
-        endpoint = 'vacc_totalsummary'
-        where_not_null_field = 'category'
+        endpoint = 'vacc_dosebydate'
+        where_not_null_field = 'valid_admin'
         json_data = self.fetch_json_data(endpoint, where_not_null_field)
         return json_data
 
     @cached_property
-    def rows(self):
+    def daily_dose_logs(self):
         return self.extract_from_json_data(self.json_data)
 
     def fetch_json_data(self, endpoint, where_not_null_field):
@@ -71,6 +95,18 @@ class OCVaccinationsSummaryExtract:
         features = json_data['features']
         data = [f['attributes'] for f in features if f.get('attributes')]
         return data
+
+    def extract_from_daily_logs(self, daily_logs, key):
+        daily_values = {}
+        timestamp_key = 'vac_date'
+
+        for daily_log in daily_logs:
+            timestamp = daily_log[timestamp_key]
+            log_date = self.timestamp_to_date(timestamp)
+            value = daily_log[key]
+            daily_values[log_date] = value
+
+        return daily_values
 
     def timestamp_to_date(self, timestamp):
         return datetime.utcfromtimestamp(timestamp/1000).date()

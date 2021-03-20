@@ -193,6 +193,13 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        analysis = OcMonthlyTestAnalysis(2020, 9)
-        print(analysis)
+        from covid_app.extracts.oc_hca.vaccinations_extract import OCVaccinationsExtract
+
+        extract = OCVaccinationsExtract()
+        total_doses = sum(extract.daily_doses.values())
+        avg_per_day = 1.0 * total_doses / len(extract.daily_doses)
+        print({
+            'total_doses': total_doses,
+            'per_day_avg': '{:.2f}'.format(avg_per_day)
+        })
         breakpoint()

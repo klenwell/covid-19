@@ -198,11 +198,16 @@ class OcController(Controller):
 
         summary = OCVaccinesSummaryExtract()
         print(summary.categories)
+        print({
+            'first_dose': summary.first_dose,
+            'both_doses': summary.both_doses,
+            'at_least_one_dose': summary.at_least_one_dose,
+            'total_doses': summary.total_doses
+        })
 
         daily = OCVaccinesDailyExtract()
         print({
             'total_doses': daily.total_doses,
             'last_7_days': daily.daily_doses_7d_average
         })
-
         breakpoint()

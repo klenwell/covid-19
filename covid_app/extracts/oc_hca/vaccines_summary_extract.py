@@ -22,6 +22,22 @@ class OCVaccinesSummaryExtract:
     #
     # Properties
     #
+    @property
+    def first_dose(self):
+        return self.by_category('TotalDoses')['num_1st']
+
+    @property
+    def both_doses(self):
+        return self.by_category('TotalDoses')['num_1st2nd']
+
+    @property
+    def at_least_one_dose(self):
+        return self.by_category('TotalDoses')['num_atleast1']
+
+    @property
+    def total_doses(self):
+        return self.first_dose + (2 * self.both_doses)
+
     @cached_property
     def categories(self):
         return self.rows_by_category.keys()

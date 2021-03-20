@@ -195,6 +195,7 @@ class OcController(Controller):
     def dev(self):
         from covid_app.extracts.oc_hca.vaccines_summary_extract import OCVaccinesSummaryExtract
         from covid_app.extracts.oc_hca.vaccines_daily_extract import OCVaccinesDailyExtract
+        from covid_app.exports.oc_immunity import OCImmunityExport
 
         summary = OCVaccinesSummaryExtract()
         print(summary.categories)
@@ -210,4 +211,9 @@ class OcController(Controller):
             'total_doses': daily.total_doses,
             'last_7_days': daily.daily_doses_7d_average
         })
-        breakpoint()
+
+        export = OCImmunityExport()
+        csv_path = export.to_csv()
+        print(csv_path)
+
+        #breakpoint()

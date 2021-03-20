@@ -17,11 +17,10 @@ EXPORT_FILE_NAME = 'oc-immunity.csv'
 
 CSV_HEADER = [
     'Date',
-    'Population (Est)',
-    'Vulnerable',
     'Infectious',
     'Recovered',
-    'Vaccinated'
+    'Vaccinated',
+    'Vulnerable'
 ]
 
 OC_POPULATION = 3000000
@@ -84,11 +83,10 @@ class OCImmunityExport:
 
         return [
             dated,
-            OC_POPULATION,
-            vulnerable,
             infectious,
             recovered,
-            vaccinated
+            vaccinated,
+            vulnerable
         ]
 
     def infectious_on_date(self, dated):

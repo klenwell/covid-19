@@ -1,6 +1,7 @@
 from os.path import join as path_join
 import csv
 from functools import cached_property
+from datetime import timedelta
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
@@ -24,6 +25,16 @@ CSV_HEADER = [
 ]
 
 OC_POPULATION = 3000000
+INFECTIOUS_WINDOW = 14 # days
+IMMUNITY_WINDOW = 180 # days
+
+# This is the factor by which positive cases are estimated to have been undercounted.
+# There are various studies that put the number between 2 and 4.
+UNDERTEST_FACTOR = 2.5
+
+# Need to adjust down vaccination count since one dose does not equal full vaccination
+# for a vaccine that requires more than one shot. Also none are 100% effective.
+VAX_EFFICACY_FACTOR = 0.45
 
 
 class OCImmunityExport:
@@ -35,12 +46,16 @@ class OCImmunityExport:
         return path_join(CSV_DATA_PATH, EXPORT_FILE_NAME)
 
     @cached_property
-    def oc_daily_case_extract(self):
+    def case_extract(self):
         return DailyCovid19Extract.latest()
+
+    @cached_property
+    def vax_extract(self):
+        return OCVaccinesDailyExtract()
 
     @property
     def dates(self):
-        return sorted(self.oc_daily_case_extract.dates)
+        return sorted(self.case_extract.dates)
 
     #
     # Instance Method
@@ -62,23 +77,58 @@ class OCImmunityExport:
     # Private
     #
     def extract_data_to_csv_row(self, dated):
+        infectious = self.infectious_on_date(dated)
+        recovered = self.recovered_on_date(dated)
+        vaccinated = self.vaccinated_on_date(dated)
+        vulnerable = OC_POPULATION - infectious - recovered - vaccinated
+
         return [
             dated,
             OC_POPULATION,
-            self.vulnerable_on_date(dated),
-            self.infectious_on_date(dated),
-            self.recovered_on_date(dated),
-            self.vaccinated_on_date(dated)
+            vulnerable,
+            infectious,
+            recovered,
+            vaccinated
         ]
 
-    def vulnerable_on_date(self, dated):
-        return 'TBA'
-
     def infectious_on_date(self, dated):
-        return 'TBA'
+        infections = []
+        extract = self.case_extract
+        start_date = dated - timedelta(days=INFECTIOUS_WINDOW)
+
+        for n in range(INFECTIOUS_WINDOW):
+            on_date = start_date + timedelta(days=n)
+            infection_count = extract.new_positive_tests_administered.get(on_date, 0)
+            infection_count = infection_count * UNDERTEST_FACTOR
+            infections.append(infection_count)
+
+        return round(sum(infections))
 
     def recovered_on_date(self, dated):
-        return 'TBA'
+        recovered = []
+        extract = self.case_extract
+        start_date = dated - timedelta(days=IMMUNITY_WINDOW)
+        end_date = dated - timedelta(days=INFECTIOUS_WINDOW)
+        days = (end_date - start_date).days
+
+        for n in range(days):
+            on_date = start_date + timedelta(days=n)
+            recovered_count = extract.new_positive_tests_administered.get(on_date, 0)
+            recovered_count = recovered_count * UNDERTEST_FACTOR
+            recovered.append(recovered_count)
+
+        return round(sum(recovered))
 
     def vaccinated_on_date(self, dated):
-        return 'TBA'
+        vaccinated = []
+        start_date = self.dates[0]
+        end_date = dated
+        days = (end_date - start_date).days
+
+        for n in range(days):
+            on_date = start_date + timedelta(days=n)
+            dose_count = self.vax_extract.daily_doses.get(on_date, 0)
+            vax_count = dose_count * VAX_EFFICACY_FACTOR
+            vaccinated.append(vax_count)
+
+        return round(sum(vaccinated))

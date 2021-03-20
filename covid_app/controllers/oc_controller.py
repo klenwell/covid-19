@@ -194,22 +194,14 @@ class OcController(Controller):
     @expose(help="For rapid testing and development.")
     def dev(self):
         from covid_app.extracts.oc_hca.vaccines_summary_extract import OCVaccinesSummaryExtract
-        from covid_app.extracts.oc_hca.vaccines_daily_extract import OCVaccinesDailyExtract
         from covid_app.exports.oc_immunity import OCImmunityExport
 
         summary = OCVaccinesSummaryExtract()
-        print(summary.categories)
         print({
             'first_dose': summary.first_dose,
             'both_doses': summary.both_doses,
             'at_least_one_dose': summary.at_least_one_dose,
             'total_doses': summary.total_doses
-        })
-
-        daily = OCVaccinesDailyExtract()
-        print({
-            'total_doses': daily.total_doses,
-            'last_7_days': daily.daily_doses_7d_average
         })
 
         export = OCImmunityExport()

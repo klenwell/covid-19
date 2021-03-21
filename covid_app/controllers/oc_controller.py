@@ -4,6 +4,7 @@ from cement import ex as expose
 
 from covid_app.services.oc_health_service import OCHealthService
 from covid_app.exports.oc_daily_testing import OcDailyTestsExport
+from covid_app.exports.oc_immunity import OCImmunityExport
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
@@ -37,6 +38,17 @@ class OcController(Controller):
         export.to_csv()
         vars = {'export': export}
         self.app.render(vars, 'oc/daily-tests.jinja2')
+
+    # python app.py oc immunity
+    @expose(help="Export immunity projections to csv file.")
+    def immunity(self):
+        export = OCImmunityExport()
+        export.to_csv()
+        vars = {
+            'export': export,
+            'latest': export.extract_data_to_csv_row(export.ends_on)
+        }
+        self.app.render(vars, 'oc/immunity.jinja2')
 
     #
     # Analytics
@@ -194,7 +206,6 @@ class OcController(Controller):
     @expose(help="For rapid testing and development.")
     def dev(self):
         from covid_app.extracts.oc_hca.vaccines_summary_extract import OCVaccinesSummaryExtract
-        from covid_app.exports.oc_immunity import OCImmunityExport
 
         summary = OCVaccinesSummaryExtract()
         print({
@@ -204,8 +215,4 @@ class OcController(Controller):
             'total_doses': summary.total_doses
         })
 
-        export = OCImmunityExport()
-        csv_path = export.to_csv()
-        print(csv_path)
-
-        #breakpoint()
+        breakpoint()

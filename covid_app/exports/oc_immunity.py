@@ -28,7 +28,7 @@ INFECTIOUS_WINDOW = 14 # days
 IMMUNITY_WINDOW = 180 # days
 
 # This is the factor by which positive cases are estimated to have been undercounted.
-# There are various studies that put the number between 2 and 4.
+# Probably conservative. There are various studies that put the number between 4 and 7.
 UNDERTEST_FACTOR = 2.5
 
 # Need to adjust down vaccination count since one dose does not equal full vaccination
@@ -56,6 +56,14 @@ class OCImmunityExport:
     def dates(self):
         return sorted(self.case_extract.dates)
 
+    @property
+    def starts_on(self):
+        return self.dates[0]
+
+    @property
+    def ends_on(self):
+        return self.dates[-1]
+
     #
     # Instance Method
     #
@@ -76,9 +84,9 @@ class OCImmunityExport:
     # Private
     #
     def extract_data_to_csv_row(self, dated):
-        infectious = self.infectious_on_date(dated)
-        recovered = self.recovered_on_date(dated)
-        vaccinated = self.vaccinated_on_date(dated)
+        infectious = round(self.infectious_on_date(dated))
+        recovered = round(self.recovered_on_date(dated))
+        vaccinated = round(self.vaccinated_on_date(dated))
         vulnerable = OC_POPULATION - infectious - recovered - vaccinated
 
         return [
@@ -100,7 +108,7 @@ class OCImmunityExport:
             infection_count = infection_count * UNDERTEST_FACTOR
             infections.append(infection_count)
 
-        return round(sum(infections))
+        return sum(infections)
 
     def recovered_on_date(self, dated):
         recovered = []
@@ -115,7 +123,7 @@ class OCImmunityExport:
             recovered_count = recovered_count * UNDERTEST_FACTOR
             recovered.append(recovered_count)
 
-        return round(sum(recovered))
+        return sum(recovered)
 
     def vaccinated_on_date(self, dated):
         vaccinated = []
@@ -129,4 +137,4 @@ class OCImmunityExport:
             vax_count = dose_count * VAX_EFFICACY_FACTOR
             vaccinated.append(vax_count)
 
-        return round(sum(vaccinated))
+        return sum(vaccinated)

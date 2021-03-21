@@ -5,7 +5,6 @@ from datetime import timedelta
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
-from covid_app.extracts.oc_hca.vaccines_summary_extract import OCVaccinesSummaryExtract
 from covid_app.extracts.oc_hca.vaccines_daily_extract import OCVaccinesDailyExtract
 
 
@@ -24,8 +23,8 @@ CSV_HEADER = [
 ]
 
 OC_POPULATION = 3000000
-INFECTIOUS_WINDOW = 14 # days
-IMMUNITY_WINDOW = 180 # days
+INFECTIOUS_WINDOW = 14  # days
+IMMUNITY_WINDOW = 180   # days
 
 # This is the factor by which positive cases are estimated to have been undercounted.
 # Probably conservative. There are various studies that put the number between 4 and 7.

@@ -206,13 +206,17 @@ class OcController(Controller):
     @expose(help="For rapid testing and development.")
     def dev(self):
         from covid_app.extracts.oc_hca.vaccines_summary_extract import OCVaccinesSummaryExtract
+        from covid_app.extracts.oc_hca.vaccines_daily_extract import OCVaccinesDailyExtract
 
         summary = OCVaccinesSummaryExtract()
+        daily = OCVaccinesDailyExtract()
         print({
             'first_dose': summary.first_dose,
             'both_doses': summary.both_doses,
             'at_least_one_dose': summary.at_least_one_dose,
-            'total_doses': summary.total_doses
+            'total_doses': summary.total_doses,
+            'daily-ends-on': daily.ends_on,
+            'daily-most-recent': daily.daily_doses[daily.ends_on]
         })
 
         breakpoint()

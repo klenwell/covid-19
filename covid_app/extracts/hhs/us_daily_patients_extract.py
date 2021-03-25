@@ -10,7 +10,7 @@ from functools import cached_property
 from config.secrets import SODA_APP_TOKEN
 
 
-EXTRACT_URL = 'sandbox.demo.socrata.com'
+EXTRACT_URL = 'healthdata.gov'
 DATASET_ID = 'g62h-syeh'
 START_DATE = date(2020, 3, 1)
 

@@ -133,7 +133,7 @@ class OCImmunityExport:
         for n in range(days):
             on_date = start_date + timedelta(days=n)
             dose_count = self.vax_extract.daily_doses.get(on_date, 0)
-            vax_count = dose_count * VAX_EFFICACY_FACTOR
+            vax_count =  float(dose_count) * VAX_EFFICACY_FACTOR
             vaccinated.append(vax_count)
 
         return sum(vaccinated)

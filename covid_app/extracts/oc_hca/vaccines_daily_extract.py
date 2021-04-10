@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 
 
 EXTRACT_URL = 'https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services'
+EXTRACT_ENDPOINT = 'vacc_dosesbydates'
 EXTRACT_URL_F = ("{}/{}/FeatureServer/0/query?where={}+IS+NOT+NULL"
                  "&objectIds=&time=&resultType=none&outFields=*"
                  "&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false"
@@ -76,9 +77,8 @@ class OCVaccinesDailyExtract:
     #
     @cached_property
     def json_data(self):
-        endpoint = 'vacc_dosebydate'
         where_not_null_field = 'valid_admin'
-        json_data = self.fetch_json_data(endpoint, where_not_null_field)
+        json_data = self.fetch_json_data(EXTRACT_ENDPOINT, where_not_null_field)
         return json_data
 
     @cached_property

@@ -210,13 +210,14 @@ class OcController(Controller):
 
         summary = OCVaccinesSummaryExtract()
         daily = OCVaccinesDailyExtract()
-        print({
+        data = {
             'first_dose': summary.first_dose,
             'both_doses': summary.both_doses,
             'at_least_one_dose': summary.at_least_one_dose,
             'total_doses': summary.total_doses,
             'daily-ends-on': daily.ends_on,
             'daily-most-recent': daily.daily_doses[daily.ends_on]
-        })
+        }
+        print(data)
 
         breakpoint()

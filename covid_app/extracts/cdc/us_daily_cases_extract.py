@@ -84,7 +84,9 @@ class CdcDailyCasesExtract:
         daily_national_total = 0
 
         for daily_log in self.daily_logs[dated]:
-            state_total = int(float(daily_log[column]))
+            # On 2021-04-21, new_case column disappeared from MO's daily log
+            reported_total = daily_log.get(column, '0.0')
+            state_total = int(float(reported_total))
             daily_national_total += state_total
 
         return daily_national_total

@@ -76,6 +76,7 @@ class OCHealthService:
 
     @cached_property
     def unacast_extract(self):
+        # TODO: this now return 401
         return UnacastSocialDistancingExtract.oc()
 
     @cached_property
@@ -141,10 +142,17 @@ class OCHealthService:
             self.oc_hca_extract.icu_cases.get(dated),
             self.oc_hca_extract.new_deaths.get(dated),
             self.rt_extract.infection_rates.get(dated),
-            self.unacast_extract.travel_distance_scores.get(dated),
-            self.unacast_extract.visitation_scores.get(dated),
-            self.unacast_extract.encounter_densities.get(dated),
-            self.unacast_extract.grades.get(dated),
+
+            # TODO: These now 401 and haven't return data for a while
+            #self.unacast_extract.travel_distance_scores.get(dated),
+            #self.unacast_extract.visitation_scores.get(dated),
+            #self.unacast_extract.encounter_densities.get(dated),
+            #self.unacast_extract.grades.get(dated),
+            '-',
+            '-',
+            '-',
+            '-',
+
             self.oc_hca_extract.new_snf_cases.get(dated)
         ]
 

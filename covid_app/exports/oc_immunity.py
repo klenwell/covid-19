@@ -23,8 +23,9 @@ CSV_HEADER = [
 ]
 
 OC_POPULATION = 3000000
-INFECTIOUS_WINDOW = 14  # days
-IMMUNITY_WINDOW = 180   # days
+INFECTIOUS_WINDOW = 14              # days
+VACCINE_IMMUNITY_WINDOW = 9 * 30    # days
+INFECTION_IMMUNITY_WINDOW = 6 * 30  # days
 
 # This is the factor by which positive cases are estimated to have been undercounted.
 # Probably conservative. There are various studies that put the number between 4 and 7.
@@ -112,7 +113,7 @@ class OCImmunityExport:
     def recovered_on_date(self, dated):
         recovered = []
         extract = self.case_extract
-        start_date = dated - timedelta(days=IMMUNITY_WINDOW)
+        start_date = dated - timedelta(days=INFECTION_IMMUNITY_WINDOW)
         end_date = dated - timedelta(days=INFECTIOUS_WINDOW)
         days = (end_date - start_date).days
 
@@ -126,7 +127,7 @@ class OCImmunityExport:
 
     def vaccinated_on_date(self, dated):
         vaccinated = []
-        start_date = dated - timedelta(days=IMMUNITY_WINDOW)
+        start_date = dated - timedelta(days=VACCINE_IMMUNITY_WINDOW)
         end_date = dated
         days = (end_date - start_date).days
 

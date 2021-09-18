@@ -29,9 +29,9 @@ from functools import cached_property
 EXTRACT_URL = 'https://wabi-us-gov-iowa-api.analysis.usgovcloudapi.net/public/reports/querydata'
 
 # US Gov API request parameters
-WABI_DATASET_ID = '59638bad-f747-4eeb-9e60-02fdca2acfcd'
-WABI_REPORT_ID = '1e588afe-f0c7-4140-8350-e1212396c270'
-WABI_MODEL_ID = '303803'
+WABI_DATASET_ID = '68c49ce8-850a-41fb-8211-dcf5bd8a7281'
+WABI_REPORT_ID = 'c6f0a0f7-5ac0-4279-bcc2-e47e9439674e'
+WABI_MODEL_ID = '348880'
 
 
 class UsGovCovid19Extract:
@@ -48,9 +48,9 @@ class UsGovCovid19Extract:
             'Accept-Language': 'en-US,en;q=0.5',
             'Accept-Encoding': 'gzip, deflate, br',
             'Referer': 'https://app.powerbigov.us',
-            'ActivityId': '34276123-f3d4-4ca6-91d7-9f16a109f985',
-            'RequestId': '1af74463-3502-4a66-584b-5c59c4514b2c',
-            'X-PowerBI-ResourceKey': '464dee02-3534-4da9-acc4-79b8bded8a83',
+            'ActivityId': '0eb36de8-1e21-4344-9847-04d7077eef75',
+            'RequestId': '09b0368c-2803-2e54-c4a7-08a458fb20b6',
+            'X-PowerBI-ResourceKey': 'a4abbd9d-08f8-456e-b02b-f4c08be8888b',
             'Content-Type': 'application/json;charset=UTF-8',
             'Origin': 'https://app.powerbigov.us',
             'DNT': '1',
@@ -77,6 +77,10 @@ class UsGovCovid19Extract:
             '{"DatasetId":"%s","Sources":[{"ReportId":"%s"}]}}],"cancelQueries":[],"modelId":%s}'
         )
         raw_data = data_str % (WABI_DATASET_ID, WABI_REPORT_ID, WABI_MODEL_ID)
+
+        # FIXME: I just copy-pasted this using steps outlined at top. This is the quick and
+        # dirty way to pull test data. In future, figure out how to get this data civilly.
+        raw_data = '{"version":"1.0.0","queries":[{"Query":{"Commands":[{"SemanticQueryDataShapeCommand":{"Query":{"Version":2,"From":[{"Name":"t","Entity":"Testing Data","Type":0},{"Name":"c","Entity":"Cases by County","Type":0}],"Select":[{"Aggregation":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"t"}},"Property":"TestCount"}},"Function":0},"Name":"Sum(Testing Data.TestCount)"},{"Column":{"Expression":{"SourceRef":{"Source":"t"}},"Property":"MessageDate"},"Name":"Testing Data.MessageDate"},{"Column":{"Expression":{"SourceRef":{"Source":"t"}},"Property":"TestType"},"Name":"Testing Data.TestType"}],"Where":[{"Condition":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"c"}},"Property":"COUNTY"}}],"Values":[[{"Literal":{"Value":"\'Kent\'"}}]]}}}]},"Binding":{"Primary":{"Groupings":[{"Projections":[0,1]}]},"Secondary":{"Groupings":[{"Projections":[2]}]},"DataReduction":{"DataVolume":4,"Primary":{"Sample":{}},"Secondary":{"Top":{}}},"Version":1},"ExecutionMetricsKind":1}}]},"QueryId":"","ApplicationContext":{"DatasetId":"68c49ce8-850a-41fb-8211-dcf5bd8a7281","Sources":[{"ReportId":"c6f0a0f7-5ac0-4279-bcc2-e47e9439674e","VisualId":"3bfd1db1633430448f1c"}]}}],"cancelQueries":[],"modelId":348880}'
         return json.loads(raw_data)
 
     @cached_property

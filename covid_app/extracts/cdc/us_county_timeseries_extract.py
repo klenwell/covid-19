@@ -23,7 +23,7 @@ report_date_window_end	"2021-05-14"
 community_transmission_level	"high"
 """
 import requests
-from datetime import datetime, date
+from datetime import datetime
 from functools import cached_property
 
 
@@ -32,7 +32,6 @@ DATASET_ID_F = 'integrated_county_timeseries_fips_{}_external'
 TIMESERIES_DATA_KEY = 'integrated_county_timeseries_external_data'
 KENT_FIPS = '26081'
 DATE_F = '%Y-%m-%d'
-START_DATE = date(2020, 3, 1)
 
 
 class CdcCountyTimeseriesExtract:
@@ -51,32 +50,50 @@ class CdcCountyTimeseriesExtract:
     # Properties
     #
     @cached_property
-    def data_dict(self):
-        data_dict = {}
-        for daily_data in self.json[TIMESERIES_DATA_KEY]:
-            date_str = str(daily_data['date'])
-            reported_on = datetime.strptime(date_str, DATE_F).date()
-            data_dict[reported_on] = daily_data
-        return data_dict
-
-    @cached_property
-    def dates(self):
-        return sorted(self.data_dict.keys())
-
-    @cached_property
-    def last_date(self):
-        return self.dates[-1]
-
-
-    @cached_property
     def new_cases(self):
         col_name = 'new_cases_7_day_rolling_average'
-        return self.daily_totals(col_name)
+        return self.extract_from_daily_logs(col_name, float)
 
     @cached_property
     def new_deaths(self):
-        col_name = 'new_death'
-        return self.daily_totals(col_name)
+        col_name = 'new_deaths_7_day_rolling_average'
+        return self.extract_from_daily_logs(col_name, float)
+
+    @cached_property
+    def new_tests(self):
+        col_name = 'new_test_results_reported_7_day_rolling_average'
+        return self.extract_from_daily_logs(col_name, float)
+
+    @cached_property
+    def new_positive_test_pct(self):
+        col_name = 'percent_new_test_results_reported_positive_7_day_rolling_average'
+        return self.extract_from_daily_logs(col_name, float)
+
+    @cached_property
+    def pct_icu_beds_used(self):
+        col_name = 'percent_adult_icu_beds_used_confirmed_covid'
+        return self.extract_from_daily_logs(col_name, float)
+
+    @cached_property
+    def new_positive_tests(self):
+        daily_positive_tests = {}
+
+        for dated in self.dates:
+            total_tests = self.new_tests[dated]
+            pos_test_pct = self.new_positive_test_pct[dated]
+
+            try:
+                pos_tests = total_tests * (pos_test_pct / 100)
+                daily_positive_tests[dated] = pos_tests
+            except TypeError:
+                daily_positive_tests[dated] = None
+
+        return daily_positive_tests
+
+    @cached_property
+    def community_risk(self):
+        col_name = 'community_transmission_level'
+        return self.extract_from_daily_logs(col_name)
 
     @property
     def dates(self):
@@ -107,6 +124,20 @@ class CdcCountyTimeseriesExtract:
 
         return self.json
 
+    def extract_from_daily_logs(self, field_key, data_type=str):
+        daily_values = {}
+
+        for dated in self.daily_logs:
+            daily_log = self.daily_logs[dated]
+            value = daily_log[field_key]
+
+            try:
+                daily_values[dated] = data_type(value)
+            except TypeError:
+                daily_values[dated] = None
+
+        return daily_values
+
     #
     # Private
     #
@@ -124,7 +155,3 @@ class CdcCountyTimeseriesExtract:
             daily_logs[dated] = daily_co_data
 
         return daily_logs
-
-    def daily_column(self, dated, column):
-        data_on_date = self.data_dict.get(dated, {})
-        return data_on_date.get(column)

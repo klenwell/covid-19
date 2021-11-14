@@ -43,18 +43,13 @@ class BaseController(Controller):
         from covid_app.extracts.cdc.us_county_timeseries_extract \
             import CdcCountyTimeseriesExtract, KENT_FIPS, TIMESERIES_DATA_KEY
 
-        extract = CdcCountyTimeseriesExtract(fips=KENT_FIPS)
+        extract = CdcCountyTimeseriesExtract.kent_mi_daily_extract()
         print(extract.url)
         print(extract.fips)
         print(extract.county_id)
-
-        json_data = extract.fetch_data_source()
-
-        timeseries_data = json_data[TIMESERIES_DATA_KEY]
-        print(len(timeseries_data))
-        print(timeseries_data[100])
-
         print(extract.starts_on, extract.ends_on)
+        print(extract.new_tests.values())
+        print(extract.community_risk.values())
         print(extract.daily_logs[extract.ends_on])
 
         breakpoint()

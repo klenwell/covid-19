@@ -124,20 +124,6 @@ class CdcCountyTimeseriesExtract:
 
         return self.json
 
-    def extract_from_daily_logs(self, field_key, data_type=str):
-        daily_values = {}
-
-        for dated in self.daily_logs:
-            daily_log = self.daily_logs[dated]
-            value = daily_log[field_key]
-
-            try:
-                daily_values[dated] = data_type(value)
-            except TypeError:
-                daily_values[dated] = None
-
-        return daily_values
-
     #
     # Private
     #
@@ -155,3 +141,17 @@ class CdcCountyTimeseriesExtract:
             daily_logs[dated] = daily_co_data
 
         return daily_logs
+
+    def extract_from_daily_logs(self, field_key, data_type=str):
+        daily_values = {}
+
+        for dated in self.daily_logs:
+            daily_log = self.daily_logs[dated]
+            value = daily_log[field_key]
+
+            try:
+                daily_values[dated] = data_type(value)
+            except (TypeError, ValueError):
+                daily_values[dated] = None
+
+        return daily_values

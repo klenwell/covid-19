@@ -40,11 +40,22 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from covid_app.extracts.hhs.us_daily_patients_extract import HHSDailyPatientsExtract
+        from covid_app.extracts.cdc.us_county_timeseries_extract \
+            import CdcCountyTimeseriesExtract, KENT_FIPS, TIMESERIES_DATA_KEY
 
-        extract = HHSDailyPatientsExtract()
-        print(extract.hospitalizations[extract.ends_on])
-        print(extract.icu_cases[extract.ends_on])
+        extract = CdcCountyTimeseriesExtract(fips=KENT_FIPS)
+        print(extract.url)
+        print(extract.fips)
+        print(extract.county_id)
+
+        json_data = extract.fetch_data_source()
+
+        timeseries_data = json_data[TIMESERIES_DATA_KEY]
+        print(len(timeseries_data))
+        print(timeseries_data[100])
+
+        print(extract.starts_on, extract.ends_on)
+        print(extract.daily_logs[extract.ends_on])
 
         breakpoint()
 

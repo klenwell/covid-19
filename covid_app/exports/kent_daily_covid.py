@@ -19,17 +19,17 @@ CSV_HEADER = [
     'Date',
     'New Tests (7d Avg)',
     'Positive Tests (7d Avg)',
-    'Positive Test Rate (7d Avg)',
     'New Cases (NYT)',
     'New Deaths (NYT)',
     'Hospital Beds Used %',
     'ICU Bed Used  %',
     'Community Risk',
-    '/\\/\\/\\',
-    'Total Cases (NYT)',
-    'Total Deaths (NYT)',
+    '/\\/\\/\\/\\/\\',
+    'Positive Test Rate (7d Avg)',
     'New Cases (CDC)',
-    'New Deaths (CDC)'
+    'New Deaths (CDC)',
+    'Total Cases (NYT)',
+    'Total Deaths (NYT)'
 ]
 
 
@@ -79,15 +79,15 @@ class KentDailyCovidExport:
             dated,
             self.cdc_timeseries_extract.new_tests.get(dated),
             self.cdc_timeseries_extract.new_positive_tests.get(dated),
-            self.cdc_timeseries_extract.new_positive_test_pct.get(dated),
             self.ny_times_extract.daily_logs.get(dated, {}).get('new_cases'),
             self.ny_times_extract.daily_logs.get(dated, {}).get('new_deaths'),
             self.cdc_timeseries_extract.pct_hosp_beds_used.get(dated),
             self.cdc_timeseries_extract.pct_icu_beds_used.get(dated),
             self.cdc_timeseries_extract.community_risk.get(dated),
             ' ',
-            self.ny_times_extract.daily_logs.get(dated, {}).get('total_cases'),
-            self.ny_times_extract.daily_logs.get(dated, {}).get('total_deaths'),
+            self.cdc_timeseries_extract.new_positive_test_pct.get(dated),
             self.cdc_timeseries_extract.new_cases.get(dated),
-            self.cdc_timeseries_extract.new_deaths.get(dated)
+            self.cdc_timeseries_extract.new_deaths.get(dated),
+            self.ny_times_extract.daily_logs.get(dated, {}).get('total_cases'),
+            self.ny_times_extract.daily_logs.get(dated, {}).get('total_deaths')
         ]

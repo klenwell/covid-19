@@ -4,7 +4,7 @@ from os.path import join as path_join
 from cement import Controller
 from cement import ex as expose
 
-from covid_app.services.mi_health_service import MiHealthService
+from covid_app.exports.kent_daily_covid import KentDailyCovidExport
 from covid_app.extracts.san_diego_county import SanDiegoCountyDailyExtract
 from covid_app.exports.us_daily_covid import USDailyCovidExport
 
@@ -16,7 +16,8 @@ class BaseController(Controller):
     # python app.py kent-daily
     @expose(help="Export Kent County data to csv file.")
     def kent_daily(self):
-        result = MiHealthService.export_daily_kent_csv()
+        export = KentDailyCovidExport()
+        result = export.to_csv()
         print(result)
 
     # python app.py us-daily

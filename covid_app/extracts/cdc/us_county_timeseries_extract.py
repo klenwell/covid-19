@@ -70,6 +70,11 @@ class CdcCountyTimeseriesExtract:
         return self.extract_from_daily_logs(col_name, float)
 
     @cached_property
+    def pct_hosp_beds_used(self):
+        col_name = 'percent_adult_inpatient_beds_used_confirmed_covid'
+        return self.extract_from_daily_logs(col_name, float)
+
+    @cached_property
     def pct_icu_beds_used(self):
         col_name = 'percent_adult_icu_beds_used_confirmed_covid'
         return self.extract_from_daily_logs(col_name, float)

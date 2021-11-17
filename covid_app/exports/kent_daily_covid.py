@@ -83,7 +83,7 @@ class KentDailyCovidExport:
             self.cdc_timeseries_extract.new_positive_test_pct.get(dated),
             self.ny_times_extract.daily_logs.get(dated, {}).get('new_cases'),
             self.ny_times_extract.daily_logs.get(dated, {}).get('new_deaths'),
-            'Hospital Beds Used %',
+            self.cdc_timeseries_extract.pct_hosp_beds_used.get(dated),
             self.cdc_timeseries_extract.pct_icu_beds_used.get(dated),
             self.ny_times_extract.daily_logs.get(dated, {}).get('total_cases'),
             self.ny_times_extract.daily_logs.get(dated, {}).get('total_deaths'),

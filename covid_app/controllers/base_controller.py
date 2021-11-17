@@ -42,20 +42,11 @@ class BaseController(Controller):
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
         from covid_app.extracts.cdc.us_county_timeseries_extract import CdcCountyTimeseriesExtract
-        from covid_app.exports.kent_daily_covid import KentDailyCovidExport
 
-        # extract = CdcCountyTimeseriesExtract.kent_mi_daily_extract()
-        # print(extract.url)
-        # print(extract.fips)
-        # print(extract.county_id)
-        # print(extract.starts_on, extract.ends_on)
-        # print(extract.new_tests.values())
-        # print(extract.community_risk.values())
-        # print(extract.daily_logs[extract.ends_on])
-
-        export = KentDailyCovidExport()
-        result = export.to_csv()
-        print(result)
+        extract = CdcCountyTimeseriesExtract.kent_mi_daily_extract()
+        print(extract.url)
+        print(extract.starts_on, extract.ends_on)
+        print(extract.daily_logs[extract.ends_on])
 
         breakpoint()
 

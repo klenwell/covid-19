@@ -66,7 +66,7 @@ class CdcCountyTimeseriesExtract:
 
     @cached_property
     def new_positive_test_pct(self):
-        col_name = 'percent_new_test_results_reported_positive_7_day_rolling_average'
+        col_name = 'percent_positive_7_day'
         return self.extract_from_daily_logs(col_name, float)
 
     @cached_property

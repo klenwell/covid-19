@@ -104,7 +104,7 @@ class OCImmunityExport:
 
         for n in range(INFECTIOUS_WINDOW):
             on_date = start_date + timedelta(days=n)
-            infection_count = extract.new_positive_tests_administered.get(on_date, 0)
+            infection_count = extract.new_positive_tests_administered.get(on_date, 0) or 0
             infection_count = infection_count * UNDERTEST_FACTOR
             infections.append(infection_count)
 

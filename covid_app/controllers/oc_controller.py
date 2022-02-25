@@ -3,6 +3,7 @@ from cement import Controller
 from cement import ex as expose
 
 from covid_app.services.oc_health_service import OCHealthService
+from covid_app.exports.oc_daily_data import OcDailyDataExport
 from covid_app.exports.oc_daily_testing import OcDailyTestsExport
 from covid_app.exports.oc_immunity import OCImmunityExport
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
@@ -31,7 +32,7 @@ class OcController(Controller):
         daily.to_csv()
 
         immunity = OCImmunityExport()
-        export.to_csv()
+        immunity.to_csv()
 
         vars = {
             'daily': daily,

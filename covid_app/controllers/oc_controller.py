@@ -24,6 +24,21 @@ class OcController(Controller):
     #
     # Daily Commands
     #
+    # python app.py oc daily-v2
+    @expose(help="Export latest daily data from OC HCA site.")
+    def daily_v2(self):
+        daily = OcDailyDataExport()
+        daily.to_csv()
+
+        immunity = OCImmunityExport()
+        export.to_csv()
+
+        vars = {
+            'daily': daily,
+            'immunity': immunity
+        }
+        self.app.render(vars, 'oc/daily-v2.jinja2')
+
     # python app.py oc daily
     @expose(help="Export data from OC HCA site to csv file.")
     def daily(self):

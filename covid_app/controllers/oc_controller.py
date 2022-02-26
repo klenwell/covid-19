@@ -33,10 +33,14 @@ class OcController(Controller):
 
         immunity = OCImmunityExport()
         immunity.to_csv()
+        immunity_latest =  immunity.extract_data_to_csv_row(immunity.ends_on)
 
         vars = {
             'daily': daily,
-            'immunity': immunity
+            'immunity': immunity,
+            'infectious': immunity_latest[1],
+            'recovered': immunity_latest[2],
+            'vaccinated': immunity_latest[3]
         }
         self.app.render(vars, 'oc/daily-v2.jinja2')
 

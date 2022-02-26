@@ -55,7 +55,7 @@ class OcDailyDataExport:
         if not self.run_time_end:
             return None
 
-        return self.run_time_start - self.run_time_end
+        return self.run_time_end - self.run_time_start
 
     #
     # Instance Method

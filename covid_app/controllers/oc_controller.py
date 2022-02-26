@@ -3,6 +3,7 @@ from cement import Controller
 from cement import ex as expose
 
 from covid_app.services.oc_health_service import OCHealthService
+from covid_app.exports.oc_daily_data import OcDailyDataExport
 from covid_app.exports.oc_daily_testing import OcDailyTestsExport
 from covid_app.exports.oc_immunity import OCImmunityExport
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
@@ -24,6 +25,25 @@ class OcController(Controller):
     #
     # Daily Commands
     #
+    # python app.py oc daily-v2
+    @expose(help="Export latest daily data from OC HCA site.")
+    def daily_v2(self):
+        daily = OcDailyDataExport()
+        daily.to_csv()
+
+        immunity = OCImmunityExport()
+        immunity.to_csv()
+        immunity_latest = immunity.extract_data_to_csv_row(immunity.ends_on)
+
+        vars = {
+            'daily': daily,
+            'immunity': immunity,
+            'infectious': immunity_latest[1],
+            'recovered': immunity_latest[2],
+            'vaccinated': immunity_latest[3]
+        }
+        self.app.render(vars, 'oc/daily-v2.jinja2')
+
     # python app.py oc daily
     @expose(help="Export data from OC HCA site to csv file.")
     def daily(self):

@@ -1,0 +1,21 @@
+OC Daily COVID-19 Data Export v2
+================================
+## Data
+CSV Path: {{ daily.csv_path }}
+Runtime: {{ daily.run_time }} s
+
+Start Date: {{ daily.starts_on }}
+End Date: {{ daily.ends_on }}
+Rows: {{ daily.dates|length }}
+
+## Immunity
+CSV Path: {{ immunity.csv_path }}
+Runtime: {{ immunity.run_time }} s
+
+Infectious: {{ infectious }}
+Recovered:  {{ recovered }}
+Vaccinated: {{ vaccinated }}
+
+Start Date: {{ immunity.starts_on }}
+End Date: {{ immunity.ends_on }}
+Rows: {{ immunity.dates|length }}

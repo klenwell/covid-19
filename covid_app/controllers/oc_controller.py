@@ -33,7 +33,7 @@ class OcController(Controller):
 
         immunity = OCImmunityExport()
         immunity.to_csv()
-        immunity_latest =  immunity.extract_data_to_csv_row(immunity.ends_on)
+        immunity_latest = immunity.extract_data_to_csv_row(immunity.ends_on)
 
         vars = {
             'daily': daily,

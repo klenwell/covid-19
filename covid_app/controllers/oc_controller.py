@@ -236,7 +236,9 @@ class OcController(Controller):
             'at_least_one_dose': summary.at_least_one_dose,
             'total_doses': summary.total_doses,
             'daily-ends-on': daily.ends_on,
-            'daily-most-recent': daily.daily_doses[daily.ends_on]
+            'daily-most-recent': daily.daily_doses[daily.ends_on],
+            'daily total': daily.total_doses,
+            'summary total': summary.by_category('Total Persons')
         }
         print(data)
 

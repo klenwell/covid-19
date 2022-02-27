@@ -22,20 +22,44 @@ class OCVaccinesSummaryExtract:
     # Properties
     #
     @property
-    def first_dose(self):
-        return self.by_category('TotalDoses')['num_1st']
-
-    @property
-    def both_doses(self):
-        return self.by_category('TotalDoses')['num_1st2nd']
-
-    @property
-    def at_least_one_dose(self):
-        return self.by_category('TotalDoses')['num_atleast1']
+    def total_persons(self):
+        """This seems to be category with most complete totals.
+        """
+        return self.by_category('Total Persons')
 
     @property
     def total_doses(self):
-        return self.first_dose + (2 * self.both_doses)
+        """Prefer total_persons to this. That data is a little more complete.
+        """
+        return self.by_category('TotalDoses')
+
+    @property
+    def first_dose(self):
+        return self.total_persons['num_1st']
+
+    @property
+    def two_doses(self):
+        return self.total_persons['num_1st2nd']
+
+    @property
+    def boosters(self):
+        return self.total_persons['num_boosters']
+
+    @property
+    def unvaccinated(self):
+        return self.total_persons['num_unvax']
+
+    @property
+    def at_least_one_dose(self):
+        return self.total_persons['num_atleast1']
+
+    @property
+    def total_valid(self):
+        return self.total_persons['num_totalvalid']
+
+    @property
+    def total_doses(self):
+        return self.first_dose + (2 * self.two_doses) + self.boosters
 
     @cached_property
     def categories(self):
@@ -65,7 +89,7 @@ class OCVaccinesSummaryExtract:
     #
     @cached_property
     def json_data(self):
-        endpoint = 'vacc_totalsummary'
+        endpoint = 'vacc_totalsummaryv2'
         where_not_null_field = 'category'
         json_data = self.fetch_json_data(endpoint, where_not_null_field)
         return json_data

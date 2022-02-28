@@ -231,19 +231,21 @@ class OcController(Controller):
         summary = OCVaccinesSummaryExtract()
         daily = OCVaccinesDailyExtract()
         data = {
-            'first_dose': summary.first_dose,
-            'two_doses': summary.two_doses,
-            'at_least_one_dose': summary.at_least_one_dose,
-            'total_doses': summary.total_doses,
-            'total_valid': summary.total_valid,
-            'boosters': summary.boosters,
-            'daily-starts-on': daily.starts_on,
-            'daily-ends-on': daily.ends_on,
-            'daily-most-recent': daily.daily_doses[daily.ends_on],
-            'daily total': daily.total_doses,
-            'summary total': summary.total_valid
+            'summary': {
+                'first_dose': summary.first_dose,
+                'two_doses': summary.two_doses,
+                'boosters': summary.boosters,
+                'summed doses': summary.first_dose + summary.two_doses + summary.boosters,
+                'summed weighted': summary.first_dose + (summary.two_doses * 2) + summary.boosters,
+                'total_doses': summary.total_doses,
+                'total_valid': summary.total_valid,
+            },
+            'daily': {
+                'daily-starts-on': daily.starts_on,
+                'daily-ends-on': daily.ends_on,
+                'daily-most-recent': daily.daily_doses[daily.ends_on],
+                'daily total': daily.total_doses
+            },
         }
-        print([daily.daily_doses.get(d, 0) for d in sorted(daily.dates)])
         print(data)
-
         breakpoint()

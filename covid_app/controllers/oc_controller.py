@@ -225,27 +225,37 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.extracts.oc_hca.vaccines_summary_extract import OCVaccinesSummaryExtract
-        from covid_app.extracts.oc_hca.vaccines_daily_extract import OCVaccinesDailyExtract
+        # from covid_app.extracts.oc_hca.vaccines_summary_extract import OCVaccinesSummaryExtract
+        # from covid_app.extracts.oc_hca.vaccines_daily_extract import OCVaccinesDailyExtract
+        #
+        # summary = OCVaccinesSummaryExtract()
+        # daily = OCVaccinesDailyExtract()
+        # data = {
+        #     'summary': {
+        #         'first_dose': summary.first_dose,
+        #         'two_doses': summary.two_doses,
+        #         'boosters': summary.boosters,
+        #         'summed doses': summary.first_dose + summary.two_doses + summary.boosters,
+        #         'summed weighted': summary.first_dose + (summary.two_doses * 2) + summary.boosters,
+        #         'total_doses': summary.total_doses,
+        #         'total_valid': summary.total_valid,
+        #     },
+        #     'daily': {
+        #         'daily-starts-on': daily.starts_on,
+        #         'daily-ends-on': daily.ends_on,
+        #         'daily-most-recent': daily.daily_doses[daily.ends_on],
+        #         'daily total': daily.total_doses,
+        #     },
+        # }
 
-        summary = OCVaccinesSummaryExtract()
-        daily = OCVaccinesDailyExtract()
-        data = {
-            'summary': {
-                'first_dose': summary.first_dose,
-                'two_doses': summary.two_doses,
-                'boosters': summary.boosters,
-                'summed doses': summary.first_dose + summary.two_doses + summary.boosters,
-                'summed weighted': summary.first_dose + (summary.two_doses * 2) + summary.boosters,
-                'total_doses': summary.total_doses,
-                'total_valid': summary.total_valid,
-            },
-            'daily': {
-                'daily-starts-on': daily.starts_on,
-                'daily-ends-on': daily.ends_on,
-                'daily-most-recent': daily.daily_doses[daily.ends_on],
-                'daily total': daily.total_doses
-            },
-        }
-        print(data)
+        # CDPH Vaccine Data
+        import requests
+        url = "https://data.ca.gov/api/3/action/datastore_search_sql?sql=SELECT%20*%20from%20%22c020ef6b-2116-4775-b11d-9df2875096ab%22%20WHERE%20%22county%22%20LIKE%20%27Orange%27"
+        response = requests.get(url)
+        response.raise_for_status()
+        data = response.json()
+        records = data['result']['records']
+        boosters = [(r['administered_date'], r['booster_recip_count']) for r in records]
+
+        print(records[-1])
         breakpoint()

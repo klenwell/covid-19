@@ -38,6 +38,24 @@ class OcVaccinesDailyExtract:
         return records
 
     @cached_property
+    def fully_vaccinated(self):
+        key = 'fully_vaccinated'
+        records = {}
+        for date in self.dates:
+            doses = self.extract_from_dated_records(key, date)
+            records[date] = doses
+        return records
+
+    @cached_property
+    def boosted(self):
+        key = 'booster_recip_count'
+        records = {}
+        for date in self.dates:
+            doses = self.extract_from_dated_records(key, date)
+            records[date] = doses
+        return records
+
+    @cached_property
     def dates(self):
         dates = []
 

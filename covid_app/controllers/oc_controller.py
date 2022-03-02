@@ -226,8 +226,19 @@ class OcController(Controller):
     @expose(help="For rapid testing and development.")
     def dev(self):
         from covid_app.extracts.cdph.oc_vaccines_daily_extract import OcVaccinesDailyExtract
+        from covid_app.models.oc.immune_cohort import ImmuneCohort
 
         extract = OcVaccinesDailyExtract()
+        record = extract.records[-100]
         print(extract.partially_vaccinated)
-        print(extract.records[-1])
+        print(record)
+
+        cohort = ImmuneCohort.from_vax_record(record)
+        cohort.infected_count = 200
+        print(cohort)
+        print(cohort.compute_immunity_for_date(date.today()))
+
+        cohort.update_partial_vaxxed(100)
+        print(cohort)
+        print(cohort.compute_immunity_for_date(date.today()))
         breakpoint()

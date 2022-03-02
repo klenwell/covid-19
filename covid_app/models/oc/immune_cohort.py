@@ -3,6 +3,7 @@ OC Immune Cohort
 
 Estimates population immunity based on vaccines and recoveries for a given data.
 """
+from datetime import datetime
 
 
 #
@@ -15,6 +16,23 @@ INF_FADE_RATE = 1.0 / 180  # assume immunity fades to 0 over 9 months
 
 
 class ImmuneCohort:
+    @staticmethod
+    def from_vax_record(record):
+        admin_date = datetime.strptime(record['administered_date'], '%Y-%m-%d').date()
+        partial_vax = int(record['partially_vaccinated'])
+        full_vax = int(record['fully_vaccinated'])
+        boost_vax = int(record['booster_recip_count'])
+        infected = None
+        return ImmuneCohort(admin_date, partial_vax, full_vax, boost_vax, infected)
+
+    @property
+    def unfully_vaxxed_partials(self):
+        return self.partial_vax_count - self.fully_vaxxed_partial_count
+
+    @property
+    def unboosted_full_vaxxed(self):
+        return self.full_vax_count - self.boosted_full_vaxxed_count
+
     #
     # Instance Method
     #
@@ -25,44 +43,56 @@ class ImmuneCohort:
         self.boost_vax_count = boost_vax
         self.infected_count = infected
 
-    def adjust_partial(self, full_vaxxed):
-        """Subtracts partial when they are estimated to later get a second shot.
-        """
-        if full_vaxxed > self.partial_vax_count:
-            adjusted = self.partial_vax_count
-            self.partial_vax_count = 0
-            return adjusted
-        else:
-            self.partial_vax_count -= full_vaxxed
-            return full_vaxxed
+        # To track follow-up vaccinations
+        self.fully_vaxxed_partial_count = 0
+        self.boosted_full_vaxxed_count = 0
 
-    def adjust_boosted(self, boosted_count):
-        """Subtracts full when they are estimated to later get a booster.
+    def update_partial_vaxxed(self, full_vaxxed):
+        """Tracks vaxxed partials when they are estimated to later get a second shot.
         """
-        if boosted_count > self.full_vax_count:
-            adjusted = self.full_vax_count
-            self.full_vax_count = 0
-            return adjusted
+        if full_vaxxed > self.unfully_vaxxed_partials:
+            surplus = full_vaxxed - self.unfully_vaxxed_partials
+            self.fully_vaxxed_partial_count = self.partial_vax_count
+            return surplus
         else:
-            self.full_vax_count -= boosted_count
-            return boosted_count
+            self.fully_vaxxed_partial_count += full_vaxxed
+            return 0
 
-    def compute_immunity_for_date(self, report_date):
+    def update_boosted(self, boosted_count):
+        """Tracks fully vaxxed when they are estimated to later get a booster.
+        """
+        if boosted_count > self.unboosted_full_vaxxed:
+            surplus = boosted_count - self.unboosted_full_vaxxed
+            self.boosted_full_vaxxed_count = self.full_vax_count
+            return surplus
+        else:
+            self.boosted_full_vaxxed_count += boosted_count
+            return 0
+
+    def compute_vax_immunity_for_date(self, report_date):
         days_out = (report_date - self.date).days
         partial = self.compute_partial_immunity(days_out)
         full = self.compute_full_immunity(days_out)
         booster = self.compute_booster_immunity(days_out)
-        recovered = self.compute_recovered_immunity(days_out)
-        return partial + full + booster + recovered
+        return partial + full + booster
 
-    def compute_partial_immunity(self, vax_count, days_out):
+    def compute_recovered_immunity_for_date(self, report_date):
+        days_out = (report_date - self.date).days
+        return self.compute_recovered_immunity(days_out)
+
+    def compute_immunity_for_date(self, report_date):
+        vax_immunity = self.compute_vax_immunity_for_date(report_date)
+        recovered = self.compute_recovered_immunity_for_date(report_date)
+        return vax_immunity + recovered
+
+    def compute_partial_immunity(self, days_out):
         vax_factor = PARTIAL_VAX_EFF - (VAX_FADE_RATE * days_out)
-        estimate = self.partial_vax_count * vax_factor
+        estimate = self.unfully_vaxxed_partials * vax_factor
         return max(estimate, 0)
 
     def compute_full_immunity(self, days_out):
         vax_factor = FULL_VAX_EFF - (VAX_FADE_RATE * days_out)
-        estimate = self.full_vax_count * vax_factor
+        estimate = self.unboosted_full_vaxxed * vax_factor
         return max(estimate, 0)
 
     def compute_booster_immunity(self, days_out):

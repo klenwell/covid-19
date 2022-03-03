@@ -15,6 +15,10 @@ VAX_FADE_RATE = 1.0 / 270  # assume immunity fades to 0 over 9 months
 INF_FADE_RATE = 1.0 / 180  # assume immunity fades to 0 over 9 months
 INFECTION_WINDOW = 14  # days
 
+# This is the factor by which positive cases are estimated to have been undercounted.
+# Probably conservative. There are various studies that put the number between 4 and 7.
+UNDERTEST_FACTOR = 3.0
+
 
 class ImmuneCohort:
     #
@@ -34,7 +38,7 @@ class ImmuneCohort:
         counts = []
         recent_cohorts = reversed(cohorts)
         for cohort in recent_cohorts:
-            counts.append(cohort.infected_count)
+            counts.append(cohort.infections)
             if len(counts) >= INFECTION_WINDOW:
                 break
         return sum(counts)
@@ -49,6 +53,10 @@ class ImmuneCohort:
     @property
     def unboosted_full_vaxxed(self):
         return self.full_vax_count - self.boosted_full_vaxxed_count
+
+    @property
+    def infections(self):
+        return self.infected_count * UNDERTEST_FACTOR
 
     #
     # Instance Method

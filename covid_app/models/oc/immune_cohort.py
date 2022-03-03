@@ -9,13 +9,17 @@ from datetime import datetime
 #
 # Constants
 #
-PARTIAL_VAX_EFF = .75
+PARTIAL_VAX_EFF = .75  # i.e. 75% effective
 FULL_VAX_EFF = .9
 VAX_FADE_RATE = 1.0 / 270  # assume immunity fades to 0 over 9 months
 INF_FADE_RATE = 1.0 / 180  # assume immunity fades to 0 over 9 months
+INFECTION_WINDOW = 14  # days
 
 
 class ImmuneCohort:
+    #
+    # Static Methods
+    #
     @staticmethod
     def from_vax_record(record):
         admin_date = datetime.strptime(record['administered_date'], '%Y-%m-%d').date()
@@ -25,6 +29,19 @@ class ImmuneCohort:
         infected = None
         return ImmuneCohort(admin_date, partial_vax, full_vax, boost_vax, infected)
 
+    @staticmethod
+    def count_active_infections(cohorts):
+        counts = []
+        recent_cohorts = reversed(cohorts)
+        for cohort in recent_cohorts:
+            counts.append(cohort.infected_count)
+            if len(counts) >= INFECTION_WINDOW:
+                break
+        return sum(counts)
+
+    #
+    # Properties
+    #
     @property
     def unfully_vaxxed_partials(self):
         return self.partial_vax_count - self.fully_vaxxed_partial_count
@@ -47,26 +64,45 @@ class ImmuneCohort:
         self.fully_vaxxed_partial_count = 0
         self.boosted_full_vaxxed_count = 0
 
-    def update_partial_vaxxed(self, full_vaxxed):
+    def update_cohort_follow_up_shots(self, cohorts):
+        # Partials getting second (full) shot
+        surplus = self.full_vax_count
+        for cohort in cohorts:
+            print('surplus full_vax_count', surplus)
+            surplus = cohort.update_partial_vaxxed(surplus)
+            if surplus <= 0:
+                break
+
+        # Fully vaxxed getting booster
+        surplus = self.boost_vax_count
+        for cohort in cohorts:
+            print('surplus boost_vax_count', surplus)
+            surplus = cohort.update_boosted(surplus)
+            if surplus <= 0:
+                break
+
+        return (self.full_vax_count, self.boost_vax_count)
+
+    def update_partial_vaxxed(self, second_shots):
         """Tracks vaxxed partials when they are estimated to later get a second shot.
         """
-        if full_vaxxed > self.unfully_vaxxed_partials:
-            surplus = full_vaxxed - self.unfully_vaxxed_partials
+        if second_shots > self.unfully_vaxxed_partials:
+            surplus = second_shots - self.unfully_vaxxed_partials
             self.fully_vaxxed_partial_count = self.partial_vax_count
             return surplus
         else:
-            self.fully_vaxxed_partial_count += full_vaxxed
+            self.fully_vaxxed_partial_count += second_shots
             return 0
 
-    def update_boosted(self, boosted_count):
+    def update_boosted(self, booster_shots):
         """Tracks fully vaxxed when they are estimated to later get a booster.
         """
-        if boosted_count > self.unboosted_full_vaxxed:
-            surplus = boosted_count - self.unboosted_full_vaxxed
+        if booster_shots > self.unboosted_full_vaxxed:
+            surplus = booster_shots - self.unboosted_full_vaxxed
             self.boosted_full_vaxxed_count = self.full_vax_count
             return surplus
         else:
-            self.boosted_full_vaxxed_count += boosted_count
+            self.boosted_full_vaxxed_count += booster_shots
             return 0
 
     def compute_vax_immunity_for_date(self, report_date):

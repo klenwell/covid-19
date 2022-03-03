@@ -66,7 +66,7 @@ class OcController(Controller):
         export.to_csv()
         vars = {
             'export': export,
-            'latest': export.extract_data_to_csv_row(export.ends_on)
+            'latest': export.estimates[-1]
         }
         self.app.render(vars, 'oc/immunity.jinja2')
 

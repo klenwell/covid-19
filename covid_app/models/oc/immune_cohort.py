@@ -145,11 +145,12 @@ class ImmuneCohort:
         return max(estimate, 0)
 
     def compute_recovered_immunity(self, days_out):
-        if days_out < 14:
+        if days_out < INFECTION_WINDOW:
             return 0
 
-        vax_factor = PARTIAL_VAX_EFF - (INF_FADE_RATE * days_out)
-        estimate = self.infected_count * vax_factor
+        days_out -= INFECTION_WINDOW
+        vax_factor = FULL_VAX_EFF - (INF_FADE_RATE * days_out)
+        estimate = self.infections * vax_factor
         return max(estimate, 0)
 
     def __repr__(self):

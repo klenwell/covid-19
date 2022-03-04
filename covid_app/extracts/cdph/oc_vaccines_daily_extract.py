@@ -74,7 +74,6 @@ class OcVaccinesDailyExtract:
     def ends_on(self):
         return self.reported_dates[-1]
 
-
     #
     # Instance Methods
     #
@@ -98,7 +97,6 @@ class OcVaccinesDailyExtract:
 
     @cached_property
     def json_data(self):
-        where_not_null_field = 'valid_admin'
         json_data = self.fetch_json_data(self.url)
         return json_data
 

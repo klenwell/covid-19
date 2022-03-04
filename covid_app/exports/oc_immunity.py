@@ -56,32 +56,7 @@ class OCImmunityExport:
     def vax_extract(self):
         return OcVaccinesDailyExtract()
 
-    @property
-    def dates(self):
-        return sorted(self.case_extract.dates)
-
-    @property
-    def starts_on(self):
-        return self.dates[0]
-
-    @property
-    def ends_on(self):
-        return self.dates[-1]
-
-    @property
-    def run_time(self):
-        if not self.run_time_end:
-            return None
-
-        return self.run_time_end - self.run_time_start
-
-    #
-    # Instance Method
-    #
-    def __init__(self):
-        self.run_time_start = time.time()
-
-    @property
+    @cached_property
     def estimates(self):
         estimates = []
         cohorts = []
@@ -106,11 +81,34 @@ class OCImmunityExport:
                 'full_vax': full_vax,
                 'boosted': boosted
             }
-            print(len(cohorts), cohort)
-            print(estimate)
             estimates.append(estimate)
 
         return estimates
+
+    @property
+    def dates(self):
+        return sorted(self.case_extract.dates)
+
+    @property
+    def starts_on(self):
+        return self.dates[0]
+
+    @property
+    def ends_on(self):
+        return self.dates[-1]
+
+    @property
+    def run_time(self):
+        if not self.run_time_end:
+            return None
+
+        return self.run_time_end - self.run_time_start
+
+    #
+    # Instance Method
+    #
+    def __init__(self):
+        self.run_time_start = time.time()
 
     def to_csv(self):
         with open(self.csv_path, 'w', newline='') as f:
@@ -142,45 +140,3 @@ class OCImmunityExport:
             estimate['full_vax'],
             estimate['boosted']
         ]
-
-    def infectious_on_date(self, dated):
-        infections = []
-        extract = self.case_extract
-        start_date = dated - timedelta(days=INFECTIOUS_WINDOW)
-
-        for n in range(INFECTIOUS_WINDOW):
-            on_date = start_date + timedelta(days=n)
-            infection_count = extract.new_positive_tests_administered.get(on_date, 0) or 0
-            infection_count = infection_count * UNDERTEST_FACTOR
-            infections.append(infection_count)
-
-        return sum(infections)
-
-    def recovered_on_date(self, dated):
-        recovered = []
-        extract = self.case_extract
-        start_date = dated - timedelta(days=INFECTION_IMMUNITY_WINDOW)
-        end_date = dated - timedelta(days=INFECTIOUS_WINDOW)
-        days = (end_date - start_date).days
-
-        for n in range(days):
-            on_date = start_date + timedelta(days=n)
-            recovered_count = extract.new_positive_tests_administered.get(on_date, 0)
-            recovered_count = recovered_count * UNDERTEST_FACTOR
-            recovered.append(recovered_count)
-
-        return sum(recovered)
-
-    def vaccinated_on_date(self, dated):
-        vaccinated = []
-        start_date = dated - timedelta(days=VACCINE_IMMUNITY_WINDOW)
-        end_date = dated
-        days = (end_date - start_date).days
-
-        for n in range(days):
-            on_date = start_date + timedelta(days=n)
-            dose_count = self.vax_extract.daily_doses.get(on_date, 0)
-            vax_count = float(dose_count) * VAX_EFFICACY_FACTOR
-            vaccinated.append(vax_count)
-
-        return sum(vaccinated)

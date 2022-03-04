@@ -58,7 +58,7 @@ class OCVaccinesSummaryExtract:
         return self.total_persons['num_totalvalid']
 
     @property
-    def total_doses(self):
+    def summed_doses(self):
         return self.first_dose + (2 * self.two_doses) + self.boosters
 
     @cached_property

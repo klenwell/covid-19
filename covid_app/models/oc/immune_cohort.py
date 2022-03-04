@@ -12,7 +12,7 @@ from datetime import datetime
 PARTIAL_VAX_EFF = .75  # i.e. 75% effective
 FULL_VAX_EFF = .9
 VAX_FADE_RATE = 1.0 / 270  # assume immunity fades to 0 over 9 months
-INF_FADE_RATE = 1.0 / 180  # assume immunity fades to 0 over 9 months
+INF_FADE_RATE = 1.0 / 180  # assume immunity fades to 0 over 6 months
 INFECTION_WINDOW = 14  # days
 
 # This is the factor by which positive cases are estimated to have been undercounted.
@@ -76,7 +76,6 @@ class ImmuneCohort:
         # Partials getting second (full) shot
         surplus = self.full_vax_count
         for cohort in cohorts:
-            print('surplus full_vax_count', surplus)
             surplus = cohort.update_partial_vaxxed(surplus)
             if surplus <= 0:
                 break
@@ -84,7 +83,6 @@ class ImmuneCohort:
         # Fully vaxxed getting booster
         surplus = self.boost_vax_count
         for cohort in cohorts:
-            print('surplus boost_vax_count', surplus)
             surplus = cohort.update_boosted(surplus)
             if surplus <= 0:
                 break

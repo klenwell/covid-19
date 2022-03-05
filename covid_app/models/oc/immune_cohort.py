@@ -9,10 +9,15 @@ from datetime import datetime
 #
 # Constants
 #
+# These constants effective define the assumptions behind the vaccine efficacy model
+# and how long it takes to fade.
 PARTIAL_VAX_EFF = .75  # i.e. 75% effective
 FULL_VAX_EFF = .9
+FULL_EFF_WINDOW = 90  # days (before fade rate kicks in)
 VAX_FADE_RATE = 1.0 / 270  # assume immunity fades to 0 over 9 months
 INF_FADE_RATE = 1.0 / 180  # assume immunity fades to 0 over 6 months
+
+# How long a reported positive case is assumed to be infectious.
 INFECTION_WINDOW = 14  # days
 
 # This is the factor by which positive cases are estimated to have been undercounted.
@@ -122,23 +127,33 @@ class ImmuneCohort:
         days_out = (report_date - self.date).days
         return self.compute_recovered_immunity(days_out)
 
-    def compute_immunity_for_date(self, report_date):
-        vax_immunity = self.compute_vax_immunity_for_date(report_date)
-        recovered = self.compute_recovered_immunity_for_date(report_date)
-        return vax_immunity + recovered
-
     def compute_partial_immunity(self, days_out):
-        vax_factor = PARTIAL_VAX_EFF - (VAX_FADE_RATE * days_out)
+        if days_out < FULL_EFF_WINDOW:
+            vax_factor = FULL_VAX_EFF
+        else:
+            days_out -= FULL_EFF_WINDOW
+            vax_factor = PARTIAL_VAX_EFF - (VAX_FADE_RATE * days_out)
+
         estimate = self.unfully_vaxxed_partials * vax_factor
         return max(estimate, 0)
 
     def compute_full_immunity(self, days_out):
-        vax_factor = FULL_VAX_EFF - (VAX_FADE_RATE * days_out)
+        if days_out < FULL_EFF_WINDOW:
+            vax_factor = FULL_VAX_EFF
+        else:
+            days_out -= FULL_EFF_WINDOW
+            vax_factor = FULL_VAX_EFF - (VAX_FADE_RATE * days_out)
+
         estimate = self.unboosted_full_vaxxed * vax_factor
         return max(estimate, 0)
 
     def compute_booster_immunity(self, days_out):
-        vax_factor = FULL_VAX_EFF - (VAX_FADE_RATE * days_out)
+        if days_out < FULL_EFF_WINDOW:
+            vax_factor = FULL_VAX_EFF
+        else:
+            days_out -= FULL_EFF_WINDOW
+            vax_factor = FULL_VAX_EFF - (VAX_FADE_RATE * days_out)
+
         estimate = self.boost_vax_count * vax_factor
         return max(estimate, 0)
 

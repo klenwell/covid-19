@@ -69,7 +69,6 @@ class OCImmunityExport:
             infected = self.case_extract.new_positive_tests_administered.get(dated, 0) or 0
 
             cohort = ImmuneCohort(dated, partial_vax, full_vax, boosted, infected)
-            cohort.update_cohort_follow_up_shots(cohorts)
             cohorts.append(cohort)
 
             estimate = {

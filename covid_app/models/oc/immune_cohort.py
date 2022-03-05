@@ -110,8 +110,12 @@ class ImmuneCohort:
         if days_out < INFECTION_WINDOW:
             return 0
 
-        days_out -= INFECTION_WINDOW
-        vax_factor = FULL_VAX_EFF - (INF_FADE_RATE * days_out)
+        if days_out < FULL_EFF_WINDOW:
+            vax_factor = FULL_VAX_EFF
+        else:
+            days_out -= FULL_EFF_WINDOW
+            vax_factor = FULL_VAX_EFF - (INF_FADE_RATE * days_out)
+
         estimate = self.infections * vax_factor
         return max(estimate, 0)
 

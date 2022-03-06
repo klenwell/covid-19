@@ -1,7 +1,6 @@
 from os.path import join as path_join
 import csv
 from functools import cached_property
-from datetime import timedelta
 import time
 
 from config.app import DATA_ROOT

@@ -13,6 +13,7 @@ from datetime import datetime
 # and how long it takes to fade.
 PARTIAL_VAX_EFF = .75  # i.e. 75% effective
 FULL_VAX_EFF = .9
+RAMP_UP_WINDOW = 30  # days (to reach full efficacy)
 FULL_EFF_WINDOW = 90  # days (before fade rate kicks in)
 VAX_FADE_RATE = 1.0 / 270  # assume immunity fades to 0 over 9 months
 INF_FADE_RATE = 1.0 / 180  # assume immunity fades to 0 over 6 months
@@ -110,8 +111,14 @@ class ImmuneCohort:
         return self.compute_recovered_immunity(days_out)
 
     def compute_partial_immunity(self, days_out):
-        if days_out < FULL_EFF_WINDOW:
-            vax_factor = FULL_VAX_EFF
+        # Ramp Up
+        if days_out < RAMP_UP_WINDOW:
+            vax_ramp_rate = PARTIAL_VAX_EFF / RAMP_UP_WINDOW
+            vax_factor = vax_ramp_rate * days_out
+        # Full Efficacy Window
+        elif days_out >= RAMP_UP_WINDOW and days_out < FULL_EFF_WINDOW:
+            vax_factor = PARTIAL_VAX_EFF
+        # Ramp Down
         else:
             days_out -= FULL_EFF_WINDOW
             vax_factor = PARTIAL_VAX_EFF - (VAX_FADE_RATE * days_out)
@@ -120,8 +127,14 @@ class ImmuneCohort:
         return max(estimate, 0)
 
     def compute_full_immunity(self, days_out):
-        if days_out < FULL_EFF_WINDOW:
+        # Ramp Up
+        if days_out < RAMP_UP_WINDOW:
+            vax_ramp_rate = FULL_VAX_EFF / RAMP_UP_WINDOW
+            vax_factor = vax_ramp_rate * days_out
+        # Full Efficacy Window
+        elif days_out >= RAMP_UP_WINDOW and days_out < FULL_EFF_WINDOW:
             vax_factor = FULL_VAX_EFF
+        # Ramp Down
         else:
             days_out -= FULL_EFF_WINDOW
             vax_factor = FULL_VAX_EFF - (VAX_FADE_RATE * days_out)
@@ -130,8 +143,14 @@ class ImmuneCohort:
         return max(estimate, 0)
 
     def compute_booster_immunity(self, days_out):
-        if days_out < FULL_EFF_WINDOW:
+        # Ramp Up
+        if days_out < RAMP_UP_WINDOW:
+            vax_ramp_rate = FULL_VAX_EFF / RAMP_UP_WINDOW
+            vax_factor = vax_ramp_rate * days_out
+        # Full Efficacy Window
+        elif days_out >= RAMP_UP_WINDOW and days_out < FULL_EFF_WINDOW:
             vax_factor = FULL_VAX_EFF
+        # Ramp Down
         else:
             days_out -= FULL_EFF_WINDOW
             vax_factor = FULL_VAX_EFF - (VAX_FADE_RATE * days_out)
@@ -143,8 +162,14 @@ class ImmuneCohort:
         if days_out < INFECTION_WINDOW:
             return 0
 
-        if days_out < FULL_EFF_WINDOW:
+        # Ramp Up
+        if days_out < RAMP_UP_WINDOW:
+            vax_ramp_rate = FULL_VAX_EFF / RAMP_UP_WINDOW
+            vax_factor = vax_ramp_rate * days_out
+        # Full Efficacy Window
+        elif days_out >= RAMP_UP_WINDOW and days_out < FULL_EFF_WINDOW:
             vax_factor = FULL_VAX_EFF
+        # Ramp Down
         else:
             days_out -= FULL_EFF_WINDOW
             vax_factor = FULL_VAX_EFF - (INF_FADE_RATE * days_out)

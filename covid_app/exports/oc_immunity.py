@@ -61,7 +61,8 @@ class OCImmunityExport:
         estimates = []
         cohorts = []
 
-        # Note here: this requires cycling through cohorts from oldest to newest
+        # Note here: update_boosted_cohorts requires cycling through cohorts from oldest
+        # to newest.
         for dated in self.dates:
             partial_vax = self.vax_extract.partially_vaccinated.get(dated, 0) or 0
             full_vax = self.vax_extract.fully_vaccinated.get(dated, 0) or 0
@@ -69,6 +70,7 @@ class OCImmunityExport:
             infected = self.case_extract.new_positive_tests_administered.get(dated, 0) or 0
 
             cohort = ImmuneCohort(dated, partial_vax, full_vax, boosted, infected)
+            cohort.update_boosted_cohorts(cohorts)
             cohorts.append(cohort)
 
             estimate = {

@@ -52,6 +52,10 @@ class ImmuneCohort:
     # Properties
     #
     @property
+    def unboosted_full_vaxxed(self):
+        return self.full_vax_count - self.boosted_full_vaxxed_count
+
+    @property
     def infections(self):
         return self.infected_count * UNDERTEST_FACTOR
 
@@ -64,6 +68,35 @@ class ImmuneCohort:
         self.full_vax_count = full_vax
         self.boost_vax_count = boost_vax
         self.infected_count = infected
+
+        # To track follow-up boosters
+        self.boosted_full_vaxxed_count = 0
+
+    def update_boosted_cohorts(self, cohorts):
+        # Restored from https://github.com/klenwell/covid-19/commit/2d0d29
+        surplus = self.boost_vax_count
+        for cohort in cohorts:
+            surplus = cohort.update_boosted(surplus)
+            if surplus <= 0:
+                break
+
+        return self.boost_vax_count
+
+    def update_boosted(self, booster_shots):
+        """Tracks fully vaxxed when they are estimated to later get a booster.
+
+        See how many booster shots we can apply for this date's cohort. Surplus will
+        be returned and applied to next date.
+        """
+        # More booster than people eligible for this date. Apply and return surplus.
+        if booster_shots > self.unboosted_full_vaxxed:
+            surplus = booster_shots - self.unboosted_full_vaxxed
+            self.boosted_full_vaxxed_count = self.full_vax_count
+            return surplus
+        # Not enough boosters. So apply them all and return 0.
+        else:
+            self.boosted_full_vaxxed_count += booster_shots
+            return 0
 
     def compute_vax_immunity_for_date(self, report_date):
         days_out = (report_date - self.date).days
@@ -93,7 +126,7 @@ class ImmuneCohort:
             days_out -= FULL_EFF_WINDOW
             vax_factor = FULL_VAX_EFF - (VAX_FADE_RATE * days_out)
 
-        estimate = self.full_vax_count * vax_factor
+        estimate = self.unboosted_full_vaxxed * vax_factor
         return max(estimate, 0)
 
     def compute_booster_immunity(self, days_out):

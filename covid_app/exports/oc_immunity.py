@@ -73,6 +73,10 @@ class OCImmunityExport:
             cohort.update_boosted_cohorts(cohorts)
             cohorts.append(cohort)
 
+            if len(cohorts) > 401:
+                spy = cohorts[400]
+                print(dated, spy.date, spy.unboosted_full_vaxxed, spy.compute_vax_immunity_for_date(dated))
+
             estimate = {
                 'date': dated,
                 'infectious': ImmuneCohort.count_active_infections(cohorts),

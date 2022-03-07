@@ -29,18 +29,32 @@ I use it to help maintain this COVID-19 spreadsheet:
 ### Export Current Data
 To export the latest Orange County COVID-19 data from the [OC Health Care Agency](https://occovid19.ochealthinfo.com/coronavirus-in-oc):
 
-    python app.py oc daily
+    python app.py oc daily-v2
 
-When successful, it will generate a CSV file and output something like this:
+When successful, it will generate a CSV files for case and immunity data and output something like this:
 
 ```
-OC Daily COVID-19 Data Export
+OC Daily COVID-19 Data Export v2
+================================
+## Data
+CSV Path: /home/klenwell/projects/covid-19/data/oc/oc-hca.csv
+Runtime: 0.8338844776153564 s
 
-path: /home/klenwell/projects/covid-19/data/oc/oc-hca.csv
-start: 2020-03-01
-end: 2020-06-28
-rows: 120
-version: 3.2
+Start Date: 2020-01-22
+End Date: 2022-03-04
+Rows: 773
+
+## Immunity
+CSV Path: /home/klenwell/projects/covid-19/data/oc/oc-immunity.csv
+Runtime: 1.5266637802124023 s
+
+Infectious: 10758.0
+Recovered:  859413.0733333332
+Vaccinated: 1523281.7587037035
+
+Start Date: 2020-01-22
+End Date: 2022-03-04
+Rows: 773
 ```
 
 

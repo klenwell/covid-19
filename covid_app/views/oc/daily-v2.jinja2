@@ -12,9 +12,9 @@ Rows: {{ daily.dates|length }}
 CSV Path: {{ immunity.csv_path }}
 Runtime: {{ immunity.run_time }} s
 
-Infectious: {{ infectious }}
-Recovered:  {{ recovered }}
-Vaccinated: {{ vaccinated }}
+Infectious: {{ latest['infectious'] }}
+Recovered:  {{ latest['recovered'] }}
+Vaccinated: {{ latest['vaccinated'] }}
 
 Start Date: {{ immunity.starts_on }}
 End Date: {{ immunity.ends_on }}

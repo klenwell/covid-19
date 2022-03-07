@@ -33,14 +33,11 @@ class OcController(Controller):
 
         immunity = OCImmunityExport()
         immunity.to_csv()
-        immunity_latest = immunity.extract_data_to_csv_row(immunity.ends_on)
 
         vars = {
             'daily': daily,
             'immunity': immunity,
-            'infectious': immunity_latest[1],
-            'recovered': immunity_latest[2],
-            'vaccinated': immunity_latest[3]
+            'latest': immunity.estimates[-1]
         }
         self.app.render(vars, 'oc/daily-v2.jinja2')
 
@@ -66,7 +63,7 @@ class OcController(Controller):
         export.to_csv()
         vars = {
             'export': export,
-            'latest': export.extract_data_to_csv_row(export.ends_on)
+            'latest': export.estimates[-1]
         }
         self.app.render(vars, 'oc/immunity.jinja2')
 
@@ -225,19 +222,6 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.extracts.oc_hca.vaccines_summary_extract import OCVaccinesSummaryExtract
-        from covid_app.extracts.oc_hca.vaccines_daily_extract import OCVaccinesDailyExtract
-
-        summary = OCVaccinesSummaryExtract()
-        daily = OCVaccinesDailyExtract()
-        data = {
-            'first_dose': summary.first_dose,
-            'both_doses': summary.both_doses,
-            'at_least_one_dose': summary.at_least_one_dose,
-            'total_doses': summary.total_doses,
-            'daily-ends-on': daily.ends_on,
-            'daily-most-recent': daily.daily_doses[daily.ends_on]
-        }
-        print(data)
-
+        export = OCImmunityExport()
+        export.to_csv()
         breakpoint()

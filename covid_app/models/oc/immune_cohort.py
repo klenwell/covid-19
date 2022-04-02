@@ -53,6 +53,10 @@ class ImmuneCohort:
     # Properties
     #
     @property
+    def unfully_vaxxed_partials(self):
+        return self.partial_vax_count - self.fully_vaxxed_partial_count
+
+    @property
     def unboosted_full_vaxxed(self):
         return self.full_vax_count - self.boosted_full_vaxxed_count
 
@@ -70,8 +74,36 @@ class ImmuneCohort:
         self.boost_vax_count = boost_vax
         self.infected_count = infected
 
-        # To track follow-up boosters
+        # To track follow-up shots so they don't get double-counted
+        self.fully_vaxxed_partial_count = 0
         self.boosted_full_vaxxed_count = 0
+
+    def update_partially_vaxxed_cohorts(self, cohorts):
+        """Restored from https://github.com/klenwell/covid-19/commit/2d0d29 for issue 55.
+
+        Imagine case where someone gets shot 1 of 1/1 and shot 2 on 1/15. CDPH data will
+        show a count for partial_vaxxed on 1/1 and fully_vaxed on 1/15 meaning person
+        will be counted twice.
+
+        To avoid overcount, this method will decrement 1/1 partial vaxxed count.
+        """
+        # Partials getting second (full) shot
+        second_shots = self.full_vax_count
+        for cohort in cohorts:
+            surplus = cohort.update_partially_vaxxed(second_shots)
+            if surplus <= 0:
+                break
+
+    def update_partially_vaxxed(self, second_shots):
+        """Tracks vaxxed partials when they are estimated to later get a second shot.
+        """
+        if second_shots > self.unfully_vaxxed_partials:
+            surplus = second_shots - self.unfully_vaxxed_partials
+            self.fully_vaxxed_partial_count = self.partial_vax_count
+            return surplus
+        else:
+            self.fully_vaxxed_partial_count += second_shots
+            return 0
 
     def update_boosted_cohorts(self, cohorts):
         # Restored from https://github.com/klenwell/covid-19/commit/2d0d29
@@ -123,7 +155,7 @@ class ImmuneCohort:
             days_out -= FULL_EFF_WINDOW
             vax_factor = PARTIAL_VAX_EFF - (VAX_FADE_RATE * days_out)
 
-        estimate = self.partial_vax_count * vax_factor
+        estimate = self.unfully_vaxxed_partials * vax_factor
         return max(estimate, 0)
 
     def compute_full_immunity(self, days_out):

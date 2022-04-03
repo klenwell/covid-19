@@ -159,6 +159,8 @@ class ImmuneCohort:
         return max(estimate, 0)
 
     def compute_full_immunity(self, days_out):
+        # TODO: Fully immunity should not have a ramp up period since they will have
+        # ramped up on first shot. This explains jitter seen in new graph.
         # Ramp Up
         if days_out < RAMP_UP_WINDOW:
             vax_ramp_rate = FULL_VAX_EFF / RAMP_UP_WINDOW

@@ -159,18 +159,23 @@ class ImmuneCohort:
         return max(estimate, 0)
 
     def compute_full_immunity(self, days_out):
-        # TODO: Fully immunity should not have a ramp up period since they will have
-        # ramped up on first shot. This explains jitter seen in new graph.
+        # Assumes this will be second shot and first shot was 4 weeks ago. Adjusts
+        # days_out and efficacy windows accordingly.
+        days_since_first_shot = 28
+        adj_ramp_up_window = RAMP_UP_WINDOW + days_since_first_shot
+        adj_full_eff_window = FULL_EFF_WINDOW + days_since_first_shot
+        days_out += days_since_first_shot
+
         # Ramp Up
-        if days_out < RAMP_UP_WINDOW:
+        if days_out < adj_ramp_up_window:
             vax_ramp_rate = FULL_VAX_EFF / RAMP_UP_WINDOW
             vax_factor = vax_ramp_rate * days_out
         # Full Efficacy Window
-        elif days_out >= RAMP_UP_WINDOW and days_out < FULL_EFF_WINDOW:
+        elif days_out >= adj_ramp_up_window and days_out < adj_full_eff_window:
             vax_factor = FULL_VAX_EFF
         # Ramp Down
         else:
-            days_out -= FULL_EFF_WINDOW
+            days_out -= adj_full_eff_window
             vax_factor = FULL_VAX_EFF - (VAX_FADE_RATE * days_out)
 
         estimate = self.unboosted_full_vaxxed * vax_factor

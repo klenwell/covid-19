@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 
 EXTRACT_URL = 'https://data.ca.gov/api/3/action/datastore_search_sql'
-EXTRACT_ID = 'c020ef6b-2116-4775-b11d-9df2875096ab'
+EXTRACT_ID = '92172873-f424-4635-ad38-71ea1c9ffcc4'
 EXTRACT_CO = 'Orange'
 EXTRACT_URL_F = "{}?sql=SELECT%20*%20from%20%22{}%22%20WHERE%20%22county%22%20LIKE%20%27{}%27"
 START_DATE = '2020-08-01'
@@ -114,3 +114,12 @@ class OcVaccinesDailyExtract:
     def date_str_to_date(self, date_str):
         format = '%Y-%m-%d'
         return datetime.strptime(date_str, format).date()
+
+
+#
+# For testing
+# python covid_app/extracts/cdph/oc_vaccines_daily_extract.py
+#
+if __name__ == "__main__":
+    extract = OcVaccinesDailyExtract()
+    breakpoint()

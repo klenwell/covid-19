@@ -114,3 +114,12 @@ class OcVaccinesDailyExtract:
     def date_str_to_date(self, date_str):
         format = '%Y-%m-%d'
         return datetime.strptime(date_str, format).date()
+
+
+#
+# For testing
+# python covid_app/extracts/cdph/oc_vaccines_daily_extract.py
+#
+if __name__ == "__main__":
+    extract = OcVaccinesDailyExtract()
+    breakpoint()

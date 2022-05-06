@@ -3,7 +3,7 @@ This is a Python command-line application developed using [the Cement framework]
 
 I use it to help maintain this COVID-19 spreadsheet:
 
-- [OC C19 Data](https://docs.google.com/spreadsheets/d/e/2PACX-1vSxCDL6xIQll_G3zW737SwkjB_Y9i5stL6ccF4Z3jFCLgaLDcrWIfquzc99DnYk_QUQQuiQbsgsXiJQ/pubhtml)
+- [OC C19 Data](https://docs.google.com/spreadsheets/d/1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4)
 
 
 ## Installation
@@ -38,23 +38,30 @@ OC Daily COVID-19 Data Export v2
 ================================
 ## Data
 CSV Path: /home/klenwell/projects/covid-19/data/oc/oc-hca.csv
-Runtime: 0.8338844776153564 s
+Runtime: 10.480208396911621 s
 
 Start Date: 2020-01-22
-End Date: 2022-03-04
-Rows: 773
+End Date: 2022-05-06
+Rows: 836
+
+Latest Wastewater Sample: 2022-05-02
+Rows: 352
 
 ## Immunity
 CSV Path: /home/klenwell/projects/covid-19/data/oc/oc-immunity.csv
-Runtime: 1.5266637802124023 s
+Runtime: 1.9219765663146973 s
 
-Infectious: 10758.0
-Recovered:  859413.0733333332
-Vaccinated: 1523281.7587037035
+Infectious: 9570.0
+Recovered:  720266.0666666667
+Vaccinated: 1117160.3205555559
 
 Start Date: 2020-01-22
-End Date: 2022-03-04
-Rows: 773
+End Date: 2022-05-06
+Rows: 836
+
+real    0m12.827s
+user    0m2.321s
+sys     0m0.189s
 ```
 
 

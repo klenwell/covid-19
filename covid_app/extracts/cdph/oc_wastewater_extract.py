@@ -4,12 +4,14 @@ CA Department of Wastewater Extract
 For info on data source, see:
 https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/CalSuWers-Dashboard.aspx
 """
+import sys
 import requests
 import csv
 import codecs
 import math
+from os.path import dirname, abspath, join as path_join
 from functools import cached_property
-from datetime import datetime
+from datetime import datetime, timedelta
 from contextlib import closing
 
 
@@ -25,6 +27,13 @@ class OcWastewaterExtract:
     # Properties
     #
     @cached_property
+    def viral_counts_7d_avg(self):
+        recrods = {}
+        for date in self.dates:
+            records[date] = self.compute_viral_count_7d_avg_for_date(date)
+        return records
+
+    @cached_property
     def viral_counts(self):
         records = {}
         for date, sample in self.dated_samples.items():
@@ -33,7 +42,7 @@ class OcWastewaterExtract:
 
     @cached_property
     def ordered_viral_counts(self):
-        return sorted([(d, s['virus']) for (d, s) in self.dated_samples.items()])
+        return sorted([(d, s['log_virus']) for (d, s) in self.dated_samples.items()])
 
     @cached_property
     def log_viral_counts(self):
@@ -54,7 +63,10 @@ class OcWastewaterExtract:
         return EXTRACT_URL_F.format(EXTRACT_URL, EXTRACT_PATH)
 
     @cached_property
-    def streamed_csv_rows(self):
+    def csv_rows(self):
+        if self.test_csv_rows:
+            return self.test_csv_rows
+
         # Large stream pattern: https://stackoverflow.com/a/38677650/1093087
         rows = []
         stream = self.fetch_source_stream()
@@ -65,17 +77,6 @@ class OcWastewaterExtract:
             for row in reader:
                 rows.append(row)
 
-        return rows
-
-    @cached_property
-    def csv_rows(self):
-        # Large stream pattern: https://stackoverflow.com/a/38677650/1093087
-        rows = []
-        path = '/home/klenwell/Downloads/tmp/Cal-SuWers.csv'
-        with open(path) as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                rows.append(row)
         return rows
 
     @cached_property
@@ -90,8 +91,12 @@ class OcWastewaterExtract:
             if county.lower() == EXTRACT_CO.lower():
                 row['date'] = self.date_str_to_date(date)
                 row['virus'] = int(round(float(concentrate.replace(',', ''))))
-                row['log_virus'] = math.log(row['virus']) if row['virus'] > 0 else 0
-                rows.append(row)
+                row['virus_k'] = row['virus'] / 1000
+
+                if row['virus'] > 0:
+                    row['log_virus'] = math.log(row['virus'])
+                    rows.append(row)
+
         return rows
 
     @cached_property
@@ -122,7 +127,7 @@ class OcWastewaterExtract:
         return self.lab_counts.keys()
 
     @cached_property
-    def dates(self):
+    def report_dates(self):
         dates = []
 
         # Fencepost alert: Don't forget to add one to range to include final day.
@@ -131,18 +136,39 @@ class OcWastewaterExtract:
 
         return sorted(dates)
 
+    @cached_property
+    def dates(self):
+        dates = []
+
+        # Fencepost alert: Don't forget to add one to range to include final day.
+        for n in range(int((self.ends_on - self.starts_on).days) + 1):
+            date = self.starts_on + timedelta(n)
+            dates.append(date)
+
+        return dates
+
     @property
     def starts_on(self):
-        return self.dates[0]
+        return self.report_dates[0]
 
     @property
     def ends_on(self):
-        return self.dates[-1]
+        return self.report_dates[-1]
 
     #
     # Instance Methods
     #
     def __init__(self):
+        self.test_csv_rows = None
+
+    def load_test_csv(self, csv_path):
+        self.test_csv_rows = []
+        with open(csv_path) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                self.test_csv_rows.append(row)
+
+    def compute_viral_count_7d_avg_for_date(self, date):
         pass
 
     #
@@ -160,10 +186,21 @@ class OcWastewaterExtract:
 
 #
 # For testing
-# python covid_app/extracts/cdph/oc_wastewater_extract.py
+# python covid_app/extracts/cdph/oc_wastewater_extract.py [--live]
 #
 if __name__ == "__main__":
     extract = OcWastewaterExtract()
+
+    if sys.argv[-1] != '--live':
+        ROOT_DIR = dirname(dirname(dirname(dirname(abspath(__file__)))))
+        csv_path = path_join(ROOT_DIR, 'data/samples/Cal-SuWers.csv')
+        extract.load_test_csv(csv_path)
+
     print(extract.lab_counts)
     print(extract.ordered_viral_counts)
+    print(extract.dates)
+    print(extract.dated_samples[datetime(2021, 10, 25).date()])
+    print(extract.dated_samples[datetime(2022, 1, 7).date()])
+    print(extract.starts_on, extract.ends_on)
+
     breakpoint()

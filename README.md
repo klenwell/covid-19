@@ -3,7 +3,7 @@ This is a Python command-line application developed using [the Cement framework]
 
 I use it to help maintain this COVID-19 spreadsheet:
 
-- [OC C19 Data](https://docs.google.com/spreadsheets/d/1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4)
+- [OC COVID-19 Data v2](https://docs.google.com/spreadsheets/d/1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4)
 
 
 ## Installation
@@ -58,10 +58,6 @@ Vaccinated: 1117160.3205555559
 Start Date: 2020-01-22
 End Date: 2022-05-06
 Rows: 836
-
-real    0m12.827s
-user    0m2.321s
-sys     0m0.189s
 ```
 
 

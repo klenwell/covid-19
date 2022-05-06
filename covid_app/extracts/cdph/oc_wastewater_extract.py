@@ -26,6 +26,10 @@ class OcWastewaterExtract:
     #
     # Properties
     #
+    @property
+    def url(self):
+        return EXTRACT_URL_F.format(EXTRACT_URL, EXTRACT_PATH)
+
     @cached_property
     def viral_counts_7d_avg(self):
         records = {}
@@ -49,14 +53,7 @@ class OcWastewaterExtract:
 
     @cached_property
     def ordered_viral_counts(self):
-        return sorted([(d, s['log_virus']) for (d, s) in self.dated_samples.items()])
-
-    @cached_property
-    def log_viral_counts(self):
-        records = {}
-        for date, sample in self.dated_samples.items():
-            records[date] = sample['log_virus']
-        return records
+        return sorted([(d, s['virus_k']) for (d, s) in self.dated_samples.items()])
 
     @cached_property
     def dated_samples(self):
@@ -64,10 +61,6 @@ class OcWastewaterExtract:
         for row in self.cal3_rows:
             dated_samples[row['date']] = row
         return dated_samples
-
-    @property
-    def url(self):
-        return EXTRACT_URL_F.format(EXTRACT_URL, EXTRACT_PATH)
 
     @cached_property
     def csv_rows(self):
@@ -103,7 +96,6 @@ class OcWastewaterExtract:
                 if row['virus'] > 0:
                     row['log_virus'] = math.log(row['virus'])
                     rows.append(row)
-
         return rows
 
     @cached_property
@@ -136,11 +128,8 @@ class OcWastewaterExtract:
     @cached_property
     def report_dates(self):
         dates = []
-
-        # Fencepost alert: Don't forget to add one to range to include final day.
         for row in self.oc_rows:
             dates.append(row['date'])
-
         return sorted(dates)
 
     @cached_property
@@ -210,8 +199,6 @@ class OcWastewaterExtract:
 # python covid_app/extracts/cdph/oc_wastewater_extract.py [--live]
 #
 if __name__ == "__main__":
-    lo_date = datetime(2021, 10, 25).date()
-    hi_date = datetime(2022, 1, 7).date()
     extract = OcWastewaterExtract()
 
     if sys.argv[-1] != '--live':
@@ -220,8 +207,8 @@ if __name__ == "__main__":
         extract.load_test_csv(csv_path)
 
     print(extract.lab_counts)
-    print(lo_date, extract.viral_counts_7d_avg[lo_date])
-    print(hi_date, extract.viral_counts_7d_avg[hi_date])
+    print(extract.dated_samples[extract.ends_on])
+    print(extract.viral_counts_7d_avg[extract.ends_on])
     print(extract.starts_on, extract.ends_on)
 
     breakpoint()

@@ -19,7 +19,7 @@ EXTRACT_URL = 'https://datavisualization.cdph.ca.gov'
 EXTRACT_PATH = '/t/SARSCov2/views/CalSuWersDashboard_v5_AllDataExport/Cal-SuWers.csv'
 EXTRACT_CO = 'Orange'
 EXTRACT_URL_F = "{}{}?:showAppBanner=false&:display_count=n&:showVizHome=n&:origin=viz_share_link"
-START_DATE = '2020-08-01'
+START_DATE = '6/28/2021'
 
 
 class OcWastewaterExtract:
@@ -28,7 +28,7 @@ class OcWastewaterExtract:
     #
     @cached_property
     def viral_counts_7d_avg(self):
-        recrods = {}
+        records = {}
         for date in self.dates:
             records[date] = self.compute_viral_count_7d_avg_for_date(date)
         return records
@@ -38,6 +38,13 @@ class OcWastewaterExtract:
         records = {}
         for date, sample in self.dated_samples.items():
             records[date] = sample['virus']
+        return records
+
+    @cached_property
+    def viral_k_counts(self):
+        records = {}
+        for date, sample in self.dated_samples.items():
+            records[date] = sample['virus_k']
         return records
 
     @cached_property
@@ -149,7 +156,8 @@ class OcWastewaterExtract:
 
     @property
     def starts_on(self):
-        return self.report_dates[0]
+        # Use START_DATE rather than self.report_dates[0] to avoid gaps in reporting
+        return self.date_str_to_date(START_DATE)
 
     @property
     def ends_on(self):
@@ -168,8 +176,20 @@ class OcWastewaterExtract:
             for row in reader:
                 self.test_csv_rows.append(row)
 
-    def compute_viral_count_7d_avg_for_date(self, date):
-        pass
+    def compute_viral_count_7d_avg_for_date(self, dated):
+        viral_counts = []
+
+        for days_back in range(7):
+            back_date = dated - timedelta(days=days_back)
+            viral_count = self.viral_k_counts.get(back_date)
+
+            if viral_count:
+                viral_counts.append(viral_count)
+
+        if len(viral_counts) < 1:
+            return None
+        else:
+            return sum(viral_counts) / len(viral_counts)
 
     #
     # Private
@@ -189,6 +209,8 @@ class OcWastewaterExtract:
 # python covid_app/extracts/cdph/oc_wastewater_extract.py [--live]
 #
 if __name__ == "__main__":
+    lo_date = datetime(2021, 10, 25).date()
+    hi_date = datetime(2022, 1, 7).date()
     extract = OcWastewaterExtract()
 
     if sys.argv[-1] != '--live':
@@ -197,10 +219,8 @@ if __name__ == "__main__":
         extract.load_test_csv(csv_path)
 
     print(extract.lab_counts)
-    print(extract.ordered_viral_counts)
-    print(extract.dates)
-    print(extract.dated_samples[datetime(2021, 10, 25).date()])
-    print(extract.dated_samples[datetime(2022, 1, 7).date()])
+    print(lo_date, extract.viral_counts_7d_avg[lo_date])
+    print(hi_date, extract.viral_counts_7d_avg[hi_date])
     print(extract.starts_on, extract.ends_on)
 
     breakpoint()

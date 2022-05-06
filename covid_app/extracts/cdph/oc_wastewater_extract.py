@@ -189,7 +189,8 @@ class OcWastewaterExtract:
         if len(viral_counts) < 1:
             return None
         else:
-            return sum(viral_counts) / len(viral_counts)
+            avg_count = sum(viral_counts) / len(viral_counts)
+            return int(round(avg_count))
 
     #
     # Private

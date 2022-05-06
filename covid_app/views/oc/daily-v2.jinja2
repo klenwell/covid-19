@@ -8,6 +8,9 @@ Start Date: {{ daily.starts_on }}
 End Date: {{ daily.ends_on }}
 Rows: {{ daily.dates|length }}
 
+Latest Wastewater Sample: {{ daily.wastewater_extract.ends_on }}
+Rows: {{ daily.wastewater_extract.cal3_rows|length }}
+
 ## Immunity
 CSV Path: {{ immunity.csv_path }}
 Runtime: {{ immunity.run_time }} s

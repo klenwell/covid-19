@@ -3,6 +3,10 @@ CA Department of Wastewater Extract
 
 For info on data source, see:
 https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/CalSuWers-Dashboard.aspx
+
+To test or troubleshoot (see main block at bottom of file):
+
+    $ python covid_app/extracts/cdph/oc_wastewater_extract.py [--live]
 """
 import sys
 import requests
@@ -29,6 +33,11 @@ class OcWastewaterExtract:
     @property
     def url(self):
         return EXTRACT_URL_F.format(EXTRACT_URL, EXTRACT_PATH)
+
+    @property
+    def sample_csv_path(self):
+        root_dir = dirname(dirname(dirname(dirname(abspath(__file__)))))
+        return path_join(root_dir, 'data/samples/Cal-SuWers.csv')
 
     @cached_property
     def viral_counts_7d_avg(self):
@@ -152,18 +161,30 @@ class OcWastewaterExtract:
     def ends_on(self):
         return self.report_dates[-1]
 
+    @cached_property
+    def newest_sample(self):
+        csv_rows = [(self.date_str_to_date(r['Sample Date']), r) for r in self.csv_rows]
+        sorted_rows = sorted(csv_rows, key=lambda r: r[0])
+        return sorted_rows[-1]
+
     #
     # Instance Methods
     #
     def __init__(self):
         self.test_csv_rows = None
 
-    def load_test_csv(self, csv_path):
+    def load_test_csv(self, csv_path=None):
         self.test_csv_rows = []
+
+        if csv_path is None:
+            csv_path = extract.sample_csv_path
+
         with open(csv_path) as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 self.test_csv_rows.append(row)
+
+        return csv_path
 
     def compute_viral_count_7d_avg_for_date(self, dated):
         viral_counts = []
@@ -202,13 +223,15 @@ if __name__ == "__main__":
     extract = OcWastewaterExtract()
 
     if sys.argv[-1] != '--live':
-        ROOT_DIR = dirname(dirname(dirname(dirname(abspath(__file__)))))
-        csv_path = path_join(ROOT_DIR, 'data/samples/Cal-SuWers.csv')
-        extract.load_test_csv(csv_path)
+        extract.load_test_csv()
+        print("Using sample csv: {}".format(extract.sample_csv_path))
+    else:
+        print('Using live data from {}'.format(extract.url))
 
     print(extract.lab_counts)
     print(extract.dated_samples[extract.ends_on])
     print(extract.viral_counts_7d_avg[extract.ends_on])
     print(extract.starts_on, extract.ends_on)
+    print('extract.newest_sample: {}'.format(extract.newest_sample))
 
     breakpoint()

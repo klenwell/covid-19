@@ -139,7 +139,7 @@ class OcWastewaterExtract:
         dates = []
         for row in self.oc_rows:
             dates.append(row['date'])
-        return sorted(dates)
+        return sorted(list(set(dates)))
 
     @cached_property
     def dates(self):
@@ -222,16 +222,13 @@ class OcWastewaterExtract:
 if __name__ == "__main__":
     extract = OcWastewaterExtract()
 
-    if sys.argv[-1] != '--live':
+    if sys.argv[-1] == '--live':
+        print('Using live data from {}'.format(extract.url))
+    else:
         extract.load_test_csv()
         print("Using sample csv: {}".format(extract.sample_csv_path))
-    else:
-        print('Using live data from {}'.format(extract.url))
 
-    print(extract.lab_counts)
-    print(extract.dated_samples[extract.ends_on])
-    print(extract.viral_counts_7d_avg[extract.ends_on])
-    print(extract.starts_on, extract.ends_on)
-    print('extract.newest_sample: {}'.format(extract.newest_sample))
+    print('Latest sample:', extract.newest_sample)
+    print('Latest OC sample:', extract.ends_on)
 
     breakpoint()

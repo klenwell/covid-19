@@ -5,7 +5,6 @@ import time
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
-from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
 
 
 #
@@ -22,8 +21,7 @@ CSV_HEADER = [
     'Cases Reported',
     'Hospital',
     'ICU',
-    'Deaths',
-    'Wastewater (kv/L)'
+    'Deaths'
 ]
 
 
@@ -38,10 +36,6 @@ class OcDailyDataExport:
     @cached_property
     def oc_hca_extract(self):
         return DailyCovid19Extract.latest()
-
-    @cached_property
-    def wastewater_extract(self):
-        return OcWastewaterExtract()
 
     @property
     def dates(self):
@@ -92,5 +86,4 @@ class OcDailyDataExport:
             self.oc_hca_extract.hospitalizations.get(dated),
             self.oc_hca_extract.icu_cases.get(dated),
             self.oc_hca_extract.new_deaths.get(dated),
-            self.wastewater_extract.viral_counts_7d_avg.get(dated)
         ]

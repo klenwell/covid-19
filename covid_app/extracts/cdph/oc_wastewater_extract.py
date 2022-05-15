@@ -92,6 +92,7 @@ class OcWastewaterExtract:
     def oc_rows(self):
         rows = []
         county_header = 'Wwtp Name'
+
         for row in self.csv_rows:
             county = row.get(county_header)
             date = row['Sample Date']

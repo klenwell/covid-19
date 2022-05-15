@@ -3,9 +3,9 @@ OC COVID-19 Wastewater Data Export
 
 CSV Path: {{ export.csv_path }}
 
-Dated: {{ export.ends_on }}
+End Date: {{ export.ends_on }}
 Virus (K): {{ export.extract.viral_k_counts.get(export.ends_on) }}
 7d Avg:  {{ export.extract.viral_counts_7d_avg.get(export.ends_on) }}
 
 Start Date: {{ export.starts_on }}
-Rows: {{ export.extract.cal3_rows|length }}
+Samples: {{ export.extract.ordered_viral_counts|length }}

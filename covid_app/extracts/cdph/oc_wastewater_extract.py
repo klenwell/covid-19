@@ -97,14 +97,18 @@ class OcWastewaterExtract:
             date = row['Sample Date']
             concentrate = row.get('Concentration', '0.0')
 
-            if county.lower() == EXTRACT_CO.lower():
-                row['date'] = self.date_str_to_date(date)
-                row['virus'] = int(round(float(concentrate.replace(',', ''))))
-                row['virus_k'] = row['virus'] / 1000
+            # Collect only OC rows
+            if county.lower() != EXTRACT_CO.lower():
+                continue
 
-                if row['virus'] > 0:
-                    row['log_virus'] = math.log(row['virus'])
-                    rows.append(row)
+            row['date'] = self.date_str_to_date(date)
+            row['virus'] = int(round(float(concentrate.replace(',', ''))))
+            row['virus_k'] = row['virus'] / 1000
+
+            if row['virus'] > 0:
+                row['log_virus'] = math.log(row['virus'])
+                rows.append(row)
+
         return rows
 
     @cached_property

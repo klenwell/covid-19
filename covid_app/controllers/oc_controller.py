@@ -68,6 +68,16 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/immunity.jinja2')
 
+    # python app.py oc wastewater
+    @expose(help="Export wastewater data to csv file.")
+    def wastewater(self):
+        export = OCWastewaterExport()
+        export.to_csv()
+        vars = {
+            'export': export,
+        }
+        self.app.render(vars, 'oc/wastewater.jinja2')
+
     #
     # Analytics
     #

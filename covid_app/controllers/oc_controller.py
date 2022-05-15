@@ -6,6 +6,7 @@ from covid_app.services.oc_health_service import OCHealthService
 from covid_app.exports.oc_daily_data import OcDailyDataExport
 from covid_app.exports.oc_daily_testing import OcDailyTestsExport
 from covid_app.exports.oc_immunity import OCImmunityExport
+from covid_app.exports.oc_wastewater import OCWastewaterExport
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
@@ -222,6 +223,6 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        export = OCImmunityExport()
-        export.to_csv()
+        export = OCWastewaterExport()
+        print(export.csv_path)
         breakpoint()

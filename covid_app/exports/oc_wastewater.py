@@ -4,28 +4,28 @@ from functools import cached_property
 import time
 
 from config.app import DATA_ROOT
-from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
-
+from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
 
 #
 # Constants
 #
 CSV_DATA_PATH = path_join(DATA_ROOT, 'oc')
-EXPORT_FILE_NAME = 'oc-hca.csv'
+EXPORT_FILE_NAME = 'oc-wastewater.csv'
 
 CSV_HEADER = [
     'Date',
-    'Tests Admin',
-    'Pos Tests Admin',
-    'Tests Reported',
-    'Cases Reported',
-    'Hospital',
-    'ICU',
-    'Deaths'
+    'K-Virus 7d Avg',
+    'Virus',
+    'Virus (k)',
+    'Virus (ln)',
+    'Rolling 10d Avg',
+    'Source',
+    'Lab ID',
+    'Units'
 ]
 
 
-class OcDailyDataExport:
+class OCWastewaterExport:
     #
     # Properties
     #
@@ -34,12 +34,12 @@ class OcDailyDataExport:
         return path_join(CSV_DATA_PATH, EXPORT_FILE_NAME)
 
     @cached_property
-    def oc_hca_extract(self):
-        return DailyCovid19Extract.latest()
+    def extract(self):
+        return OcWastewaterExtract()
 
     @property
     def dates(self):
-        return sorted(self.oc_hca_extract.dates)
+        return sorted(self.extract.dates)
 
     @property
     def starts_on(self):
@@ -77,13 +77,16 @@ class OcDailyDataExport:
     # Private
     #
     def extract_data_to_csv_row(self, dated):
+        row = self.extract.dated_samples.get(dated, {})
+
         return [
             dated,
-            self.oc_hca_extract.new_tests_administered.get(dated),
-            self.oc_hca_extract.new_positive_tests_administered.get(dated),
-            self.oc_hca_extract.new_tests_reported.get(dated),
-            self.oc_hca_extract.new_cases.get(dated),
-            self.oc_hca_extract.hospitalizations.get(dated),
-            self.oc_hca_extract.icu_cases.get(dated),
-            self.oc_hca_extract.new_deaths.get(dated),
+            self.extract.viral_counts_7d_avg.get(dated),
+            row.get('virus'),
+            row.get('virus_k'),
+            row.get('log_virus'),
+            row.get('Ten_Rollapply'),
+            row.get('data_source'),
+            row.get('Lab Id'),
+            row.get('units'),
         ]

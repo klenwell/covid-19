@@ -6,6 +6,7 @@ from covid_app.services.oc_health_service import OCHealthService
 from covid_app.exports.oc_daily_data import OcDailyDataExport
 from covid_app.exports.oc_daily_testing import OcDailyTestsExport
 from covid_app.exports.oc_immunity import OCImmunityExport
+from covid_app.exports.oc_wastewater import OCWastewaterExport
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
@@ -66,6 +67,16 @@ class OcController(Controller):
             'latest': export.estimates[-1]
         }
         self.app.render(vars, 'oc/immunity.jinja2')
+
+    # python app.py oc wastewater
+    @expose(help="Export wastewater data to csv file.")
+    def wastewater(self):
+        export = OCWastewaterExport()
+        export.to_csv()
+        vars = {
+            'export': export,
+        }
+        self.app.render(vars, 'oc/wastewater.jinja2')
 
     #
     # Analytics
@@ -222,6 +233,8 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        export = OCImmunityExport()
-        export.to_csv()
+        export = OCWastewaterExport()
+        export.extract.load_test_csv()
+        print(export.csv_path)
+        print(export.extract.cal3_rows[-3:])
         breakpoint()

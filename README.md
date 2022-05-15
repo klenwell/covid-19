@@ -44,9 +44,6 @@ Start Date: 2020-01-22
 End Date: 2022-05-06
 Rows: 836
 
-Latest Wastewater Sample: 2022-05-02
-Rows: 352
-
 ## Immunity
 CSV Path: /home/klenwell/projects/covid-19/data/oc/oc-immunity.csv
 Runtime: 1.9219765663146973 s

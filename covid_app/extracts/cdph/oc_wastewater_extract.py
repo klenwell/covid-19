@@ -92,19 +92,24 @@ class OcWastewaterExtract:
     def oc_rows(self):
         rows = []
         county_header = 'Wwtp Name'
+
         for row in self.csv_rows:
             county = row.get(county_header)
             date = row['Sample Date']
             concentrate = row.get('Concentration', '0.0')
 
-            if county.lower() == EXTRACT_CO.lower():
-                row['date'] = self.date_str_to_date(date)
-                row['virus'] = int(round(float(concentrate.replace(',', ''))))
-                row['virus_k'] = row['virus'] / 1000
+            # Collect only OC rows
+            if county.lower() != EXTRACT_CO.lower():
+                continue
 
-                if row['virus'] > 0:
-                    row['log_virus'] = math.log(row['virus'])
-                    rows.append(row)
+            row['date'] = self.date_str_to_date(date)
+            row['virus'] = int(round(float(concentrate.replace(',', ''))))
+            row['virus_k'] = row['virus'] / 1000
+
+            if row['virus'] > 0:
+                row['log_virus'] = math.log(row['virus'])
+                rows.append(row)
+
         return rows
 
     @cached_property
@@ -137,7 +142,7 @@ class OcWastewaterExtract:
     @cached_property
     def report_dates(self):
         dates = []
-        for row in self.oc_rows:
+        for row in self.cal3_rows:
             dates.append(row['date'])
         return sorted(list(set(dates)))
 
@@ -177,7 +182,7 @@ class OcWastewaterExtract:
         self.test_csv_rows = []
 
         if csv_path is None:
-            csv_path = extract.sample_csv_path
+            csv_path = self.sample_csv_path
 
         with open(csv_path) as csvfile:
             reader = csv.DictReader(csvfile)

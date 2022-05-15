@@ -137,7 +137,7 @@ class OcWastewaterExtract:
     @cached_property
     def report_dates(self):
         dates = []
-        for row in self.oc_rows:
+        for row in self.cal3_rows:
             dates.append(row['date'])
         return sorted(list(set(dates)))
 
@@ -177,7 +177,7 @@ class OcWastewaterExtract:
         self.test_csv_rows = []
 
         if csv_path is None:
-            csv_path = extract.sample_csv_path
+            csv_path = self.sample_csv_path
 
         with open(csv_path) as csvfile:
             reader = csv.DictReader(csvfile)

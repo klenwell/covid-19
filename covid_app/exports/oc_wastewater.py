@@ -4,9 +4,7 @@ from functools import cached_property
 import time
 
 from config.app import DATA_ROOT
-from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
-from covid_app.extracts.cdph.oc_vaccines_daily_extract import OcVaccinesDailyExtract
-from covid_app.models.oc.immune_cohort import ImmuneCohort
+from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
 
 #
 # Constants
@@ -16,6 +14,14 @@ EXPORT_FILE_NAME = 'oc-wastewater.csv'
 
 CSV_HEADER = [
     'Date',
+    'K-Virus 7d Avg',
+    'Virus',
+    'Virus (k)',
+    'Virus (ln)',
+    'Rolling 10d Avg',
+    'Source',
+    'Lab ID',
+    'Units'
 ]
 
 
@@ -33,7 +39,7 @@ class OCWastewaterExport:
 
     @property
     def dates(self):
-        return sorted(self.case_extract.dates)
+        return sorted(self.extract.dates)
 
     @property
     def starts_on(self):
@@ -61,8 +67,8 @@ class OCWastewaterExport:
             writer = csv.writer(f)
             writer.writerow(CSV_HEADER)
 
-            for date in reversed(self.dates):
-                writer.writerow(self.extract_data_to_csv_row())
+            for dated in reversed(self.dates):
+                writer.writerow(self.extract_data_to_csv_row(dated))
 
         self.run_time_end = time.time()
         return self.csv_path
@@ -70,15 +76,17 @@ class OCWastewaterExport:
     #
     # Private
     #
-    def extract_data_to_csv_row(self):
-        return []
+    def extract_data_to_csv_row(self, dated):
+        row = self.extract.dated_samples.get(dated, {})
 
-
-
-# For testing
-# python covid_app/exports/oc_wastewater_export.py
-#
-if __name__ == "__main__":
-    export = OcWastewaterExport()
-    print(export.csv_path)
-    breakpoint()
+        return [
+            dated,
+            self.extract.viral_counts_7d_avg.get(dated),
+            row.get('virus'),
+            row.get('virus_k'),
+            row.get('log_virus'),
+            row.get('Ten_Rollapply'),
+            row.get('data_source'),
+            row.get('Lab Id'),
+            row.get('units'),
+        ]

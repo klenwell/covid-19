@@ -3,7 +3,7 @@
  *
  * Uses jQuery module pattern: https://wiki.klenwell.com/view/JQuery
  */
-const ocDashboard = (function() {
+const OcDashboard = (function() {
   /*
    * Constants
    */
@@ -38,23 +38,36 @@ const ocDashboard = (function() {
 
   const onFetchComplete = function(results) {
     console.log('onFetchComplete', results)
-    const jsonData = transformCsvResults(results)
+    const jsonData = transformCsvResults(results.data)
     reloadDashboard(jsonData)
   }
 
-  const transformCsvResults = function(results) {
+  const transformCsvResults = function(csvRows) {
     $(TRENDS_TABLE_SEL).find('caption').text(`Data extracted.`)
-    console.debug("transformCsvResults:", results)
-    // OcTrendsModel.loadCsvResults(results)
-    // return OcTrendsModel.toJson()
-    return {}
+    console.debug("transformCsvResults:", csvRows)
+    OcTrendsModel.loadCsvResults(csvRows)
+    window.OcTrendsModel = OcTrendsModel
+    return OcTrendsModel.toJson()
   }
 
   const reloadDashboard = function(jsonData) {
     $(TRENDS_TABLE_SEL).find('caption').text(`Data transformed.`)
-    console.debug("reloadDashboard:", jsonData)
-    $(TRENDS_TABLE_SEL).find('td').text('TBA')
+    '12345'.split('').forEach(num => reloadRow(num, jsonData))
     $(TRENDS_TABLE_SEL).find('caption').text(`Dashboard reloaded.`)
+  }
+
+  const reloadRow = function(week, jsonData) {
+    const idx = parseInt(week) - 1
+    const rowSel = `${TRENDS_TABLE_SEL} tr.week-${week}`
+    const wasteWater = jsonData.week[idx].wastewater
+
+    const nullOrValue = function(value) {
+      return value !== null ? value : 'n/a'
+    }
+
+    $(`${rowSel} td.test-positive-rate`).text(jsonData.week[idx].positiveRate)
+    $(`${rowSel} td.wastewater`).text(nullOrValue(wasteWater))
+    $(`${rowSel} td.end-date`).text(jsonData.week[idx].date)
   }
 
   const resetDashboard = function() {
@@ -78,6 +91,5 @@ const ocDashboard = (function() {
  * Main block: these are the things that happen on every page load.
  */
 $(document).ready(function() {
-  console.log('document ready')
-  ocDashboard.etl()
+  OcDashboard.etl()
 })

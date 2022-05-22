@@ -21,7 +21,7 @@ const OcTrendsModel = (function() {
    * Public Methods
    */
   const loadCsvResults = function(csvRows) {
-    console.debug('loadCsvResults', csvRows)
+    console.debug('loadCsvResults?', csvRows)
     allRows = csvRows
     trendRows = filterTrendRows(csvRows)
     trendRows = computeTrends(trendRows)
@@ -81,7 +81,7 @@ const OcTrendsModel = (function() {
      return filteredRows
    }
 
-   const computeTrends = function(rows) {
+   let computeTrends = function(rows) {
      let updatedRows = []
      let idx = 0
 
@@ -120,8 +120,8 @@ const OcTrendsModel = (function() {
      return mappedRows
    }
 
-   const computePctChange = function(oldValue, newValue) {
-     if ( !oldValue ) {
+   let computePctChange = function(oldValue, newValue) {
+     if ( !oldValue || !newValue ) {
        return undefined
      }
      return ((newValue - oldValue) / oldValue) * 100

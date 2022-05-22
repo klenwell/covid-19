@@ -32,7 +32,7 @@ const OcDashboard = (function() {
       error: onFetchError
     }
 
-    console.log(`Fetrching data from ${csvUrl}`)
+    console.log(`Fetching data from ${csvUrl}`)
     Papa.parse(csvUrl, papaConfig)
   }
 
@@ -43,43 +43,50 @@ const OcDashboard = (function() {
   }
 
   const transformCsvResults = function(csvRows) {
+    console.log("transformCsvResults:", csvRows)
     $(TRENDS_TABLE_SEL).find('caption').text(`Data extracted.`)
-    console.debug("transformCsvResults:", csvRows)
     OcTrendsModel.loadCsvResults(csvRows)
     return OcTrendsModel.toJson()
   }
 
   const reloadDashboard = function(jsonData) {
-    console.debug("loadResults:", jsonData)
+    console.log("loadResults:", jsonData)
     $(TRENDS_TABLE_SEL).find('caption').text(`Data transformed.`)
-    '12345'.split('').forEach(num => reloadRow(num, jsonData))
+    '12345'.split('').forEach(weekNum => reloadRow(weekNum, jsonData))
     $(TRENDS_TABLE_SEL).find('caption').text(`Dashboard reloaded.`)
   }
 
-  const reloadRow = function(week, jsonData) {
-    const rowSel = `${TRENDS_TABLE_SEL} tr.week-${week}`
+  const reloadRow = function(weekNum, jsonData) {
+    const rowSel = `${TRENDS_TABLE_SEL} tr.week-${weekNum}`
     const valSel = 'span.value'
     const delSel = 'span.delta'
 
-    const idx = parseInt(week) - 1
+    const idx = parseInt(weekNum) - 1
     const rowData = jsonData.week[idx]
+    const startDate = rowData.dateTime.minus({days: 6}).toFormat('yyyy-MM-dd')
 
-    const nullOrValue = function(value) {
-      return value !== null ? value : 'n/a'
-    }
-
+    // Helper functions
     const asNum = (value) => !!value ? value.toFixed(1) : 'n/a'
-    const asPct = (value) => !!value ? `${value.toFixed(1)}%` : 'n/a'
+    const asPct = (value) => {
+      if ( !value ) {
+        return 'n/a'
+      }
+      const sign = value > 0 ? '+' : '';
+      return `${sign}${value.toFixed(1)}%`
+    }
+    const pctWrap = (value) => `(${asPct(value)})`
 
+    // Update cells
     $(`${rowSel} td.test-positive-rate ${valSel}`).text(asPct(rowData.positiveRate))
-    $(`${rowSel} td.test-positive-rate ${delSel}`).text(asPct(rowData.positiveRateDelta))
+    $(`${rowSel} td.test-positive-rate ${delSel}`).text(pctWrap(rowData.positiveRateDelta))
     $(`${rowSel} td.admin-tests ${valSel}`).text(asNum(rowData.adminTests))
-    $(`${rowSel} td.admin-tests ${delSel}`).text(asPct(rowData.adminTestsDelta))
+    $(`${rowSel} td.admin-tests ${delSel}`).text(pctWrap(rowData.adminTestsDelta))
     $(`${rowSel} td.positive-tests ${valSel}`).text(asNum(rowData.positiveTests))
-    $(`${rowSel} td.positive-tests ${delSel}`).text(asPct(rowData.positiveTestsDelta))
+    $(`${rowSel} td.positive-tests ${delSel}`).text(pctWrap(rowData.positiveTestsDelta))
     $(`${rowSel} td.wastewater ${valSel}`).text(asNum(rowData.wastewater))
-    $(`${rowSel} td.wastewater ${delSel}`).text(asPct(rowData.wastewaterDelta))
-    $(`${rowSel} td.end-date`).text(jsonData.week[idx].date)
+    $(`${rowSel} td.wastewater ${delSel}`).text(pctWrap(rowData.wastewaterDelta))
+    $(`${rowSel} td.start-date`).text(startDate)
+    $(`${rowSel} td.end-date`).text(rowData.date)
   }
 
   const resetDashboard = function() {
@@ -88,6 +95,7 @@ const OcDashboard = (function() {
 
   const onFetchError = function(err, file) {
     console.error("ERROR:", err, file)
+    $(TRENDS_TABLE_SEL).find('caption').text('Sorry. There was an error fetching the data.')
   }
 
   /*

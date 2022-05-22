@@ -46,32 +46,43 @@ const OcDashboard = (function() {
     $(TRENDS_TABLE_SEL).find('caption').text(`Data extracted.`)
     console.debug("transformCsvResults:", csvRows)
     OcTrendsModel.loadCsvResults(csvRows)
-    window.OcTrendsModel = OcTrendsModel
     return OcTrendsModel.toJson()
   }
 
   const reloadDashboard = function(jsonData) {
+    console.debug("loadResults:", jsonData)
     $(TRENDS_TABLE_SEL).find('caption').text(`Data transformed.`)
     '12345'.split('').forEach(num => reloadRow(num, jsonData))
     $(TRENDS_TABLE_SEL).find('caption').text(`Dashboard reloaded.`)
   }
 
   const reloadRow = function(week, jsonData) {
-    const idx = parseInt(week) - 1
     const rowSel = `${TRENDS_TABLE_SEL} tr.week-${week}`
-    const wasteWater = jsonData.week[idx].wastewater
+    const valSel = 'span.value'
+    const delSel = 'span.delta'
+
+    const idx = parseInt(week) - 1
+    const rowData = jsonData.week[idx]
 
     const nullOrValue = function(value) {
       return value !== null ? value : 'n/a'
     }
 
-    $(`${rowSel} td.test-positive-rate`).text(jsonData.week[idx].positiveRate)
-    $(`${rowSel} td.wastewater`).text(nullOrValue(wasteWater))
+    const asNum = (value) => !!value ? value.toFixed(1) : 'n/a'
+    const asPct = (value) => !!value ? `${value.toFixed(1)}%` : 'n/a'
+
+    $(`${rowSel} td.test-positive-rate ${valSel}`).text(asPct(rowData.positiveRate))
+    $(`${rowSel} td.test-positive-rate ${delSel}`).text(asPct(rowData.positiveRateDelta))
+    $(`${rowSel} td.admin-tests ${valSel}`).text(asNum(rowData.adminTests))
+    $(`${rowSel} td.admin-tests ${delSel}`).text(asPct(rowData.adminTestsDelta))
+    $(`${rowSel} td.positive-tests ${valSel}`).text(asNum(rowData.positiveTests))
+    $(`${rowSel} td.positive-tests ${delSel}`).text(asPct(rowData.positiveTestsDelta))
+    $(`${rowSel} td.wastewater ${valSel}`).text(asNum(rowData.wastewater))
+    $(`${rowSel} td.wastewater ${delSel}`).text(asPct(rowData.wastewaterDelta))
     $(`${rowSel} td.end-date`).text(jsonData.week[idx].date)
   }
 
   const resetDashboard = function() {
-    $(TRENDS_TABLE_SEL).find('td').html('&middot;')
     $(TRENDS_TABLE_SEL).find('caption').text(`Loading data from ${CSV_URL}`)
   }
 

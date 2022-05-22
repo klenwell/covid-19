@@ -24,6 +24,7 @@ const OcTrendsModel = (function() {
     console.debug('loadCsvResults', csvRows)
     allRows = csvRows
     trendRows = filterTrendRows(csvRows)
+    trendRows = computeTrends(trendRows)
     datedRecords = mapRowsToDates(trendRows)
     weekDates = [
       trendRows[0].date,
@@ -52,7 +53,6 @@ const OcTrendsModel = (function() {
    const filterTrendRows = function(rows) {
      let filteredRows = []
      const maxRows = 35
-     console.debug(rows)
 
      for (const row of rows) {
        let isValid = !!row['Date'] && !!row['Test Pos Rate 7d Avg']
@@ -65,8 +65,8 @@ const OcTrendsModel = (function() {
          ...row,
          date: row['Date'],
          dateTime: DateTime.fromFormat(row['Date'], 'yyyy-MM-dd'),
-         positiveRate: row['Test Pos Rate 7d Avg'],
-         adminTests: row["Tests Admin'd"],
+         positiveRate: parseFloat(row['Test Pos Rate 7d Avg']),
+         adminTests: row["Tests Admin 7d Avg"],
          positiveTests: row['Pos Tests 7d Avg'],
          wastewater: row['Wastewater 7d (kv / L)'],
          hospitalCases: row['Hospital Cases'],
@@ -81,6 +81,35 @@ const OcTrendsModel = (function() {
      return filteredRows
    }
 
+   const computeTrends = function(rows) {
+     let updatedRows = []
+     let idx = 0
+
+     for (const row of rows) {
+       const prevWeekIdx = idx + 7
+       const prevWeekRow = rows[prevWeekIdx]
+       idx++
+
+       if ( prevWeekRow === undefined ) {
+         updatedRows.push(row)
+         continue
+       }
+
+       updatedRows.push({
+         ...row,
+         date: row['Date'],
+         positiveRateDelta: computePctChange(prevWeekRow.positiveRate, row.positiveRate),
+         adminTestsDelta: computePctChange(prevWeekRow.adminTests, row.adminTests),
+         positiveTestsDelta: computePctChange(prevWeekRow.positiveTests, row.positiveTests),
+         wastewaterDelta: computePctChange(prevWeekRow.wastewater, row.wastewater),
+         hospitalCasesDelta: computePctChange(prevWeekRow.hospitalCases, row.hospitalCases),
+         deathsDelta: computePctChange(prevWeekRow.deaths, row.deaths)
+       })
+     }
+
+     return updatedRows
+   }
+
    const mapRowsToDates = function(rows) {
      mappedRows = {}
 
@@ -89,6 +118,13 @@ const OcTrendsModel = (function() {
      }
 
      return mappedRows
+   }
+
+   const computePctChange = function(oldValue, newValue) {
+     if ( !oldValue ) {
+       return undefined
+     }
+     return ((newValue - oldValue) / oldValue) * 100
    }
 
   /*

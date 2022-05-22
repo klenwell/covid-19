@@ -21,7 +21,7 @@ const OcTrendsModel = (function() {
    * Public Methods
    */
   const loadCsvResults = function(csvRows) {
-    console.debug('loadCsvResults?', csvRows)
+    console.debug('loadCsvResults:', csvRows)
     allRows = csvRows
     trendRows = filterTrendRows(csvRows)
     trendRows = computeTrends(trendRows)
@@ -36,6 +36,21 @@ const OcTrendsModel = (function() {
   }
 
   const toJson = function() {
+    // Sum up deaths
+    weekDates.forEach((weekDate, idx) => {
+      let datedRecord = datedRecords[weekDate]
+      let startIdx = idx * 7
+      let endIdx = startIdx + 7
+
+      let weekDeaths = trendRows.slice(startIdx, endIdx).reduce((sum, trendRow) => {
+        let dailyDeaths = trendRow.deaths
+        return sum + dailyDeaths
+      }, 0)
+
+      // Update dated record (returned below)
+      datedRecord.totalDeaths = weekDeaths
+    })
+
     return {
       week: [
         datedRecords[weekDates[0]],
@@ -45,6 +60,13 @@ const OcTrendsModel = (function() {
         datedRecords[weekDates[4]]
       ]
     }
+  }
+
+  const computePctChange = function(oldValue, newValue) {
+    if ( !oldValue || !newValue ) {
+      return undefined
+    }
+    return ((newValue - oldValue) / oldValue) * 100
   }
 
   /*
@@ -69,7 +91,7 @@ const OcTrendsModel = (function() {
          adminTests: row["Tests Admin 7d Avg"],
          positiveTests: row['Pos Tests 7d Avg'],
          wastewater: row['Wastewater 7d (kv / L)'],
-         hospitalCases: row['Hospital Cases'],
+         hospitalCases: row['Hospital Avg 7d'],
          deaths: row['New Deaths']
        })
 
@@ -94,7 +116,7 @@ const OcTrendsModel = (function() {
          updatedRows.push(row)
          continue
        }
-
+       
        updatedRows.push({
          ...row,
          date: row['Date'],
@@ -102,8 +124,7 @@ const OcTrendsModel = (function() {
          adminTestsDelta: computePctChange(prevWeekRow.adminTests, row.adminTests),
          positiveTestsDelta: computePctChange(prevWeekRow.positiveTests, row.positiveTests),
          wastewaterDelta: computePctChange(prevWeekRow.wastewater, row.wastewater),
-         hospitalCasesDelta: computePctChange(prevWeekRow.hospitalCases, row.hospitalCases),
-         deathsDelta: computePctChange(prevWeekRow.deaths, row.deaths)
+         hospitalCasesDelta: computePctChange(prevWeekRow.hospitalCases, row.hospitalCases)
        })
      }
 
@@ -120,18 +141,12 @@ const OcTrendsModel = (function() {
      return mappedRows
    }
 
-   let computePctChange = function(oldValue, newValue) {
-     if ( !oldValue || !newValue ) {
-       return undefined
-     }
-     return ((newValue - oldValue) / oldValue) * 100
-   }
-
   /*
    * Public API
    */
   return {
     loadCsvResults: loadCsvResults,
-    toJson: toJson
+    toJson: toJson,
+    computePctChange: computePctChange
   }
 })()

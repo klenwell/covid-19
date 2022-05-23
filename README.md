@@ -1,9 +1,13 @@
-# covid-19
+# COVID-19
 This is a Python command-line application developed using [the Cement framework](https://docs.builtoncement.com/) as the missing CSV export feature for the OC Health Care Agency's [COVID-19 dashboard](https://occovid19.ochealthinfo.com/coronavirus-in-oc).
 
 I use it to help maintain this COVID-19 spreadsheet:
 
 - [OC COVID-19 Data v2](https://docs.google.com/spreadsheets/d/1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4)
+
+I've also added a dashboard with key trends I follow here:
+
+- https://klenwell.github.io/covid-19/
 
 
 ## Installation
@@ -59,7 +63,7 @@ Rows: 836
 
 
 ## Testing
-There are a few tests. At this time, they are focused mainly on making quick fixes for breaking changes in page source formatting.
+I haven't given much attention to tests. At this time, there are a few tests focused mainly on making quick fixes for breaking changes in page source formatting.
 
 To run the full test suite:
 

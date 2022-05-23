@@ -1,0 +1,46 @@
+/*
+ * Trends Table
+ */
+table.trends th {
+   text-align: center;
+   font-size: 0.9em;
+ }
+
+table.trends td {
+  font-size: 0.8em;
+  text-align: center;
+  font-family: monospace;
+}
+
+table.trends caption {
+  padding-left: 2em;
+  font-size: 0.9em;
+}
+
+table.trends .sub-th {
+  display: block;
+  font-size: 0.8em;
+  font-weight: normal;
+}
+
+table.trends span.delta {
+  font-weight: bold;
+}
+
+table.trends td.falling span.delta,
+table.trends td.admin-tests.rising span.delta {
+  color: ForestGreen;
+}
+
+table.trends td.rising span.delta,
+table.trends td.admin-tests.falling span.delta {
+  color: DarkRed;
+}
+
+table.trends td.test-positive-rate.falling {
+  background-color: LightGreen;
+}
+
+table.trends td.test-positive-rate.rising {
+  background-color: LightCoral;
+}

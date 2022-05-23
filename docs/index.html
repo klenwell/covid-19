@@ -6,8 +6,11 @@
     <!-- CSS Styling -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-      rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
       crossorigin="anonymous">
+    <link href="css/main.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -49,19 +52,27 @@
         </ul>
       </header>
 
-      <h2>Latest Trends</h2>
-
       <section id="week-to-week-trends">
         <h3>OC Week-to-Week Covid-19 Trends</h3>
-        <table class="table">
+        <table class="table trends">
           <caption>Under development...</caption>
           <thead>
             <tr>
               <th scope="col">Week</th>
               <th scope="col">Test Positive Rate</th>
-              <th scope="col">New Tests Admin'd</th>
-              <th scope="col">Positive Tests</th>
-              <th scope="col">Wastewater</th>
+              <th scope="col">
+                New Tests Admin'd
+                <span class="sub-th">7-day average</span>
+              </th>
+              <th scope="col">
+                Positive Tests
+                <span class="sub-th">7-day average</span>
+              </th>
+              <th scope="col">
+                Wastewater
+                <span class="sub-th">7-day average</span>
+                <span class="sub-th">(x1000 per liter)</span>
+              </th>
               <th scope="col">Hospital Cases</th>
               <th scope="col">Deaths</th>
               <th scope="col">End Date</th>
@@ -70,7 +81,9 @@
           </thead>
           <tbody>
             <tr class="week-1">
-              <th scope="row">Last Week</th>
+              <th scope="row">
+                Last Week*
+              </th>
               <td class="test-positive-rate">
                 <span class="value"></span>
                 <span class="delta"></span>
@@ -187,6 +200,21 @@
             </tr>
           </tbody>
         </table>
+
+        <h4>Notes</h4>
+        <ul>
+          <li>Data for <strong>last week</strong> not yet fully reported.</li>
+          <li>
+            Data extracted from Google sheet:
+            <a target="_blank" href="https://docs.google.com/spreadsheets/d/1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4/">OC COVID-19 Data v2</a>
+          </li>
+          <li>
+            Data sourced from
+            <a target="_blank" href="https://occovid19.ochealthinfo.com/coronavirus-in-oc">OC Health Care Agency</a> and
+            <a target="_blank" href="https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/Wastewater-Surveillance.aspx">CA Dept of Public Health</a>.
+          </li>
+          <li>Questions, comments, or issues? Email Tom at klenwell@gmail.com.</li>
+        </ul>
       </section>
 
     </div>

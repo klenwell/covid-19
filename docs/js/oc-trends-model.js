@@ -21,7 +21,6 @@ const OcTrendsModel = (function() {
    * Public Methods
    */
   const loadCsvResults = function(csvRows) {
-    console.debug('loadCsvResults:', csvRows)
     allRows = csvRows
     trendRows = filterTrendRows(csvRows)
     trendRows = computeTrends(trendRows)
@@ -116,7 +115,7 @@ const OcTrendsModel = (function() {
          updatedRows.push(row)
          continue
        }
-       
+
        updatedRows.push({
          ...row,
          date: row['Date'],

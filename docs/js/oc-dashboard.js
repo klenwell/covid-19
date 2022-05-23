@@ -53,7 +53,7 @@ const OcDashboard = (function() {
     console.log("loadResults:", jsonData)
     $(TRENDS_TABLE_SEL).find('caption').text(`Data transformed.`)
     '1234'.split('').forEach(weekNum => reloadRow(weekNum, jsonData))
-    $(TRENDS_TABLE_SEL).find('caption').text(`Dashboard reloaded.`)
+    $(TRENDS_TABLE_SEL).find('caption').text(`Data loaded.`)
   }
 
   const reloadRow = function(weekNum, jsonData) {
@@ -79,7 +79,7 @@ const OcDashboard = (function() {
 
     // Compute death delta
     let prevWeekDeaths = jsonData.week[idx + 1].totalDeaths
-    let deathsDelta = OcTrendsModel.computePctChange(prevWeekDeaths, rowData.totalDeaths)
+    rowData.deathsDelta = OcTrendsModel.computePctChange(prevWeekDeaths, rowData.totalDeaths)
 
     // Update cells
     $(`${rowSel} td.test-positive-rate ${valSel}`).text(asPct(rowData.positiveRate))
@@ -93,9 +93,33 @@ const OcDashboard = (function() {
     $(`${rowSel} td.hospital-cases ${valSel}`).text(asNum(rowData.hospitalCases, 1))
     $(`${rowSel} td.hospital-cases ${delSel}`).text(pctWrap(rowData.hospitalCasesDelta))
     $(`${rowSel} td.deaths ${valSel}`).text(asNum(rowData.totalDeaths, 0))
-    $(`${rowSel} td.deaths ${delSel}`).text(pctWrap(deathsDelta))
+    $(`${rowSel} td.deaths ${delSel}`).text(pctWrap(rowData.deathsDelta))
     $(`${rowSel} td.start-date`).text(startDate)
     $(`${rowSel} td.end-date`).text(rowData.date)
+
+    // Set cell styles
+    updateRowStyling(rowSel, rowData)
+  }
+
+  const updateRowStyling = function(rowSel, rowData) {
+    const setClass = (delta, tdSel) => {
+      let className = ''
+      if (delta > 0) {
+        className = 'rising'
+      }
+      else if (delta < 0) {
+        className = 'falling'
+      }
+
+      $(`${rowSel} ${tdSel}`).addClass(className)
+    }
+
+    setClass(rowData.positiveRateDelta, 'td.test-positive-rate')
+    setClass(rowData.adminTestsDelta, 'td.admin-tests')
+    setClass(rowData.positiveTestsDelta, 'td.positive-tests')
+    setClass(rowData.wastewaterDelta, 'td.wastewater')
+    setClass(rowData.hospitalCasesDelta, 'td.hospital-cases')
+    setClass(rowData.deathsDelta, 'td.deaths')
   }
 
   const resetDashboard = function() {

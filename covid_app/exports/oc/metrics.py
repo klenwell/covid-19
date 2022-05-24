@@ -216,7 +216,29 @@ class OCMetricsExport:
         }
 
     def prep_wastewater(self):
-        pass
+        updated_on = self.latest_wastewater_update
+        dataset = self.waste_extract.viral_counts_7d_avg
+
+        latest = dataset.get(updated_on)
+        percentile = self.compute_percentile(latest, dataset.values())
+
+        updated_on_d7 = updated_on - timedelta(days=7)
+        value_d7 = dataset.get(updated_on_d7)
+        delta_d7 = self.compute_change(value_d7, latest)
+
+        updated_on_d14 = updated_on - timedelta(days=14)
+        value_d14 = dataset.get(updated_on_d14)
+        delta_d14 = self.compute_change(value_d14, latest)
+
+        return {
+            'updatedOn': updated_on.strftime(DATE_OUT_F),
+            'latest': round(latest, 2),
+            'percentile': round(percentile, 2),
+            'd7Value': round(value_d7, 2),
+            'd7DeltaPct': round(delta_d7, 2),
+            'd14Value': round(value_d14, 2),
+            'd14DeltaPct': round(delta_d14, 2),
+        }
 
     def prep_hospital_cases(self):
         pass

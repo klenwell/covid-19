@@ -5,8 +5,11 @@ For info on data source, see:
 https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services
 """
 import requests
+import json
+from os.path import join as path_join
 from functools import cached_property
 from datetime import datetime, timedelta
+from config.app import DATA_ROOT
 
 
 EXTRACT_URL = 'https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services'
@@ -162,16 +165,28 @@ class DailyCovid19ExtractV3:
     # Instance Methods
     #
     def __init__(self):
-        pass
+        self.fetch_samples = False
+
+    def mock_api_calls(self):
+        self.fetch_samples = True
 
     #
     # Private
     #
     def fetch_json_data(self, endpoint, where_not_null_field):
         url = EXTRACT_URL_F.format(EXTRACT_URL, endpoint, where_not_null_field)
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.json()
+
+        if self.fetch_samples:
+            sample_file_name = 'oc-hca-{}.json'.format(endpoint)
+            json_path = path_join(DATA_ROOT, 'samples', sample_file_name)
+            print('fetching mock data from {}'.format(json_path))
+
+            with open(json_path) as f:
+                return json.load(f)
+        else:
+            response = requests.get(url)
+            response.raise_for_status()
+            return response.json()
 
     def extract_from_json_data(self, json_data):
         features = json_data['features']

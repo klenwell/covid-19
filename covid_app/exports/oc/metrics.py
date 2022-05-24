@@ -51,7 +51,7 @@ class OCMetricsExport:
 
     @cached_property
     def latest_wastewater_update(self):
-        pass
+        return self.waste_extract.ends_on
 
     @cached_property
     def latest_hospital_case_update(self):
@@ -99,8 +99,14 @@ class OCMetricsExport:
     #
     # Instance Method
     #
-    def __init__(self):
+    def __init__(self, test=False):
         self.run_time_start = time.time()
+        self.test = test
+
+        if self.test:
+            print('[WARNING] In test mode: loading sample data.')
+            self.waste_extract.load_test_csv()
+            self.case_extract.mock_api_calls()
 
     def to_json_file(self):
         metrics = JSON_SCHEMA.copy()

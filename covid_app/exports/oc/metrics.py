@@ -175,7 +175,7 @@ class OCMetricsExport:
     @property
     def run_time(self):
         if not self.run_time_end:
-            return None
+            self.run_time_end = time.time()
 
         return self.run_time_end - self.run_time_start
 
@@ -184,6 +184,7 @@ class OCMetricsExport:
     #
     def __init__(self, test=False):
         self.run_time_start = time.time()
+        self.run_time_end = None
         self.test = test
 
         if self.test:

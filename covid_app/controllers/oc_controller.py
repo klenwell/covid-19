@@ -85,13 +85,17 @@ class OcController(Controller):
     # python app.py oc metrics-json-file
     @expose(help="Output JSON file to data/api/oc/metrics.json.")
     def metrics_json_file(self):
-        export = OCMetricsExport(test=True)
-        #breakpoint()
+        export = OCMetricsExport(test=False)
         json_path = export.to_json_file()
 
         vars = {
             'json_path': json_path,
-            'export': export
+            'run time': export.run_time,
+            'notes': [
+                'Latest positive rate update: {}'.format(export.latest_test_update),
+                'Latest case update: {}'.format(export.latest_case_update),
+                'Latest wastewater update: {}'.format(export.latest_wastewater_update)
+            ]
         }
         print(vars)
         #self.app.render(vars, 'oc/json-export.jinja2')

@@ -156,6 +156,20 @@ class OCMetricsExport:
 
         return daily_values
 
+    @cached_property
+    def death_7d_avgs(self):
+        daily_values = {}
+        dataset = self.case_extract.new_deaths
+        start_from = self.latest_death_update
+        max_length = 28
+
+        dates = [start_from - timedelta(days=n) for n in range(max_length)]
+
+        for dated in dates:
+            week_avg = self.week_avg_from_date(dataset, dated)
+            daily_values[dated] = week_avg
+
+        return daily_values
 
     # Etc
     @property
@@ -322,7 +336,29 @@ class OCMetricsExport:
         }
 
     def prep_deaths(self):
-        pass
+        updated_on = self.latest_death_update
+        dataset = self.death_7d_avgs
+
+        latest = dataset.get(updated_on)
+        percentile = self.compute_percentile(latest, dataset.values())
+
+        updated_on_d7 = updated_on - timedelta(days=7)
+        value_d7 = dataset.get(updated_on_d7)
+        delta_d7 = self.compute_change(value_d7, latest)
+
+        updated_on_d14 = updated_on - timedelta(days=14)
+        value_d14 = dataset.get(updated_on_d14)
+        delta_d14 = self.compute_change(value_d14, latest)
+
+        return {
+            'updatedOn': updated_on.strftime(DATE_OUT_F),
+            'latest': round(latest, 2),
+            'percentile': round(percentile, 2),
+            'd7Value': round(value_d7, 2),
+            'd7DeltaPct': round(delta_d7, 2),
+            'd14Value': round(value_d14, 2),
+            'd14DeltaPct': round(delta_d14, 2),
+        }
 
     def compute_percentile(self, value, all_values):
         """Source: https://en.wikipedia.org/wiki/Percentile_rank

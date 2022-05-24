@@ -90,15 +90,14 @@ class OcController(Controller):
 
         vars = {
             'json_path': json_path,
-            'run time': export.run_time,
             'notes': [
-                'Latest positive rate update: {}'.format(export.latest_test_update),
                 'Latest case update: {}'.format(export.latest_case_update),
-                'Latest wastewater update: {}'.format(export.latest_wastewater_update)
+                'Latest positive rate update: {}'.format(export.latest_test_update),
+                'Latest wastewater update: {}'.format(export.latest_wastewater_update),
+                'Run time: {} s'.format(round(export.run_time, 2))
             ]
         }
-        print(vars)
-        #self.app.render(vars, 'oc/json-export.jinja2')
+        self.app.render(vars, 'oc/json-export.jinja2')
 
     #
     # Analytics

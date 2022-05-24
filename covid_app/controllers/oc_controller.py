@@ -79,6 +79,22 @@ class OcController(Controller):
         self.app.render(vars, 'oc/wastewater.jinja2')
 
     #
+    # API / JSON Files
+    #
+    # python app.py oc metrics-json-file
+    @expose(help="Output JSON file to data/api/oc/metrics.json.")
+    def metrics_json_file(self):
+        export = OcMetricJsonExport()
+        breakpoint()
+        export.to_json_file()
+
+        vars = {
+            'export': export,
+        }
+        print(vars)
+        #self.app.render(vars, 'oc/json-export.jinja2')
+
+    #
     # Analytics
     #
     # python app.py oc analyze-daily-tests YEAR MONTH

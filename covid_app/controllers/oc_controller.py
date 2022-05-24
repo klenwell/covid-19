@@ -7,6 +7,7 @@ from covid_app.exports.oc_daily_data import OcDailyDataExport
 from covid_app.exports.oc_daily_testing import OcDailyTestsExport
 from covid_app.exports.oc_immunity import OCImmunityExport
 from covid_app.exports.oc_wastewater import OCWastewaterExport
+from covid_app.exports.oc.metrics import OCMetricsExport
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
@@ -84,7 +85,7 @@ class OcController(Controller):
     # python app.py oc metrics-json-file
     @expose(help="Output JSON file to data/api/oc/metrics.json.")
     def metrics_json_file(self):
-        export = OcMetricJsonExport()
+        export = OCMetricsExport()
         breakpoint()
         export.to_json_file()
 

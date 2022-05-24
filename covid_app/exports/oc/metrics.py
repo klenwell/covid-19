@@ -213,132 +213,34 @@ class OCMetricsExport:
     def prep_positive_rate_data(self):
         updated_on = self.latest_test_update
         dataset = self.postive_rate_7d_avgs
-
-        latest = dataset.get(updated_on)
-        percentile = self.compute_percentile(latest, dataset.values())
-
-        updated_on_d7 = updated_on - timedelta(days=7)
-        value_d7 = dataset.get(updated_on_d7)
-        delta_d7 = self.compute_change(value_d7, latest)
-
-        updated_on_d14 = updated_on - timedelta(days=14)
-        value_d14 = dataset.get(updated_on_d14)
-        delta_d14 = self.compute_change(value_d14, latest)
-
-        return {
-            'updatedOn': updated_on.strftime(DATE_OUT_F),
-            'latest': round(latest, 2),
-            'percentile': round(percentile, 2),
-            'd7Value': round(value_d7, 2),
-            'd7DeltaPct': round(delta_d7, 2),
-            'd14Value': round(value_d14, 2),
-            'd14DeltaPct': round(delta_d14, 2),
-        }
+        return self.prep_metric(dataset, updated_on)
 
     def prep_daily_new_cases(self):
         updated_on = self.latest_case_update
         dataset = self.case_7d_avgs
-
-        latest = dataset.get(updated_on)
-        percentile = self.compute_percentile(latest, dataset.values())
-
-        updated_on_d7 = updated_on - timedelta(days=7)
-        value_d7 = dataset.get(updated_on_d7)
-        delta_d7 = self.compute_change(value_d7, latest)
-
-        updated_on_d14 = updated_on - timedelta(days=14)
-        value_d14 = dataset.get(updated_on_d14)
-        delta_d14 = self.compute_change(value_d14, latest)
-
-        return {
-            'updatedOn': updated_on.strftime(DATE_OUT_F),
-            'latest': round(latest, 2),
-            'percentile': round(percentile, 2),
-            'd7Value': round(value_d7, 2),
-            'd7DeltaPct': round(delta_d7, 2),
-            'd14Value': round(value_d14, 2),
-            'd14DeltaPct': round(delta_d14, 2),
-        }
+        return self.prep_metric(dataset, updated_on)
 
     def prep_wastewater(self):
         updated_on = self.latest_wastewater_update
         dataset = self.waste_extract.viral_counts_7d_avg
-
-        latest = dataset.get(updated_on)
-        percentile = self.compute_percentile(latest, dataset.values())
-
-        updated_on_d7 = updated_on - timedelta(days=7)
-        value_d7 = dataset.get(updated_on_d7)
-        delta_d7 = self.compute_change(value_d7, latest)
-
-        updated_on_d14 = updated_on - timedelta(days=14)
-        value_d14 = dataset.get(updated_on_d14)
-        delta_d14 = self.compute_change(value_d14, latest)
-
-        return {
-            'updatedOn': updated_on.strftime(DATE_OUT_F),
-            'latest': round(latest, 2),
-            'percentile': round(percentile, 2),
-            'd7Value': round(value_d7, 2),
-            'd7DeltaPct': round(delta_d7, 2),
-            'd14Value': round(value_d14, 2),
-            'd14DeltaPct': round(delta_d14, 2),
-        }
+        return self.prep_metric(dataset, updated_on)
 
     def prep_hospital_cases(self):
         updated_on = self.latest_hospital_case_update
         dataset = self.hospital_7d_avgs
-
-        latest = dataset.get(updated_on)
-        percentile = self.compute_percentile(latest, dataset.values())
-
-        updated_on_d7 = updated_on - timedelta(days=7)
-        value_d7 = dataset.get(updated_on_d7)
-        delta_d7 = self.compute_change(value_d7, latest)
-
-        updated_on_d14 = updated_on - timedelta(days=14)
-        value_d14 = dataset.get(updated_on_d14)
-        delta_d14 = self.compute_change(value_d14, latest)
-
-        return {
-            'updatedOn': updated_on.strftime(DATE_OUT_F),
-            'latest': round(latest, 2),
-            'percentile': round(percentile, 2),
-            'd7Value': round(value_d7, 2),
-            'd7DeltaPct': round(delta_d7, 2),
-            'd14Value': round(value_d14, 2),
-            'd14DeltaPct': round(delta_d14, 2),
-        }
+        return self.prep_metric(dataset, updated_on)
 
     def prep_icu_cases(self):
         updated_on = self.latest_icu_case_update
         dataset = self.icu_7d_avgs
-
-        latest = dataset.get(updated_on)
-        percentile = self.compute_percentile(latest, dataset.values())
-
-        updated_on_d7 = updated_on - timedelta(days=7)
-        value_d7 = dataset.get(updated_on_d7)
-        delta_d7 = self.compute_change(value_d7, latest)
-
-        updated_on_d14 = updated_on - timedelta(days=14)
-        value_d14 = dataset.get(updated_on_d14)
-        delta_d14 = self.compute_change(value_d14, latest)
-
-        return {
-            'updatedOn': updated_on.strftime(DATE_OUT_F),
-            'latest': round(latest, 2),
-            'percentile': round(percentile, 2),
-            'd7Value': round(value_d7, 2),
-            'd7DeltaPct': round(delta_d7, 2),
-            'd14Value': round(value_d14, 2),
-            'd14DeltaPct': round(delta_d14, 2),
-        }
+        return self.prep_metric(dataset, updated_on)
 
     def prep_deaths(self):
         updated_on = self.latest_death_update
         dataset = self.death_7d_avgs
+        return self.prep_metric(dataset, updated_on)
 
+    def prep_metric(self, dataset, updated_on):
         latest = dataset.get(updated_on)
         percentile = self.compute_percentile(latest, dataset.values())
 
@@ -354,8 +256,10 @@ class OCMetricsExport:
             'updatedOn': updated_on.strftime(DATE_OUT_F),
             'latest': round(latest, 2),
             'percentile': round(percentile, 2),
+            'd7Date': updated_on_d7.strftime(DATE_OUT_F),
             'd7Value': round(value_d7, 2),
             'd7DeltaPct': round(delta_d7, 2),
+            'd14Date': updated_on_d14.strftime(DATE_OUT_F),
             'd14Value': round(value_d14, 2),
             'd14DeltaPct': round(delta_d14, 2),
         }

@@ -35,6 +35,7 @@ class OCMetricsExport:
     def json_path(self):
         return path_join(JSON_DATA_PATH, JSON_FILE_NAME)
 
+    # Extracts
     @cached_property
     def waste_extract(self):
         return OcWastewaterExtract()
@@ -43,6 +44,7 @@ class OCMetricsExport:
     def case_extract(self):
         return DailyCovid19Extract.latest()
 
+    # Latest Update Dates
     @cached_property
     def latest_test_update(self):
         for dated in self.case_dates:
@@ -51,8 +53,9 @@ class OCMetricsExport:
 
     @cached_property
     def latest_case_update(self):
+        dataset = self.case_extract.new_cases
         for dated in self.case_dates:
-            if self.new_cases.get(dated):
+            if dataset.get(dated):
                 return dated
 
     @cached_property
@@ -77,10 +80,12 @@ class OCMetricsExport:
             if self.new_deaths.get(dated):
                 return dated
 
+    # Date sets
     @property
     def case_dates(self):
         return sorted(self.case_extract.dates, reverse=True)
 
+    # Dataset aliases
     @property
     def admin_tests(self):
         return self.case_extract.new_tests_administered
@@ -89,8 +94,9 @@ class OCMetricsExport:
     def positive_tests(self):
         return self.case_extract.new_positive_tests_administered
 
+    # Avgs datasets
     @cached_property
-    def postive_rate_7d_avg(self):
+    def postive_rate_7d_avgs(self):
         daily_values = {}
 
         # Source: https://stackoverflow.com/a/993367/1093087
@@ -105,6 +111,22 @@ class OCMetricsExport:
 
         return daily_values
 
+    @cached_property
+    def case_7d_avgs(self):
+        daily_values = {}
+        dataset = self.case_extract.new_cases
+        start_from = self.latest_case_update
+        max_length = 28
+
+        dates = [start_from - timedelta(days=n) for n in range(max_length)]
+
+        for dated in dates:
+            week_avg = self.week_avg_from_date(dataset, dated)
+            daily_values[dated] = week_avg
+
+        return daily_values
+
+    # Etc
     @property
     def run_time(self):
         if not self.run_time_end:
@@ -145,17 +167,18 @@ class OCMetricsExport:
     #
     def prep_positive_rate_data(self):
         updated_on = self.latest_test_update
+        dataset = self.postive_rate_7d_avgs
 
-        latest = self.postive_rate_7d_avg.get(updated_on)
-        percentile = self.compute_percentile(latest, self.postive_rate_7d_avg.values())
+        latest = dataset.get(updated_on)
+        percentile = self.compute_percentile(latest, dataset.values())
 
         updated_on_d7 = updated_on - timedelta(days=7)
-        value_d7 = self.postive_rate_7d_avg.get(updated_on_d7)
+        value_d7 = dataset.get(updated_on_d7)
         delta_d7 = self.compute_change(value_d7, latest)
 
         updated_on_d14 = updated_on - timedelta(days=14)
-        latest_d14 = self.postive_rate_7d_avg.get(updated_on_d14)
-        delta_d14 = self.compute_change(latest_d14, latest)
+        value_d14 = dataset.get(updated_on_d14)
+        delta_d14 = self.compute_change(value_d14, latest)
 
         return {
             'updatedOn': updated_on.strftime(DATE_OUT_F),
@@ -163,12 +186,34 @@ class OCMetricsExport:
             'percentile': round(percentile, 2),
             'd7Value': round(value_d7, 2),
             'd7DeltaPct': round(delta_d7, 2),
-            'd14Value': round(latest_d14, 2),
+            'd14Value': round(value_d14, 2),
             'd14DeltaPct': round(delta_d14, 2),
         }
 
     def prep_daily_new_cases(self):
-        pass
+        updated_on = self.latest_case_update
+        dataset = self.case_7d_avgs
+
+        latest = dataset.get(updated_on)
+        percentile = self.compute_percentile(latest, dataset.values())
+
+        updated_on_d7 = updated_on - timedelta(days=7)
+        value_d7 = dataset.get(updated_on_d7)
+        delta_d7 = self.compute_change(value_d7, latest)
+
+        updated_on_d14 = updated_on - timedelta(days=14)
+        value_d14 = dataset.get(updated_on_d14)
+        delta_d14 = self.compute_change(value_d14, latest)
+
+        return {
+            'updatedOn': updated_on.strftime(DATE_OUT_F),
+            'latest': round(latest, 2),
+            'percentile': round(percentile, 2),
+            'd7Value': round(value_d7, 2),
+            'd7DeltaPct': round(delta_d7, 2),
+            'd14Value': round(value_d14, 2),
+            'd14DeltaPct': round(delta_d14, 2),
+        }
 
     def prep_wastewater(self):
         pass

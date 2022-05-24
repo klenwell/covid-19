@@ -24,6 +24,8 @@ JSON_SCHEMA = {
     'deaths': {}
 }
 
+DATE_OUT_F = '%Y-%m-%d'
+
 
 class OCMetricsExport:
     #
@@ -43,11 +45,15 @@ class OCMetricsExport:
 
     @cached_property
     def latest_test_update(self):
-        pass
+        for dated in self.case_dates:
+            if self.admin_tests.get(dated) and self.positive_tests.get(dated):
+                return dated
 
     @cached_property
     def latest_case_update(self):
-        pass
+        for dated in self.case_dates:
+            if self.new_cases.get(dated):
+                return dated
 
     @cached_property
     def latest_wastewater_update(self):
@@ -55,15 +61,25 @@ class OCMetricsExport:
 
     @cached_property
     def latest_hospital_case_update(self):
-        pass
+        for dated in self.case_dates:
+            if self.hospitalizations.get(dated):
+                return dated
 
     @cached_property
     def latest_icu_case_update(self):
-        pass
+        for dated in self.case_dates:
+            if self.icu_cases.get(dated):
+                return dated
 
     @cached_property
     def latest_death_update(self):
-        pass
+        for dated in self.case_dates:
+            if self.new_deaths.get(dated):
+                return dated
+
+    @property
+    def case_dates(self):
+        return sorted(self.case_extract.dates, reverse=True)
 
     @property
     def admin_tests(self):
@@ -80,12 +96,12 @@ class OCMetricsExport:
         # Source: https://stackoverflow.com/a/993367/1093087
         start_from = self.latest_test_update
         max_length = 28
-        dates = [start_from - timedelta(days=n+1) for n in range(max_length)]
+        dates = [start_from - timedelta(days=n) for n in range(max_length)]
 
         for dated in dates:
             avg_tests_admin = self.week_avg_from_date(self.admin_tests, dated)
             avg_tests_pos = self.week_avg_from_date(self.positive_tests, dated)
-            daily_values[dated] = avg_tests_pos / avg_tests_admin
+            daily_values[dated] = avg_tests_pos / avg_tests_admin * 100.0
 
         return daily_values
 
@@ -131,7 +147,7 @@ class OCMetricsExport:
         updated_on = self.latest_test_update
 
         latest = self.postive_rate_7d_avg.get(updated_on)
-        level = self.compute_level(latest, self.postive_rate_7d_avg.values())
+        percentile = self.compute_percentile(latest, self.postive_rate_7d_avg.values())
 
         updated_on_d7 = updated_on - timedelta(days=7)
         value_d7 = self.postive_rate_7d_avg.get(updated_on_d7)
@@ -142,27 +158,14 @@ class OCMetricsExport:
         delta_d14 = self.compute_change(latest_d14, latest)
 
         return {
-            'updatedOn': updated_on,
-            'latest': latest,
-            'level': level,
-            'd7Value': value_d7,
-            'd7DeltaPct': delta_d7,
-            'd14Value': latest_d14,
-            'd14DeltaPct': delta_d14,
+            'updatedOn': updated_on.strftime(DATE_OUT_F),
+            'latest': round(latest, 2),
+            'percentile': round(percentile, 2),
+            'd7Value': round(value_d7, 2),
+            'd7DeltaPct': round(delta_d7, 2),
+            'd14Value': round(latest_d14, 2),
+            'd14DeltaPct': round(delta_d14, 2),
         }
-
-    def compute_level(self, value, all_values):
-        raise ValueError('Not Implemented')
-
-    def week_avg_from_date(self, daily_values, from_date):
-        values = []
-
-        for n in range(7):
-            dated = from_date - timedelta(days=n)
-            value = daily_values[dated]
-            values.append(value)
-
-        return sum(values) / len(values)
 
     def prep_daily_new_cases(self):
         pass
@@ -178,3 +181,28 @@ class OCMetricsExport:
 
     def prep_deaths(self):
         pass
+
+    def compute_percentile(self, value, all_values):
+        """Source: https://en.wikipedia.org/wiki/Percentile_rank
+        PR = (CF' + (.5 * F)) / N * 100
+        CF' (cumulative frequency) is the count of all scores less than the score of interest
+        F is the frequency for the score of interest
+        N is the number of scores in the distribution
+        """
+        sorted_values = sorted(all_values)
+        cf = sorted_values.index(value)
+        freq = sorted_values.count(value)
+        return (cf + (.5 * freq)) / len(sorted_values) * 100
+
+    def compute_change(self, old, new):
+        """Source: https://stackoverflow.com/q/30926840/1093087
+        """
+        return (new - old) / old * 100.0
+
+    def week_avg_from_date(self, daily_values, from_date):
+        values = []
+        for n in range(7):
+            dated = from_date - timedelta(days=n)
+            value = daily_values[dated]
+            values.append(value)
+        return sum(values) / len(values)

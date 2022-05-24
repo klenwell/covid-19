@@ -65,19 +65,19 @@ class OCMetricsExport:
     @cached_property
     def latest_hospital_case_update(self):
         for dated in self.case_dates:
-            if self.hospitalizations.get(dated):
+            if self.case_extract.hospitalizations.get(dated):
                 return dated
 
     @cached_property
     def latest_icu_case_update(self):
         for dated in self.case_dates:
-            if self.icu_cases.get(dated):
+            if self.case_extract.icu_cases.get(dated):
                 return dated
 
     @cached_property
     def latest_death_update(self):
         for dated in self.case_dates:
-            if self.new_deaths.get(dated):
+            if self.case_extract.new_deaths.get(dated):
                 return dated
 
     # Date sets
@@ -125,6 +125,37 @@ class OCMetricsExport:
             daily_values[dated] = week_avg
 
         return daily_values
+
+    @cached_property
+    def hospital_7d_avgs(self):
+        daily_values = {}
+        dataset = self.case_extract.hospitalizations
+        start_from = self.latest_hospital_case_update
+        max_length = 28
+
+        dates = [start_from - timedelta(days=n) for n in range(max_length)]
+
+        for dated in dates:
+            week_avg = self.week_avg_from_date(dataset, dated)
+            daily_values[dated] = week_avg
+
+        return daily_values
+
+    @cached_property
+    def icu_7d_avgs(self):
+        daily_values = {}
+        dataset = self.case_extract.icu_cases
+        start_from = self.latest_icu_case_update
+        max_length = 28
+
+        dates = [start_from - timedelta(days=n) for n in range(max_length)]
+
+        for dated in dates:
+            week_avg = self.week_avg_from_date(dataset, dated)
+            daily_values[dated] = week_avg
+
+        return daily_values
+
 
     # Etc
     @property
@@ -241,10 +272,54 @@ class OCMetricsExport:
         }
 
     def prep_hospital_cases(self):
-        pass
+        updated_on = self.latest_hospital_case_update
+        dataset = self.hospital_7d_avgs
+
+        latest = dataset.get(updated_on)
+        percentile = self.compute_percentile(latest, dataset.values())
+
+        updated_on_d7 = updated_on - timedelta(days=7)
+        value_d7 = dataset.get(updated_on_d7)
+        delta_d7 = self.compute_change(value_d7, latest)
+
+        updated_on_d14 = updated_on - timedelta(days=14)
+        value_d14 = dataset.get(updated_on_d14)
+        delta_d14 = self.compute_change(value_d14, latest)
+
+        return {
+            'updatedOn': updated_on.strftime(DATE_OUT_F),
+            'latest': round(latest, 2),
+            'percentile': round(percentile, 2),
+            'd7Value': round(value_d7, 2),
+            'd7DeltaPct': round(delta_d7, 2),
+            'd14Value': round(value_d14, 2),
+            'd14DeltaPct': round(delta_d14, 2),
+        }
 
     def prep_icu_cases(self):
-        pass
+        updated_on = self.latest_icu_case_update
+        dataset = self.icu_7d_avgs
+
+        latest = dataset.get(updated_on)
+        percentile = self.compute_percentile(latest, dataset.values())
+
+        updated_on_d7 = updated_on - timedelta(days=7)
+        value_d7 = dataset.get(updated_on_d7)
+        delta_d7 = self.compute_change(value_d7, latest)
+
+        updated_on_d14 = updated_on - timedelta(days=14)
+        value_d14 = dataset.get(updated_on_d14)
+        delta_d14 = self.compute_change(value_d14, latest)
+
+        return {
+            'updatedOn': updated_on.strftime(DATE_OUT_F),
+            'latest': round(latest, 2),
+            'percentile': round(percentile, 2),
+            'd7Value': round(value_d7, 2),
+            'd7DeltaPct': round(delta_d7, 2),
+            'd14Value': round(value_d14, 2),
+            'd14DeltaPct': round(delta_d14, 2),
+        }
 
     def prep_deaths(self):
         pass

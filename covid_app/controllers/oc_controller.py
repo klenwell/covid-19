@@ -87,10 +87,11 @@ class OcController(Controller):
     def metrics_json_file(self):
         export = OCMetricsExport()
         breakpoint()
-        export.to_json_file()
+        json_path = export.to_json_file()
 
         vars = {
-            'export': export,
+            'json_path': json_path,
+            'export': export
         }
         print(vars)
         #self.app.render(vars, 'oc/json-export.jinja2')

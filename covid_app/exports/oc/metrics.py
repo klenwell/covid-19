@@ -2,6 +2,7 @@ from os.path import join as path_join
 import csv
 from functools import cached_property
 import time
+import json
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
@@ -87,7 +88,9 @@ class OCMetricsExport:
         metrics['icuCases'] = self.prep_icu_cases()
         metrics['deaths'] = self.prep_deaths()
 
-        # TODO: write dict to file as pretty json
+        # pretty print
+        with open(self.json_path, 'w') as f:
+            f.write(json.dumps(metrics, indent=4))
 
         return self.json_path
 

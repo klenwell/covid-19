@@ -1,0 +1,6278 @@
+{
+  "objectIdFieldName" : "ObjectId", 
+  "uniqueIdField" : 
+  {
+    "name" : "ObjectId", 
+    "isSystemMaintained" : true
+  }, 
+  "globalIdFieldName" : "", 
+  "fields" : [
+    {
+      "name" : "date", 
+      "type" : "esriFieldTypeDate", 
+      "alias" : "date", 
+      "sqlType" : "sqlTypeTimestamp2", 
+      "length" : 8, 
+      "domain" : null, 
+      "defaultValue" : null
+    }, 
+    {
+      "name" : "hospital", 
+      "type" : "esriFieldTypeInteger", 
+      "alias" : "hospital", 
+      "sqlType" : "sqlTypeInteger", 
+      "domain" : null, 
+      "defaultValue" : null
+    }, 
+    {
+      "name" : "icu", 
+      "type" : "esriFieldTypeInteger", 
+      "alias" : "icu", 
+      "sqlType" : "sqlTypeInteger", 
+      "domain" : null, 
+      "defaultValue" : null
+    }, 
+    {
+      "name" : "ObjectId", 
+      "type" : "esriFieldTypeOID", 
+      "alias" : "ObjectId", 
+      "sqlType" : "sqlTypeInteger", 
+      "domain" : null, 
+      "defaultValue" : null
+    }
+  ], 
+  "features" : [
+    {
+      "attributes" : {
+        "date" : 1585724400000, 
+        "hospital" : 117, 
+        "icu" : 50, 
+        "ObjectId" : 1
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1585810800000, 
+        "hospital" : 129, 
+        "icu" : 67, 
+        "ObjectId" : 2
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1585897200000, 
+        "hospital" : 131, 
+        "icu" : 66, 
+        "ObjectId" : 3
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1585983600000, 
+        "hospital" : 143, 
+        "icu" : 70, 
+        "ObjectId" : 4
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586070000000, 
+        "hospital" : 144, 
+        "icu" : 70, 
+        "ObjectId" : 5
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586156400000, 
+        "hospital" : 145, 
+        "icu" : 73, 
+        "ObjectId" : 6
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586242800000, 
+        "hospital" : 143, 
+        "icu" : 71, 
+        "ObjectId" : 7
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586329200000, 
+        "hospital" : 153, 
+        "icu" : 49, 
+        "ObjectId" : 8
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586415600000, 
+        "hospital" : 146, 
+        "icu" : 45, 
+        "ObjectId" : 9
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586502000000, 
+        "hospital" : 139, 
+        "icu" : 69, 
+        "ObjectId" : 10
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586588400000, 
+        "hospital" : 144, 
+        "icu" : 44, 
+        "ObjectId" : 11
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586674800000, 
+        "hospital" : 138, 
+        "icu" : 63, 
+        "ObjectId" : 12
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586761200000, 
+        "hospital" : 149, 
+        "icu" : 54, 
+        "ObjectId" : 13
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586847600000, 
+        "hospital" : 147, 
+        "icu" : 57, 
+        "ObjectId" : 14
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1586934000000, 
+        "hospital" : 156, 
+        "icu" : 73, 
+        "ObjectId" : 15
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587020400000, 
+        "hospital" : 152, 
+        "icu" : 55, 
+        "ObjectId" : 16
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587106800000, 
+        "hospital" : 160, 
+        "icu" : 58, 
+        "ObjectId" : 17
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587193200000, 
+        "hospital" : 157, 
+        "icu" : 64, 
+        "ObjectId" : 18
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587279600000, 
+        "hospital" : 162, 
+        "icu" : 73, 
+        "ObjectId" : 19
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587366000000, 
+        "hospital" : 172, 
+        "icu" : 73, 
+        "ObjectId" : 20
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587452400000, 
+        "hospital" : 179, 
+        "icu" : 77, 
+        "ObjectId" : 21
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587538800000, 
+        "hospital" : 172, 
+        "icu" : 73, 
+        "ObjectId" : 22
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587625200000, 
+        "hospital" : 170, 
+        "icu" : 75, 
+        "ObjectId" : 23
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587711600000, 
+        "hospital" : 175, 
+        "icu" : 68, 
+        "ObjectId" : 24
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587798000000, 
+        "hospital" : 177, 
+        "icu" : 74, 
+        "ObjectId" : 25
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587884400000, 
+        "hospital" : 180, 
+        "icu" : 73, 
+        "ObjectId" : 26
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1587970800000, 
+        "hospital" : 189, 
+        "icu" : 76, 
+        "ObjectId" : 27
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588057200000, 
+        "hospital" : 203, 
+        "icu" : 75, 
+        "ObjectId" : 28
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588143600000, 
+        "hospital" : 211, 
+        "icu" : 76, 
+        "ObjectId" : 29
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588230000000, 
+        "hospital" : 214, 
+        "icu" : 74, 
+        "ObjectId" : 30
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588316400000, 
+        "hospital" : 218, 
+        "icu" : 62, 
+        "ObjectId" : 31
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588402800000, 
+        "hospital" : 215, 
+        "icu" : 64, 
+        "ObjectId" : 32
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588489200000, 
+        "hospital" : 218, 
+        "icu" : 66, 
+        "ObjectId" : 33
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588575600000, 
+        "hospital" : 214, 
+        "icu" : 71, 
+        "ObjectId" : 34
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588662000000, 
+        "hospital" : 210, 
+        "icu" : 70, 
+        "ObjectId" : 35
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588748400000, 
+        "hospital" : 216, 
+        "icu" : 71, 
+        "ObjectId" : 36
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588834800000, 
+        "hospital" : 222, 
+        "icu" : 78, 
+        "ObjectId" : 37
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1588921200000, 
+        "hospital" : 222, 
+        "icu" : 77, 
+        "ObjectId" : 38
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589007600000, 
+        "hospital" : 228, 
+        "icu" : 85, 
+        "ObjectId" : 39
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589094000000, 
+        "hospital" : 230, 
+        "icu" : 81, 
+        "ObjectId" : 40
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589180400000, 
+        "hospital" : 232, 
+        "icu" : 85, 
+        "ObjectId" : 41
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589266800000, 
+        "hospital" : 263, 
+        "icu" : 88, 
+        "ObjectId" : 42
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589353200000, 
+        "hospital" : 257, 
+        "icu" : 105, 
+        "ObjectId" : 43
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589439600000, 
+        "hospital" : 259, 
+        "icu" : 102, 
+        "ObjectId" : 44
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589526000000, 
+        "hospital" : 250, 
+        "icu" : 110, 
+        "ObjectId" : 45
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589612400000, 
+        "hospital" : 251, 
+        "icu" : 103, 
+        "ObjectId" : 46
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589698800000, 
+        "hospital" : 267, 
+        "icu" : 117, 
+        "ObjectId" : 47
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589785200000, 
+        "hospital" : 263, 
+        "icu" : 111, 
+        "ObjectId" : 48
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589871600000, 
+        "hospital" : 269, 
+        "icu" : 116, 
+        "ObjectId" : 49
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1589958000000, 
+        "hospital" : 275, 
+        "icu" : 120, 
+        "ObjectId" : 50
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590044400000, 
+        "hospital" : 262, 
+        "icu" : 119, 
+        "ObjectId" : 251
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590130800000, 
+        "hospital" : 269, 
+        "icu" : 127, 
+        "ObjectId" : 252
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590217200000, 
+        "hospital" : 278, 
+        "icu" : 122, 
+        "ObjectId" : 253
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590303600000, 
+        "hospital" : 286, 
+        "icu" : 117, 
+        "ObjectId" : 254
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590390000000, 
+        "hospital" : 300, 
+        "icu" : 119, 
+        "ObjectId" : 255
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590476400000, 
+        "hospital" : 301, 
+        "icu" : 119, 
+        "ObjectId" : 256
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590562800000, 
+        "hospital" : 307, 
+        "icu" : 125, 
+        "ObjectId" : 257
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590649200000, 
+        "hospital" : 291, 
+        "icu" : 119, 
+        "ObjectId" : 258
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590735600000, 
+        "hospital" : 262, 
+        "icu" : 100, 
+        "ObjectId" : 259
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590822000000, 
+        "hospital" : 291, 
+        "icu" : 122, 
+        "ObjectId" : 260
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590908400000, 
+        "hospital" : 283, 
+        "icu" : 120, 
+        "ObjectId" : 261
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1590994800000, 
+        "hospital" : 292, 
+        "icu" : 121, 
+        "ObjectId" : 262
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591081200000, 
+        "hospital" : 306, 
+        "icu" : 130, 
+        "ObjectId" : 263
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591167600000, 
+        "hospital" : 296, 
+        "icu" : 124, 
+        "ObjectId" : 264
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591254000000, 
+        "hospital" : 300, 
+        "icu" : 123, 
+        "ObjectId" : 265
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591340400000, 
+        "hospital" : 315, 
+        "icu" : 131, 
+        "ObjectId" : 266
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591426800000, 
+        "hospital" : 309, 
+        "icu" : 137, 
+        "ObjectId" : 267
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591513200000, 
+        "hospital" : 322, 
+        "icu" : 148, 
+        "ObjectId" : 268
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591599600000, 
+        "hospital" : 327, 
+        "icu" : 149, 
+        "ObjectId" : 269
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591686000000, 
+        "hospital" : 315, 
+        "icu" : 146, 
+        "ObjectId" : 270
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591772400000, 
+        "hospital" : 312, 
+        "icu" : 143, 
+        "ObjectId" : 271
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591858800000, 
+        "hospital" : 325, 
+        "icu" : 156, 
+        "ObjectId" : 272
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1591945200000, 
+        "hospital" : 311, 
+        "icu" : 150, 
+        "ObjectId" : 273
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592031600000, 
+        "hospital" : 336, 
+        "icu" : 150, 
+        "ObjectId" : 274
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592118000000, 
+        "hospital" : 321, 
+        "icu" : 143, 
+        "ObjectId" : 275
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592204400000, 
+        "hospital" : 346, 
+        "icu" : 138, 
+        "ObjectId" : 276
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592290800000, 
+        "hospital" : 364, 
+        "icu" : 151, 
+        "ObjectId" : 277
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592377200000, 
+        "hospital" : 351, 
+        "icu" : 149, 
+        "ObjectId" : 278
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592463600000, 
+        "hospital" : 335, 
+        "icu" : 141, 
+        "ObjectId" : 279
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592550000000, 
+        "hospital" : 344, 
+        "icu" : 138, 
+        "ObjectId" : 280
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592636400000, 
+        "hospital" : 363, 
+        "icu" : 142, 
+        "ObjectId" : 281
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592722800000, 
+        "hospital" : 361, 
+        "icu" : 142, 
+        "ObjectId" : 282
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592809200000, 
+        "hospital" : 376, 
+        "icu" : 152, 
+        "ObjectId" : 283
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592895600000, 
+        "hospital" : 406, 
+        "icu" : 154, 
+        "ObjectId" : 284
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1592982000000, 
+        "hospital" : 437, 
+        "icu" : 161, 
+        "ObjectId" : 285
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593068400000, 
+        "hospital" : 451, 
+        "icu" : 166, 
+        "ObjectId" : 286
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593154800000, 
+        "hospital" : 467, 
+        "icu" : 179, 
+        "ObjectId" : 287
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593241200000, 
+        "hospital" : 492, 
+        "icu" : 170, 
+        "ObjectId" : 288
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593327600000, 
+        "hospital" : 485, 
+        "icu" : 175, 
+        "ObjectId" : 289
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593414000000, 
+        "hospital" : 510, 
+        "icu" : 176, 
+        "ObjectId" : 290
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593500400000, 
+        "hospital" : 542, 
+        "icu" : 192, 
+        "ObjectId" : 291
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593586800000, 
+        "hospital" : 556, 
+        "icu" : 193, 
+        "ObjectId" : 292
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593673200000, 
+        "hospital" : 584, 
+        "icu" : 187, 
+        "ObjectId" : 293
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593759600000, 
+        "hospital" : 594, 
+        "icu" : 193, 
+        "ObjectId" : 294
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593846000000, 
+        "hospital" : 624, 
+        "icu" : 197, 
+        "ObjectId" : 295
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1593932400000, 
+        "hospital" : 634, 
+        "icu" : 203, 
+        "ObjectId" : 296
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594018800000, 
+        "hospital" : 659, 
+        "icu" : 224, 
+        "ObjectId" : 297
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594105200000, 
+        "hospital" : 679, 
+        "icu" : 234, 
+        "ObjectId" : 298
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594191600000, 
+        "hospital" : 691, 
+        "icu" : 236, 
+        "ObjectId" : 299
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594278000000, 
+        "hospital" : 672, 
+        "icu" : 227, 
+        "ObjectId" : 300
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594364400000, 
+        "hospital" : 671, 
+        "icu" : 231, 
+        "ObjectId" : 151
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594450800000, 
+        "hospital" : 675, 
+        "icu" : 233, 
+        "ObjectId" : 152
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594537200000, 
+        "hospital" : 674, 
+        "icu" : 235, 
+        "ObjectId" : 153
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594623600000, 
+        "hospital" : 712, 
+        "icu" : 237, 
+        "ObjectId" : 154
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594710000000, 
+        "hospital" : 722, 
+        "icu" : 238, 
+        "ObjectId" : 155
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594796400000, 
+        "hospital" : 711, 
+        "icu" : 245, 
+        "ObjectId" : 156
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594882800000, 
+        "hospital" : 682, 
+        "icu" : 235, 
+        "ObjectId" : 157
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1594969200000, 
+        "hospital" : 692, 
+        "icu" : 232, 
+        "ObjectId" : 158
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595055600000, 
+        "hospital" : 665, 
+        "icu" : 214, 
+        "ObjectId" : 159
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595142000000, 
+        "hospital" : 666, 
+        "icu" : 213, 
+        "ObjectId" : 160
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595228400000, 
+        "hospital" : 700, 
+        "icu" : 234, 
+        "ObjectId" : 161
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595314800000, 
+        "hospital" : 699, 
+        "icu" : 233, 
+        "ObjectId" : 162
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595401200000, 
+        "hospital" : 690, 
+        "icu" : 233, 
+        "ObjectId" : 163
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595487600000, 
+        "hospital" : 652, 
+        "icu" : 215, 
+        "ObjectId" : 164
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595574000000, 
+        "hospital" : 685, 
+        "icu" : 203, 
+        "ObjectId" : 165
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595660400000, 
+        "hospital" : 687, 
+        "icu" : 201, 
+        "ObjectId" : 166
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595746800000, 
+        "hospital" : 661, 
+        "icu" : 204, 
+        "ObjectId" : 167
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595833200000, 
+        "hospital" : 640, 
+        "icu" : 203, 
+        "ObjectId" : 168
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1595919600000, 
+        "hospital" : 626, 
+        "icu" : 204, 
+        "ObjectId" : 169
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596006000000, 
+        "hospital" : 592, 
+        "icu" : 189, 
+        "ObjectId" : 170
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596092400000, 
+        "hospital" : 593, 
+        "icu" : 191, 
+        "ObjectId" : 171
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596178800000, 
+        "hospital" : 546, 
+        "icu" : 169, 
+        "ObjectId" : 172
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596265200000, 
+        "hospital" : 554, 
+        "icu" : 171, 
+        "ObjectId" : 173
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596351600000, 
+        "hospital" : 555, 
+        "icu" : 175, 
+        "ObjectId" : 174
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596438000000, 
+        "hospital" : 539, 
+        "icu" : 167, 
+        "ObjectId" : 175
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596524400000, 
+        "hospital" : 536, 
+        "icu" : 172, 
+        "ObjectId" : 176
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596610800000, 
+        "hospital" : 517, 
+        "icu" : 171, 
+        "ObjectId" : 177
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596697200000, 
+        "hospital" : 511, 
+        "icu" : 177, 
+        "ObjectId" : 178
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596783600000, 
+        "hospital" : 491, 
+        "icu" : 167, 
+        "ObjectId" : 179
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596870000000, 
+        "hospital" : 487, 
+        "icu" : 163, 
+        "ObjectId" : 180
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1596956400000, 
+        "hospital" : 468, 
+        "icu" : 152, 
+        "ObjectId" : 181
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597042800000, 
+        "hospital" : 441, 
+        "icu" : 141, 
+        "ObjectId" : 182
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597129200000, 
+        "hospital" : 440, 
+        "icu" : 141, 
+        "ObjectId" : 183
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597215600000, 
+        "hospital" : 438, 
+        "icu" : 143, 
+        "ObjectId" : 184
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597302000000, 
+        "hospital" : 436, 
+        "icu" : 152, 
+        "ObjectId" : 185
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597388400000, 
+        "hospital" : 434, 
+        "icu" : 138, 
+        "ObjectId" : 186
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597474800000, 
+        "hospital" : 422, 
+        "icu" : 133, 
+        "ObjectId" : 187
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597561200000, 
+        "hospital" : 414, 
+        "icu" : 132, 
+        "ObjectId" : 188
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597647600000, 
+        "hospital" : 409, 
+        "icu" : 124, 
+        "ObjectId" : 189
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597734000000, 
+        "hospital" : 419, 
+        "icu" : 124, 
+        "ObjectId" : 190
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597820400000, 
+        "hospital" : 400, 
+        "icu" : 118, 
+        "ObjectId" : 191
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597906800000, 
+        "hospital" : 397, 
+        "icu" : 117, 
+        "ObjectId" : 192
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1597993200000, 
+        "hospital" : 392, 
+        "icu" : 110, 
+        "ObjectId" : 193
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598079600000, 
+        "hospital" : 380, 
+        "icu" : 111, 
+        "ObjectId" : 194
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598166000000, 
+        "hospital" : 388, 
+        "icu" : 116, 
+        "ObjectId" : 195
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598252400000, 
+        "hospital" : 385, 
+        "icu" : 113, 
+        "ObjectId" : 196
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598338800000, 
+        "hospital" : 399, 
+        "icu" : 113, 
+        "ObjectId" : 197
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598425200000, 
+        "hospital" : 372, 
+        "icu" : 112, 
+        "ObjectId" : 198
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598511600000, 
+        "hospital" : 351, 
+        "icu" : 98, 
+        "ObjectId" : 199
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598598000000, 
+        "hospital" : 341, 
+        "icu" : 99, 
+        "ObjectId" : 200
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598684400000, 
+        "hospital" : 329, 
+        "icu" : 99, 
+        "ObjectId" : 201
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598770800000, 
+        "hospital" : 317, 
+        "icu" : 98, 
+        "ObjectId" : 202
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598857200000, 
+        "hospital" : 307, 
+        "icu" : 93, 
+        "ObjectId" : 203
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1598943600000, 
+        "hospital" : 295, 
+        "icu" : 89, 
+        "ObjectId" : 204
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599030000000, 
+        "hospital" : 272, 
+        "icu" : 79, 
+        "ObjectId" : 205
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599116400000, 
+        "hospital" : 264, 
+        "icu" : 77, 
+        "ObjectId" : 206
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599202800000, 
+        "hospital" : 274, 
+        "icu" : 83, 
+        "ObjectId" : 207
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599289200000, 
+        "hospital" : 253, 
+        "icu" : 77, 
+        "ObjectId" : 208
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599375600000, 
+        "hospital" : 238, 
+        "icu" : 75, 
+        "ObjectId" : 209
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599462000000, 
+        "hospital" : 242, 
+        "icu" : 70, 
+        "ObjectId" : 210
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599548400000, 
+        "hospital" : 234, 
+        "icu" : 62, 
+        "ObjectId" : 211
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599634800000, 
+        "hospital" : 239, 
+        "icu" : 64, 
+        "ObjectId" : 212
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599721200000, 
+        "hospital" : 223, 
+        "icu" : 65, 
+        "ObjectId" : 213
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599807600000, 
+        "hospital" : 215, 
+        "icu" : 65, 
+        "ObjectId" : 214
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599894000000, 
+        "hospital" : 196, 
+        "icu" : 58, 
+        "ObjectId" : 215
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1599980400000, 
+        "hospital" : 193, 
+        "icu" : 56, 
+        "ObjectId" : 216
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600066800000, 
+        "hospital" : 201, 
+        "icu" : 67, 
+        "ObjectId" : 217
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600153200000, 
+        "hospital" : 202, 
+        "icu" : 67, 
+        "ObjectId" : 218
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600239600000, 
+        "hospital" : 198, 
+        "icu" : 64, 
+        "ObjectId" : 219
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600326000000, 
+        "hospital" : 201, 
+        "icu" : 64, 
+        "ObjectId" : 220
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600412400000, 
+        "hospital" : 202, 
+        "icu" : 65, 
+        "ObjectId" : 221
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600498800000, 
+        "hospital" : 170, 
+        "icu" : 55, 
+        "ObjectId" : 222
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600585200000, 
+        "hospital" : 178, 
+        "icu" : 64, 
+        "ObjectId" : 223
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600671600000, 
+        "hospital" : 170, 
+        "icu" : 55, 
+        "ObjectId" : 224
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600758000000, 
+        "hospital" : 175, 
+        "icu" : 51, 
+        "ObjectId" : 225
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600844400000, 
+        "hospital" : 168, 
+        "icu" : 42, 
+        "ObjectId" : 226
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1600930800000, 
+        "hospital" : 157, 
+        "icu" : 50, 
+        "ObjectId" : 227
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601017200000, 
+        "hospital" : 156, 
+        "icu" : 47, 
+        "ObjectId" : 228
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601103600000, 
+        "hospital" : 164, 
+        "icu" : 45, 
+        "ObjectId" : 229
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601190000000, 
+        "hospital" : 161, 
+        "icu" : 46, 
+        "ObjectId" : 230
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601276400000, 
+        "hospital" : 162, 
+        "icu" : 46, 
+        "ObjectId" : 231
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601362800000, 
+        "hospital" : 172, 
+        "icu" : 48, 
+        "ObjectId" : 232
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601449200000, 
+        "hospital" : 173, 
+        "icu" : 45, 
+        "ObjectId" : 233
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601535600000, 
+        "hospital" : 175, 
+        "icu" : 48, 
+        "ObjectId" : 234
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601622000000, 
+        "hospital" : 160, 
+        "icu" : 47, 
+        "ObjectId" : 235
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601708400000, 
+        "hospital" : 155, 
+        "icu" : 47, 
+        "ObjectId" : 236
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601794800000, 
+        "hospital" : 168, 
+        "icu" : 53, 
+        "ObjectId" : 237
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601881200000, 
+        "hospital" : 176, 
+        "icu" : 63, 
+        "ObjectId" : 238
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1601967600000, 
+        "hospital" : 183, 
+        "icu" : 64, 
+        "ObjectId" : 239
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602054000000, 
+        "hospital" : 172, 
+        "icu" : 62, 
+        "ObjectId" : 240
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602140400000, 
+        "hospital" : 176, 
+        "icu" : 64, 
+        "ObjectId" : 241
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602226800000, 
+        "hospital" : 169, 
+        "icu" : 61, 
+        "ObjectId" : 242
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602313200000, 
+        "hospital" : 164, 
+        "icu" : 57, 
+        "ObjectId" : 243
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602399600000, 
+        "hospital" : 167, 
+        "icu" : 56, 
+        "ObjectId" : 244
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602486000000, 
+        "hospital" : 160, 
+        "icu" : 57, 
+        "ObjectId" : 245
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602572400000, 
+        "hospital" : 165, 
+        "icu" : 60, 
+        "ObjectId" : 246
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602658800000, 
+        "hospital" : 164, 
+        "icu" : 66, 
+        "ObjectId" : 247
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602745200000, 
+        "hospital" : 170, 
+        "icu" : 66, 
+        "ObjectId" : 248
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602831600000, 
+        "hospital" : 159, 
+        "icu" : 56, 
+        "ObjectId" : 249
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1602918000000, 
+        "hospital" : 162, 
+        "icu" : 59, 
+        "ObjectId" : 250
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603004400000, 
+        "hospital" : 168, 
+        "icu" : 63, 
+        "ObjectId" : 101
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603090800000, 
+        "hospital" : 168, 
+        "icu" : 63, 
+        "ObjectId" : 102
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603177200000, 
+        "hospital" : 174, 
+        "icu" : 66, 
+        "ObjectId" : 103
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603263600000, 
+        "hospital" : 168, 
+        "icu" : 56, 
+        "ObjectId" : 104
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603350000000, 
+        "hospital" : 162, 
+        "icu" : 58, 
+        "ObjectId" : 105
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603436400000, 
+        "hospital" : 159, 
+        "icu" : 55, 
+        "ObjectId" : 106
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603522800000, 
+        "hospital" : 150, 
+        "icu" : 55, 
+        "ObjectId" : 107
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603609200000, 
+        "hospital" : 162, 
+        "icu" : 59, 
+        "ObjectId" : 108
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603695600000, 
+        "hospital" : 157, 
+        "icu" : 56, 
+        "ObjectId" : 109
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603782000000, 
+        "hospital" : 177, 
+        "icu" : 60, 
+        "ObjectId" : 110
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603868400000, 
+        "hospital" : 181, 
+        "icu" : 59, 
+        "ObjectId" : 111
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1603954800000, 
+        "hospital" : 182, 
+        "icu" : 61, 
+        "ObjectId" : 112
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604041200000, 
+        "hospital" : 188, 
+        "icu" : 58, 
+        "ObjectId" : 113
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604127600000, 
+        "hospital" : 181, 
+        "icu" : 55, 
+        "ObjectId" : 114
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604214000000, 
+        "hospital" : 183, 
+        "icu" : 60, 
+        "ObjectId" : 115
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604304000000, 
+        "hospital" : 177, 
+        "icu" : 60, 
+        "ObjectId" : 116
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604390400000, 
+        "hospital" : 182, 
+        "icu" : 78, 
+        "ObjectId" : 117
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604476800000, 
+        "hospital" : 178, 
+        "icu" : 76, 
+        "ObjectId" : 118
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604563200000, 
+        "hospital" : 177, 
+        "icu" : 72, 
+        "ObjectId" : 119
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604649600000, 
+        "hospital" : 199, 
+        "icu" : 72, 
+        "ObjectId" : 120
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604736000000, 
+        "hospital" : 201, 
+        "icu" : 72, 
+        "ObjectId" : 121
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604822400000, 
+        "hospital" : 205, 
+        "icu" : 76, 
+        "ObjectId" : 122
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604908800000, 
+        "hospital" : 224, 
+        "icu" : 79, 
+        "ObjectId" : 123
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1604995200000, 
+        "hospital" : 244, 
+        "icu" : 83, 
+        "ObjectId" : 124
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605081600000, 
+        "hospital" : 251, 
+        "icu" : 89, 
+        "ObjectId" : 125
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605168000000, 
+        "hospital" : 244, 
+        "icu" : 95, 
+        "ObjectId" : 126
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605254400000, 
+        "hospital" : 235, 
+        "icu" : 90, 
+        "ObjectId" : 127
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605340800000, 
+        "hospital" : 242, 
+        "icu" : 90, 
+        "ObjectId" : 128
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605427200000, 
+        "hospital" : 257, 
+        "icu" : 85, 
+        "ObjectId" : 129
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605513600000, 
+        "hospital" : 270, 
+        "icu" : 79, 
+        "ObjectId" : 130
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605600000000, 
+        "hospital" : 291, 
+        "icu" : 90, 
+        "ObjectId" : 131
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605686400000, 
+        "hospital" : 304, 
+        "icu" : 83, 
+        "ObjectId" : 132
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605772800000, 
+        "hospital" : 333, 
+        "icu" : 102, 
+        "ObjectId" : 133
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605859200000, 
+        "hospital" : 365, 
+        "icu" : 88, 
+        "ObjectId" : 134
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1605945600000, 
+        "hospital" : 380, 
+        "icu" : 91, 
+        "ObjectId" : 135
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606032000000, 
+        "hospital" : 428, 
+        "icu" : 105, 
+        "ObjectId" : 136
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606118400000, 
+        "hospital" : 463, 
+        "icu" : 116, 
+        "ObjectId" : 137
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606204800000, 
+        "hospital" : 479, 
+        "icu" : 115, 
+        "ObjectId" : 138
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606291200000, 
+        "hospital" : 499, 
+        "icu" : 130, 
+        "ObjectId" : 139
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606377600000, 
+        "hospital" : 506, 
+        "icu" : 139, 
+        "ObjectId" : 140
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606464000000, 
+        "hospital" : 534, 
+        "icu" : 138, 
+        "ObjectId" : 141
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606550400000, 
+        "hospital" : 597, 
+        "icu" : 148, 
+        "ObjectId" : 142
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606636800000, 
+        "hospital" : 605, 
+        "icu" : 146, 
+        "ObjectId" : 143
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606723200000, 
+        "hospital" : 648, 
+        "icu" : 158, 
+        "ObjectId" : 144
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606809600000, 
+        "hospital" : 689, 
+        "icu" : 171, 
+        "ObjectId" : 145
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606896000000, 
+        "hospital" : 735, 
+        "icu" : 179, 
+        "ObjectId" : 146
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1606982400000, 
+        "hospital" : 746, 
+        "icu" : 195, 
+        "ObjectId" : 147
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607068800000, 
+        "hospital" : 842, 
+        "icu" : 193, 
+        "ObjectId" : 148
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607155200000, 
+        "hospital" : 848, 
+        "icu" : 209, 
+        "ObjectId" : 149
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607241600000, 
+        "hospital" : 877, 
+        "icu" : 218, 
+        "ObjectId" : 150
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607328000000, 
+        "hospital" : 946, 
+        "icu" : 238, 
+        "ObjectId" : 351
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607414400000, 
+        "hospital" : 974, 
+        "icu" : 239, 
+        "ObjectId" : 352
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607500800000, 
+        "hospital" : 1025, 
+        "icu" : 257, 
+        "ObjectId" : 353
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607587200000, 
+        "hospital" : 1122, 
+        "icu" : 265, 
+        "ObjectId" : 354
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607673600000, 
+        "hospital" : 1150, 
+        "icu" : 273, 
+        "ObjectId" : 355
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607760000000, 
+        "hospital" : 1236, 
+        "icu" : 284, 
+        "ObjectId" : 356
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607846400000, 
+        "hospital" : 1287, 
+        "icu" : 288, 
+        "ObjectId" : 357
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1607932800000, 
+        "hospital" : 1371, 
+        "icu" : 296, 
+        "ObjectId" : 358
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608019200000, 
+        "hospital" : 1486, 
+        "icu" : 319, 
+        "ObjectId" : 359
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608105600000, 
+        "hospital" : 1519, 
+        "icu" : 343, 
+        "ObjectId" : 360
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608192000000, 
+        "hospital" : 1557, 
+        "icu" : 358, 
+        "ObjectId" : 361
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608278400000, 
+        "hospital" : 1601, 
+        "icu" : 361, 
+        "ObjectId" : 362
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608364800000, 
+        "hospital" : 1682, 
+        "icu" : 375, 
+        "ObjectId" : 363
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608451200000, 
+        "hospital" : 1709, 
+        "icu" : 380, 
+        "ObjectId" : 364
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608537600000, 
+        "hospital" : 1806, 
+        "icu" : 390, 
+        "ObjectId" : 365
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608624000000, 
+        "hospital" : 1854, 
+        "icu" : 394, 
+        "ObjectId" : 366
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608710400000, 
+        "hospital" : 1893, 
+        "icu" : 405, 
+        "ObjectId" : 367
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608796800000, 
+        "hospital" : 1955, 
+        "icu" : 417, 
+        "ObjectId" : 368
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608883200000, 
+        "hospital" : 1957, 
+        "icu" : 432, 
+        "ObjectId" : 369
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1608969600000, 
+        "hospital" : 1990, 
+        "icu" : 443, 
+        "ObjectId" : 370
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609056000000, 
+        "hospital" : 2031, 
+        "icu" : 453, 
+        "ObjectId" : 371
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609142400000, 
+        "hospital" : 2106, 
+        "icu" : 473, 
+        "ObjectId" : 372
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609228800000, 
+        "hospital" : 2145, 
+        "icu" : 479, 
+        "ObjectId" : 373
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609315200000, 
+        "hospital" : 2128, 
+        "icu" : 495, 
+        "ObjectId" : 374
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609401600000, 
+        "hospital" : 2097, 
+        "icu" : 501, 
+        "ObjectId" : 375
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609488000000, 
+        "hospital" : 2057, 
+        "icu" : 506, 
+        "ObjectId" : 376
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609574400000, 
+        "hospital" : 2136, 
+        "icu" : 487, 
+        "ObjectId" : 377
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609660800000, 
+        "hospital" : 2178, 
+        "icu" : 500, 
+        "ObjectId" : 378
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609747200000, 
+        "hospital" : 2236, 
+        "icu" : 504, 
+        "ObjectId" : 379
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609833600000, 
+        "hospital" : 2249, 
+        "icu" : 485, 
+        "ObjectId" : 380
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1609920000000, 
+        "hospital" : 2251, 
+        "icu" : 502, 
+        "ObjectId" : 381
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610006400000, 
+        "hospital" : 2259, 
+        "icu" : 514, 
+        "ObjectId" : 382
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610092800000, 
+        "hospital" : 2221, 
+        "icu" : 528, 
+        "ObjectId" : 383
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610179200000, 
+        "hospital" : 2216, 
+        "icu" : 547, 
+        "ObjectId" : 384
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610265600000, 
+        "hospital" : 2221, 
+        "icu" : 544, 
+        "ObjectId" : 385
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610352000000, 
+        "hospital" : 2200, 
+        "icu" : 535, 
+        "ObjectId" : 386
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610438400000, 
+        "hospital" : 2180, 
+        "icu" : 544, 
+        "ObjectId" : 387
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610524800000, 
+        "hospital" : 2169, 
+        "icu" : 544, 
+        "ObjectId" : 388
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610611200000, 
+        "hospital" : 2102, 
+        "icu" : 532, 
+        "ObjectId" : 389
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610697600000, 
+        "hospital" : 2065, 
+        "icu" : 542, 
+        "ObjectId" : 390
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610784000000, 
+        "hospital" : 2026, 
+        "icu" : 538, 
+        "ObjectId" : 391
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610870400000, 
+        "hospital" : 1964, 
+        "icu" : 538, 
+        "ObjectId" : 392
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1610956800000, 
+        "hospital" : 2007, 
+        "icu" : 523, 
+        "ObjectId" : 393
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611043200000, 
+        "hospital" : 1975, 
+        "icu" : 527, 
+        "ObjectId" : 394
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611129600000, 
+        "hospital" : 1935, 
+        "icu" : 517, 
+        "ObjectId" : 395
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611216000000, 
+        "hospital" : 1896, 
+        "icu" : 516, 
+        "ObjectId" : 396
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611302400000, 
+        "hospital" : 1818, 
+        "icu" : 482, 
+        "ObjectId" : 397
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611388800000, 
+        "hospital" : 1732, 
+        "icu" : 467, 
+        "ObjectId" : 398
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611475200000, 
+        "hospital" : 1703, 
+        "icu" : 447, 
+        "ObjectId" : 399
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611561600000, 
+        "hospital" : 1677, 
+        "icu" : 437, 
+        "ObjectId" : 400
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611648000000, 
+        "hospital" : 1639, 
+        "icu" : 448, 
+        "ObjectId" : 51
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611734400000, 
+        "hospital" : 1592, 
+        "icu" : 439, 
+        "ObjectId" : 52
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611820800000, 
+        "hospital" : 1521, 
+        "icu" : 426, 
+        "ObjectId" : 53
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611907200000, 
+        "hospital" : 1442, 
+        "icu" : 394, 
+        "ObjectId" : 54
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1611993600000, 
+        "hospital" : 1412, 
+        "icu" : 392, 
+        "ObjectId" : 55
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612080000000, 
+        "hospital" : 1362, 
+        "icu" : 384, 
+        "ObjectId" : 56
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612166400000, 
+        "hospital" : 1330, 
+        "icu" : 370, 
+        "ObjectId" : 57
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612252800000, 
+        "hospital" : 1298, 
+        "icu" : 363, 
+        "ObjectId" : 58
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612339200000, 
+        "hospital" : 1238, 
+        "icu" : 365, 
+        "ObjectId" : 59
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612425600000, 
+        "hospital" : 1233, 
+        "icu" : 342, 
+        "ObjectId" : 60
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612512000000, 
+        "hospital" : 1164, 
+        "icu" : 347, 
+        "ObjectId" : 61
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612598400000, 
+        "hospital" : 1093, 
+        "icu" : 335, 
+        "ObjectId" : 62
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612684800000, 
+        "hospital" : 1046, 
+        "icu" : 331, 
+        "ObjectId" : 63
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612771200000, 
+        "hospital" : 1058, 
+        "icu" : 324, 
+        "ObjectId" : 64
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612857600000, 
+        "hospital" : 1009, 
+        "icu" : 310, 
+        "ObjectId" : 65
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1612944000000, 
+        "hospital" : 965, 
+        "icu" : 298, 
+        "ObjectId" : 66
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613030400000, 
+        "hospital" : 908, 
+        "icu" : 290, 
+        "ObjectId" : 67
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613116800000, 
+        "hospital" : 839, 
+        "icu" : 270, 
+        "ObjectId" : 68
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613203200000, 
+        "hospital" : 790, 
+        "icu" : 257, 
+        "ObjectId" : 69
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613289600000, 
+        "hospital" : 777, 
+        "icu" : 242, 
+        "ObjectId" : 70
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613376000000, 
+        "hospital" : 748, 
+        "icu" : 235, 
+        "ObjectId" : 71
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613462400000, 
+        "hospital" : 719, 
+        "icu" : 235, 
+        "ObjectId" : 72
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613548800000, 
+        "hospital" : 663, 
+        "icu" : 230, 
+        "ObjectId" : 73
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613635200000, 
+        "hospital" : 636, 
+        "icu" : 215, 
+        "ObjectId" : 74
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613721600000, 
+        "hospital" : 591, 
+        "icu" : 196, 
+        "ObjectId" : 75
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613808000000, 
+        "hospital" : 577, 
+        "icu" : 190, 
+        "ObjectId" : 76
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613894400000, 
+        "hospital" : 556, 
+        "icu" : 179, 
+        "ObjectId" : 77
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1613980800000, 
+        "hospital" : 539, 
+        "icu" : 152, 
+        "ObjectId" : 78
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614067200000, 
+        "hospital" : 515, 
+        "icu" : 151, 
+        "ObjectId" : 79
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614153600000, 
+        "hospital" : 515, 
+        "icu" : 160, 
+        "ObjectId" : 80
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614240000000, 
+        "hospital" : 453, 
+        "icu" : 137, 
+        "ObjectId" : 81
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614326400000, 
+        "hospital" : 444, 
+        "icu" : 128, 
+        "ObjectId" : 82
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614412800000, 
+        "hospital" : 421, 
+        "icu" : 132, 
+        "ObjectId" : 83
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614499200000, 
+        "hospital" : 419, 
+        "icu" : 119, 
+        "ObjectId" : 84
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614585600000, 
+        "hospital" : 425, 
+        "icu" : 116, 
+        "ObjectId" : 85
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614672000000, 
+        "hospital" : 403, 
+        "icu" : 107, 
+        "ObjectId" : 86
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614758400000, 
+        "hospital" : 379, 
+        "icu" : 97, 
+        "ObjectId" : 87
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614844800000, 
+        "hospital" : 339, 
+        "icu" : 91, 
+        "ObjectId" : 88
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1614931200000, 
+        "hospital" : 321, 
+        "icu" : 87, 
+        "ObjectId" : 89
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615017600000, 
+        "hospital" : 296, 
+        "icu" : 89, 
+        "ObjectId" : 90
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615104000000, 
+        "hospital" : 288, 
+        "icu" : 84, 
+        "ObjectId" : 91
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615190400000, 
+        "hospital" : 283, 
+        "icu" : 77, 
+        "ObjectId" : 92
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615276800000, 
+        "hospital" : 277, 
+        "icu" : 73, 
+        "ObjectId" : 93
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615363200000, 
+        "hospital" : 252, 
+        "icu" : 67, 
+        "ObjectId" : 94
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615449600000, 
+        "hospital" : 245, 
+        "icu" : 74, 
+        "ObjectId" : 95
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615536000000, 
+        "hospital" : 237, 
+        "icu" : 71, 
+        "ObjectId" : 96
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615622400000, 
+        "hospital" : 241, 
+        "icu" : 76, 
+        "ObjectId" : 97
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615708800000, 
+        "hospital" : 233, 
+        "icu" : 72, 
+        "ObjectId" : 98
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615791600000, 
+        "hospital" : 216, 
+        "icu" : 62, 
+        "ObjectId" : 99
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615878000000, 
+        "hospital" : 199, 
+        "icu" : 54, 
+        "ObjectId" : 100
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1615964400000, 
+        "hospital" : 213, 
+        "icu" : 49, 
+        "ObjectId" : 301
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616050800000, 
+        "hospital" : 206, 
+        "icu" : 44, 
+        "ObjectId" : 302
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616137200000, 
+        "hospital" : 197, 
+        "icu" : 43, 
+        "ObjectId" : 303
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616223600000, 
+        "hospital" : 187, 
+        "icu" : 43, 
+        "ObjectId" : 304
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616310000000, 
+        "hospital" : 195, 
+        "icu" : 50, 
+        "ObjectId" : 305
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616396400000, 
+        "hospital" : 188, 
+        "icu" : 40, 
+        "ObjectId" : 306
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616482800000, 
+        "hospital" : 172, 
+        "icu" : 36, 
+        "ObjectId" : 307
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616569200000, 
+        "hospital" : 167, 
+        "icu" : 35, 
+        "ObjectId" : 308
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616655600000, 
+        "hospital" : 172, 
+        "icu" : 31, 
+        "ObjectId" : 309
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616742000000, 
+        "hospital" : 170, 
+        "icu" : 28, 
+        "ObjectId" : 310
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616828400000, 
+        "hospital" : 156, 
+        "icu" : 25, 
+        "ObjectId" : 311
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1616914800000, 
+        "hospital" : 145, 
+        "icu" : 29, 
+        "ObjectId" : 312
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617001200000, 
+        "hospital" : 143, 
+        "icu" : 26, 
+        "ObjectId" : 313
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617087600000, 
+        "hospital" : 141, 
+        "icu" : 26, 
+        "ObjectId" : 314
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617174000000, 
+        "hospital" : 131, 
+        "icu" : 22, 
+        "ObjectId" : 315
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617260400000, 
+        "hospital" : 118, 
+        "icu" : 23, 
+        "ObjectId" : 316
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617346800000, 
+        "hospital" : 109, 
+        "icu" : 23, 
+        "ObjectId" : 317
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617433200000, 
+        "hospital" : 115, 
+        "icu" : 22, 
+        "ObjectId" : 318
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617519600000, 
+        "hospital" : 109, 
+        "icu" : 16, 
+        "ObjectId" : 319
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617606000000, 
+        "hospital" : 107, 
+        "icu" : 23, 
+        "ObjectId" : 320
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617692400000, 
+        "hospital" : 114, 
+        "icu" : 29, 
+        "ObjectId" : 321
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617778800000, 
+        "hospital" : 113, 
+        "icu" : 28, 
+        "ObjectId" : 322
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617865200000, 
+        "hospital" : 114, 
+        "icu" : 32, 
+        "ObjectId" : 323
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1617951600000, 
+        "hospital" : 125, 
+        "icu" : 33, 
+        "ObjectId" : 324
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618038000000, 
+        "hospital" : 124, 
+        "icu" : 25, 
+        "ObjectId" : 325
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618124400000, 
+        "hospital" : 120, 
+        "icu" : 29, 
+        "ObjectId" : 326
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618210800000, 
+        "hospital" : 115, 
+        "icu" : 31, 
+        "ObjectId" : 327
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618297200000, 
+        "hospital" : 122, 
+        "icu" : 30, 
+        "ObjectId" : 328
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618383600000, 
+        "hospital" : 125, 
+        "icu" : 29, 
+        "ObjectId" : 329
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618470000000, 
+        "hospital" : 135, 
+        "icu" : 29, 
+        "ObjectId" : 330
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618556400000, 
+        "hospital" : 134, 
+        "icu" : 25, 
+        "ObjectId" : 331
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618642800000, 
+        "hospital" : 124, 
+        "icu" : 23, 
+        "ObjectId" : 332
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618729200000, 
+        "hospital" : 128, 
+        "icu" : 22, 
+        "ObjectId" : 333
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618815600000, 
+        "hospital" : 113, 
+        "icu" : 25, 
+        "ObjectId" : 334
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618902000000, 
+        "hospital" : 110, 
+        "icu" : 23, 
+        "ObjectId" : 335
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1618988400000, 
+        "hospital" : 110, 
+        "icu" : 22, 
+        "ObjectId" : 336
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619074800000, 
+        "hospital" : 100, 
+        "icu" : 15, 
+        "ObjectId" : 337
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619161200000, 
+        "hospital" : 114, 
+        "icu" : 22, 
+        "ObjectId" : 338
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619247600000, 
+        "hospital" : 113, 
+        "icu" : 25, 
+        "ObjectId" : 339
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619334000000, 
+        "hospital" : 115, 
+        "icu" : 23, 
+        "ObjectId" : 340
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619420400000, 
+        "hospital" : 128, 
+        "icu" : 27, 
+        "ObjectId" : 341
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619506800000, 
+        "hospital" : 125, 
+        "icu" : 24, 
+        "ObjectId" : 342
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619593200000, 
+        "hospital" : 116, 
+        "icu" : 25, 
+        "ObjectId" : 343
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619679600000, 
+        "hospital" : 113, 
+        "icu" : 22, 
+        "ObjectId" : 344
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619766000000, 
+        "hospital" : 106, 
+        "icu" : 27, 
+        "ObjectId" : 345
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619852400000, 
+        "hospital" : 111, 
+        "icu" : 24, 
+        "ObjectId" : 346
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1619938800000, 
+        "hospital" : 95, 
+        "icu" : 21, 
+        "ObjectId" : 347
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620025200000, 
+        "hospital" : 97, 
+        "icu" : 26, 
+        "ObjectId" : 348
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620111600000, 
+        "hospital" : 89, 
+        "icu" : 25, 
+        "ObjectId" : 349
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620198000000, 
+        "hospital" : 91, 
+        "icu" : 23, 
+        "ObjectId" : 350
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620284400000, 
+        "hospital" : 93, 
+        "icu" : 20, 
+        "ObjectId" : 428
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620370800000, 
+        "hospital" : 90, 
+        "icu" : 22, 
+        "ObjectId" : 433
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620457200000, 
+        "hospital" : 84, 
+        "icu" : 21, 
+        "ObjectId" : 435
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620543600000, 
+        "hospital" : 80, 
+        "icu" : 20, 
+        "ObjectId" : 438
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620630000000, 
+        "hospital" : 84, 
+        "icu" : 18, 
+        "ObjectId" : 441
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620716400000, 
+        "hospital" : 83, 
+        "icu" : 18, 
+        "ObjectId" : 444
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620802800000, 
+        "hospital" : 80, 
+        "icu" : 15, 
+        "ObjectId" : 447
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620889200000, 
+        "hospital" : 75, 
+        "icu" : 20, 
+        "ObjectId" : 450
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1620975600000, 
+        "hospital" : 80, 
+        "icu" : 25, 
+        "ObjectId" : 453
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621062000000, 
+        "hospital" : 82, 
+        "icu" : 23, 
+        "ObjectId" : 456
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621148400000, 
+        "hospital" : 79, 
+        "icu" : 13, 
+        "ObjectId" : 459
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621234800000, 
+        "hospital" : 78, 
+        "icu" : 14, 
+        "ObjectId" : 462
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621321200000, 
+        "hospital" : 70, 
+        "icu" : 15, 
+        "ObjectId" : 465
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621407600000, 
+        "hospital" : 75, 
+        "icu" : 22, 
+        "ObjectId" : 468
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621494000000, 
+        "hospital" : 68, 
+        "icu" : 10, 
+        "ObjectId" : 471
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621580400000, 
+        "hospital" : 68, 
+        "icu" : 9, 
+        "ObjectId" : 474
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621666800000, 
+        "hospital" : 69, 
+        "icu" : 10, 
+        "ObjectId" : 477
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621753200000, 
+        "hospital" : 76, 
+        "icu" : 11, 
+        "ObjectId" : 480
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621839600000, 
+        "hospital" : 72, 
+        "icu" : 9, 
+        "ObjectId" : 483
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1621926000000, 
+        "hospital" : 66, 
+        "icu" : 8, 
+        "ObjectId" : 486
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622012400000, 
+        "hospital" : 61, 
+        "icu" : 18, 
+        "ObjectId" : 489
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622098800000, 
+        "hospital" : 62, 
+        "icu" : 14, 
+        "ObjectId" : 492
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622185200000, 
+        "hospital" : 63, 
+        "icu" : 14, 
+        "ObjectId" : 495
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622271600000, 
+        "hospital" : 63, 
+        "icu" : 15, 
+        "ObjectId" : 498
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622358000000, 
+        "hospital" : 65, 
+        "icu" : 15, 
+        "ObjectId" : 501
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622444400000, 
+        "hospital" : 63, 
+        "icu" : 15, 
+        "ObjectId" : 504
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622530800000, 
+        "hospital" : 58, 
+        "icu" : 14, 
+        "ObjectId" : 507
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622617200000, 
+        "hospital" : 60, 
+        "icu" : 16, 
+        "ObjectId" : 509
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622703600000, 
+        "hospital" : 59, 
+        "icu" : 13, 
+        "ObjectId" : 511
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622790000000, 
+        "hospital" : 61, 
+        "icu" : 13, 
+        "ObjectId" : 513
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622876400000, 
+        "hospital" : 61, 
+        "icu" : 10, 
+        "ObjectId" : 515
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1622962800000, 
+        "hospital" : 64, 
+        "icu" : 8, 
+        "ObjectId" : 517
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623049200000, 
+        "hospital" : 54, 
+        "icu" : 7, 
+        "ObjectId" : 519
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623135600000, 
+        "hospital" : 50, 
+        "icu" : 7, 
+        "ObjectId" : 521
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623222000000, 
+        "hospital" : 53, 
+        "icu" : 14, 
+        "ObjectId" : 523
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623308400000, 
+        "hospital" : 56, 
+        "icu" : 14, 
+        "ObjectId" : 525
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623394800000, 
+        "hospital" : 50, 
+        "icu" : 15, 
+        "ObjectId" : 527
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623481200000, 
+        "hospital" : 55, 
+        "icu" : 17, 
+        "ObjectId" : 529
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623567600000, 
+        "hospital" : 55, 
+        "icu" : 11, 
+        "ObjectId" : 531
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623654000000, 
+        "hospital" : 54, 
+        "icu" : 15, 
+        "ObjectId" : 533
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623740400000, 
+        "hospital" : 54, 
+        "icu" : 13, 
+        "ObjectId" : 535
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623826800000, 
+        "hospital" : 50, 
+        "icu" : 8, 
+        "ObjectId" : 537
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623913200000, 
+        "hospital" : 54, 
+        "icu" : 17, 
+        "ObjectId" : 539
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1623999600000, 
+        "hospital" : 55, 
+        "icu" : 16, 
+        "ObjectId" : 541
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624086000000, 
+        "hospital" : 56, 
+        "icu" : 13, 
+        "ObjectId" : 543
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624172400000, 
+        "hospital" : 54, 
+        "icu" : 14, 
+        "ObjectId" : 545
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624258800000, 
+        "hospital" : 51, 
+        "icu" : 8, 
+        "ObjectId" : 547
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624345200000, 
+        "hospital" : 55, 
+        "icu" : 11, 
+        "ObjectId" : 549
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624431600000, 
+        "hospital" : 51, 
+        "icu" : 10, 
+        "ObjectId" : 551
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624518000000, 
+        "hospital" : 49, 
+        "icu" : 9, 
+        "ObjectId" : 553
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624604400000, 
+        "hospital" : 45, 
+        "icu" : 6, 
+        "ObjectId" : 555
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624690800000, 
+        "hospital" : 40, 
+        "icu" : 8, 
+        "ObjectId" : 557
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624777200000, 
+        "hospital" : 51, 
+        "icu" : 11, 
+        "ObjectId" : 559
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624863600000, 
+        "hospital" : 56, 
+        "icu" : 10, 
+        "ObjectId" : 561
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1624950000000, 
+        "hospital" : 56, 
+        "icu" : 10, 
+        "ObjectId" : 563
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625036400000, 
+        "hospital" : 70, 
+        "icu" : 13, 
+        "ObjectId" : 565
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625122800000, 
+        "hospital" : 63, 
+        "icu" : 12, 
+        "ObjectId" : 436
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625209200000, 
+        "hospital" : 70, 
+        "icu" : 11, 
+        "ObjectId" : 439
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625295600000, 
+        "hospital" : 66, 
+        "icu" : 10, 
+        "ObjectId" : 442
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625382000000, 
+        "hospital" : 73, 
+        "icu" : 10, 
+        "ObjectId" : 445
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625468400000, 
+        "hospital" : 73, 
+        "icu" : 11, 
+        "ObjectId" : 448
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625554800000, 
+        "hospital" : 70, 
+        "icu" : 12, 
+        "ObjectId" : 451
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625641200000, 
+        "hospital" : 79, 
+        "icu" : 15, 
+        "ObjectId" : 454
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625727600000, 
+        "hospital" : 88, 
+        "icu" : 15, 
+        "ObjectId" : 457
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625814000000, 
+        "hospital" : 90, 
+        "icu" : 21, 
+        "ObjectId" : 460
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625900400000, 
+        "hospital" : 102, 
+        "icu" : 20, 
+        "ObjectId" : 463
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1625986800000, 
+        "hospital" : 113, 
+        "icu" : 24, 
+        "ObjectId" : 466
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626073200000, 
+        "hospital" : 119, 
+        "icu" : 25, 
+        "ObjectId" : 469
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626159600000, 
+        "hospital" : 119, 
+        "icu" : 25, 
+        "ObjectId" : 472
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626246000000, 
+        "hospital" : 119, 
+        "icu" : 32, 
+        "ObjectId" : 475
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626332400000, 
+        "hospital" : 117, 
+        "icu" : 34, 
+        "ObjectId" : 478
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626418800000, 
+        "hospital" : 123, 
+        "icu" : 46, 
+        "ObjectId" : 481
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626505200000, 
+        "hospital" : 120, 
+        "icu" : 57, 
+        "ObjectId" : 484
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626591600000, 
+        "hospital" : 117, 
+        "icu" : 59, 
+        "ObjectId" : 487
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626678000000, 
+        "hospital" : 126, 
+        "icu" : 59, 
+        "ObjectId" : 490
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626764400000, 
+        "hospital" : 143, 
+        "icu" : 35, 
+        "ObjectId" : 493
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626850800000, 
+        "hospital" : 149, 
+        "icu" : 39, 
+        "ObjectId" : 496
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1626937200000, 
+        "hospital" : 156, 
+        "icu" : 44, 
+        "ObjectId" : 499
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627023600000, 
+        "hospital" : 178, 
+        "icu" : 41, 
+        "ObjectId" : 502
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627110000000, 
+        "hospital" : 178, 
+        "icu" : 45, 
+        "ObjectId" : 505
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627196400000, 
+        "hospital" : 194, 
+        "icu" : 48, 
+        "ObjectId" : 508
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627282800000, 
+        "hospital" : 212, 
+        "icu" : 48, 
+        "ObjectId" : 510
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627369200000, 
+        "hospital" : 215, 
+        "icu" : 56, 
+        "ObjectId" : 512
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627455600000, 
+        "hospital" : 236, 
+        "icu" : 56, 
+        "ObjectId" : 514
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627542000000, 
+        "hospital" : 252, 
+        "icu" : 59, 
+        "ObjectId" : 516
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627628400000, 
+        "hospital" : 269, 
+        "icu" : 61, 
+        "ObjectId" : 518
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627714800000, 
+        "hospital" : 292, 
+        "icu" : 69, 
+        "ObjectId" : 520
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627801200000, 
+        "hospital" : 322, 
+        "icu" : 68, 
+        "ObjectId" : 522
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627887600000, 
+        "hospital" : 333, 
+        "icu" : 62, 
+        "ObjectId" : 524
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1627974000000, 
+        "hospital" : 375, 
+        "icu" : 68, 
+        "ObjectId" : 526
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628060400000, 
+        "hospital" : 409, 
+        "icu" : 69, 
+        "ObjectId" : 528
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628146800000, 
+        "hospital" : 454, 
+        "icu" : 71, 
+        "ObjectId" : 530
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628233200000, 
+        "hospital" : 458, 
+        "icu" : 76, 
+        "ObjectId" : 532
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628319600000, 
+        "hospital" : 463, 
+        "icu" : 82, 
+        "ObjectId" : 534
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628406000000, 
+        "hospital" : 453, 
+        "icu" : 84, 
+        "ObjectId" : 536
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628492400000, 
+        "hospital" : 461, 
+        "icu" : 89, 
+        "ObjectId" : 538
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628578800000, 
+        "hospital" : 495, 
+        "icu" : 96, 
+        "ObjectId" : 540
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628665200000, 
+        "hospital" : 497, 
+        "icu" : 126, 
+        "ObjectId" : 542
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628751600000, 
+        "hospital" : 498, 
+        "icu" : 120, 
+        "ObjectId" : 544
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628838000000, 
+        "hospital" : 505, 
+        "icu" : 127, 
+        "ObjectId" : 546
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1628924400000, 
+        "hospital" : 528, 
+        "icu" : 127, 
+        "ObjectId" : 548
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629010800000, 
+        "hospital" : 538, 
+        "icu" : 124, 
+        "ObjectId" : 550
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629097200000, 
+        "hospital" : 549, 
+        "icu" : 126, 
+        "ObjectId" : 552
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629183600000, 
+        "hospital" : 568, 
+        "icu" : 125, 
+        "ObjectId" : 554
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629270000000, 
+        "hospital" : 571, 
+        "icu" : 133, 
+        "ObjectId" : 556
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629356400000, 
+        "hospital" : 571, 
+        "icu" : 137, 
+        "ObjectId" : 558
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629442800000, 
+        "hospital" : 574, 
+        "icu" : 136, 
+        "ObjectId" : 560
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629529200000, 
+        "hospital" : 560, 
+        "icu" : 121, 
+        "ObjectId" : 562
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629615600000, 
+        "hospital" : 570, 
+        "icu" : 116, 
+        "ObjectId" : 564
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629702000000, 
+        "hospital" : 564, 
+        "icu" : 132, 
+        "ObjectId" : 566
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629788400000, 
+        "hospital" : 573, 
+        "icu" : 129, 
+        "ObjectId" : 567
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629874800000, 
+        "hospital" : 565, 
+        "icu" : 122, 
+        "ObjectId" : 568
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1629961200000, 
+        "hospital" : 592, 
+        "icu" : 132, 
+        "ObjectId" : 401
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630047600000, 
+        "hospital" : 549, 
+        "icu" : 121, 
+        "ObjectId" : 402
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630134000000, 
+        "hospital" : 545, 
+        "icu" : 136, 
+        "ObjectId" : 403
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630220400000, 
+        "hospital" : 546, 
+        "icu" : 139, 
+        "ObjectId" : 404
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630306800000, 
+        "hospital" : 556, 
+        "icu" : 150, 
+        "ObjectId" : 405
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630393200000, 
+        "hospital" : 534, 
+        "icu" : 149, 
+        "ObjectId" : 406
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630479600000, 
+        "hospital" : 521, 
+        "icu" : 143, 
+        "ObjectId" : 407
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630566000000, 
+        "hospital" : 500, 
+        "icu" : 138, 
+        "ObjectId" : 408
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630652400000, 
+        "hospital" : 483, 
+        "icu" : 128, 
+        "ObjectId" : 409
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630738800000, 
+        "hospital" : 488, 
+        "icu" : 126, 
+        "ObjectId" : 410
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630825200000, 
+        "hospital" : 478, 
+        "icu" : 128, 
+        "ObjectId" : 411
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630911600000, 
+        "hospital" : 466, 
+        "icu" : 128, 
+        "ObjectId" : 412
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1630998000000, 
+        "hospital" : 446, 
+        "icu" : 135, 
+        "ObjectId" : 413
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631084400000, 
+        "hospital" : 432, 
+        "icu" : 132, 
+        "ObjectId" : 414
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631170800000, 
+        "hospital" : 426, 
+        "icu" : 130, 
+        "ObjectId" : 415
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631257200000, 
+        "hospital" : 401, 
+        "icu" : 125, 
+        "ObjectId" : 416
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631343600000, 
+        "hospital" : 416, 
+        "icu" : 126, 
+        "ObjectId" : 417
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631430000000, 
+        "hospital" : 406, 
+        "icu" : 119, 
+        "ObjectId" : 418
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631516400000, 
+        "hospital" : 372, 
+        "icu" : 105, 
+        "ObjectId" : 419
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631602800000, 
+        "hospital" : 368, 
+        "icu" : 103, 
+        "ObjectId" : 420
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631689200000, 
+        "hospital" : 371, 
+        "icu" : 102, 
+        "ObjectId" : 421
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631775600000, 
+        "hospital" : 367, 
+        "icu" : 108, 
+        "ObjectId" : 422
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631862000000, 
+        "hospital" : 348, 
+        "icu" : 101, 
+        "ObjectId" : 423
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1631948400000, 
+        "hospital" : 320, 
+        "icu" : 107, 
+        "ObjectId" : 424
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632034800000, 
+        "hospital" : 309, 
+        "icu" : 100, 
+        "ObjectId" : 425
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632121200000, 
+        "hospital" : 311, 
+        "icu" : 95, 
+        "ObjectId" : 426
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632207600000, 
+        "hospital" : 326, 
+        "icu" : 85, 
+        "ObjectId" : 427
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632294000000, 
+        "hospital" : 313, 
+        "icu" : 87, 
+        "ObjectId" : 429
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632380400000, 
+        "hospital" : 308, 
+        "icu" : 76, 
+        "ObjectId" : 430
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632466800000, 
+        "hospital" : 312, 
+        "icu" : 85, 
+        "ObjectId" : 431
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632553200000, 
+        "hospital" : 309, 
+        "icu" : 80, 
+        "ObjectId" : 432
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632639600000, 
+        "hospital" : 300, 
+        "icu" : 80, 
+        "ObjectId" : 434
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632726000000, 
+        "hospital" : 288, 
+        "icu" : 72, 
+        "ObjectId" : 437
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632812400000, 
+        "hospital" : 291, 
+        "icu" : 82, 
+        "ObjectId" : 440
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632898800000, 
+        "hospital" : 279, 
+        "icu" : 85, 
+        "ObjectId" : 443
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1632985200000, 
+        "hospital" : 283, 
+        "icu" : 76, 
+        "ObjectId" : 446
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633071600000, 
+        "hospital" : 252, 
+        "icu" : 71, 
+        "ObjectId" : 449
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633158000000, 
+        "hospital" : 252, 
+        "icu" : 72, 
+        "ObjectId" : 452
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633244400000, 
+        "hospital" : 242, 
+        "icu" : 62, 
+        "ObjectId" : 455
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633330800000, 
+        "hospital" : 230, 
+        "icu" : 60, 
+        "ObjectId" : 458
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633417200000, 
+        "hospital" : 224, 
+        "icu" : 60, 
+        "ObjectId" : 461
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633503600000, 
+        "hospital" : 220, 
+        "icu" : 54, 
+        "ObjectId" : 464
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633590000000, 
+        "hospital" : 223, 
+        "icu" : 47, 
+        "ObjectId" : 467
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633676400000, 
+        "hospital" : 214, 
+        "icu" : 44, 
+        "ObjectId" : 470
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633762800000, 
+        "hospital" : 224, 
+        "icu" : 49, 
+        "ObjectId" : 473
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633849200000, 
+        "hospital" : 208, 
+        "icu" : 47, 
+        "ObjectId" : 476
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1633935600000, 
+        "hospital" : 211, 
+        "icu" : 45, 
+        "ObjectId" : 479
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634022000000, 
+        "hospital" : 205, 
+        "icu" : 40, 
+        "ObjectId" : 482
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634108400000, 
+        "hospital" : 207, 
+        "icu" : 40, 
+        "ObjectId" : 485
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634194800000, 
+        "hospital" : 210, 
+        "icu" : 39, 
+        "ObjectId" : 488
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634281200000, 
+        "hospital" : 204, 
+        "icu" : 37, 
+        "ObjectId" : 491
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634367600000, 
+        "hospital" : 191, 
+        "icu" : 35, 
+        "ObjectId" : 494
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634454000000, 
+        "hospital" : 175, 
+        "icu" : 34, 
+        "ObjectId" : 497
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634540400000, 
+        "hospital" : 185, 
+        "icu" : 32, 
+        "ObjectId" : 500
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634626800000, 
+        "hospital" : 190, 
+        "icu" : 41, 
+        "ObjectId" : 503
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634713200000, 
+        "hospital" : 200, 
+        "icu" : 42, 
+        "ObjectId" : 506
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634799600000, 
+        "hospital" : 190, 
+        "icu" : 43, 
+        "ObjectId" : 732
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634886000000, 
+        "hospital" : 205, 
+        "icu" : 43, 
+        "ObjectId" : 733
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1634972400000, 
+        "hospital" : 209, 
+        "icu" : 44, 
+        "ObjectId" : 734
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635058800000, 
+        "hospital" : 207, 
+        "icu" : 44, 
+        "ObjectId" : 735
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635145200000, 
+        "hospital" : 213, 
+        "icu" : 52, 
+        "ObjectId" : 736
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635231600000, 
+        "hospital" : 200, 
+        "icu" : 49, 
+        "ObjectId" : 737
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635318000000, 
+        "hospital" : 195, 
+        "icu" : 53, 
+        "ObjectId" : 738
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635404400000, 
+        "hospital" : 193, 
+        "icu" : 49, 
+        "ObjectId" : 739
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635490800000, 
+        "hospital" : 198, 
+        "icu" : 51, 
+        "ObjectId" : 740
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635577200000, 
+        "hospital" : 203, 
+        "icu" : 53, 
+        "ObjectId" : 741
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635663600000, 
+        "hospital" : 199, 
+        "icu" : 53, 
+        "ObjectId" : 742
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635750000000, 
+        "hospital" : 197, 
+        "icu" : 47, 
+        "ObjectId" : 743
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635836400000, 
+        "hospital" : 198, 
+        "icu" : 46, 
+        "ObjectId" : 744
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1635922800000, 
+        "hospital" : 215, 
+        "icu" : 51, 
+        "ObjectId" : 745
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636009200000, 
+        "hospital" : 212, 
+        "icu" : 54, 
+        "ObjectId" : 746
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636095600000, 
+        "hospital" : 219, 
+        "icu" : 49, 
+        "ObjectId" : 747
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636182000000, 
+        "hospital" : 219, 
+        "icu" : 52, 
+        "ObjectId" : 748
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636268400000, 
+        "hospital" : 227, 
+        "icu" : 56, 
+        "ObjectId" : 749
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636358400000, 
+        "hospital" : 225, 
+        "icu" : 53, 
+        "ObjectId" : 750
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636444800000, 
+        "hospital" : 218, 
+        "icu" : 50, 
+        "ObjectId" : 751
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636531200000, 
+        "hospital" : 219, 
+        "icu" : 55, 
+        "ObjectId" : 752
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636617600000, 
+        "hospital" : 219, 
+        "icu" : 57, 
+        "ObjectId" : 753
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636704000000, 
+        "hospital" : 207, 
+        "icu" : 61, 
+        "ObjectId" : 754
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636790400000, 
+        "hospital" : 195, 
+        "icu" : 58, 
+        "ObjectId" : 755
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636876800000, 
+        "hospital" : 204, 
+        "icu" : 56, 
+        "ObjectId" : 756
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1636963200000, 
+        "hospital" : 210, 
+        "icu" : 55, 
+        "ObjectId" : 757
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637049600000, 
+        "hospital" : 216, 
+        "icu" : 52, 
+        "ObjectId" : 758
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637136000000, 
+        "hospital" : 208, 
+        "icu" : 49, 
+        "ObjectId" : 759
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637222400000, 
+        "hospital" : 194, 
+        "icu" : 47, 
+        "ObjectId" : 760
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637308800000, 
+        "hospital" : 194, 
+        "icu" : 48, 
+        "ObjectId" : 761
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637395200000, 
+        "hospital" : 188, 
+        "icu" : 49, 
+        "ObjectId" : 762
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637481600000, 
+        "hospital" : 186, 
+        "icu" : 49, 
+        "ObjectId" : 763
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637568000000, 
+        "hospital" : 187, 
+        "icu" : 49, 
+        "ObjectId" : 764
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637654400000, 
+        "hospital" : 179, 
+        "icu" : 45, 
+        "ObjectId" : 765
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637740800000, 
+        "hospital" : 188, 
+        "icu" : 49, 
+        "ObjectId" : 766
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637827200000, 
+        "hospital" : 186, 
+        "icu" : 45, 
+        "ObjectId" : 767
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1637913600000, 
+        "hospital" : 184, 
+        "icu" : 46, 
+        "ObjectId" : 768
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638000000000, 
+        "hospital" : 181, 
+        "icu" : 43, 
+        "ObjectId" : 769
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638086400000, 
+        "hospital" : 181, 
+        "icu" : 48, 
+        "ObjectId" : 770
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638172800000, 
+        "hospital" : 196, 
+        "icu" : 52, 
+        "ObjectId" : 771
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638259200000, 
+        "hospital" : 189, 
+        "icu" : 54, 
+        "ObjectId" : 772
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638345600000, 
+        "hospital" : 169, 
+        "icu" : 55, 
+        "ObjectId" : 773
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638432000000, 
+        "hospital" : 176, 
+        "icu" : 56, 
+        "ObjectId" : 774
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638518400000, 
+        "hospital" : 177, 
+        "icu" : 53, 
+        "ObjectId" : 775
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638604800000, 
+        "hospital" : 164, 
+        "icu" : 56, 
+        "ObjectId" : 776
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638691200000, 
+        "hospital" : 169, 
+        "icu" : 57, 
+        "ObjectId" : 777
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638777600000, 
+        "hospital" : 163, 
+        "icu" : 53, 
+        "ObjectId" : 778
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638864000000, 
+        "hospital" : 183, 
+        "icu" : 57, 
+        "ObjectId" : 779
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1638950400000, 
+        "hospital" : 196, 
+        "icu" : 59, 
+        "ObjectId" : 780
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639036800000, 
+        "hospital" : 194, 
+        "icu" : 60, 
+        "ObjectId" : 781
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639123200000, 
+        "hospital" : 200, 
+        "icu" : 59, 
+        "ObjectId" : 782
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639209600000, 
+        "hospital" : 199, 
+        "icu" : 65, 
+        "ObjectId" : 783
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639296000000, 
+        "hospital" : 196, 
+        "icu" : 66, 
+        "ObjectId" : 784
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639382400000, 
+        "hospital" : 194, 
+        "icu" : 63, 
+        "ObjectId" : 785
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639468800000, 
+        "hospital" : 206, 
+        "icu" : 64, 
+        "ObjectId" : 786
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639555200000, 
+        "hospital" : 201, 
+        "icu" : 58, 
+        "ObjectId" : 787
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639641600000, 
+        "hospital" : 198, 
+        "icu" : 56, 
+        "ObjectId" : 569
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639728000000, 
+        "hospital" : 193, 
+        "icu" : 49, 
+        "ObjectId" : 570
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639814400000, 
+        "hospital" : 196, 
+        "icu" : 53, 
+        "ObjectId" : 571
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639900800000, 
+        "hospital" : 195, 
+        "icu" : 56, 
+        "ObjectId" : 572
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1639987200000, 
+        "hospital" : 188, 
+        "icu" : 56, 
+        "ObjectId" : 573
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640073600000, 
+        "hospital" : 215, 
+        "icu" : 57, 
+        "ObjectId" : 574
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640160000000, 
+        "hospital" : 217, 
+        "icu" : 58, 
+        "ObjectId" : 575
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640246400000, 
+        "hospital" : 229, 
+        "icu" : 54, 
+        "ObjectId" : 576
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640332800000, 
+        "hospital" : 229, 
+        "icu" : 54, 
+        "ObjectId" : 577
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640419200000, 
+        "hospital" : 256, 
+        "icu" : 60, 
+        "ObjectId" : 578
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640505600000, 
+        "hospital" : 282, 
+        "icu" : 66, 
+        "ObjectId" : 579
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640592000000, 
+        "hospital" : 322, 
+        "icu" : 66, 
+        "ObjectId" : 580
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640678400000, 
+        "hospital" : 376, 
+        "icu" : 72, 
+        "ObjectId" : 581
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640764800000, 
+        "hospital" : 420, 
+        "icu" : 86, 
+        "ObjectId" : 582
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640851200000, 
+        "hospital" : 453, 
+        "icu" : 82, 
+        "ObjectId" : 583
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1640937600000, 
+        "hospital" : 481, 
+        "icu" : 89, 
+        "ObjectId" : 584
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641024000000, 
+        "hospital" : 522, 
+        "icu" : 97, 
+        "ObjectId" : 585
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641110400000, 
+        "hospital" : 545, 
+        "icu" : 104, 
+        "ObjectId" : 586
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641196800000, 
+        "hospital" : 614, 
+        "icu" : 110, 
+        "ObjectId" : 587
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641283200000, 
+        "hospital" : 673, 
+        "icu" : 116, 
+        "ObjectId" : 588
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641369600000, 
+        "hospital" : 724, 
+        "icu" : 109, 
+        "ObjectId" : 589
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641456000000, 
+        "hospital" : 779, 
+        "icu" : 122, 
+        "ObjectId" : 590
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641542400000, 
+        "hospital" : 875, 
+        "icu" : 116, 
+        "ObjectId" : 591
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641628800000, 
+        "hospital" : 907, 
+        "icu" : 128, 
+        "ObjectId" : 592
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641715200000, 
+        "hospital" : 964, 
+        "icu" : 140, 
+        "ObjectId" : 593
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641801600000, 
+        "hospital" : 1013, 
+        "icu" : 159, 
+        "ObjectId" : 594
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641888000000, 
+        "hospital" : 1071, 
+        "icu" : 169, 
+        "ObjectId" : 595
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1641974400000, 
+        "hospital" : 1072, 
+        "icu" : 168, 
+        "ObjectId" : 596
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642060800000, 
+        "hospital" : 1154, 
+        "icu" : 171, 
+        "ObjectId" : 597
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642147200000, 
+        "hospital" : 1194, 
+        "icu" : 178, 
+        "ObjectId" : 598
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642233600000, 
+        "hospital" : 1200, 
+        "icu" : 180, 
+        "ObjectId" : 599
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642320000000, 
+        "hospital" : 1202, 
+        "icu" : 188, 
+        "ObjectId" : 600
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642406400000, 
+        "hospital" : 1197, 
+        "icu" : 199, 
+        "ObjectId" : 601
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642492800000, 
+        "hospital" : 1232, 
+        "icu" : 207, 
+        "ObjectId" : 602
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642579200000, 
+        "hospital" : 1183, 
+        "icu" : 199, 
+        "ObjectId" : 603
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642665600000, 
+        "hospital" : 1144, 
+        "icu" : 188, 
+        "ObjectId" : 604
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642752000000, 
+        "hospital" : 1163, 
+        "icu" : 199, 
+        "ObjectId" : 605
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642838400000, 
+        "hospital" : 1162, 
+        "icu" : 204, 
+        "ObjectId" : 606
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1642924800000, 
+        "hospital" : 1162, 
+        "icu" : 195, 
+        "ObjectId" : 607
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643011200000, 
+        "hospital" : 1114, 
+        "icu" : 191, 
+        "ObjectId" : 608
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643097600000, 
+        "hospital" : 1086, 
+        "icu" : 179, 
+        "ObjectId" : 609
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643184000000, 
+        "hospital" : 1067, 
+        "icu" : 184, 
+        "ObjectId" : 610
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643270400000, 
+        "hospital" : 1022, 
+        "icu" : 178, 
+        "ObjectId" : 611
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643356800000, 
+        "hospital" : 1007, 
+        "icu" : 174, 
+        "ObjectId" : 612
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643443200000, 
+        "hospital" : 967, 
+        "icu" : 173, 
+        "ObjectId" : 613
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643529600000, 
+        "hospital" : 934, 
+        "icu" : 174, 
+        "ObjectId" : 614
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643616000000, 
+        "hospital" : 872, 
+        "icu" : 164, 
+        "ObjectId" : 615
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643702400000, 
+        "hospital" : 846, 
+        "icu" : 161, 
+        "ObjectId" : 616
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643788800000, 
+        "hospital" : 818, 
+        "icu" : 147, 
+        "ObjectId" : 617
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643875200000, 
+        "hospital" : 746, 
+        "icu" : 134, 
+        "ObjectId" : 618
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1643961600000, 
+        "hospital" : 687, 
+        "icu" : 124, 
+        "ObjectId" : 619
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644048000000, 
+        "hospital" : 627, 
+        "icu" : 120, 
+        "ObjectId" : 620
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644134400000, 
+        "hospital" : 620, 
+        "icu" : 123, 
+        "ObjectId" : 621
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644220800000, 
+        "hospital" : 619, 
+        "icu" : 125, 
+        "ObjectId" : 622
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644307200000, 
+        "hospital" : 617, 
+        "icu" : 124, 
+        "ObjectId" : 623
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644393600000, 
+        "hospital" : 581, 
+        "icu" : 118, 
+        "ObjectId" : 624
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644480000000, 
+        "hospital" : 538, 
+        "icu" : 102, 
+        "ObjectId" : 625
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644566400000, 
+        "hospital" : 482, 
+        "icu" : 101, 
+        "ObjectId" : 626
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644652800000, 
+        "hospital" : 456, 
+        "icu" : 96, 
+        "ObjectId" : 627
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644739200000, 
+        "hospital" : 453, 
+        "icu" : 89, 
+        "ObjectId" : 628
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644825600000, 
+        "hospital" : 431, 
+        "icu" : 77, 
+        "ObjectId" : 629
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644912000000, 
+        "hospital" : 415, 
+        "icu" : 79, 
+        "ObjectId" : 630
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1644998400000, 
+        "hospital" : 399, 
+        "icu" : 76, 
+        "ObjectId" : 631
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645084800000, 
+        "hospital" : 363, 
+        "icu" : 77, 
+        "ObjectId" : 632
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645171200000, 
+        "hospital" : 380, 
+        "icu" : 78, 
+        "ObjectId" : 633
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645257600000, 
+        "hospital" : 352, 
+        "icu" : 79, 
+        "ObjectId" : 634
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645344000000, 
+        "hospital" : 334, 
+        "icu" : 76, 
+        "ObjectId" : 635
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645430400000, 
+        "hospital" : 325, 
+        "icu" : 69, 
+        "ObjectId" : 636
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645516800000, 
+        "hospital" : 331, 
+        "icu" : 68, 
+        "ObjectId" : 637
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645603200000, 
+        "hospital" : 299, 
+        "icu" : 63, 
+        "ObjectId" : 638
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645689600000, 
+        "hospital" : 295, 
+        "icu" : 56, 
+        "ObjectId" : 639
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645776000000, 
+        "hospital" : 286, 
+        "icu" : 55, 
+        "ObjectId" : 640
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645862400000, 
+        "hospital" : 252, 
+        "icu" : 40, 
+        "ObjectId" : 641
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1645948800000, 
+        "hospital" : 230, 
+        "icu" : 41, 
+        "ObjectId" : 642
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646035200000, 
+        "hospital" : 233, 
+        "icu" : 35, 
+        "ObjectId" : 643
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646121600000, 
+        "hospital" : 217, 
+        "icu" : 37, 
+        "ObjectId" : 644
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646208000000, 
+        "hospital" : 206, 
+        "icu" : 34, 
+        "ObjectId" : 645
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646294400000, 
+        "hospital" : 202, 
+        "icu" : 33, 
+        "ObjectId" : 646
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646380800000, 
+        "hospital" : 195, 
+        "icu" : 36, 
+        "ObjectId" : 647
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646467200000, 
+        "hospital" : 189, 
+        "icu" : 39, 
+        "ObjectId" : 648
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646553600000, 
+        "hospital" : 179, 
+        "icu" : 37, 
+        "ObjectId" : 649
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646640000000, 
+        "hospital" : 166, 
+        "icu" : 28, 
+        "ObjectId" : 650
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646726400000, 
+        "hospital" : 159, 
+        "icu" : 29, 
+        "ObjectId" : 651
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646812800000, 
+        "hospital" : 160, 
+        "icu" : 29, 
+        "ObjectId" : 652
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646899200000, 
+        "hospital" : 163, 
+        "icu" : 28, 
+        "ObjectId" : 653
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1646985600000, 
+        "hospital" : 153, 
+        "icu" : 30, 
+        "ObjectId" : 654
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647072000000, 
+        "hospital" : 150, 
+        "icu" : 28, 
+        "ObjectId" : 655
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647158400000, 
+        "hospital" : 139, 
+        "icu" : 31, 
+        "ObjectId" : 656
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647241200000, 
+        "hospital" : 140, 
+        "icu" : 31, 
+        "ObjectId" : 657
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647327600000, 
+        "hospital" : 133, 
+        "icu" : 29, 
+        "ObjectId" : 658
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647414000000, 
+        "hospital" : 137, 
+        "icu" : 27, 
+        "ObjectId" : 659
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647500400000, 
+        "hospital" : 129, 
+        "icu" : 25, 
+        "ObjectId" : 660
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647586800000, 
+        "hospital" : 137, 
+        "icu" : 22, 
+        "ObjectId" : 661
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647673200000, 
+        "hospital" : 132, 
+        "icu" : 25, 
+        "ObjectId" : 662
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647759600000, 
+        "hospital" : 126, 
+        "icu" : 24, 
+        "ObjectId" : 663
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647846000000, 
+        "hospital" : 125, 
+        "icu" : 25, 
+        "ObjectId" : 664
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1647932400000, 
+        "hospital" : 123, 
+        "icu" : 26, 
+        "ObjectId" : 665
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648018800000, 
+        "hospital" : 127, 
+        "icu" : 24, 
+        "ObjectId" : 666
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648105200000, 
+        "hospital" : 129, 
+        "icu" : 24, 
+        "ObjectId" : 667
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648191600000, 
+        "hospital" : 113, 
+        "icu" : 19, 
+        "ObjectId" : 668
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648278000000, 
+        "hospital" : 100, 
+        "icu" : 20, 
+        "ObjectId" : 669
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648364400000, 
+        "hospital" : 95, 
+        "icu" : 20, 
+        "ObjectId" : 670
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648450800000, 
+        "hospital" : 98, 
+        "icu" : 17, 
+        "ObjectId" : 671
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648537200000, 
+        "hospital" : 102, 
+        "icu" : 17, 
+        "ObjectId" : 672
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648623600000, 
+        "hospital" : 89, 
+        "icu" : 16, 
+        "ObjectId" : 673
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648710000000, 
+        "hospital" : 96, 
+        "icu" : 14, 
+        "ObjectId" : 674
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648796400000, 
+        "hospital" : 77, 
+        "icu" : 14, 
+        "ObjectId" : 675
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648882800000, 
+        "hospital" : 72, 
+        "icu" : 13, 
+        "ObjectId" : 676
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1648969200000, 
+        "hospital" : 66, 
+        "icu" : 14, 
+        "ObjectId" : 677
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649055600000, 
+        "hospital" : 70, 
+        "icu" : 14, 
+        "ObjectId" : 678
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649142000000, 
+        "hospital" : 67, 
+        "icu" : 11, 
+        "ObjectId" : 679
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649228400000, 
+        "hospital" : 78, 
+        "icu" : 16, 
+        "ObjectId" : 680
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649314800000, 
+        "hospital" : 84, 
+        "icu" : 20, 
+        "ObjectId" : 681
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649401200000, 
+        "hospital" : 80, 
+        "icu" : 14, 
+        "ObjectId" : 682
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649487600000, 
+        "hospital" : 79, 
+        "icu" : 14, 
+        "ObjectId" : 683
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649574000000, 
+        "hospital" : 77, 
+        "icu" : 13, 
+        "ObjectId" : 684
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649660400000, 
+        "hospital" : 86, 
+        "icu" : 16, 
+        "ObjectId" : 685
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649746800000, 
+        "hospital" : 78, 
+        "icu" : 13, 
+        "ObjectId" : 686
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649833200000, 
+        "hospital" : 63, 
+        "icu" : 11, 
+        "ObjectId" : 687
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1649919600000, 
+        "hospital" : 67, 
+        "icu" : 13, 
+        "ObjectId" : 688
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650006000000, 
+        "hospital" : 69, 
+        "icu" : 10, 
+        "ObjectId" : 689
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650092400000, 
+        "hospital" : 67, 
+        "icu" : 8, 
+        "ObjectId" : 690
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650178800000, 
+        "hospital" : 60, 
+        "icu" : 9, 
+        "ObjectId" : 691
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650265200000, 
+        "hospital" : 60, 
+        "icu" : 10, 
+        "ObjectId" : 692
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650351600000, 
+        "hospital" : 66, 
+        "icu" : 15, 
+        "ObjectId" : 693
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650438000000, 
+        "hospital" : 63, 
+        "icu" : 15, 
+        "ObjectId" : 694
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650524400000, 
+        "hospital" : 64, 
+        "icu" : 14, 
+        "ObjectId" : 695
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650610800000, 
+        "hospital" : 57, 
+        "icu" : 14, 
+        "ObjectId" : 696
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650697200000, 
+        "hospital" : 66, 
+        "icu" : 14, 
+        "ObjectId" : 697
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650783600000, 
+        "hospital" : 68, 
+        "icu" : 13, 
+        "ObjectId" : 698
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650870000000, 
+        "hospital" : 66, 
+        "icu" : 13, 
+        "ObjectId" : 699
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1650956400000, 
+        "hospital" : 68, 
+        "icu" : 13, 
+        "ObjectId" : 700
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651042800000, 
+        "hospital" : 70, 
+        "icu" : 12, 
+        "ObjectId" : 701
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651129200000, 
+        "hospital" : 76, 
+        "icu" : 11, 
+        "ObjectId" : 702
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651215600000, 
+        "hospital" : 83, 
+        "icu" : 11, 
+        "ObjectId" : 703
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651302000000, 
+        "hospital" : 83, 
+        "icu" : 12, 
+        "ObjectId" : 704
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651388400000, 
+        "hospital" : 81, 
+        "icu" : 14, 
+        "ObjectId" : 705
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651474800000, 
+        "hospital" : 74, 
+        "icu" : 13, 
+        "ObjectId" : 706
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651561200000, 
+        "hospital" : 79, 
+        "icu" : 12, 
+        "ObjectId" : 707
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651647600000, 
+        "hospital" : 90, 
+        "icu" : 18, 
+        "ObjectId" : 708
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651734000000, 
+        "hospital" : 98, 
+        "icu" : 17, 
+        "ObjectId" : 709
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651820400000, 
+        "hospital" : 94, 
+        "icu" : 14, 
+        "ObjectId" : 710
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651906800000, 
+        "hospital" : 108, 
+        "icu" : 14, 
+        "ObjectId" : 711
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1651993200000, 
+        "hospital" : 117, 
+        "icu" : 17, 
+        "ObjectId" : 712
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652079600000, 
+        "hospital" : 101, 
+        "icu" : 17, 
+        "ObjectId" : 713
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652166000000, 
+        "hospital" : 90, 
+        "icu" : 13, 
+        "ObjectId" : 714
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652252400000, 
+        "hospital" : 87, 
+        "icu" : 14, 
+        "ObjectId" : 715
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652338800000, 
+        "hospital" : 83, 
+        "icu" : 17, 
+        "ObjectId" : 716
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652425200000, 
+        "hospital" : 87, 
+        "icu" : 14, 
+        "ObjectId" : 717
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652511600000, 
+        "hospital" : 88, 
+        "icu" : 13, 
+        "ObjectId" : 718
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652598000000, 
+        "hospital" : 87, 
+        "icu" : 13, 
+        "ObjectId" : 719
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652684400000, 
+        "hospital" : 89, 
+        "icu" : 15, 
+        "ObjectId" : 720
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652770800000, 
+        "hospital" : 112, 
+        "icu" : 14, 
+        "ObjectId" : 721
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652857200000, 
+        "hospital" : 114, 
+        "icu" : 12, 
+        "ObjectId" : 722
+      }
+    }, 
+    {
+      "attributes" : {
+        "date" : 1652943600000, 
+        "hospital" : 113, 
+        "icu" : 13, 
+        "ObjectId" : 723
+      }
+    }
+  ]
+}

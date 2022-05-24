@@ -1,6 +1,6 @@
 from os.path import join as path_join
-import csv
 from functools import cached_property
+from datetime import timedelta
 import time
 import json
 
@@ -66,6 +66,30 @@ class OCMetricsExport:
         pass
 
     @property
+    def admin_tests(self):
+        return self.case_extract.new_tests_administered
+
+    @property
+    def positive_tests(self):
+        return self.case_extract.new_positive_tests_administered
+
+    @cached_property
+    def postive_rate_7d_avg(self):
+        daily_values = {}
+
+        # Source: https://stackoverflow.com/a/993367/1093087
+        start_from = self.latest_test_update
+        max_length = 28
+        dates = [start_from - timedelta(days=n+1) for n in range(max_length)]
+
+        for dated in dates:
+            avg_tests_admin = self.week_avg_from_date(self.admin_tests, dated)
+            avg_tests_pos = self.week_avg_from_date(self.positive_tests, dated)
+            daily_values[dated] = avg_tests_pos / avg_tests_admin
+
+        return daily_values
+
+    @property
     def run_time(self):
         if not self.run_time_end:
             return None
@@ -98,16 +122,41 @@ class OCMetricsExport:
     # Private
     #
     def prep_positive_rate_data(self):
+        updated_on = self.latest_test_update
+
+        latest = self.postive_rate_7d_avg.get(updated_on)
+        level = self.compute_level(latest, self.postive_rate_7d_avg.values())
+
+        updated_on_d7 = updated_on - timedelta(days=7)
+        value_d7 = self.postive_rate_7d_avg.get(updated_on_d7)
+        delta_d7 = self.compute_change(value_d7, latest)
+
+        updated_on_d14 = updated_on - timedelta(days=14)
+        latest_d14 = self.postive_rate_7d_avg.get(updated_on_d14)
+        delta_d14 = self.compute_change(latest_d14, latest)
+
         return {
-            'updatedOn': '',
-            'latest': 0.0,
-            'level': '',
-            'trend': '',
-            'd7Value': 0.0,
-            'd7DeltaPct': 0.0,
-            'd14Value': 0.0,
-            'd14DeltaPct': 0.0,
+            'updatedOn': updated_on,
+            'latest': latest,
+            'level': level,
+            'd7Value': value_d7,
+            'd7DeltaPct': delta_d7,
+            'd14Value': latest_d14,
+            'd14DeltaPct': delta_d14,
         }
+
+    def compute_level(self, value, all_values):
+        raise ValueError('Not Implemented')
+
+    def week_avg_from_date(self, daily_values, from_date):
+        values = []
+
+        for n in range(7):
+            dated = from_date - timedelta(days=n)
+            value = daily_values[dated]
+            values.append(value)
+
+        return sum(values) / len(values)
 
     def prep_daily_new_cases(self):
         pass

@@ -38,16 +38,23 @@ const OcMetricTable = (function() {
     $(`${SELECTOR} tbody tr`).each((_, el) => {
       const $tr = $(el)
       const rowGetter = $tr.data('metric')
-      const rowMetric = model[rowGetter]
+      const metric = model[rowGetter]
 
-      $tr.find('td.updated-on span.value').html(rowMetric.updatedOn)
-      $tr.find('td.latest span.value').html(rowMetric.latest)
-      $tr.find('td.level span.value').html(rowMetric.level)
-      $tr.find('td.trend span.value').html(rowMetric.trend)
-      $tr.find('td.delta-7d span.value').html(rowMetric.delta7dValue)
-      $tr.find('td.delta-7d span.note').html(rowMetric.delta7dNote)
-      $tr.find('td.delta-14d span.value').html(rowMetric.delta14dValue)
-      $tr.find('td.delta-14d span.note').html(rowMetric.delta14dNote)
+      // Update HTML
+      $tr.find('td.updated-on span.value').html(metric.html.updatedOn)
+      $tr.find('td.latest span.value').html(metric.html.latest)
+      $tr.find('td.level span.value').html(metric.html.level)
+      $tr.find('td.trend span.value').html(metric.html.trend)
+      $tr.find('td.delta-7d span.value').html(metric.html.delta7dValue)
+      $tr.find('td.delta-7d span.note').html(metric.html.delta7dNote)
+      $tr.find('td.delta-14d span.value').html(metric.html.delta14dValue)
+      $tr.find('td.delta-14d span.note').html(metric.html.delta14dNote)
+
+      // Update td classes (styling)
+      $tr.find('td.level').addClass(metric.tdClass.level)
+      $tr.find('td.trend').addClass(metric.tdClass.trend)
+      $tr.find('td.delta-7d').addClass(metric.tdClass.trend)
+      $tr.find('td.delta-14d').addClass(metric.tdClass.trend)
     })
   }
 

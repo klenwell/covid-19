@@ -56,15 +56,29 @@
    * Methods
   **/
   mapMetric(metric, postfix) {
-    return {
+    const level = this.mapLevel(metric.percentile)
+    const trend = this.mapTrend(metric)
+
+    const html = {
       updatedOn: metric.updatedOn,
       latest: `${metric.latest}<span class="postfix">${postfix}</span>`,
-      level: this.computeLevel(metric.percentile),
-      trend: this.computeTrend(metric),
+      level: level,
+      trend: trend,
       delta7dValue: this.asSignedPct(metric.d7DeltaPct),
       delta7dNote: this.asFromNote(metric.d7Value, postfix),
       delta14dValue: this.asSignedPct(metric.d14DeltaPct),
       delta14dNote: this.asFromNote(metric.d14Value, postfix)
+    }
+
+    const tdClass = {
+      level: level.replace(/\s/g , "-"),
+      trend: trend,
+    }
+
+    return {
+      data: metric,
+      html: html,
+      tdClass: tdClass
     }
   }
 
@@ -80,7 +94,7 @@
     return `from ${value}<span class="postfix">${postfix}</span>`
   }
 
-  computeLevel(percentile) {
+  mapLevel(percentile) {
     if (percentile <= 25) {
       return 'low'
     }
@@ -95,7 +109,7 @@
     }
   }
 
-  computeTrend(metric) {
+  mapTrend(metric) {
     if (metric.d7DeltaPct >= 2.5) {
       return 'rising'
     }

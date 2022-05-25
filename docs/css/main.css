@@ -44,6 +44,20 @@ table span.delta {
 /*
  * Trends Table
 **/
+table.metrics tr {
+  border-color: #eee;
+}
+
+table.metrics thead {
+  border-top: 2px solid  #ad6800;
+}
+
+table.metrics tbody,
+table.metrics thead th,
+table.metrics tr.wastewater {
+  border-bottom: 2px solid  #ad6800;
+}
+
 table.metrics span.value {
   font-weight: bold;
 }
@@ -56,6 +70,29 @@ table.metrics span.note {
   display: block;
   font-size: 0.8em;
 }
+
+table.metrics td.level span.value,
+table.metrics td.trend span.value {
+  text-transform: capitalize;
+  font-weight: bold;
+  color: black;
+}
+
+table.metrics td.rising { background-color: #eeb0b1; }
+table.metrics td.flat { background-color: #ffdf8b; }
+table.metrics td.falling { background-color: #ade7ca; }
+
+table.metrics td.low { background-color: #ade7ca; }
+table.metrics td.moderate { background-color: #ffdf8b; }
+table.metrics td.high { background-color: #eeb0b1; }
+table.metrics td.very-high { background-color: #ff4b53; }
+
+table.metrics tr.positiveRate th { background-color: #fff2df; }
+table.metrics tr.cases th { background-color: #ffe6bf; }
+table.metrics tr.wastewater th { background-color: #ffcc80; }
+table.metrics tr.hospitalizations th { background-color: #ecb360; }
+table.metrics tr.icus th { background-color: #e8a440; }
+table.metrics tr.deaths th { background-color: #e08600; }
 
 /*
  * Trends Table

@@ -118,6 +118,7 @@ table.metrics td.trend span.value {
 table.metrics td.rising { background-color: #eeb0b1; }
 table.metrics td.flat { background-color: #ffdf8b; }
 table.metrics td.falling { background-color: #ade7ca; }
+table.metrics td.erratic { background-color: #e8a440; }
 
 table.metrics td.low { background-color: #ade7ca; }
 table.metrics td.moderate { background-color: #ffdf8b; }

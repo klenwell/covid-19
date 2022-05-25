@@ -57,12 +57,14 @@
   **/
   mapMetric(metric, postfix) {
     const level = this.mapLevel(metric.percentile)
+    const percentileOrd = this.mapOrd(metric.percentile)
     const trend = this.mapTrend(metric)
 
     const html = {
       updatedOn: metric.updatedOn,
       latest: `${metric.latest}<span class="postfix">${postfix}</span>`,
       level: level,
+      levelNote: `${metric.percentile.toFixed(0)}<span class="postfix">${percentileOrd} percentile</span>`,
       trend: trend,
       delta7dValue: this.asSignedPct(metric.d7DeltaPct),
       delta7dNote: this.asFromNote(metric.d7Value, postfix),
@@ -110,14 +112,26 @@
   }
 
   mapTrend(metric) {
-    if (metric.d7DeltaPct >= 2.5) {
+    if ( metric.d7DeltaPct > 10 && metric.d14DeltaPct < -10 ) {
+      return 'erratic'
+    }
+    else if ( metric.d7DeltaPct < -10 && metric.d14DeltaPct > 10 ) {
+      return 'erratic'
+    }
+    else if ( metric.d7DeltaPct >= 2.5 ) {
       return 'rising'
     }
-    else if ( (metric.d7DeltaPct <= -2.5) ) {
+    else if ( metric.d7DeltaPct <= -2.5 ) {
       return 'falling'
     }
     else {
       return 'flat'
     }
+  }
+
+  mapOrd(num) {
+    // https://stackoverflow.com/a/39466341/1093087
+    const n = Math.round(num)
+    return [,'st','nd','rd'][n/10%10^1&&n%10]||'th'
   }
 }

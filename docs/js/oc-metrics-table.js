@@ -44,6 +44,7 @@ const OcMetricTable = (function() {
       $tr.find('td.updated-on span.value').html(metric.html.updatedOn)
       $tr.find('td.latest span.value').html(metric.html.latest)
       $tr.find('td.level span.value').html(metric.html.level)
+      $tr.find('td.level span.note').html(metric.html.levelNote)
       $tr.find('td.trend span.value').html(metric.html.trend)
       $tr.find('td.delta-7d span.value').html(metric.html.delta7dValue)
       $tr.find('td.delta-7d span.note').html(metric.html.delta7dNote)

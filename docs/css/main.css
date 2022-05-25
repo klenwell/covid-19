@@ -1,32 +1,65 @@
 /*
- * Trends Table
- */
-table.trends th {
-   text-align: center;
-   font-size: 0.9em;
- }
+ * Body
+**/
+div.container section {
+  padding-bottom: 1em;
+}
 
-table.trends td {
+div.container section + section {
+  border-top: 4px solid #eee;
+  margin-top: 1em;
+  padding-top: 1em;
+}
+
+/*
+ * Tables
+**/
+table th {
+  text-align: center;
+  font-size: 0.9em;
+}
+
+table td {
   font-size: 0.8em;
   text-align: center;
   font-family: monospace;
+  vertical-align: middle;
 }
 
-table.trends caption {
+table caption {
   padding-left: 2em;
   font-size: 0.9em;
 }
 
-table.trends .sub-th {
+table .sub-th {
   display: block;
   font-size: 0.8em;
   font-weight: normal;
 }
 
-table.trends span.delta {
+table span.delta {
   font-weight: bold;
 }
 
+/*
+ * Trends Table
+**/
+table.metrics span.value {
+  font-weight: bold;
+}
+
+table.metrics span.postfix {
+  font-weight: normal;
+}
+
+table.metrics span.note {
+  display: block;
+  font-size: 0.8em;
+}
+
+/*
+ * Trends Table
+**/
 table.trends td.falling span.delta,
 table.trends td.admin-tests.rising span.delta {
   color: ForestGreen;

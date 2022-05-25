@@ -18,91 +18,68 @@
   **/
   get cases() {
     const metric = this.data.dailyNewCases
-    return {
-      updatedOn: metric.updatedOn,
-      latest: metric.latest,
-      level: this.computeLevel(metric.percentile),
-      trend: this.computeTrend(metric),
-      delta7dValue: metric.d7Value,
-      delta7dDelta: metric.d7DeltaPct,
-      delta14dValue: metric.d14Value,
-      delta14dDelta: metric.d14DeltaPct
-    }
+    const postfix = '/day'
+    return this.mapMetric(metric, postfix)
   }
 
   get positiveRate() {
     const metric = this.data.testPositiveRate
-    return {
-      updatedOn: metric.updatedOn,
-      latest: metric.latest,
-      level: this.computeLevel(metric.percentile),
-      trend: this.computeTrend(metric),
-      delta7dValue: metric.d7Value,
-      delta7dDelta: metric.d7DeltaPct,
-      delta14dValue: metric.d14Value,
-      delta14dDelta: metric.d14DeltaPct
-    }
+    const postfix = '%'
+    return this.mapMetric(metric, postfix)
   }
 
   get wastewater() {
     const metric = this.data.wastewater
-    return {
-      updatedOn: metric.updatedOn,
-      latest: metric.latest,
-      level: this.computeLevel(metric.percentile),
-      trend: this.computeTrend(metric),
-      delta7dValue: metric.d7Value,
-      delta7dDelta: metric.d7DeltaPct,
-      delta14dValue: metric.d14Value,
-      delta14dDelta: metric.d14DeltaPct
-    }
+    const postfix = '/day'
+    return this.mapMetric(metric, postfix)
   }
 
   get hospitalCases() {
     const metric = this.data.hospitalCases
-    return {
-      updatedOn: metric.updatedOn,
-      latest: metric.latest,
-      level: this.computeLevel(metric.percentile),
-      trend: this.computeTrend(metric),
-      delta7dValue: metric.d7Value,
-      delta7dDelta: metric.d7DeltaPct,
-      delta14dValue: metric.d14Value,
-      delta14dDelta: metric.d14DeltaPct
-    }
+    const postfix = '/day'
+    return this.mapMetric(metric, postfix)
   }
 
   get icuCases() {
     const metric = this.data.icuCases
-    return {
-      updatedOn: metric.updatedOn,
-      latest: metric.latest,
-      level: this.computeLevel(metric.percentile),
-      trend: this.computeTrend(metric),
-      delta7dValue: metric.d7Value,
-      delta7dDelta: metric.d7DeltaPct,
-      delta14dValue: metric.d14Value,
-      delta14dDelta: metric.d14DeltaPct
-    }
+    const postfix = '/day'
+    return this.mapMetric(metric, postfix)
   }
 
   get deaths() {
     const metric = this.data.deaths
-    return {
-      updatedOn: metric.updatedOn,
-      latest: metric.latest,
-      level: this.computeLevel(metric.percentile),
-      trend: this.computeTrend(metric),
-      delta7dValue: metric.d7Value,
-      delta7dDelta: metric.d7DeltaPct,
-      delta14dValue: metric.d14Value,
-      delta14dDelta: metric.d14DeltaPct
-    }
+    const postfix = '/day'
+    return this.mapMetric(metric, postfix)
   }
 
   /*
    * Methods
   **/
+  mapMetric(metric, postfix) {
+    return {
+      updatedOn: metric.updatedOn,
+      latest: `${metric.latest}<span class="postfix">${postfix}</span>`,
+      level: this.computeLevel(metric.percentile),
+      trend: this.computeTrend(metric),
+      delta7dValue: this.asSignedPct(metric.d7DeltaPct),
+      delta7dNote: this.asFromNote(metric.d7Value, postfix),
+      delta14dValue: this.asSignedPct(metric.d14DeltaPct),
+      delta14dNote: this.asFromNote(metric.d14Value, postfix)
+    }
+  }
+
+  asSignedPct(value) {
+    if ( !value ) {
+      return 'n/a'
+    }
+    const sign = value > 0 ? '+' : '';
+    return `${sign}${value.toFixed(1)}%`
+  }
+
+  asFromNote(value, postfix) {
+    return `from ${value}<span class="postfix">${postfix}</span>`
+  }
+
   computeLevel(percentile) {
     if (percentile <= 25) {
       return 'low'

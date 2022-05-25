@@ -33,22 +33,21 @@ const OcMetricTable = (function() {
   }
 
   const populate = function(model) {
-    console.log("populate:", model)
+    console.log("populate table:", model)
 
     $(`${SELECTOR} tbody tr`).each((_, el) => {
       const $tr = $(el)
       const rowGetter = $tr.data('metric')
       const rowMetric = model[rowGetter]
-      console.debug($tr, rowGetter, rowMetric)
 
       $tr.find('td.updated-on span.value').html(rowMetric.updatedOn)
       $tr.find('td.latest span.value').html(rowMetric.latest)
       $tr.find('td.level span.value').html(rowMetric.level)
       $tr.find('td.trend span.value').html(rowMetric.trend)
       $tr.find('td.delta-7d span.value').html(rowMetric.delta7dValue)
-      $tr.find('td.delta-7d span.delta').html(rowMetric.delta7dDelta)
+      $tr.find('td.delta-7d span.note').html(rowMetric.delta7dNote)
       $tr.find('td.delta-14d span.value').html(rowMetric.delta14dValue)
-      $tr.find('td.delta-14d span.delta').html(rowMetric.delta14dDelta)
+      $tr.find('td.delta-14d span.note').html(rowMetric.delta14dNote)
     })
   }
 

@@ -100,7 +100,7 @@ class OCMetricsExport:
 
         # Source: https://stackoverflow.com/a/993367/1093087
         start_from = self.latest_test_update
-        max_length = 28
+        max_length = len(self.admin_tests) - 14
         dates = [start_from - timedelta(days=n) for n in range(max_length)]
 
         for dated in dates:
@@ -115,7 +115,7 @@ class OCMetricsExport:
         daily_values = {}
         dataset = self.case_extract.new_cases
         start_from = self.latest_case_update
-        max_length = 28
+        max_length = len(dataset) - 14
 
         dates = [start_from - timedelta(days=n) for n in range(max_length)]
 
@@ -130,7 +130,7 @@ class OCMetricsExport:
         daily_values = {}
         dataset = self.case_extract.hospitalizations
         start_from = self.latest_hospital_case_update
-        max_length = 28
+        max_length = len(dataset) - 14
 
         dates = [start_from - timedelta(days=n) for n in range(max_length)]
 
@@ -145,7 +145,7 @@ class OCMetricsExport:
         daily_values = {}
         dataset = self.case_extract.icu_cases
         start_from = self.latest_icu_case_update
-        max_length = 28
+        max_length = len(dataset) - 14
 
         dates = [start_from - timedelta(days=n) for n in range(max_length)]
 
@@ -160,7 +160,7 @@ class OCMetricsExport:
         daily_values = {}
         dataset = self.case_extract.new_deaths
         start_from = self.latest_death_update
-        max_length = 28
+        max_length = len(dataset) - 14
 
         dates = [start_from - timedelta(days=n) for n in range(max_length)]
 

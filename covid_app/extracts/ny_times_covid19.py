@@ -6,7 +6,7 @@ from datetime import datetime
 from functools import cached_property
 
 
-EXTRACT_URL = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'
+EXTRACT_URL = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties-2022.csv'
 DATE_F = '%Y-%m-%d'
 OC_FIPS = '06059'
 KENT_MI_FIPS = '26081'

@@ -140,7 +140,7 @@ const OcDashboard = (function() {
 })()
 
 /*
- * Main block: these are the things that happen on every page load.
+ * Main block: these are the things that happen on page load.
  */
 $(document).ready(function() {
   OcDashboard.etl()

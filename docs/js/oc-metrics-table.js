@@ -37,9 +37,9 @@ const OcMetricTable = (function() {
 
     $(`${SELECTOR} tbody tr`).each((_, el) => {
       const $tr = $(el)
-      const rowGetter = $tr.data('getter')
+      const rowGetter = $tr.data('metric')
       const rowMetric = model[rowGetter]
-      console.debug($tr, rowGetter, rowData)
+      console.debug($tr, rowGetter, rowMetric)
 
       $tr.find('td.updated-on span.value').html(rowMetric.updatedOn)
       $tr.find('td.latest span.value').html(rowMetric.latest)

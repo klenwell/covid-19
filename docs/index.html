@@ -68,7 +68,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="rate" data-getter="positiveRate">
+            <tr class="rate" data-metric="positiveRate">
               <th scope="row">
                 Test-Positive Rate
                 <span class="sub-th">7-day average</span>
@@ -94,10 +94,36 @@
                 <span class="delta"></span>
               </td>
             </tr>
-            <tr class="cases" data-getter="cases">
+            <tr class="cases" data-metric="cases">
               <th scope="row">
                 Daily New Cases
                 <span class="sub-th">7-day average</span>
+              </th>
+              <td class="updated-on">
+                <span class="value"></span>
+              </td>
+              <td class="latest">
+                <span class="value"></span>
+              </td>
+              <td class="level">
+                <span class="value"></span>
+              </td>
+              <td class="trend">
+                <span class="value"></span>
+              </td>
+              <td class="delta-7d">
+                <span class="value"></span>
+                <span class="delta"></span>
+              </td>
+              <td class="delta-14d">
+                <span class="value"></span>
+                <span class="delta"></span>
+              </td>
+            </tr>
+            <tr class="wastewater" data-metric="wastewater">
+              <th scope="row">
+                Wastewater Concentration
+                <span class="sub-th">7-day average (copies/ml)</span>
               </th>
               <td class="updated-on">
                 <span class="value"></span>
@@ -159,7 +185,7 @@
               <th scope="col">
                 Wastewater
                 <span class="sub-th">7-day average</span>
-                <span class="sub-th">(x1000 per liter)</span>
+                <span class="sub-th">(copies per milliliter)</span>
               </th>
               <th scope="col">
                 Hospital Cases

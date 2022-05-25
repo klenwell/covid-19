@@ -22,15 +22,15 @@
         "d14DeltaPct": 68.99
     },
     "wastewater": {
-        "updatedOn": "2022-05-12",
-        "latest": 642,
-        "percentile": 37.77,
-        "d7Date": "2022-05-05",
-        "d7Value": 2801,
-        "d7DeltaPct": -77.08,
-        "d14Date": "2022-04-28",
-        "d14Value": 2543,
-        "d14DeltaPct": -74.75
+        "updatedOn": "2022-05-17",
+        "latest": 1594,
+        "percentile": 58.49,
+        "d7Date": "2022-05-10",
+        "d7Value": 2198,
+        "d7DeltaPct": -27.48,
+        "d14Date": "2022-05-03",
+        "d14Value": 1376,
+        "d14DeltaPct": 15.84
     },
     "hospitalCases": {
         "updatedOn": "2022-05-23",

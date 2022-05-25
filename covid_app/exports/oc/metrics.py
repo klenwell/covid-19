@@ -4,15 +4,14 @@ from datetime import timedelta
 import time
 import json
 
-from config.app import DATA_ROOT
+from config.app import GH_PAGES_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
 from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
 
 #
 # Constants
 #
-CSV_DATA_PATH = path_join(DATA_ROOT, 'oc')
-JSON_DATA_PATH = path_join(DATA_ROOT, 'api', 'oc')
+JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
 JSON_FILE_NAME = 'metrics.json'
 
 JSON_SCHEMA = {

@@ -8,7 +8,7 @@ const OcMetricTable = (function() {
    * Constants
    */
   const SELECTOR = 'section#oc-covid-metrics table'
-  const JSON_URL = 'https://raw.githubusercontent.com/klenwell/covid-19/master/data/api/oc/metrics.json'
+  const JSON_URL = 'data/json/oc/metrics.json'
 
   /*
    * Public Methods

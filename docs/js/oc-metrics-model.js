@@ -58,6 +58,20 @@
     }
   }
 
+    get hospitalCases() {
+      const metric = this.data.hospitalCases
+      return {
+        updatedOn: metric.updatedOn,
+        latest: metric.latest,
+        level: this.computeLevel(metric.percentile),
+        trend: this.computeTrend(metric),
+        delta7dValue: metric.d7Value,
+        delta7dDelta: metric.d7DeltaPct,
+        delta14dValue: metric.d14Value,
+        delta14dDelta: metric.d14DeltaPct
+      }
+  }
+
   /*
    * Methods
   **/

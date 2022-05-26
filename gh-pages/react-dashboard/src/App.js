@@ -4,7 +4,8 @@ import Header from './components/Header'
 import SimpleTable from './components/SimpleTable'
 
 
-const METRICS_URL = 'https://raw.githubusercontent.com/klenwell/covid-19/master/docs/data/json/oc/metrics.json'
+const DEV_METRICS_URL = 'react-dev/data/json/oc/metrics.json'
+const METRICS_URL = 'data/json/oc/metrics.json'
 
 
 function App() {
@@ -13,14 +14,22 @@ function App() {
   const [metricsDataFetched, setMetricsDataReady] = React.useState(false)
 
   React.useEffect(() => {
-    fetch(METRICS_URL)
+    fetchMetricsData()
+  }, [])
+
+  function fetchMetricsData() {
+    const isDev = process.env.NODE_ENV == 'development'
+    const metricsUrl = isDev ? DEV_METRICS_URL : METRICS_URL
+    console.log(`fetching metrics data from ${metricsUrl}`)
+
+    fetch(metricsUrl)
       .then(response => response.json())
       .then(data => {
         console.log(data)
         setmetricsData(data)
         setMetricsDataReady(true)
       })
-  }, [])
+  }
 
   function simpleTable() {
     console.log('simpleTable', metricsDataFetched)

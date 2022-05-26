@@ -1,32 +1,140 @@
 /*
- * Trends Table
- */
-table.trends th {
-   text-align: center;
-   font-size: 0.9em;
- }
+ * Body
+**/
+div.container section {
+  padding-bottom: 1em;
+}
 
-table.trends td {
+div.container section h3 {
+  font-size: 1.3rem;
+}
+
+div.container section h4 {
+  font-size: 1.15rem;
+}
+
+div.container section ul {
+  font-size: 0.95rem;
+}
+
+div.container section + section {
+  border-top: 4px solid #eee;
+  margin-top: 1em;
+  padding-top: 1em;
+}
+
+/*
+ * Tables
+**/
+table th {
+  text-align: center;
+  font-size: 0.9em;
+}
+
+table td {
   font-size: 0.8em;
   text-align: center;
   font-family: monospace;
+  vertical-align: middle;
 }
 
-table.trends caption {
+table caption {
   padding-left: 2em;
   font-size: 0.9em;
 }
 
-table.trends .sub-th {
+table .sub-th {
   display: block;
   font-size: 0.8em;
   font-weight: normal;
 }
 
-table.trends span.delta {
+table span.delta {
   font-weight: bold;
 }
 
+table thead th.capstone {
+  width: 10px;
+}
+
+table tbody tr th.capstone {
+  writing-mode: vertical-lr;
+  -webkit-transform: rotate(-180deg);
+  -moz-transform: rotate(-180deg);
+  text-align: baseline;
+  vertical-align: middle;
+  font-weight: normal;
+}
+
+/*
+ * Trends Table
+**/
+table.metrics tr {
+  border-color: #eee;
+}
+
+table.metrics thead {
+  border-top: 2px solid  #ad6800;
+}
+
+table.metrics thead tr {
+  background-color: #ffffff;
+}
+
+table.metrics tbody,
+table.metrics thead th,
+table.metrics tr.cases {
+  border-bottom: 2px solid  #ad6800;
+}
+
+table.metrics span.value {
+  font-weight: bold;
+}
+
+table.metrics span.postfix {
+  font-weight: normal;
+}
+
+table.metrics span.note {
+  display: block;
+  font-size: 0.8em;
+}
+
+table tbody tr.rate th.capstone {
+  background-color: #ffe6bf
+}
+
+table tbody tr.hospitalizations th.capstone {
+  background-color: #e8a440
+}
+
+table.metrics td.level span.value,
+table.metrics td.trend span.value {
+  text-transform: capitalize;
+  font-weight: bold;
+  color: black;
+}
+
+table.metrics td.rising { background-color: #eeb0b1; }
+table.metrics td.flat { background-color: #ffdf8b; }
+table.metrics td.falling { background-color: #ade7ca; }
+table.metrics td.erratic { background-color: #e8a440; }
+
+table.metrics td.low { background-color: #ade7ca; }
+table.metrics td.moderate { background-color: #ffdf8b; }
+table.metrics td.high { background-color: #eeb0b1; }
+table.metrics td.very-high { background-color: #ff4b53; }
+
+table.metrics tr.rate th { background-color: #fff2df; }
+table.metrics tr.wastewater th { background-color: #ffe6bf; }
+table.metrics tr.cases th { background-color: #ffcc80; }
+table.metrics tr.hospitalizations th { background-color: #ecb360; }
+table.metrics tr.icus th { background-color: #e8a440; }
+table.metrics tr.deaths th { background-color: #e08600; }
+
+/*
+ * Trends Table
+**/
 table.trends td.falling span.delta,
 table.trends td.admin-tests.rising span.delta {
   color: ForestGreen;

@@ -83,7 +83,7 @@ class OcController(Controller):
     # API / JSON Files
     #
     # python app.py oc metrics-json-file
-    @expose(help="Output JSON file to data/api/oc/metrics.json.")
+    @expose(help="Output JSON file to docs/data/json/oc/metrics.json.")
     def metrics_json_file(self):
         export = OCMetricsExport(test=False)
         json_path = export.to_json_file()

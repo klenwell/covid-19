@@ -52,8 +52,210 @@
         </ul>
       </header>
 
+      <section id="oc-covid-metrics">
+        <h3>Latest Metrics</h3>
+        <table class="table metrics">
+          <caption></caption>
+          <thead>
+            <tr>
+              <th scope="col" class="capstone"></th>
+              <th scope="col">Metric</th>
+              <th scope="col">Updated</th>
+              <th scope="col">Latest</th>
+              <th scope="col">Level</th>
+              <th scope="col">Trend</th>
+              <th scope="col">7-Day Change</th>
+              <th scope="col">14-Day Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="rate" data-metric="positiveRate">
+              <th scope="row" class="capstone" rowspan="3">Less Lag &#129070;</th>
+              <th scope="row">
+                Test-Positive Rate
+                <span class="sub-th">7-day average</span>
+              </th>
+              <td class="updated-on">
+                <span class="value"></span>
+              </td>
+              <td class="latest">
+                <span class="value"></span>
+              </td>
+              <td class="level">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="trend">
+                <span class="value"></span>
+              </td>
+              <td class="delta-7d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="delta-14d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+            </tr>
+            <tr class="wastewater" data-metric="wastewater">
+              <th scope="row">
+                Wastewater Concentration
+                <span class="sub-th">7-day average (copies/ml)</span>
+              </th>
+              <td class="updated-on">
+                <span class="value"></span>
+              </td>
+              <td class="latest">
+                <span class="value"></span>
+              </td>
+              <td class="level">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="trend">
+                <span class="value"></span>
+              </td>
+              <td class="delta-7d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="delta-14d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+            </tr>
+            <tr class="cases" data-metric="cases">
+              <th scope="row">
+                Daily New Cases
+                <span class="sub-th">7-day average</span>
+              </th>
+              <td class="updated-on">
+                <span class="value"></span>
+              </td>
+              <td class="latest">
+                <span class="value"></span>
+              </td>
+              <td class="level">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="trend">
+                <span class="value"></span>
+              </td>
+              <td class="delta-7d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="delta-14d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+            </tr>
+            <tr class="hospitalizations" data-metric="hospitalCases">
+              <th class="capstone" scope="row" rowspan="3">&#129068; More Lag</th>
+              <th scope="row">
+                Hospitalizations
+                <span class="sub-th">7-day average</span>
+              </th>
+              <td class="updated-on">
+                <span class="value"></span>
+              </td>
+              <td class="latest">
+                <span class="value"></span>
+              </td>
+              <td class="level">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="trend">
+                <span class="value"></span>
+              </td>
+              <td class="delta-7d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="delta-14d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+            </tr>
+            <tr class="icus" data-metric="icuCases">
+              <th scope="row">
+                ICU Cases
+                <span class="sub-th">7-day average</span>
+              </th>
+              <td class="updated-on">
+                <span class="value"></span>
+              </td>
+              <td class="latest">
+                <span class="value"></span>
+              </td>
+              <td class="level">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="trend">
+                <span class="value"></span>
+              </td>
+              <td class="delta-7d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="delta-14d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+            </tr>
+            <tr class="deaths" data-metric="deaths">
+              <th scope="row">
+                Deaths
+                <span class="sub-th">7-day average</span>
+              </th>
+              <td class="updated-on">
+                <span class="value"></span>
+              </td>
+              <td class="latest">
+                <span class="value"></span>
+              </td>
+              <td class="level">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="trend">
+                <span class="value"></span>
+              </td>
+              <td class="delta-7d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+              <td class="delta-14d">
+                <span class="value"></span>
+                <span class="note"></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Notes</h4>
+        <ul>
+          <li>
+            Data extracted from JSON export:
+            <a target="_blank" href="https://github.com/klenwell/covid-19/blob/master/docs/data/json/oc/metrics.json">docs/data/json/oc/metrics.json</a>.
+            (File is updated as data becomes available.)
+          </li>
+          <li>
+            Data sourced from
+            <a target="_blank" href="https://occovid19.ochealthinfo.com/coronavirus-in-oc">OC Health Care Agency</a> and
+            <a target="_blank" href="https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/Wastewater-Surveillance.aspx">CA Dept of Public Health</a>.
+          </li>
+          <li>Table modeled after <a target="_blank" href="https://twitter.com/MicahPollak/status/1528887857670238212">Micah's Metric Matrix</a>.</li>
+          <li>Level quartiles: low=0-25, moderate=25-50, high=50-75, very high=75-100</li>
+          <li>Questions, comments, or issues? Email Tom at klenwell@gmail.com.</li>
+        </ul>
+      </section>
+
       <section id="week-to-week-trends">
-        <h3>OC Week-to-Week Covid-19 Trends</h3>
+        <h3>Week-by-Week Trends</h3>
         <table class="table trends">
           <caption>Under development...</caption>
           <thead>
@@ -71,7 +273,7 @@
               <th scope="col">
                 Wastewater
                 <span class="sub-th">7-day average</span>
-                <span class="sub-th">(x1000 per liter)</span>
+                <span class="sub-th">(copies per milliliter)</span>
               </th>
               <th scope="col">
                 Hospital Cases
@@ -241,6 +443,8 @@
       crossorigin="anonymous">
     </script>
 
+    <script src="js/oc-metrics-model.js"></script>
+    <script src="js/oc-metrics-table.js"></script>
     <script src="js/oc-trends-model.js"></script>
     <script src="js/oc-dashboard.js"></script>
 

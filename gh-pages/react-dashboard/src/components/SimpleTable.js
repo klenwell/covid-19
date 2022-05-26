@@ -6,9 +6,10 @@ export default function SimpleTable(props) {
 
   function headRow(headers) {
     console.log(headers)
-    const headCells = headers.map(header => {
+    const headCells = headers.map((header, i) => {
+      let cellKey = `head-${i}`
       return (
-        <th className="{header}">{header}</th>
+        <th className={header} key={cellKey}>{header}</th>
       )
     })
 
@@ -19,30 +20,30 @@ export default function SimpleTable(props) {
     )
   }
 
-  function bodyRow(metric) {
+  function bodyRow(metricKey, metric) {
     console.log('bodyRow', metric)
-    const cells = Object.entries(metric).map(([key, value]) => {
-      console.log(key, value)
+    const cells = Object.entries(metric).map(([key, value], i) => {
+      let cellKey = `${metricKey}-${i}`
       return (
-        <td className="{key}">{value}</td>
+        <td className={key} key={cellKey}>{value}</td>
       )
     })
 
     return (
-      <tr>
+      <tr key={metricKey}>
         {cells}
       </tr>
     )
   }
 
   return (
-    <table>
+    <table className="table">
       <thead>
         {headRow(Object.keys(metricsData.testPositiveRate))}
       </thead>
       <tbody>
-        {bodyRow(metricsData.testPositiveRate)}
-        {bodyRow(metricsData.dailyNewCases)}
+        {bodyRow('testPositiveRate', metricsData.testPositiveRate)}
+        {bodyRow('dailyNewCases', metricsData.dailyNewCases)}
       </tbody>
     </table>
   );

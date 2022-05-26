@@ -13,17 +13,16 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "pre-build-deploy": "mv -v ../../docs/index.html ../../docs/jquery.html",
-    "post-build-deploy": "npm run mv-react-index && npm run cp-build && npm run un-mv-jquery-index && npm run rm-react-dev",
-    "mv-react-index": "mv -v build/index.html build/react.html",
-    "cp-build": "cp -Rv build/* ../../docs/",
-    "un-mv-jquery-index": "mv -v ../../docs/jquery.html ../../docs/index.html",
-    "rm-react-dev": "rm -Rv ../../docs/react-dev",
-    "build-deploy": "npm run pre-build-deploy && npm run build && npm run post-build-deploy",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-deploy": "npm run build && npm run post-build-deploy",
+    "post-build-deploy": "npm run mv-react-index && npm run rm-react-dev && npm run clean-docs && npm run cp-build",
+    "mv-react-index": "mv -v build/index.html build/react.html",
+    "rm-react-dev": "rm -Rv build/react-dev",
+    "clean-docs": "rm -Rv ../../docs/static",
+    "cp-build": "cp -Rv build/* ../../docs/"
   },
   "eslintConfig": {
     "extends": [

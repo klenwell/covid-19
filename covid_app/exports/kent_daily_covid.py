@@ -5,7 +5,7 @@ from datetime import date
 
 from config.app import DATA_ROOT
 from covid_app.extracts.cdc.us_county_timeseries_extract import CdcCountyTimeseriesExtract
-from covid_app.extracts.ny_times_covid19 import NyTimesCovid19Extract
+from covid_app.extracts.nyt.counties_extract import NyTimesCountiesExtract
 
 
 #
@@ -47,7 +47,7 @@ class KentDailyCovidExport:
 
     @cached_property
     def ny_times_extract(self):
-        return NyTimesCovid19Extract.kent_mi_daily_extract()
+        return NyTimesCountiesExtract.kent_mi_extract()
 
     @property
     def dates(self):

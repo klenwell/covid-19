@@ -42,7 +42,6 @@ class NyTimesCountiesExtract:
 
         for year in self.pandemic_years:
             logs[year] = self.fetch_data_source_by_year(year)
-            print(year, len(logs[year].values()))
 
         return logs
 
@@ -62,7 +61,6 @@ class NyTimesCountiesExtract:
     def fetch_data_source_by_year(self, year):
         daily_values = {}
         source_url = EXTRACT_URL_F.format(year)
-        print('fetch {}...'.format(source_url))
 
         # Large stream pattern: https://stackoverflow.com/a/38677650/1093087
         stream = self.fetch_source_stream(source_url)

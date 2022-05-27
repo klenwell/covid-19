@@ -1,0 +1,68 @@
+{
+    "testPositiveRate": {
+        "updatedOn": "2000-01-21",
+        "latest": 6.78,
+        "percentile": 64.78,
+        "d7Date": "2022-05-16",
+        "d7Value": 5.89,
+        "d7DeltaPct": 15.22,
+        "d14Date": "2022-05-09",
+        "d14Value": 4.6,
+        "d14DeltaPct": 47.42
+    },
+    "dailyNewCases": {
+        "updatedOn": "2022-05-24",
+        "latest": 750.57,
+        "percentile": 81.89,
+        "d7Date": "2022-05-17",
+        "d7Value": 544.29,
+        "d7DeltaPct": 37.9,
+        "d14Date": "2022-05-10",
+        "d14Value": 444.14,
+        "d14DeltaPct": 68.99
+    },
+    "wastewater": {
+        "updatedOn": "2022-05-17",
+        "latest": 1594,
+        "percentile": 58.49,
+        "d7Date": "2022-05-10",
+        "d7Value": 2198,
+        "d7DeltaPct": -27.48,
+        "d14Date": "2022-05-03",
+        "d14Value": 1376,
+        "d14DeltaPct": 15.84
+    },
+    "hospitalCases": {
+        "updatedOn": "2022-05-23",
+        "latest": 118.0,
+        "percentile": 19.57,
+        "d7Date": "2022-05-16",
+        "d7Value": 87.29,
+        "d7DeltaPct": 35.19,
+        "d14Date": "2022-05-09",
+        "d14Value": 98.14,
+        "d14DeltaPct": 20.23
+    },
+    "icuCases": {
+        "updatedOn": "2022-05-23",
+        "latest": 15.86,
+        "percentile": 13.26,
+        "d7Date": "2022-05-16",
+        "d7Value": 14.14,
+        "d7DeltaPct": 12.12,
+        "d14Date": "2022-05-09",
+        "d14Value": 15.57,
+        "d14DeltaPct": 1.83
+    },
+    "deaths": {
+        "updatedOn": "2022-05-24",
+        "latest": 1.0,
+        "percentile": 6.19,
+        "d7Date": "2022-05-17",
+        "d7Value": 0.57,
+        "d7DeltaPct": 75.0,
+        "d14Date": "2022-05-10",
+        "d14Value": 1.43,
+        "d14DeltaPct": -30.0
+    }
+}

@@ -18,7 +18,7 @@ function App() {
   }, [])
 
   function fetchMetricsData() {
-    const isDev = process.env.NODE_ENV == 'development'
+    const isDev = process.env.NODE_ENV === 'development'
     const metricsUrl = isDev ? DEV_METRICS_URL : METRICS_URL
     console.log(`fetching metrics data from ${metricsUrl}`)
 

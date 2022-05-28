@@ -41,12 +41,18 @@ class BaseController(Controller):
     # This command can be used for testing and development.
     @expose(help="Run the Application interactively. Useful for testing and development.")
     def interactive(self):
-        from covid_app.extracts.cdc.us_county_timeseries_extract import CdcCountyTimeseriesExtract
+        from covid_app.extracts.nyt.counties_extract import NyTimesCountiesExtract, KENT_MI_FIPS
+        from datetime import datetime
 
-        extract = CdcCountyTimeseriesExtract.kent_mi_daily_extract()
-        print(extract.url)
-        print(extract.starts_on, extract.ends_on)
-        print(extract.daily_logs[extract.ends_on])
+        extract = NyTimesCountiesExtract(fips=KENT_MI_FIPS)
+        print(list(extract.pandemic_years))
+
+        print('fetch data yearly data...')
+        print(len(extract.yearly_logs.values()))
+
+        dated = datetime(2022, 3, 1).date()
+        print('fetch log for {}...'.format(dated))
+        print(extract.daily_logs.get(dated))
 
         breakpoint()
 

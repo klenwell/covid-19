@@ -254,8 +254,8 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        export = OCWastewaterExport()
-        export.extract.load_test_csv()
-        print(export.csv_path)
-        print(export.extract.cal3_rows[-3:])
+        from covid_app.analytics.oc.waves import OcWaveAnalysis
+
+        analysis = OcWaveAnalysis()
+
         breakpoint()

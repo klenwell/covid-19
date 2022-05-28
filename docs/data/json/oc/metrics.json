@@ -11,15 +11,15 @@
         "d14DeltaPct": 47.42
     },
     "dailyNewCases": {
-        "updatedOn": "2022-05-24",
-        "latest": 750.57,
-        "percentile": 81.89,
-        "d7Date": "2022-05-17",
-        "d7Value": 544.29,
-        "d7DeltaPct": 37.9,
-        "d14Date": "2022-05-10",
-        "d14Value": 444.14,
-        "d14DeltaPct": 68.99
+        "updatedOn": "2022-05-27",
+        "latest": 773.29,
+        "percentile": 82.79,
+        "d7Date": "2022-05-20",
+        "d7Value": 698.71,
+        "d7DeltaPct": 10.67,
+        "d14Date": "2022-05-13",
+        "d14Value": 494.43,
+        "d14DeltaPct": 56.4
     },
     "wastewater": {
         "updatedOn": "2022-05-17",
@@ -33,36 +33,36 @@
         "d14DeltaPct": 15.84
     },
     "hospitalCases": {
-        "updatedOn": "2022-05-23",
-        "latest": 118.0,
-        "percentile": 19.57,
-        "d7Date": "2022-05-16",
-        "d7Value": 87.29,
-        "d7DeltaPct": 35.19,
-        "d14Date": "2022-05-09",
-        "d14Value": 98.14,
-        "d14DeltaPct": 20.23
+        "updatedOn": "2022-05-26",
+        "latest": 125.86,
+        "percentile": 21.89,
+        "d7Date": "2022-05-19",
+        "d7Value": 98.57,
+        "d7DeltaPct": 27.68,
+        "d14Date": "2022-05-12",
+        "d14Value": 97.14,
+        "d14DeltaPct": 29.56
     },
     "icuCases": {
-        "updatedOn": "2022-05-23",
-        "latest": 15.86,
-        "percentile": 13.26,
-        "d7Date": "2022-05-16",
-        "d7Value": 14.14,
-        "d7DeltaPct": 12.12,
-        "d14Date": "2022-05-09",
-        "d14Value": 15.57,
-        "d14DeltaPct": 1.83
+        "updatedOn": "2022-05-26",
+        "latest": 17.71,
+        "percentile": 14.18,
+        "d7Date": "2022-05-19",
+        "d7Value": 13.43,
+        "d7DeltaPct": 31.91,
+        "d14Date": "2022-05-12",
+        "d14Value": 15.14,
+        "d14DeltaPct": 16.98
     },
     "deaths": {
-        "updatedOn": "2022-05-24",
-        "latest": 1.0,
-        "percentile": 6.19,
-        "d7Date": "2022-05-17",
-        "d7Value": 0.57,
-        "d7DeltaPct": 75.0,
-        "d14Date": "2022-05-10",
-        "d14Value": 1.43,
-        "d14DeltaPct": -30.0
+        "updatedOn": "2022-05-27",
+        "latest": 0.86,
+        "percentile": 5.66,
+        "d7Date": "2022-05-20",
+        "d7Value": 0.71,
+        "d7DeltaPct": 20.0,
+        "d14Date": "2022-05-13",
+        "d14Value": 1.71,
+        "d14DeltaPct": -50.0
     }
 }

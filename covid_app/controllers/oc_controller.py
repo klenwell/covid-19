@@ -257,6 +257,6 @@ class OcController(Controller):
         from covid_app.analytics.oc.waves import OcWaveAnalysis
 
         analysis = OcWaveAnalysis()
-        print(analysis.avg_positive_rates[analysis.end_date])
+        analysis.windows_to_csv()
 
-        breakpoint()
+        #breakpoint()

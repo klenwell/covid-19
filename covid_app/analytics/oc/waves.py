@@ -14,9 +14,6 @@ from config.app import DATA_ROOT
 DATE_F = '%Y-%m-%d'
 START_DATE = '2020-02-01'
 WINDOW_SIZE = 7
-UP_TREND = 1
-DOWN_TREND = -1
-FLAT_TREND = 0
 
 
 class OcWaveAnalysis:
@@ -24,7 +21,7 @@ class OcWaveAnalysis:
     # Properties
     #
     @cached_property
-    def stdevs(self):
+    def std_devs(self):
         dated_values = {}
 
         for dated in self.dates[1:]:
@@ -55,23 +52,21 @@ class OcWaveAnalysis:
                     window_values.append(rate)
 
             if len(window_values) == WINDOW_SIZE:
-                diff = window_values[-1] - window_values[0]
+                change = window_values[-1] - window_values[0]
+                slope = change / len(window_values)
+                sd = statistics.stdev(window_values)
+                mean = statistics.mean(window_values)
                 dated_values[dated] = {
-                    'stdev': statistics.stdev(window_values),
-                    'mean': statistics.mean(window_values),
-                    'diff': diff,
-                    'trend': '+' if diff > 0 else '-'
+                    'rate': window_values[3],
+                    'stdev': sd,
+                    'rsd': sd / mean,
+                    'mean': mean,
+                    'change': change,
+                    'slope': slope,
+                    'trend': 1 if change > 0 else -1 if change < 0 else 0
                 }
 
         return dated_values
-
-    def map_rate_trend(self, delta):
-        if delta >= TREND_THRESHOLD:
-            return UP_TREND
-        elif delta <= -TREND_THRESHOLD:
-            return DOWN_TREND
-        else:
-            return FLAT_TREND
 
     @cached_property
     def avg_positive_rates(self):
@@ -161,6 +156,29 @@ class OcWaveAnalysis:
         self.run_time_start = time.time()
         self.run_time_end = None
         self.test = test
+
+    def windows_to_csv(self):
+        csv_path = path_join(DATA_ROOT, 'oc', 'analytics', 'windows.csv')
+        headers = ['date', 'rate', 'stdev', 'rsd', 'slope', 'mean', 'change', 'trend']
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(headers)
+
+            for dated, row in sorted(self.windows.items()):
+                writer.writerow([
+                    dated,
+                    row['rate'],
+                    row['stdev'],
+                    row['rsd'],
+                    row['slope'],
+                    row['mean'],
+                    row['change'],
+                    row['trend']
+                ])
+
+        self.run_time_end = time.time()
+        print(self.run_time, csv_path)
+        return csv_path
 
     #
     # Private

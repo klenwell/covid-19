@@ -3,6 +3,7 @@ from functools import cached_property
 from datetime import datetime, timedelta
 import time
 import csv
+import statistics
 
 from config.app import DATA_ROOT
 
@@ -12,7 +13,7 @@ from config.app import DATA_ROOT
 #
 DATE_F = '%Y-%m-%d'
 START_DATE = '2020-02-01'
-TREND_THRESHOLD = 8
+WINDOW_SIZE = 7
 UP_TREND = 1
 DOWN_TREND = -1
 FLAT_TREND = 0
@@ -23,48 +24,46 @@ class OcWaveAnalysis:
     # Properties
     #
     @cached_property
-    def intervals(self):
-        intervals = []
-        for row in self.trends:
-            if row['trend_change']:
-                intervals.append(row)
-        return intervals
+    def stdevs(self):
+        dated_values = {}
 
-    @cached_property
-    def trends(self):
-        rows = []
-        prev_trend = None
+        for dated in self.dates[1:]:
+            yesterday = dated - timedelta(days=1)
+            window = self.windows.get(yesterday)
 
-        # Skip start date since need to look back
-        for dated in self.dates:
-            date_m1 = dated - timedelta(days=1)
-            date_m14 = dated - timedelta(days=1)
-
-            pos_rate = self.avg_positive_rates[dated]
-            d1_pos_rate = self.avg_positive_rates.get(date_m1)
-            d14_pos_rate = self.avg_positive_rates.get(date_m14)
-
-            if not d14_pos_rate:
+            if not window:
                 continue
 
-            d1_delta = self.compute_change(d1_pos_rate, pos_rate)
-            d14_delta = self.compute_change(d14_pos_rate, pos_rate)
-            trend = self.map_rate_trend(d14_delta)
-            trend_change = prev_trend is not None and trend != prev_trend
+            diff = self.avg_positive_rates[dated] - window['mean']
+            dev = diff / window['stdev']
+            dated_values[dated] = dev
 
-            row = {
-                'date': dated,
-                'rate': pos_rate,
-                'd1-delta': d1_delta,
-                'd14-delta': d14_delta,
-                'trend': trend,
-                'trend_change': trend_change
-            }
+        return dated_values
 
-            prev_trend = trend
-            rows.append(row)
+    @cached_property
+    def windows(self):
+        # Stddev for positive rate values
+        dated_values = {}
 
-        return rows
+        for dated in self.dates:
+            window_values = []
+
+            for n in range(-3, 4):
+                prev_date = dated + timedelta(days=n)
+                rate = self.avg_positive_rates.get(prev_date)
+                if rate:
+                    window_values.append(rate)
+
+            if len(window_values) == WINDOW_SIZE:
+                diff = window_values[-1] - window_values[0]
+                dated_values[dated] = {
+                    'stdev': statistics.stdev(window_values),
+                    'mean': statistics.mean(window_values),
+                    'diff': diff,
+                    'trend': '+' if diff > 0 else '-'
+                }
+
+        return dated_values
 
     def map_rate_trend(self, delta):
         if delta >= TREND_THRESHOLD:

@@ -79,7 +79,7 @@ class Interval:
         merge_with_next = False
 
         for interval, next_interval in sliding_window(intervals, 2):
-            print(prev_interval, interval, next_interval)
+            #print(prev_interval, interval, next_interval)
             merge_with_prev = False     # reset flag each loop
 
             # In previous loop, flagged that interval to merge with this one.
@@ -87,14 +87,9 @@ class Interval:
                 interval = interval.merge(prev_interval)
                 merge_with_next = False
 
-            if not interval.is_micro():
-                smoothed_intervals.append(interval)
-                prev_interval = interval
-                continue
-
             # What to do with micro interval?
             # If it trends with previous, merge
-            if interval.trend == prev_interval.trend:
+            if prev_interval and interval.trend == prev_interval.trend:
                 merge_with_prev = True
 
             # If it trends with next, flag for merge in next loop
@@ -103,8 +98,9 @@ class Interval:
 
             # If flat, merge with previous or next
             elif interval.trending == 'flat':
-                slope_diff_prev = interval.kslope - prev_interval.kslope
-                slope_diff_next = interval.kslope - next_interval.kslope
+                slope_diff_prev = abs(interval.kslope - prev_interval.kslope) if \
+                    prev_interval is not None else 0
+                slope_diff_next = abs(interval.kslope - next_interval.kslope)
                 if slope_diff_prev > slope_diff_next:
                     merge_with_prev = True
                 else:
@@ -121,6 +117,10 @@ class Interval:
                 if prev_interval in smoothed_intervals:
                     smoothed_intervals.pop()
 
+                smoothed_intervals.append(interval)
+
+            # If interval is not micro, add to smoothed_intervals
+            if not interval.is_micro():
                 smoothed_intervals.append(interval)
 
             # on to next loop

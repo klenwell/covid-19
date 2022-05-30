@@ -257,11 +257,11 @@ class OcController(Controller):
         from covid_app.analytics.oc.waves import OcWaveAnalysis, Interval
         from pprint import pprint
 
-        analysis = OcWaveAnalysis(test=True)
+        analysis = OcWaveAnalysis(test=False)
         print(len(analysis.avg_positive_rates))
         print('windows', len(analysis.windows))
         pprint(analysis.intervals)
-        pprint(Interval.merge_intervals(analysis.intervals))
+        pprint(Interval.merge_running_trends(analysis.intervals))
 
         breakpoint()
 

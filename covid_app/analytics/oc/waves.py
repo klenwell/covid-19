@@ -1,11 +1,11 @@
 from os.path import join as path_join
 from functools import cached_property
 from datetime import datetime, timedelta
-from math import floor
+from math import floor, inf
 import time
 import csv
 import statistics
-from pprint import pprint
+from pprint import pprint, pformat
 
 from config.app import DATA_ROOT
 
@@ -14,7 +14,7 @@ from config.app import DATA_ROOT
 # Constants
 #
 DATE_F = '%Y-%m-%d'
-START_DATE = '2020-02-01'
+START_DATE = '2020-03-12'
 WINDOW_SIZE = 7
 KSLOPE_THRESHOLD = 10   # Slope value distinguishing plateaus from rise/falls
 SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
@@ -73,75 +73,104 @@ class Window:
 
 class Interval:
     @staticmethod
-    def includes_micros(intervals):
+    def series_is_jagged(intervals):
+        """These things are considered unjagged or unsmooth:
+        - any micro intervals
+        - any consecutive intervals with same trend
+        """
+        prev_interval = None
         for interval in intervals:
             if interval.is_micro():
                 return True
+            if prev_interval and prev_interval.trend == interval.trend:
+                return True
+            prev_interval = interval
         return False
 
     @staticmethod
     def smooth_intervals(intervals):
         n = 0
-        while Interval.includes_micros(intervals):
+        while Interval.series_is_jagged(intervals):
+            pre_merge_count = len(intervals)
             n += 1
             print('micro merge loop', n, len(intervals))
             pprint(intervals)
-            pre_merge_count = len(intervals)
-            intervals = Interval.merge_intervals(intervals)
 
-            if Interval.includes_micros(intervals) and len(intervals) == pre_merge_count:
-                raise Exception('Unable to merge micro intervals: {}'.format(intervals))
+            intervals = Interval.merge_running_trends(intervals)
+            intervals = Interval.merge_micro_intervals(intervals)
+
+            if Interval.series_is_jagged(intervals) and len(intervals) == pre_merge_count:
+                raise Exception('Unable to smooth jagged intervals:\n {}'.format(pformat(intervals)))
 
         return intervals
 
     @staticmethod
-    def merge_intervals(intervals):
+    def merge_running_trends(intervals):
+        merged_intervals = []
+        prev_interval = intervals[0]
+
+        for interval in intervals[1:]:
+            if interval.trend == prev_interval.trend:
+                interval = interval.merge(prev_interval)
+            else:
+                merged_intervals.append(prev_interval)
+            prev_interval = interval
+
+        # Don't forget last interval
+        merged_intervals.append(interval)
+        return merged_intervals
+
+    @staticmethod
+    def merge_micro_intervals(intervals):
         merged_intervals = []
         prev_interval = None
-        merge_with_prev = False
-        merge_with_next = False
+        merge_on_next_loop = False
 
         for interval, next_interval in sliding_window(intervals, 2):
             #print(prev_interval, interval, next_interval)
             merge_with_prev = False     # reset flag each loop
 
-            # In previous loop, flagged that interval to merge with this one.
-            if merge_with_next:
-                interval = interval.merge(prev_interval)
-                merge_with_next = False
-
-            if not interval.is_micro():
-                merged_intervals.append(interval)
-                prev_interval = interval
-                continue
-
-            # If it trends with previous, merge
-            if prev_interval and interval.trend == prev_interval.trend:
-                merge_with_prev = True
-
-            # If it trends with next, flag for merge in next loop
-            elif interval.trend == next_interval.trend:
-                merge_with_next = True
-
-            # What to do with micro interval?
-            # If flat, merge with previous or next
-            elif interval.is_micro() and interval.trending == 'flat':
-                slope_diff_prev = abs(interval.kslope - prev_interval.kslope) if \
-                    prev_interval is not None else 0
-                slope_diff_next = abs(interval.kslope - next_interval.kslope)
-                if slope_diff_prev < slope_diff_next:
-                    merge_with_prev = True
-                else:
-                    merge_with_next = True
-
-            # Merge with previous if flagged above
-            if merge_with_prev:
+            # Merge intervals as flagged in previous loop.
+            if merge_on_next_loop:
+                merge_on_next_loop = False
                 interval = interval.merge(prev_interval)
 
                 # If prev interval was added to smooth, pop and replace with merged one
                 if prev_interval in merged_intervals:
                     merged_intervals.pop()
 
+            # Interval no longer micro, skip to next one
+            if not interval.is_micro():
+                merged_intervals.append(interval)
+                prev_interval = interval
+                continue
+
+            # Now figure out what to do with micro intervals.
+            # If flat, merge with previous or next
+            if interval.trending == 'flat':
+                slope_diff_prev = abs(interval.kslope - prev_interval.kslope) if \
+                    prev_interval is not None else inf
+                slope_diff_next = abs(interval.kslope - next_interval.kslope)
+                if slope_diff_prev < slope_diff_next:
+                    merge_with_prev = True
+                else:
+                    merge_on_next_loop = True
+            else:
+                slope_diff_prev = abs(interval.kslope - prev_interval.kslope) if \
+                    prev_interval is not None else inf
+                slope_diff_next = abs(interval.kslope - next_interval.kslope)
+                if slope_diff_prev < slope_diff_next:
+                    merge_with_prev = True
+                else:
+                    merge_on_next_loop = True
+
+            # Merge with previous if flagged above
+            if merge_with_prev:
+                interval = interval.merge(prev_interval)
+                if prev_interval in merged_intervals:
+                    merged_intervals.pop()
+
+            if not merge_on_next_loop:
                 merged_intervals.append(interval)
 
             # on to next loop

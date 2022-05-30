@@ -266,6 +266,7 @@ class OcController(Controller):
         breakpoint()
 
         pprint(analysis.smooth_intervals)
+        print(len(analysis.smooth_intervals))
 
         #analysis.windows_to_csv()
         #analysis.export_sample_data_to_csv()

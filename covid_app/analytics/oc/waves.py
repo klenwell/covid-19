@@ -16,7 +16,7 @@ from config.app import DATA_ROOT
 DATE_F = '%Y-%m-%d'
 START_DATE = '2020-03-12'
 WINDOW_SIZE = 7
-KSLOPE_THRESHOLD = 10   # Slope value distinguishing plateaus from rise/falls
+KSLOPE_THRESHOLD = 6   # Slope value distinguishing plateaus from rise/falls
 SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
 
 
@@ -79,7 +79,7 @@ class Interval:
         - any consecutive intervals with same trend
         """
         prev_interval = None
-        for interval in intervals:
+        for interval in intervals[:-1]:
             if interval.is_micro():
                 return True
             if prev_interval and prev_interval.trend == interval.trend:
@@ -155,6 +155,7 @@ class Interval:
                     merge_with_prev = True
                 else:
                     merge_on_next_loop = True
+            # TODO: this mostly works. See new surge around 4/2/2022 where it doesn't.
             else:
                 slope_diff_prev = abs(interval.kslope - prev_interval.kslope) if \
                     prev_interval is not None else inf

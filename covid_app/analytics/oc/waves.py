@@ -115,26 +115,24 @@ class Interval:
                 prev_interval = interval
                 continue
 
-            # What to do with micro interval?
             # If it trends with previous, merge
-            if interval.trend == prev_interval.trend:
+            if prev_interval and interval.trend == prev_interval.trend:
                 merge_with_prev = True
 
             # If it trends with next, flag for merge in next loop
             elif interval.trend == next_interval.trend:
                 merge_with_next = True
 
+            # What to do with micro interval?
             # If flat, merge with previous or next
-            elif interval.trending == 'flat':
-                slope_diff_prev = interval.kslope - prev_interval.kslope
-                slope_diff_next = interval.kslope - next_interval.kslope
-                if slope_diff_prev > slope_diff_next:
+            elif interval.is_micro() and interval.trending == 'flat':
+                slope_diff_prev = abs(interval.kslope - prev_interval.kslope) if \
+                    prev_interval is not None else 0
+                slope_diff_next = abs(interval.kslope - next_interval.kslope)
+                if slope_diff_prev < slope_diff_next:
                     merge_with_prev = True
                 else:
                     merge_with_next = True
-
-            else:
-                raise ValueError("Orphaned micro interval: {}".format(interval))
 
             # Merge with previous if flagged above
             if merge_with_prev:

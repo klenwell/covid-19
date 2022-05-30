@@ -1,6 +1,7 @@
 from os.path import join as path_join
 from functools import cached_property
 from datetime import datetime, timedelta
+from math import floor
 import time
 import csv
 import statistics
@@ -14,12 +15,218 @@ from config.app import DATA_ROOT
 DATE_F = '%Y-%m-%d'
 START_DATE = '2020-02-01'
 WINDOW_SIZE = 7
+KSLOPE_THRESHOLD = 10   # Slope value distinguishing plateaus from rise/falls
+SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
+
+
+class Window:
+    def __init__(self, dated, rates):
+        self.date = dated
+        self.rates = rates
+        self.rate = rates[floor(len(rates) / 2)]
+
+    @property
+    def rate_change(self):
+        return self.rates[-1] - self.rates[0]
+
+    @property
+    def slope(self):
+        return self.rate_change / len(self.rates)
+
+    @property
+    def kslope(self):
+        return self.slope * 100
+
+    @property
+    def stdev(self):
+        return statistics.stdev(self.rates)
+
+    @property
+    def trend(self):
+        if self.kslope > KSLOPE_THRESHOLD:
+            return 1
+        elif self.kslope < -KSLOPE_THRESHOLD:
+            return -1
+        else:
+            return 0
+
+    def __repr__(self):
+        f = '<Window middate={} days={} kslope={:.1f} stdev={:.3f} trend={}>'
+        return f.format(self.date, len(self.rates), self.kslope, self.stdev, self.trend)
+
+
+class Interval:
+    def __init__(self, start_window):
+        self.start_window = start_window
+        self.end_window = None
+
+    @property
+    def started_on(self):
+        return self.start_window.date
+
+    @property
+    def ended_on(self):
+        if self.is_ended:
+            return self.end_window.date
+
+    @property
+    def start_rate(self):
+        return self.start_window.rate
+
+    @property
+    def end_rate(self):
+        if self.is_ended:
+            return self.end_window.rate
+
+    @property
+    def is_ended(self):
+        return self.end_window is not None
+
+    @property
+    def days(self):
+        if not self.is_ended:
+            return None
+        return (self.ended_on - self.started_on).days
+
+    @property
+    def rate_diff(self):
+        if not self.is_ended:
+            return None
+        return self.end_rate - self.start_rate
+
+    @property
+    def kslope(self):
+        if not self.is_ended:
+            return None
+        return self.rate_diff / self.days * 100
+
+    @property
+    def trend(self):
+        if self.kslope is None:
+            return None
+
+        if self.kslope > KSLOPE_THRESHOLD:
+            return 1
+        elif self.kslope < -KSLOPE_THRESHOLD:
+            return -1
+        else:
+            return 0
+
+    @property
+    def trending(self):
+        labels = {
+            -1: 'falling',
+            0: 'flat',
+            1: 'rising'
+        }
+        if self.trend is not None:
+            return labels[self.trend]
+
+    # Methods
+    def end(self, window):
+        self.end_window = window
+
+    def is_micro(self):
+        if not self.is_ended:
+            return None
+
+        if self.days < 8:
+            return True
+
+        return False
+
+    def __repr__(self):
+        f = '<Interval start={} end={} days={} kslope={} trend={} micro?={}>'
+        kslope = None if self.kslope is None else round(self.kslope, 1)
+        return f.format(self.started_on, self.ended_on, self.days, kslope, self.trending,
+            self.is_micro())
 
 
 class OcWaveAnalysis:
     #
     # Properties
     #
+    @cached_property
+    def avg_positive_rates(self):
+        if self.test:
+            return self.test_avg_positive_rates
+
+        dated_values = {}
+
+        for dated in self.dates:
+            tests = []
+            positives = []
+            for days_back in range(7):
+                prev_date = dated - timedelta(days=days_back)
+                tests.append(self.tests_admin[prev_date])
+                positives.append(self.tests_positive[prev_date])
+            dated_values[dated] = sum(positives) / sum(tests) * 100
+
+        return dated_values
+
+    @cached_property
+    def test_avg_positive_rates(self):
+        dated_values = {}
+        with open(SAMPLE_DATA_CSV, newline='') as f:
+            for row in csv.reader(f):
+                dated = datetime.strptime(row[0], DATE_F).date()
+                dated_values[dated] = float(row[1])
+        return dated_values
+
+    @cached_property
+    def smooth_intervals(self):
+        smooth_intervals = []
+        prev_interval = self.intervals[0]
+
+        for interval, n in enumerate(self.intervals):
+            if not interval.is_micro():
+                smooth_intervals.append(interval)
+
+            # Micro: merge with previous or next?
+            # TODO
+
+        return smooth_intervals
+
+
+    @cached_property
+    def intervals(self):
+        intervals = []
+        prev_window = self.windows[0]
+        open_interval = Interval(prev_window)
+
+        for window in self.windows[1:]:
+            trend_change = window.trend != prev_window.trend
+
+            if trend_change:
+                open_interval.end(window)
+                intervals.append(open_interval)
+                open_interval = Interval(window)
+
+            prev_window = window
+
+        intervals.append(open_interval)
+        return intervals
+
+    @cached_property
+    def windows(self):
+        windows = []
+        half_window_len = floor(WINDOW_SIZE / 2)
+
+        for dated in self.dates:
+            window_rates = []
+
+            for n in range(-half_window_len, half_window_len+1):
+                rate_date = dated + timedelta(days=n)
+                rate = self.avg_positive_rates.get(rate_date)
+                if rate:
+                    window_rates.append(rate)
+
+            if len(window_rates) == WINDOW_SIZE:
+                window = Window(dated, window_rates)
+                windows.append(window)
+
+        return windows
+
     @cached_property
     def std_devs(self):
         dated_values = {}
@@ -34,52 +241,6 @@ class OcWaveAnalysis:
             diff = self.avg_positive_rates[dated] - window['mean']
             dev = diff / window['stdev']
             dated_values[dated] = dev
-
-        return dated_values
-
-    @cached_property
-    def windows(self):
-        # Stddev for positive rate values
-        dated_values = {}
-
-        for dated in self.dates:
-            window_values = []
-
-            for n in range(-3, 4):
-                prev_date = dated + timedelta(days=n)
-                rate = self.avg_positive_rates.get(prev_date)
-                if rate:
-                    window_values.append(rate)
-
-            if len(window_values) == WINDOW_SIZE:
-                change = window_values[-1] - window_values[0]
-                slope = change / len(window_values)
-                sd = statistics.stdev(window_values)
-                mean = statistics.mean(window_values)
-                dated_values[dated] = {
-                    'rate': window_values[3],
-                    'stdev': sd,
-                    'rsd': sd / mean,
-                    'mean': mean,
-                    'change': change,
-                    'slope': slope,
-                    'trend': 1 if change > 0 else -1 if change < 0 else 0
-                }
-
-        return dated_values
-
-    @cached_property
-    def avg_positive_rates(self):
-        dated_values = {}
-
-        for dated in self.dates:
-            tests = []
-            positives = []
-            for days_back in range(7):
-                prev_date = dated - timedelta(days=days_back)
-                tests.append(self.tests_admin[prev_date])
-                positives.append(self.tests_positive[prev_date])
-            dated_values[dated] = sum(positives) / sum(tests) * 100
 
         return dated_values
 
@@ -122,7 +283,7 @@ class OcWaveAnalysis:
             export_rows[dated] = row
         return export_rows
 
-    # Date sets
+    # Dates
     @property
     def dates(self):
         num_days = (self.end_date - self.start_date).days
@@ -179,6 +340,24 @@ class OcWaveAnalysis:
         self.run_time_end = time.time()
         print(self.run_time, csv_path)
         return csv_path
+
+    def export_sample_data_to_csv(self):
+        start_date = datetime.strptime('2020-10-01', DATE_F).date()
+        end_date = datetime.strptime('2021-11-01', DATE_F).date()
+
+        with open(SAMPLE_DATA_CSV, 'w', newline='') as f:
+            writer = csv.writer(f)
+            next_date = start_date
+
+            while next_date <= end_date:
+                writer.writerow([
+                    next_date,
+                    self.avg_positive_rates[next_date]
+                ])
+                next_date += timedelta(days=1)
+
+        print('export_sample_data_to_csv', SAMPLE_DATA_CSV)
+        return SAMPLE_DATA_CSV
 
     #
     # Private

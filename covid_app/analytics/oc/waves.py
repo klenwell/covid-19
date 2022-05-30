@@ -19,6 +19,21 @@ KSLOPE_THRESHOLD = 10   # Slope value distinguishing plateaus from rise/falls
 SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
 
 
+from itertools import islice
+from collections import deque
+def sliding_window(iterable, n):
+    """Source: https://docs.python.org/3/library/itertools.html#itertools-recipes
+    sliding_window('ABCDEFG', 4) -> ABCD BCDE CDEF DEFG
+    """
+    it = iter(iterable)
+    window = deque(islice(it, n), maxlen=n)
+    if len(window) == n:
+        yield tuple(window)
+    for x in it:
+        window.append(x)
+        yield tuple(window)
+
+
 class Window:
     def __init__(self, dated, rates):
         self.date = dated
@@ -56,6 +71,63 @@ class Window:
 
 
 class Interval:
+    @staticmethod
+    def smooth_intervals(intervals):
+        smoothed_intervals = []
+        prev_interval = None
+        merge_with_prev = False
+        merge_with_next = False
+
+        for interval, next_interval in sliding_window(intervals, 2):
+            print(prev_interval, interval, next_interval)
+            merge_with_prev = False     # reset flag each loop
+
+            # In previous loop, flagged that interval to merge with this one.
+            if merge_with_next:
+                interval = interval.merge(prev_interval)
+                merge_with_next = False
+
+            if not interval.is_micro():
+                smoothed_intervals.append(interval)
+                prev_interval = interval
+                continue
+
+            # What to do with micro interval?
+            # If it trends with previous, merge
+            if interval.trend == prev_interval.trend:
+                merge_with_prev = True
+
+            # If it trends with next, flag for merge in next loop
+            elif interval.trend == next_interval.trend:
+                merge_with_next = True
+
+            # If flat, merge with previous or next
+            elif interval.trending == 'flat':
+                slope_diff_prev = interval.kslope - prev_interval.kslope
+                slope_diff_next = interval.kslope - next_interval.kslope
+                if slope_diff_prev > slope_diff_next:
+                    merge_with_prev = True
+                else:
+                    merge_with_next = True
+
+            else:
+                raise ValueError("Orphaned micro interval: {}".format(interval))
+
+            # Merge with previous if flagged above
+            if merge_with_prev:
+                interval = interval.merge(prev_interval)
+
+                # If prev interval was added to smooth, pop and replace with merged one
+                if prev_interval in smoothed_intervals:
+                    smoothed_intervals.pop()
+
+                smoothed_intervals.append(interval)
+
+            # on to next loop
+            prev_interval = interval
+
+        return smoothed_intervals
+
     def __init__(self, start_window):
         self.start_window = start_window
         self.end_window = None
@@ -123,6 +195,13 @@ class Interval:
             return labels[self.trend]
 
     # Methods
+    def merge(self, other_interval):
+        start_interval = self if self.started_on < other_interval.started_on else other_interval
+        end_interval = self if start_interval != self else other_interval
+        merged_interval = Interval(start_interval.start_window)
+        merged_interval.end(end_interval.end_window)
+        return merged_interval
+
     def end(self, window):
         self.end_window = window
 
@@ -130,13 +209,13 @@ class Interval:
         if not self.is_ended:
             return None
 
-        if self.days < 8:
+        if self.days <= 14:
             return True
 
         return False
 
     def __repr__(self):
-        f = '<Interval start={} end={} days={} kslope={} trend={} micro?={}>'
+        f = '<Interval start={} end={} days={} kslope={} trending={} micro?={}>'
         kslope = None if self.kslope is None else round(self.kslope, 1)
         return f.format(self.started_on, self.ended_on, self.days, kslope, self.trending,
             self.is_micro())
@@ -175,18 +254,7 @@ class OcWaveAnalysis:
 
     @cached_property
     def smooth_intervals(self):
-        smooth_intervals = []
-        prev_interval = self.intervals[0]
-
-        for interval, n in enumerate(self.intervals):
-            if not interval.is_micro():
-                smooth_intervals.append(interval)
-
-            # Micro: merge with previous or next?
-            # TODO
-
-        return smooth_intervals
-
+        return Interval.smooth_intervals(self.intervals)
 
     @cached_property
     def intervals(self):
@@ -204,7 +272,10 @@ class OcWaveAnalysis:
 
             prev_window = window
 
-        intervals.append(open_interval)
+        if open_interval.start_window != window:
+            open_interval.end(window)
+            intervals.append(open_interval)
+
         return intervals
 
     @cached_property

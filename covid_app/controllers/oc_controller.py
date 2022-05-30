@@ -261,6 +261,7 @@ class OcController(Controller):
         print(len(analysis.avg_positive_rates))
         print('windows', len(analysis.windows))
         pprint(analysis.intervals)
+        pprint(analysis.smooth_intervals)
 
         #analysis.windows_to_csv()
         #analysis.export_sample_data_to_csv()

@@ -5,6 +5,7 @@ from math import floor
 import time
 import csv
 import statistics
+from pprint import pprint
 
 from config.app import DATA_ROOT
 
@@ -72,8 +73,30 @@ class Window:
 
 class Interval:
     @staticmethod
+    def includes_micros(intervals):
+        for interval in intervals:
+            if interval.is_micro():
+                return True
+        return False
+
+    @staticmethod
     def smooth_intervals(intervals):
-        smoothed_intervals = []
+        n = 0
+        while Interval.includes_micros(intervals):
+            n += 1
+            print('micro merge loop', n, len(intervals))
+            pprint(intervals)
+            pre_merge_count = len(intervals)
+            intervals = Interval.merge_intervals(intervals)
+
+            if Interval.includes_micros(intervals) and len(intervals) == pre_merge_count:
+                raise Exception('Unable to merge micro intervals: {}'.format(intervals))
+
+        return intervals
+
+    @staticmethod
+    def merge_intervals(intervals):
+        merged_intervals = []
         prev_interval = None
         merge_with_prev = False
         merge_with_next = False
@@ -87,9 +110,14 @@ class Interval:
                 interval = interval.merge(prev_interval)
                 merge_with_next = False
 
+            if not interval.is_micro():
+                merged_intervals.append(interval)
+                prev_interval = interval
+                continue
+
             # What to do with micro interval?
             # If it trends with previous, merge
-            if prev_interval and interval.trend == prev_interval.trend:
+            if interval.trend == prev_interval.trend:
                 merge_with_prev = True
 
             # If it trends with next, flag for merge in next loop
@@ -98,9 +126,8 @@ class Interval:
 
             # If flat, merge with previous or next
             elif interval.trending == 'flat':
-                slope_diff_prev = abs(interval.kslope - prev_interval.kslope) if \
-                    prev_interval is not None else 0
-                slope_diff_next = abs(interval.kslope - next_interval.kslope)
+                slope_diff_prev = interval.kslope - prev_interval.kslope
+                slope_diff_next = interval.kslope - next_interval.kslope
                 if slope_diff_prev > slope_diff_next:
                     merge_with_prev = True
                 else:
@@ -114,19 +141,18 @@ class Interval:
                 interval = interval.merge(prev_interval)
 
                 # If prev interval was added to smooth, pop and replace with merged one
-                if prev_interval in smoothed_intervals:
-                    smoothed_intervals.pop()
+                if prev_interval in merged_intervals:
+                    merged_intervals.pop()
 
-                smoothed_intervals.append(interval)
-
-            # If interval is not micro, add to smoothed_intervals
-            if not interval.is_micro():
-                smoothed_intervals.append(interval)
+                merged_intervals.append(interval)
 
             # on to next loop
             prev_interval = interval
 
-        return smoothed_intervals
+        # Don't forget last interval
+        merged_intervals.append(intervals[-1])
+
+        return merged_intervals
 
     def __init__(self, start_window):
         self.start_window = start_window

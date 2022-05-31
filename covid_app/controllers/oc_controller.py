@@ -258,14 +258,14 @@ class OcController(Controller):
         from pprint import pprint
 
         analysis = OcWaveAnalysis(test=False)
-        print(len(analysis.avg_positive_rates))
+        print('avg_positive_rates', len(analysis.avg_positive_rates))
         print('windows', len(analysis.windows))
-        print(len(analysis.intervals))
+        print('intervals', len(analysis.intervals))
+        print('smooth_intervals', len(analysis.smooth_intervals))
 
         breakpoint()
 
-        pprint(analysis.smooth_intervals)
-        print(len(analysis.smooth_intervals))
-
+        #pprint(analysis.smooth_intervals)
         #analysis.windows_to_csv()
         #analysis.export_sample_data_to_csv()
+        print(analysis.export_windows_and_intervals_to_csv())

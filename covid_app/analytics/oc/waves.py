@@ -44,7 +44,7 @@ class Window:
 
     @property
     def rate_change(self):
-        return self.rates[-1] - self.rates[0]
+        return self.end_rate - self.start_rate
 
     @property
     def slope(self):
@@ -66,6 +66,14 @@ class Window:
             return -1
         else:
             return 0
+
+    @property
+    def start_rate(self):
+        return self.rates[0]
+
+    @property
+    def end_rate(self):
+        return self.rates[-1]
 
     def __repr__(self):
         f = '<Window middate={} days={} kslope={:.1f} stdev={:.3f} trend={}>'
@@ -90,19 +98,17 @@ class Interval:
 
     @staticmethod
     def smooth_intervals(intervals):
+        debug = False
+        dump = lambda msg, n, seq: debug and print(msg, n, len(seq), "\n", pformat(seq))
         n = 0
         while Interval.series_is_jagged(intervals):
             pre_merge_count = len(intervals)
             n += 1
 
-            print('PRE merges', n, len(intervals))
-            pprint(intervals)
             intervals = Interval.merge_running_trends(intervals)
-            print('POST running merges', n, len(intervals))
-            pprint(intervals)
+            dump('post running merges', n, intervals)
             intervals = Interval.merge_micro_intervals(intervals)
-            print('POST micro merges', n, len(intervals))
-            pprint(intervals)
+            dump('post micro merges', n, intervals)
 
             if Interval.series_is_jagged(intervals) and len(intervals) == pre_merge_count:
                 raise Exception('Unable to smooth jagged intervals:\n {}'.format(pformat(intervals)))
@@ -493,6 +499,30 @@ class OcWaveAnalysis:
 
         print('export_sample_data_to_csv', SAMPLE_DATA_CSV)
         return SAMPLE_DATA_CSV
+
+    def export_windows_and_intervals_to_csv(self):
+        headers = ['date', 'rate', 'window', 'interval']
+        window_size = WINDOW_SIZE
+        interval_size = MICRO_INTERVAL_MAX
+        csv_name = "waves-w{}-i{}.csv".format(window_size, interval_size)
+        csv_path = path_join(DATA_ROOT, 'tmp', csv_name)
+
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(headers)
+
+            for dated in self.dates:
+                interval = [i for i in self.smooth_intervals if i.started_on == dated]
+                window = [w for w in self.windows if w.date == dated]
+
+                writer.writerow([
+                    dated,
+                    self.avg_positive_rates[dated],
+                    window[0].rate if window else '',
+                    interval[0].start_rate if interval else ''
+                ])
+
+        return csv_path
 
     #
     # Private

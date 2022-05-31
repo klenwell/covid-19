@@ -260,8 +260,7 @@ class OcController(Controller):
         analysis = OcWaveAnalysis(test=False)
         print(len(analysis.avg_positive_rates))
         print('windows', len(analysis.windows))
-        pprint(analysis.intervals)
-        pprint(Interval.merge_running_trends(analysis.intervals))
+        print(len(analysis.intervals))
 
         breakpoint()
 

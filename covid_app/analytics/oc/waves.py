@@ -15,8 +15,9 @@ from config.app import DATA_ROOT
 #
 DATE_F = '%Y-%m-%d'
 START_DATE = '2020-03-12'
-WINDOW_SIZE = 7
+WINDOW_SIZE = 5
 KSLOPE_THRESHOLD = 6   # Slope value distinguishing plateaus from rise/falls
+MICRO_INTERVAL_MAX = 14
 SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
 
 
@@ -93,11 +94,15 @@ class Interval:
         while Interval.series_is_jagged(intervals):
             pre_merge_count = len(intervals)
             n += 1
-            print('micro merge loop', n, len(intervals))
-            pprint(intervals)
 
+            print('PRE merges', n, len(intervals))
+            pprint(intervals)
             intervals = Interval.merge_running_trends(intervals)
+            print('POST running merges', n, len(intervals))
+            pprint(intervals)
             intervals = Interval.merge_micro_intervals(intervals)
+            print('POST micro merges', n, len(intervals))
+            pprint(intervals)
 
             if Interval.series_is_jagged(intervals) and len(intervals) == pre_merge_count:
                 raise Exception('Unable to smooth jagged intervals:\n {}'.format(pformat(intervals)))
@@ -139,31 +144,37 @@ class Interval:
                 if prev_interval in merged_intervals:
                     merged_intervals.pop()
 
-            # Interval no longer micro, skip to next one
+            # Interval no longer micro, continue to next one
             if not interval.is_micro():
                 merged_intervals.append(interval)
                 prev_interval = interval
                 continue
 
             # Now figure out what to do with micro intervals.
-            # If flat, merge with previous or next
-            if interval.trending == 'flat':
-                slope_diff_prev = abs(interval.kslope - prev_interval.kslope) if \
-                    prev_interval is not None else inf
-                slope_diff_next = abs(interval.kslope - next_interval.kslope)
-                if slope_diff_prev < slope_diff_next:
+            prev_interval_slope = prev_interval.kslope if prev_interval is not None else inf
+            prev_interval_flatter = prev_interval_slope < next_interval.kslope
+
+            # If no previous, just merge with next interval
+            if not prev_interval:
+                merge_on_next_loop = True
+            # If flat, merge with whichever neibor is flatter
+            elif interval.trending == 'flat':
+                if prev_interval_flatter:
                     merge_with_prev = True
                 else:
                     merge_on_next_loop = True
-            # TODO: this mostly works. See new surge around 4/2/2022 where it doesn't.
-            else:
-                slope_diff_prev = abs(interval.kslope - prev_interval.kslope) if \
-                    prev_interval is not None else inf
-                slope_diff_next = abs(interval.kslope - next_interval.kslope)
-                if slope_diff_prev < slope_diff_next:
-                    merge_with_prev = True
-                else:
+            # If next interval is lower then previous, merge with next since this should extend trend
+            elif interval.trending == 'rising':
+                if next_interval.end_rate < prev_interval.end_rate:
                     merge_on_next_loop = True
+                else:
+                    merge_with_prev = True
+            # Same logic as rising reversed
+            else: # interval.trending == 'falling'
+                if next_interval.end_rate < prev_interval.end_rate:
+                    merge_on_next_loop = True
+                else:
+                    merge_with_prev = True
 
             # Merge with previous if flagged above
             if merge_with_prev:
@@ -179,7 +190,6 @@ class Interval:
 
         # Don't forget last interval
         merged_intervals.append(intervals[-1])
-
         return merged_intervals
 
     def __init__(self, start_window):
@@ -263,7 +273,7 @@ class Interval:
         if not self.is_ended:
             return None
 
-        if self.days <= 14:
+        if self.days <= MICRO_INTERVAL_MAX:
             return True
 
         return False

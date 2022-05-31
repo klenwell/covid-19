@@ -17,7 +17,7 @@ DATE_F = '%Y-%m-%d'
 START_DATE = '2020-03-05'
 WINDOW_SIZE = 5             # Must be odd number!
 MICRO_INTERVAL_MAX = 14
-KSLOPE_THRESHOLD = 3.5        # Slope value distinguishing plateaus from rise/falls
+KSLOPE_THRESHOLD = 5        # Slope value distinguishing plateaus from rise/falls
 SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
 
 
@@ -98,7 +98,7 @@ class Interval:
 
     @staticmethod
     def smooth_intervals(intervals):
-        debug = False
+        debug = True
         dump = lambda msg, n, seq: debug and print(msg, n, len(seq), "\n", pformat(seq))
         n = 0
         while Interval.series_is_jagged(intervals):
@@ -172,13 +172,17 @@ class Interval:
                     merge_on_next_loop = True
             # If next interval is lower then previous, merge with next since this should extend trend
             elif interval.trending == 'rising':
-                if next_interval.end_rate < prev_interval.end_rate:
+                if prev_interval.trending == 'rising':
+                    merge_with_prev = True
+                elif next_interval.end_rate < prev_interval.end_rate:
                     merge_on_next_loop = True
                 else:
                     merge_with_prev = True
             # Same logic as rising reversed
             else: # interval.trending == 'falling'
-                if next_interval.end_rate < prev_interval.end_rate:
+                if prev_interval.trending == 'falling':
+                    merge_with_prev = True
+                elif next_interval.end_rate < prev_interval.end_rate:
                     merge_on_next_loop = True
                 else:
                     merge_with_prev = True

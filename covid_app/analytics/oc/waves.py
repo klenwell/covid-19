@@ -14,10 +14,10 @@ from config.app import DATA_ROOT
 # Constants
 #
 DATE_F = '%Y-%m-%d'
-START_DATE = '2020-03-12'
-WINDOW_SIZE = 5
-KSLOPE_THRESHOLD = 6   # Slope value distinguishing plateaus from rise/falls
+START_DATE = '2020-03-05'
+WINDOW_SIZE = 5             # Must be odd number!
 MICRO_INTERVAL_MAX = 14
+KSLOPE_THRESHOLD = 3.5        # Slope value distinguishing plateaus from rise/falls
 SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
 
 
@@ -158,12 +158,13 @@ class Interval:
 
             # Now figure out what to do with micro intervals.
             prev_interval_slope = prev_interval.kslope if prev_interval is not None else inf
-            prev_interval_flatter = prev_interval_slope < next_interval.kslope
+            prev_interval_higher = prev_interval and prev_interval.end_rate > next_interval.end_rate
+            prev_interval_flatter = abs(prev_interval_slope) < abs(next_interval.kslope)
 
             # If no previous, just merge with next interval
             if not prev_interval:
                 merge_on_next_loop = True
-            # If flat, merge with whichever neibor is flatter
+            # If flat, merge with whichever neighbor is flatter
             elif interval.trending == 'flat':
                 if prev_interval_flatter:
                     merge_with_prev = True
@@ -504,7 +505,8 @@ class OcWaveAnalysis:
         headers = ['date', 'rate', 'window', 'interval']
         window_size = WINDOW_SIZE
         interval_size = MICRO_INTERVAL_MAX
-        csv_name = "waves-w{}-i{}.csv".format(window_size, interval_size)
+        slope = KSLOPE_THRESHOLD
+        csv_name = "waves-w{}-i{}-s{}.csv".format(window_size, interval_size, slope)
         csv_path = path_join(DATA_ROOT, 'tmp', csv_name)
 
         with open(csv_path, 'w', newline='') as f:

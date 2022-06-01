@@ -64,19 +64,19 @@ class OCMetricsExport:
     @cached_property
     def latest_hospital_case_update(self):
         for dated in self.case_dates:
-            if self.case_extract.hospitalizations.get(dated):
+            if self.case_extract.hospitalizations.get(dated) not in ('', None):
                 return dated
 
     @cached_property
     def latest_icu_case_update(self):
         for dated in self.case_dates:
-            if self.case_extract.icu_cases.get(dated):
+            if self.case_extract.icu_cases.get(dated) not in ('', None):
                 return dated
 
     @cached_property
     def latest_death_update(self):
         for dated in self.case_dates:
-            if self.case_extract.new_deaths.get(dated):
+            if self.case_extract.new_deaths.get(dated) not in ('', None):
                 return dated
 
     # Date sets

@@ -55,14 +55,14 @@
         "d14DeltaPct": 30.3
     },
     "deaths": {
-        "updatedOn": "2022-05-27",
-        "latest": 0.86,
-        "percentile": 5.95,
-        "d7Date": "2022-05-20",
-        "d7Value": 0.71,
-        "d7DeltaPct": 20.0,
-        "d14Date": "2022-05-13",
-        "d14Value": 1.71,
-        "d14DeltaPct": -50.0
+        "updatedOn": "2022-05-31",
+        "latest": 0.57,
+        "percentile": 2.85,
+        "d7Date": "2022-05-24",
+        "d7Value": 1.0,
+        "d7DeltaPct": -42.86,
+        "d14Date": "2022-05-17",
+        "d14Value": 0.57,
+        "d14DeltaPct": 0.0
     }
 }

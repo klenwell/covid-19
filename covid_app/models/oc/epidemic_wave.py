@@ -160,17 +160,8 @@ class EpidemicWave:
         merged_phases = []
         prev_phase = phases[0]
 
-        # TODO: remove this if you ever abstract this out. This is OC-specific.
-        seesaw_2020_period_start = datetime(2020, 3, 31).date()
-        seesaw_2020_period_end = datetime(2020, 6, 11).date()
-
         for phase in phases[1:]:
-            # This is a dirty hack to deal with irregular data early in pandemic
-            if phase.started_on > seesaw_2020_period_start and \
-                phase.started_on < seesaw_2020_period_end and \
-                    prev_phase.trending == 'falling':
-                phase = phase.merge(prev_phase)
-            elif phase.trend == prev_phase.trend:
+            if phase.trend == prev_phase.trend:
                 phase = phase.merge(prev_phase)
             else:
                 merged_phases.append(prev_phase)
@@ -218,12 +209,12 @@ class EpidemicWave:
                     merge_with_prev = True
                 else:
                     merge_on_next_loop = True
-            # If next phase is lower then previous, merge with next since this should extend trend
+            # If next phase is higher than previous, merge with next since this should extend trend
             elif phase.trending == 'rising':
                 if prev_phase.trending == 'rising':
                     merge_with_prev = True
                 # FIXME? Comment above and this line seem inconsistent.
-                elif next_phase.end_value < prev_phase.end_value:
+                elif not prev_phase_higher:
                     merge_on_next_loop = True
                 else:
                     merge_with_prev = True
@@ -231,7 +222,7 @@ class EpidemicWave:
             else:  # phase.trending == 'falling'
                 if prev_phase.trending == 'falling':
                     merge_with_prev = True
-                elif next_phase.end_value < prev_phase.end_value:
+                elif prev_phase_higher:
                     merge_on_next_loop = True
                 else:
                     merge_with_prev = True

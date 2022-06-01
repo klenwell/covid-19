@@ -8,7 +8,7 @@ import statistics
 from pprint import pprint, pformat
 
 from config.app import DATA_ROOT
-from covid_app.models.oc.epidemic_wave import EpidemicWave
+from covid_app.models.oc.epidemic import Epidemic
 
 
 #
@@ -28,13 +28,13 @@ class OcWaveAnalysis:
     # Properties
     #
     @cached_property
-    def wave(self):
+    def epidemic(self):
         opts = {
             'window_size': 5,
             'flat_slope_threshold': 5,
             'min_phase_size': 14
         }
-        return EpidemicWave(self.avg_positive_rates, **opts)
+        return Epidemic(self.avg_positive_rates, **opts)
 
     @cached_property
     def avg_positive_rates(self):

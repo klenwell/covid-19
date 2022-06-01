@@ -92,6 +92,15 @@ class WavePhase:
 
         return False
 
+    def is_rising(self):
+        return self.trending == 'rising'
+
+    def is_falling(self):
+        return self.trending == 'falling'
+
+    def is_flat(self):
+        return self.trending == 'flat'
+
     def __repr__(self):
         f = '<Phase start={} end={} days={} kslope={} trending={} micro?={}>'
         kslope = None if self.kslope is None else round(self.kslope, 1)

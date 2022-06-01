@@ -112,4 +112,5 @@ config/secrets.py
 # Assorted files
 data/oc/oc-immunity-v1.csv
 data/oc/analytics/windows.csv
+data/tmp
 data/**/*.ods

@@ -8,6 +8,7 @@ import statistics
 from pprint import pprint, pformat
 
 from config.app import DATA_ROOT
+from covid_app.models.oc.epidemic_wave import EpidemicWave
 
 
 #
@@ -21,292 +22,20 @@ KSLOPE_THRESHOLD = 5        # Slope value distinguishing plateaus from rise/fall
 SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
 
 
-from itertools import islice
-from collections import deque
-def sliding_window(iterable, n):
-    """Source: https://docs.python.org/3/library/itertools.html#itertools-recipes
-    sliding_window('ABCDEFG', 4) -> ABCD BCDE CDEF DEFG
-    """
-    it = iter(iterable)
-    window = deque(islice(it, n), maxlen=n)
-    if len(window) == n:
-        yield tuple(window)
-    for x in it:
-        window.append(x)
-        yield tuple(window)
-
-
-class Window:
-    def __init__(self, dated, rates):
-        self.date = dated
-        self.rates = rates
-        self.rate = rates[floor(len(rates) / 2)]
-
-    @property
-    def rate_change(self):
-        return self.end_rate - self.start_rate
-
-    @property
-    def slope(self):
-        return self.rate_change / len(self.rates)
-
-    @property
-    def kslope(self):
-        return self.slope * 100
-
-    @property
-    def stdev(self):
-        return statistics.stdev(self.rates)
-
-    @property
-    def trend(self):
-        if self.kslope > KSLOPE_THRESHOLD:
-            return 1
-        elif self.kslope < -KSLOPE_THRESHOLD:
-            return -1
-        else:
-            return 0
-
-    @property
-    def start_rate(self):
-        return self.rates[0]
-
-    @property
-    def end_rate(self):
-        return self.rates[-1]
-
-    def __repr__(self):
-        f = '<Window middate={} days={} kslope={:.1f} stdev={:.3f} trend={}>'
-        return f.format(self.date, len(self.rates), self.kslope, self.stdev, self.trend)
-
-
-class Interval:
-    @staticmethod
-    def series_is_jagged(intervals):
-        """These things are considered unjagged or unsmooth:
-        - any micro intervals
-        - any consecutive intervals with same trend
-        """
-        prev_interval = None
-        for interval in intervals[:-1]:
-            if interval.is_micro():
-                return True
-            if prev_interval and prev_interval.trend == interval.trend:
-                return True
-            prev_interval = interval
-        return False
-
-    @staticmethod
-    def smooth_intervals(intervals):
-        debug = True
-        dump = lambda msg, n, seq: debug and print(msg, n, len(seq), "\n", pformat(seq))
-        n = 0
-        while Interval.series_is_jagged(intervals):
-            pre_merge_count = len(intervals)
-            n += 1
-
-            intervals = Interval.merge_running_trends(intervals)
-            dump('post running merges', n, intervals)
-            intervals = Interval.merge_micro_intervals(intervals)
-            dump('post micro merges', n, intervals)
-
-            if Interval.series_is_jagged(intervals) and len(intervals) == pre_merge_count:
-                raise Exception('Unable to smooth jagged intervals:\n {}'.format(pformat(intervals)))
-
-        return intervals
-
-    @staticmethod
-    def merge_running_trends(intervals):
-        merged_intervals = []
-        prev_interval = intervals[0]
-        seesaw_2020_period_start = datetime(2020, 3, 31).date()
-        seesaw_2020_period_end = datetime(2020, 6, 11).date()
-
-        for interval in intervals[1:]:
-            # This is a dirty hack to deal with jagged data early in pandemic
-            if interval.started_on > seesaw_2020_period_start and \
-                interval.started_on < seesaw_2020_period_end and \
-                prev_interval.trending == 'falling':
-                interval = interval.merge(prev_interval)
-            elif interval.trend == prev_interval.trend:
-                interval = interval.merge(prev_interval)
-            else:
-                merged_intervals.append(prev_interval)
-            prev_interval = interval
-
-        # Don't forget last interval
-        merged_intervals.append(interval)
-        return merged_intervals
-
-    @staticmethod
-    def merge_micro_intervals(intervals):
-        merged_intervals = []
-        prev_interval = None
-        merge_on_next_loop = False
-
-        for interval, next_interval in sliding_window(intervals, 2):
-            #print(prev_interval, interval, next_interval)
-            merge_with_prev = False     # reset flag each loop
-
-            # Merge intervals as flagged in previous loop.
-            if merge_on_next_loop:
-                merge_on_next_loop = False
-                interval = interval.merge(prev_interval)
-
-                # If prev interval was added to smooth, pop and replace with merged one
-                if prev_interval in merged_intervals:
-                    merged_intervals.pop()
-
-            # Interval no longer micro, continue to next one
-            if not interval.is_micro():
-                merged_intervals.append(interval)
-                prev_interval = interval
-                continue
-
-            # Now figure out what to do with micro intervals.
-            prev_interval_slope = prev_interval.kslope if prev_interval is not None else inf
-            prev_interval_higher = prev_interval and prev_interval.end_rate > next_interval.end_rate
-            prev_interval_flatter = abs(prev_interval_slope) < abs(next_interval.kslope)
-
-            # If no previous, just merge with next interval
-            if not prev_interval:
-                merge_on_next_loop = True
-            # If flat, merge with whichever neighbor is flatter
-            elif interval.trending == 'flat':
-                if prev_interval_flatter:
-                    merge_with_prev = True
-                else:
-                    merge_on_next_loop = True
-            # If next interval is lower then previous, merge with next since this should extend trend
-            elif interval.trending == 'rising':
-                if prev_interval.trending == 'rising':
-                    merge_with_prev = True
-                elif next_interval.end_rate < prev_interval.end_rate:
-                    merge_on_next_loop = True
-                else:
-                    merge_with_prev = True
-            # Same logic as rising reversed
-            else: # interval.trending == 'falling'
-                if prev_interval.trending == 'falling':
-                    merge_with_prev = True
-                elif next_interval.end_rate < prev_interval.end_rate:
-                    merge_on_next_loop = True
-                else:
-                    merge_with_prev = True
-
-            # Merge with previous if flagged above
-            if merge_with_prev:
-                interval = interval.merge(prev_interval)
-                if prev_interval in merged_intervals:
-                    merged_intervals.pop()
-
-            if not merge_on_next_loop:
-                merged_intervals.append(interval)
-
-            # on to next loop
-            prev_interval = interval
-
-        # Don't forget last interval
-        merged_intervals.append(intervals[-1])
-        return merged_intervals
-
-    def __init__(self, start_window):
-        self.start_window = start_window
-        self.end_window = None
-
-    @property
-    def started_on(self):
-        return self.start_window.date
-
-    @property
-    def ended_on(self):
-        if self.is_ended:
-            return self.end_window.date
-
-    @property
-    def start_rate(self):
-        return self.start_window.rate
-
-    @property
-    def end_rate(self):
-        if self.is_ended:
-            return self.end_window.rate
-
-    @property
-    def is_ended(self):
-        return self.end_window is not None
-
-    @property
-    def days(self):
-        if not self.is_ended:
-            return None
-        return (self.ended_on - self.started_on).days
-
-    @property
-    def rate_diff(self):
-        if not self.is_ended:
-            return None
-        return self.end_rate - self.start_rate
-
-    @property
-    def kslope(self):
-        if not self.is_ended:
-            return None
-        return self.rate_diff / self.days * 100
-
-    @property
-    def trend(self):
-        if self.kslope is None:
-            return None
-
-        if self.kslope > KSLOPE_THRESHOLD:
-            return 1
-        elif self.kslope < -KSLOPE_THRESHOLD:
-            return -1
-        else:
-            return 0
-
-    @property
-    def trending(self):
-        labels = {
-            -1: 'falling',
-            0: 'flat',
-            1: 'rising'
-        }
-        if self.trend is not None:
-            return labels[self.trend]
-
-    # Methods
-    def merge(self, other_interval):
-        start_interval = self if self.started_on < other_interval.started_on else other_interval
-        end_interval = self if start_interval != self else other_interval
-        merged_interval = Interval(start_interval.start_window)
-        merged_interval.end(end_interval.end_window)
-        return merged_interval
-
-    def end(self, window):
-        self.end_window = window
-
-    def is_micro(self):
-        if not self.is_ended:
-            return None
-
-        if self.days <= MICRO_INTERVAL_MAX:
-            return True
-
-        return False
-
-    def __repr__(self):
-        f = '<Interval start={} end={} days={} kslope={} trending={} micro?={}>'
-        kslope = None if self.kslope is None else round(self.kslope, 1)
-        return f.format(self.started_on, self.ended_on, self.days, kslope, self.trending,
-            self.is_micro())
-
 
 class OcWaveAnalysis:
     #
     # Properties
     #
+    @cached_property
+    def wave(self):
+        opts = {
+            'window_size': 5,
+            'flat_slope_threshold': 5,
+            'min_phase_size': 14
+        }
+        return EpidemicWave(self.avg_positive_rates, **opts)
+
     @cached_property
     def avg_positive_rates(self):
         if self.test:
@@ -332,69 +61,6 @@ class OcWaveAnalysis:
             for row in csv.reader(f):
                 dated = datetime.strptime(row[0], DATE_F).date()
                 dated_values[dated] = float(row[1])
-        return dated_values
-
-    @cached_property
-    def smooth_intervals(self):
-        return Interval.smooth_intervals(self.intervals)
-
-    @cached_property
-    def intervals(self):
-        intervals = []
-        prev_window = self.windows[0]
-        open_interval = Interval(prev_window)
-
-        for window in self.windows[1:]:
-            trend_change = window.trend != prev_window.trend
-
-            if trend_change:
-                open_interval.end(window)
-                intervals.append(open_interval)
-                open_interval = Interval(window)
-
-            prev_window = window
-
-        if open_interval.start_window != window:
-            open_interval.end(window)
-            intervals.append(open_interval)
-
-        return intervals
-
-    @cached_property
-    def windows(self):
-        windows = []
-        half_window_len = floor(WINDOW_SIZE / 2)
-
-        for dated in self.dates:
-            window_rates = []
-
-            for n in range(-half_window_len, half_window_len+1):
-                rate_date = dated + timedelta(days=n)
-                rate = self.avg_positive_rates.get(rate_date)
-                if rate:
-                    window_rates.append(rate)
-
-            if len(window_rates) == WINDOW_SIZE:
-                window = Window(dated, window_rates)
-                windows.append(window)
-
-        return windows
-
-    @cached_property
-    def std_devs(self):
-        dated_values = {}
-
-        for dated in self.dates[1:]:
-            yesterday = dated - timedelta(days=1)
-            window = self.windows.get(yesterday)
-
-            if not window:
-                continue
-
-            diff = self.avg_positive_rates[dated] - window['mean']
-            dev = diff / window['stdev']
-            dated_values[dated] = dev
-
         return dated_values
 
     @cached_property
@@ -478,7 +144,7 @@ class OcWaveAnalysis:
             writer = csv.writer(f)
             writer.writerow(headers)
 
-            for dated, row in sorted(self.windows.items()):
+            for dated, row in sorted(self.wave.windows.items()):
                 writer.writerow([
                     dated,
                     row['rate'],
@@ -512,27 +178,25 @@ class OcWaveAnalysis:
         print('export_sample_data_to_csv', SAMPLE_DATA_CSV)
         return SAMPLE_DATA_CSV
 
-    def export_windows_and_intervals_to_csv(self):
-        headers = ['date', 'rate', 'window', 'interval']
-        window_size = WINDOW_SIZE
-        interval_size = MICRO_INTERVAL_MAX
-        slope = KSLOPE_THRESHOLD
-        csv_name = "waves-w{}-i{}-s{}.csv".format(window_size, interval_size, slope)
+    def export_windows_and_phases_to_csv(self):
+        headers = ['date', 'rate', 'window', 'phase']
+        csv_name = "waves-w{}-p{}-s{}.csv".format(self.wave.window_size,
+            self.wave.min_phase_size, self.wave.flat_slope_threshold)
         csv_path = path_join(DATA_ROOT, 'tmp', csv_name)
 
         with open(csv_path, 'w', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(headers)
 
-            for dated in self.dates:
-                interval = [i for i in self.smooth_intervals if i.started_on == dated]
-                window = [w for w in self.windows if w.date == dated]
+            for dated in self.wave.dates:
+                phase = [p for p in self.wave.smoothed_phases if p.started_on == dated]
+                window = [w for w in self.wave.windows if w.date == dated]
 
                 writer.writerow([
                     dated,
                     self.avg_positive_rates[dated],
-                    window[0].rate if window else '',
-                    interval[0].start_rate if interval else ''
+                    window[0].value if window else '',
+                    phase[0].start_value if phase else ''
                 ])
 
         return csv_path

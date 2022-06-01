@@ -254,18 +254,18 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.analytics.oc.waves import OcWaveAnalysis, Interval
+        from covid_app.analytics.oc.waves import OcWaveAnalysis
         from pprint import pprint
 
         analysis = OcWaveAnalysis(test=False)
         print('avg_positive_rates', len(analysis.avg_positive_rates))
-        print('windows', len(analysis.windows))
-        print('intervals', len(analysis.intervals))
-        print('smooth_intervals', len(analysis.smooth_intervals))
+        print('windows', len(analysis.wave.windows))
+        print('phases', len(analysis.wave.phases))
+        print('smooth_phases', len(analysis.wave.smoothed_phases))
 
         #breakpoint()
 
-        pprint(analysis.smooth_intervals)
+        pprint(analysis.wave.smoothed_phases)
         #analysis.windows_to_csv()
         #analysis.export_sample_data_to_csv()
-        print(analysis.export_windows_and_intervals_to_csv())
+        print(analysis.export_windows_and_phases_to_csv())

@@ -119,9 +119,16 @@ class Interval:
     def merge_running_trends(intervals):
         merged_intervals = []
         prev_interval = intervals[0]
+        seesaw_2020_period_start = datetime(2020, 3, 31).date()
+        seesaw_2020_period_end = datetime(2020, 6, 11).date()
 
         for interval in intervals[1:]:
-            if interval.trend == prev_interval.trend:
+            # This is a dirty hack to deal with jagged data early in pandemic
+            if interval.started_on > seesaw_2020_period_start and \
+                interval.started_on < seesaw_2020_period_end and \
+                prev_interval.trending == 'falling':
+                interval = interval.merge(prev_interval)
+            elif interval.trend == prev_interval.trend:
                 interval = interval.merge(prev_interval)
             else:
                 merged_intervals.append(prev_interval)

@@ -1,11 +1,8 @@
 from os.path import join as path_join
 from functools import cached_property
 from datetime import datetime, timedelta
-from math import floor, inf
 import time
 import csv
-import statistics
-from pprint import pprint, pformat
 
 from config.app import DATA_ROOT
 from covid_app.models.oc.epidemic import Epidemic
@@ -16,11 +13,7 @@ from covid_app.models.oc.epidemic import Epidemic
 #
 DATE_F = '%Y-%m-%d'
 START_DATE = '2020-03-05'
-WINDOW_SIZE = 5             # Must be odd number!
-MICRO_INTERVAL_MAX = 14
-KSLOPE_THRESHOLD = 5        # Slope value distinguishing plateaus from rise/falls
 SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
-
 
 
 class OcWaveAnalysis:
@@ -180,8 +173,11 @@ class OcWaveAnalysis:
 
     def export_windows_and_phases_to_csv(self):
         headers = ['date', 'rate', 'window', 'phase']
-        csv_name = "waves-w{}-p{}-s{}.csv".format(self.wave.window_size,
-            self.wave.min_phase_size, self.wave.flat_slope_threshold)
+        csv_name = "waves-w{}-p{}-s{}.csv".format(
+            self.wave.window_size,
+            self.wave.min_phase_size,
+            self.wave.flat_slope_threshold
+        )
         csv_path = path_join(DATA_ROOT, 'tmp', csv_name)
 
         with open(csv_path, 'w', newline='') as f:

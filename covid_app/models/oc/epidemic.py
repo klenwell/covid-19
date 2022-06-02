@@ -24,6 +24,12 @@ class PhaseSmoothingError(Exception):
         self.phases = phases
 
 
+class PhaseMergingError(Exception):
+    def __init__(self, prev_phase, phase):
+        message = 'Unexpected phase combination:\nphase: {}\nprev:{}'.format(
+            phase, prev_phase)
+        super().__init__(message)
+
 class WaveExtractionError(Exception):
     def __init__(self, prev_phase, next_phase):
         message = 'Unexpected phase combination:\n{}\n{}'.format(prev_phase, next_phase)
@@ -237,7 +243,7 @@ class Epidemic:
                 merge_on_next_loop = False
                 phase = phase.merge(prev_phase)
 
-                # If prev phase was added to smooth, pop and replace with merged one
+                # If prev phase was added to merged_phases, pop and replace with new one below.
                 if prev_phase in merged_phases:
                     merged_phases.pop()
 
@@ -256,28 +262,30 @@ class Epidemic:
             if not prev_phase:
                 merge_on_next_loop = True
             # If flat, merge with whichever neighbor is flatter
-            elif phase.trending == 'flat':
+            elif phase.is_flat():
                 if prev_phase_flatter:
                     merge_with_prev = True
                 else:
                     merge_on_next_loop = True
+            # Continue rising or falling trend
+            elif phase.is_rising() and prev_phase.is_rising():
+                merge_with_prev = True
+            elif phase.is_falling() and prev_phase.is_falling():
+                merge_with_prev = True
             # If next phase is higher than previous, merge with next since this should extend trend
-            elif phase.trending == 'rising':
-                if prev_phase.trending == 'rising':
-                    merge_with_prev = True
-                # FIXME? Comment above and this line seem inconsistent.
-                elif not prev_phase_higher:
+            elif phase.is_rising():
+                if not prev_phase_higher:
                     merge_on_next_loop = True
                 else:
                     merge_with_prev = True
             # Same logic as rising reversed
-            else:  # phase.trending == 'falling'
-                if prev_phase.trending == 'falling':
-                    merge_with_prev = True
-                elif prev_phase_higher:
+            elif phase.is_falling():
+                if prev_phase_higher:
                     merge_on_next_loop = True
                 else:
                     merge_with_prev = True
+            else:
+                raise PhaseMergingError(prev_phase, phase)
 
             # Merge with previous if flagged above
             if merge_with_prev:

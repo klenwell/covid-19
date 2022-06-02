@@ -258,10 +258,10 @@ class OcController(Controller):
         from pprint import pprint
 
         analysis = OcWaveAnalysis(test=False)
-        print('avg_positive_rates', len(analysis.avg_positive_rates))
-        print('windows', len(analysis.epidemic.windows))
-        print('phases', len(analysis.epidemic.phases))
-        print('smooth_phases', len(analysis.epidemic.smoothed_phases))
+        print('avg_positive_rates:', len(analysis.avg_positive_rates))
+        print('windows:', len(analysis.epidemic.windows))
+        print('phases:', len(analysis.epidemic.phases))
+        print('smoothed phases:', len(analysis.epidemic.smoothed_phases))
         pprint(analysis.epidemic.smoothed_phases)
         pprint(analysis.epidemic.waves)
 

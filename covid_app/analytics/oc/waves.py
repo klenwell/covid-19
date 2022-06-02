@@ -36,6 +36,17 @@ class OcWaveAnalysis:
         }
         return Epidemic(self.avg_positive_rates, **opts)
 
+    @property
+    def daily_oc_export_path(self):
+        return path_join(DATA_ROOT, 'oc', 'oc-hca.csv')
+
+    @cached_property
+    def export_rows(self):
+        with open(self.daily_oc_export_path, newline='') as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+        return rows
+
     @cached_property
     def avg_positive_rates(self):
         if self.test:
@@ -82,17 +93,6 @@ class OcWaveAnalysis:
             except ValueError:
                 pass
         return dated_values
-
-    @property
-    def daily_oc_export_path(self):
-        return path_join(DATA_ROOT, 'oc', 'oc-hca.csv')
-
-    @cached_property
-    def export_rows(self):
-        with open(self.daily_oc_export_path, newline='') as f:
-            reader = csv.DictReader(f)
-            rows = list(reader)
-        return rows
 
     @cached_property
     def dated_export_rows(self):

@@ -2,7 +2,7 @@
 Class for breaking a data series (e.g. positive rate data) into waves and troughs.
 
 An epidemic is made up of waves which are made up of phases which are made up of
-phase intervals which are made up of data points (from a time series.)
+phase windows which are made up of data points (from a time series.)
 """
 from functools import cached_property
 from datetime import timedelta

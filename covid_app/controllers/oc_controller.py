@@ -262,11 +262,7 @@ class OcController(Controller):
         print('windows', len(analysis.epidemic.windows))
         print('phases', len(analysis.epidemic.phases))
         print('smooth_phases', len(analysis.epidemic.smoothed_phases))
-
-        #breakpoint()
-
         pprint(analysis.epidemic.smoothed_phases)
         pprint(analysis.epidemic.waves)
-        #analysis.windows_to_csv()
-        #analysis.export_sample_data_to_csv()
-        #print(analysis.export_windows_and_phases_to_csv())
+
+        breakpoint()

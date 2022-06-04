@@ -1,6 +1,6 @@
 from os.path import join as path_join
 from functools import cached_property
-from datetime import timedelta
+from datetime import timedelta, datetime
 import time
 import json
 
@@ -8,18 +8,19 @@ from config.app import GH_PAGES_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
 from covid_app.analytics.oc.waves import OcWaveAnalysis
 
+
 #
 # Constants
 #
 JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
-JSON_FILE_NAME = 'waves.json'
-
-JSON_SCHEMA = {
-    'waves': [],
-    'phases': []
-}
-
 DATE_OUT_F = '%Y-%m-%d'
+JSON_SCHEMA = {
+    'data': {},
+    'meta': {
+        'createdOn': '{date}',
+        'lastUpdatedOn': '{date}'
+    }
+}
 
 
 class OCWavesExport:
@@ -27,8 +28,14 @@ class OCWavesExport:
     # Properties
     #
     @property
-    def json_path(self):
-        return path_join(JSON_DATA_PATH, JSON_FILE_NAME)
+    def waves_json_path(self):
+        file_name = 'waves.json'
+        return path_join(JSON_DATA_PATH, file_name)
+
+    @property
+    def phases_json_path(self):
+        file_name = 'phases.json'
+        return path_join(JSON_DATA_PATH, file_name)
 
     # Extracts
     @cached_property
@@ -130,6 +137,11 @@ class OCWavesExport:
 
     # Etc
     @property
+    def iso_timestamp(self):
+        # Source: https://stackoverflow.com/a/28147286/1093087
+        return datetime.now().astimezone().replace(microsecond=0).isoformat()
+
+    @property
     def run_time(self):
         if not self.run_time_end:
             self.run_time_end = time.time()
@@ -148,17 +160,35 @@ class OCWavesExport:
             print('[WARNING] In test mode: loading sample data.')
             self.case_extract.mock_api_calls()
 
-    def to_json_file(self):
+    def waves_to_json_file(self):
         schema = JSON_SCHEMA.copy()
 
-        schema['waves'] = self.prep_waves_data()
-        schema['phases'] = self.prep_phases_cases()
+        schema['data'] = self.prep_waves_data()
+        schema['meta'] = {
+            'createdAt': self.iso_timestamp,
+            'lastUpdatedOn': self.analysis.end_date.strftime(DATE_OUT_F)
+        }
 
         # pretty print
-        with open(self.json_path, 'w') as f:
+        with open(self.waves_json_path, 'w') as f:
             f.write(json.dumps(schema, indent=4))
 
-        return self.json_path
+        return self.waves_json_path
+
+    def phases_to_json_file(self):
+        schema = JSON_SCHEMA.copy()
+
+        schema['data'] = self.prep_phases_cases()
+        schema['meta'] = {
+            'createdAt': self.iso_timestamp,
+            'lastUpdatedOn': self.analysis.end_date.strftime(DATE_OUT_F)
+        }
+
+        # pretty print
+        with open(self.phases_json_path, 'w') as f:
+            f.write(json.dumps(schema, indent=4))
+
+        return self.phases_json_path
 
     #
     # Private

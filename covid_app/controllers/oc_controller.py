@@ -259,8 +259,10 @@ class OcController(Controller):
         from pprint import pprint
 
         export = OCWavesExport()
-        csv_path = export.to_json_file()
-        print('Exported to:', csv_path)
+        waves_csv_path = export.waves_to_json_file()
+        print('Waves exported to:', waves_csv_path)
+        phases_csv_path = export.phases_to_json_file()
+        print('Phases exported to:', phases_csv_path)
 
         analysis = OcWaveAnalysis(test=False)
         print('avg_positive_rates:', len(analysis.avg_positive_rates))

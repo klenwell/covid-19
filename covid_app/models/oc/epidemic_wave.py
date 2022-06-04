@@ -90,6 +90,7 @@ class EpidemicWave:
                 return dated
 
     def __repr__(self):
-        f = '<Epidemic{} start={} end={} days={}>'
+        f = '<Epidemic{} start={} end={} days={} peak={} peak_rate={:.2f}>'
         label = 'Wave' if self.is_wave() else 'Lull'
-        return f.format(label, self.started_on, self.ended_on, self.days)
+        return f.format(label, self.started_on, self.ended_on, self.days, self.peaked_on,
+                        self.peak_value)

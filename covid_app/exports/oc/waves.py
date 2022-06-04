@@ -199,8 +199,12 @@ class OCWavesExport:
     #
     def prep_waves_data(self):
         waves = []
-        print(self.epidemic.timelines.keys())
+
         for wave in self.epidemic.waves:
+            total_cases = self.sum_timeline(wave.get_timeline('new_cases'))
+            total_deaths = self.sum_timeline(wave.get_timeline('deaths'))
+            max_hosps = self.find_max_date_and_value(wave.get_timeline('hospitalizations'))
+            max_icus = self.find_max_date_and_value(wave.get_timeline('icu_cases'))
             wave_data = {
                 'startedOn': wave.started_on.strftime(DATE_OUT_F),
                 'endedOn': wave.ended_on.strftime(DATE_OUT_F),
@@ -215,28 +219,38 @@ class OCWavesExport:
                     'date': wave.floored_on.strftime(DATE_OUT_F),
                     'value': round(wave.floor_value, 2)
                 },
-                'maxDailyCases': {},
-                'maxHospitalizations': {},
+                'maxHospitalizations': max_hosps,
+                'maxIcuCases': max_icus,
                 'totalTests': sum(wave.get_timeline('tests_admin').values()),
                 'totalPositiveTests': sum(wave.get_timeline('tests_positive').values()),
-                'totalCases': None,
-                'totalHospitalizations': None,
-                'totalICUs': None,
-                'totalDeaths': None,
+                'totalCases': total_cases,
+                'totalDeaths': total_deaths,
                 'datasets': {
                     'dates': [d.strftime(DATE_OUT_F) for d in sorted(wave.timeline.keys())],
                     'avgPositiveRates': self.to_dataset(wave.timeline),
                     'tests': self.to_dataset(wave.get_timeline('tests_admin')),
                     'positiveTests': self.to_dataset(wave.get_timeline('tests_positive')),
-                    'cases': []
+                    'cases': self.to_dataset(wave.get_timeline('new_cases'))
                 }
 
             }
             waves.append(wave_data)
+
         return waves
 
     def prep_phases_cases(self):
         pass
+
+    def find_max_date_and_value(self, timeline):
+        values = [v for v in timeline.values() if v is not None]
+        max_value = max(values)
+        for dated, value in timeline.items():
+            if value == max_value:
+                return {'date': dated.strftime(DATE_OUT_F), 'value': max_value}
+
+    def sum_timeline(self, timeline):
+        values = [v for v in timeline.values() if v is not None]
+        return sum(values)
 
     def to_dataset(self, timeline, precision=2):
         """Converts dict {date: value...} to list of values (correlated to date list).

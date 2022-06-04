@@ -30,6 +30,7 @@ class PhaseMergingError(Exception):
             phase, prev_phase)
         super().__init__(message)
 
+
 class WaveExtractionError(Exception):
     def __init__(self, prev_phase, next_phase):
         message = 'Unexpected phase combination:\n{}\n{}'.format(prev_phase, next_phase)

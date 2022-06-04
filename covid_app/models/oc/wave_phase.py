@@ -12,7 +12,6 @@ class WavePhase:
 
         self.end_window = None
 
-
     @property
     def started_on(self):
         return self.start_window.date
@@ -34,10 +33,6 @@ class WavePhase:
     def end_value(self):
         if self.is_ended():
             return self.end_window.value
-
-    @property
-    def start_window(self):
-        return self.windows[0]
 
     @property
     def days(self):

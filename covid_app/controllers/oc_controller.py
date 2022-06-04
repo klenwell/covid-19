@@ -255,7 +255,13 @@ class OcController(Controller):
     @expose(help="For rapid testing and development.")
     def dev(self):
         from covid_app.analytics.oc.waves import OcWaveAnalysis
+        from covid_app.exports.oc.waves import OCWavesExport
         from pprint import pprint
+
+        export = OCWavesExport(test=True)
+        print(export)
+
+        breakpoint()
 
         analysis = OcWaveAnalysis(test=False)
         print('avg_positive_rates:', len(analysis.avg_positive_rates))
@@ -264,5 +270,3 @@ class OcController(Controller):
         print('smoothed phases:', len(analysis.epidemic.smoothed_phases))
         pprint(analysis.epidemic.smoothed_phases)
         pprint(analysis.epidemic.waves)
-
-        breakpoint()

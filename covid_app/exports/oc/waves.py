@@ -15,8 +15,8 @@ JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
 JSON_FILE_NAME = 'waves.json'
 
 JSON_SCHEMA = {
-    'waves': {},
-    'phases': {}
+    'waves': [],
+    'phases': []
 }
 
 DATE_OUT_F = '%Y-%m-%d'
@@ -32,7 +32,7 @@ class OCWavesExport:
 
     # Extracts
     @cached_property
-    def wave_analysis(self):
+    def analysis(self):
         return OcWaveAnalysis(self.test)
 
     @cached_property
@@ -156,7 +156,7 @@ class OCWavesExport:
 
         # pretty print
         with open(self.json_path, 'w') as f:
-            f.write(json.dumps(metrics, indent=4))
+            f.write(json.dumps(schema, indent=4))
 
         return self.json_path
 
@@ -164,7 +164,23 @@ class OCWavesExport:
     # Private
     #
     def prep_waves_data(self):
-        pass
+        waves = []
+        for wave in self.analysis.epidemic.waves:
+            wave_data = {
+                'startedOn': wave.started_on.strftime(DATE_OUT_F),
+                'endedOn': wave.ended_on.strftime(DATE_OUT_F),
+                'type': 'wave' if wave.is_wave() else 'lull',
+                'days': wave.days,
+                'rateTimeSeries': [],
+                'totalTests': None,
+                'positiveTests': None,
+                'cases': None,
+                'hospitalizations': None,
+                'icus': None,
+                'deaths': None
+            }
+            waves.append(wave_data)
+        return waves
 
     def prep_phases_cases(self):
         pass

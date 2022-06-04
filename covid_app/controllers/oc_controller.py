@@ -258,8 +258,9 @@ class OcController(Controller):
         from covid_app.exports.oc.waves import OCWavesExport
         from pprint import pprint
 
-        export = OCWavesExport(test=True)
-        print(export)
+        export = OCWavesExport()
+        csv_path = export.to_json_file()
+        print(csv_path)
 
         breakpoint()
 

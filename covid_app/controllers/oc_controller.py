@@ -268,6 +268,9 @@ class OcController(Controller):
         print('phases:', len(analysis.epidemic.phases))
         print('smoothed phases:', len(analysis.epidemic.smoothed_phases))
 
+        last_wave = analysis.epidemic.waves[-1]
+        print('last_wave timeline:', len(last_wave.timeline.keys()))
+
         last_phase = analysis.epidemic.smoothed_phases[-1]
         print('last_phase primary timeline:', len(last_phase.get_timeline('primary').keys()))
 

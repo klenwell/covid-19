@@ -165,17 +165,25 @@ class OCWavesExport:
     #
     def prep_waves_data(self):
         waves = []
+
         for wave in self.analysis.epidemic.waves:
             wave_data = {
                 'startedOn': wave.started_on.strftime(DATE_OUT_F),
                 'endedOn': wave.ended_on.strftime(DATE_OUT_F),
                 'type': 'wave' if wave.is_wave() else 'lull',
                 'days': wave.days,
-                'peakedOn': None,
-                'peakPositiveRate': {},
-                'peakDailyCases': {},
-                'peakHospitalizations': {},
-                'rateTimeSeries': [],
+                'peakedOn': wave.peaked_on.strftime(DATE_OUT_F),
+                'maxPositiveRate': {
+                    'date': wave.peaked_on.strftime(DATE_OUT_F),
+                    'value': round(wave.peak_value, 2)
+                },
+                'minPositiveRate': {
+                    'date': wave.peaked_on.strftime(DATE_OUT_F),
+                    'value': round(wave.peak_value, 2)
+                },
+                'maxDailyCases': {},
+                'maxHospitalizations': {},
+                'rateTimeSeries': self.to_timeseries(wave.timeline),
                 'totalTests': None,
                 'positiveTests': None,
                 'cases': None,
@@ -188,6 +196,15 @@ class OCWavesExport:
 
     def prep_phases_cases(self):
         pass
+
+    def to_timeseries(self, timeline):
+        """Converts dict {date: value...} to ordered list [(date, value)...]
+        """
+        time_series = []
+        for dated in sorted(timeline.keys()):
+            value = round(timeline[dated], 2)
+            time_series.append((dated.strftime(DATE_OUT_F), value))
+        return time_series
 
     def week_avg_from_date(self, daily_values, from_date):
         values = []

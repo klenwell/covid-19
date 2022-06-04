@@ -141,11 +141,26 @@ class Epidemic:
     #
     # Methods
     #
-    def extract_timeline(self, key, time_series):
+    def add_timeline(self, key, time_series):
         timeline = {}
         for dated in self.dates:
             timeline[dated] = time_series.get(dated)
         self.timelines[key] = time_series
+        return timeline
+
+    def extract_timeline_by_start_end_dates(self, time_series, start_date, end_date):
+        """Extract timeline for time series datapoints falling within range of the
+        start and end date.
+        """
+        timeline = {}
+
+        for dated, value in sorted(time_series.items()):
+            if dated > end_date:
+                return timeline
+
+            if dated >= start_date:
+                timeline[dated] = value
+
         return timeline
 
     def generate_waves(self, phases):

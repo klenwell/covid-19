@@ -27,7 +27,18 @@ class OcWaveAnalysis:
             'flat_slope_threshold': 5,
             'min_phase_size': 14
         }
-        return Epidemic(self.avg_positive_rates, **opts)
+
+        datasets = {
+            'tests_admin': self.tests_admin,
+            'tests_positive': self.tests_positive,
+            'cases': {},
+            'hospitalizations': {},
+            'icu_cases': {},
+            'deaths': {}
+        }
+
+        epidemic = Epidemic(self.avg_positive_rates, opts, datasets)
+        return epidemic
 
     @property
     def daily_oc_export_path(self):

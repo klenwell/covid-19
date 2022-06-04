@@ -24,6 +24,15 @@ JSON_SCHEMA = {
 
 
 class OCWavesExport:
+    def __init__(self, test=False):
+        self.run_time_start = time.time()
+        self.run_time_end = None
+        self.test = test
+
+        if self.test:
+            print('[WARNING] In test mode: loading sample data.')
+            self.case_extract.mock_api_calls()
+
     #
     # Properties
     #
@@ -45,6 +54,10 @@ class OCWavesExport:
     @cached_property
     def case_extract(self):
         return DailyCovid19Extract.latest()
+
+    @property
+    def epidemic(self):
+        return self.analysis.epidemic
 
     # Latest Update Dates
     @cached_property
@@ -151,15 +164,6 @@ class OCWavesExport:
     #
     # Instance Method
     #
-    def __init__(self, test=False):
-        self.run_time_start = time.time()
-        self.run_time_end = None
-        self.test = test
-
-        if self.test:
-            print('[WARNING] In test mode: loading sample data.')
-            self.case_extract.mock_api_calls()
-
     def waves_to_json_file(self):
         schema = JSON_SCHEMA.copy()
 
@@ -195,8 +199,8 @@ class OCWavesExport:
     #
     def prep_waves_data(self):
         waves = []
-
-        for wave in self.analysis.epidemic.waves:
+        print(self.epidemic.timelines.keys())
+        for wave in self.epidemic.waves:
             wave_data = {
                 'startedOn': wave.started_on.strftime(DATE_OUT_F),
                 'endedOn': wave.ended_on.strftime(DATE_OUT_F),
@@ -208,18 +212,25 @@ class OCWavesExport:
                     'value': round(wave.peak_value, 2)
                 },
                 'minPositiveRate': {
-                    'date': wave.peaked_on.strftime(DATE_OUT_F),
-                    'value': round(wave.peak_value, 2)
+                    'date': wave.floored_on.strftime(DATE_OUT_F),
+                    'value': round(wave.floor_value, 2)
                 },
                 'maxDailyCases': {},
                 'maxHospitalizations': {},
-                'rateTimeSeries': self.to_timeseries(wave.timeline),
-                'totalTests': None,
-                'positiveTests': None,
-                'cases': None,
-                'hospitalizations': None,
-                'icus': None,
-                'deaths': None
+                'totalTests': sum(wave.get_timeline('tests_admin').values()),
+                'totalPositiveTests': sum(wave.get_timeline('tests_positive').values()),
+                'totalCases': None,
+                'totalHospitalizations': None,
+                'totalICUs': None,
+                'totalDeaths': None,
+                'datasets': {
+                    'dates': [d.strftime(DATE_OUT_F) for d in sorted(wave.timeline.keys())],
+                    'avgPositiveRates': self.to_dataset(wave.timeline),
+                    'tests': self.to_dataset(wave.get_timeline('tests_admin')),
+                    'positiveTests': self.to_dataset(wave.get_timeline('tests_positive')),
+                    'cases': []
+                }
+
             }
             waves.append(wave_data)
         return waves
@@ -227,14 +238,15 @@ class OCWavesExport:
     def prep_phases_cases(self):
         pass
 
-    def to_timeseries(self, timeline):
-        """Converts dict {date: value...} to ordered list [(date, value)...]
+    def to_dataset(self, timeline, precision=2):
+        """Converts dict {date: value...} to list of values (correlated to date list).
         """
-        time_series = []
+        dataset = []
         for dated in sorted(timeline.keys()):
-            value = round(timeline[dated], 2)
-            time_series.append((dated.strftime(DATE_OUT_F), value))
-        return time_series
+            value = timeline[dated]
+            value = round(value, precision) if precision is not None else value
+            dataset.append(value)
+        return dataset
 
     def week_avg_from_date(self, daily_values, from_date):
         values = []

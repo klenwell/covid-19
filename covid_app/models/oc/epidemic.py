@@ -50,17 +50,29 @@ def sliding_window(iterable, n):
 
 
 class Epidemic:
-    def __init__(self, time_series, **opts):
+    def __init__(self, time_series, opts=None, datasets=None):
+        """Datasets is dict of dicts mapping dates to values. They get added as timelines
+        mapping dates (in time_series date range) to values. Example:
+
+        datasets = {'key1': {<date>: 1.2, <date>:2.5, ...}, 'key2': timeseries2}
+        """
         self.timeline = time_series
         self.timelines = {
             'primary': time_series
         }
+
+        # Opts
+        c = WAVE_ANALYSIS_CONFIG
+        opts = opts if opts is not None else {}
         self.debug = opts.get('debug', False)
-        self.window_size = opts.get('window_size', WAVE_ANALYSIS_CONFIG['window_size'])
-        self.flat_slope_threshold = opts.get('flat_slope_threshold',
-                                             WAVE_ANALYSIS_CONFIG['flat_slope_threshold'])
-        self.min_phase_size = opts.get('min_phase_size',
-                                       WAVE_ANALYSIS_CONFIG['min_phase_size'])
+        self.window_size = opts.get('window_size', c['window_size'])
+        self.flat_slope_threshold = opts.get('flat_slope_threshold', c['flat_slope_threshold'])
+        self.min_phase_size = opts.get('min_phase_size', c['min_phase_size'])
+
+        # Datasets
+        datasets = datasets if datasets is not None else {}
+        for key, dataset in datasets.items():
+            self.add_timeline(key, dataset)
 
     #
     # Properties
@@ -145,15 +157,18 @@ class Epidemic:
         timeline = {}
         for dated in self.dates:
             timeline[dated] = time_series.get(dated)
-        self.timelines[key] = time_series
+        self.timelines[key] = timeline
         return timeline
 
     def extract_timeline_by_start_end_dates(self, time_series, start_date, end_date):
         """Extract timeline for time series datapoints falling within range of the
         start and end date.
+
+        This is useful for nested classes: waves and phases
         """
         timeline = {}
 
+        # TODO: Cover every date between start_date and end_date?
         for dated, value in sorted(time_series.items()):
             if dated > end_date:
                 return timeline

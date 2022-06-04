@@ -42,14 +42,20 @@ class EpidemicWave:
         return self.end_phase.ended_on
 
     @property
-    def peaked_on(self):
-        for dated, value in self.timeline.items():
-            if value == self.peak_value:
-                return dated
-
-    @property
     def peak_value(self):
         return max(self.timeline.values())
+
+    @property
+    def peaked_on(self):
+        return self.find_date_by_value(self.peak_value)
+
+    @property
+    def floor_value(self):
+        return min(self.timeline.values())
+
+    @property
+    def floored_on(self):
+        return self.find_date_by_value(self.floor_value)
 
     @cached_property
     def dates(self):
@@ -77,6 +83,11 @@ class EpidemicWave:
             self.started_on,
             self.ended_on
         )
+
+    def find_date_by_value(self, search_value):
+        for dated, value in self.timeline.items():
+            if value == search_value:
+                return dated
 
     def __repr__(self):
         f = '<Epidemic{} start={} end={} days={}>'

@@ -2,13 +2,16 @@ from config.app import WAVE_ANALYSIS_CONFIG
 
 
 class WavePhase:
-    def __init__(self, start_window, **opts):
-        self.start_window = start_window
+    def __init__(self, start_window, epidemic, **opts):
+        self.windows = [start_window]
+        self.epidemic = epidemic
+
+        c = WAVE_ANALYSIS_CONFIG
+        self.flat_slope_threshold = opts.get('flat_slope_threshold', c['flat_slope_threshold'])
+        self.min_phase_size = opts.get('min_phase_size', c['min_phase_size'])
+
         self.end_window = None
-        self.flat_slope_threshold = opts.get('flat_slope_threshold',
-                                             WAVE_ANALYSIS_CONFIG['flat_slope_threshold'])
-        self.min_phase_size = opts.get('min_phase_size',
-                                       WAVE_ANALYSIS_CONFIG['min_phase_size'])
+
 
     @property
     def started_on(self):
@@ -16,8 +19,12 @@ class WavePhase:
 
     @property
     def ended_on(self):
-        if self.is_ended:
+        if self.is_ended():
             return self.end_window.date
+
+    @property
+    def start_window(self):
+        return self.windows[0]
 
     @property
     def start_value(self):
@@ -25,28 +32,28 @@ class WavePhase:
 
     @property
     def end_value(self):
-        if self.is_ended:
+        if self.is_ended():
             return self.end_window.value
 
     @property
-    def is_ended(self):
-        return self.end_window is not None
+    def start_window(self):
+        return self.windows[0]
 
     @property
     def days(self):
-        if not self.is_ended:
+        if not self.is_ended():
             return None
         return (self.ended_on - self.started_on).days
 
     @property
     def value_diff(self):
-        if not self.is_ended:
+        if not self.is_ended():
             return None
         return self.end_value - self.start_value
 
     @property
     def kslope(self):
-        if not self.is_ended:
+        if not self.is_ended():
             return None
         return self.value_diff / self.days * 100
 
@@ -73,18 +80,26 @@ class WavePhase:
             return labels[self.trend]
 
     # Methods
+    def add_window(self, window):
+        self.windows.append(window)
+
     def merge(self, other_phase):
         start_phase = self if self.started_on < other_phase.started_on else other_phase
         end_phase = self if start_phase != self else other_phase
-        merged_phase = WavePhase(start_phase.start_window)
+        merged_phase = WavePhase(start_phase.start_window, self.epidemic)
+        merged_phase.windows = start_phase.windows + end_phase.windows[:-1]
         merged_phase.end(end_phase.end_window)
         return merged_phase
 
     def end(self, window):
+        self.windows.append(window)
         self.end_window = window
 
+    def is_ended(self):
+        return self.end_window is not None
+
     def is_micro(self):
-        if not self.is_ended:
+        if not self.is_ended():
             return None
 
         if self.days <= self.min_phase_size:
@@ -100,6 +115,24 @@ class WavePhase:
 
     def is_flat(self):
         return self.trending == 'flat'
+
+    def get_timeline(self, key):
+        return self.extract_timeline(self.epidemic.timelines[key])
+
+    def extract_timeline(self, time_series):
+        """Extract timeline for time series datapoints falling within range of this
+        wave.
+        """
+        wave_timeline = {}
+
+        for dated, value in sorted(time_series.items()):
+            if dated > self.ended_on:
+                return wave_timeline
+
+            if dated >= self.started_on:
+                wave_timeline[dated] = value
+
+        return wave_timeline
 
     def __repr__(self):
         f = '<Phase start={} end={} days={} kslope={} trending={} micro?={}>'

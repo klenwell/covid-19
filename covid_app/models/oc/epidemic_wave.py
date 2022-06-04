@@ -10,9 +10,10 @@ from functools import cached_property
 
 
 class EpidemicWave:
-    def __init__(self, phases, time_series):
+    def __init__(self, phases, epidemic):
         self.phases = phases
-        self.time_series = self.extract_wave_time_series(time_series)
+        self.epidemic = epidemic
+        self.timeline = self.extract_timeline(epidemic.timeline)
 
     #
     # Properties
@@ -35,7 +36,7 @@ class EpidemicWave:
 
     @cached_property
     def dates(self):
-        return sorted(self.time_series.keys())
+        return sorted(self.timeline.keys())
 
     @property
     def days(self):
@@ -53,17 +54,23 @@ class EpidemicWave:
     def is_active(self):
         return self.start_phase.is_rising() and not self.end_phases.is_falling()
 
-    def extract_wave_time_series(self, time_series):
-        wave_time_series = {}
+    def get_timeline(self, key):
+        return self.extract_timeline(self.epidemic.timelines[key])
+
+    def extract_timeline(self, time_series):
+        """Extract timeline for time series datapoints falling within range of this
+        wave.
+        """
+        wave_timeline = {}
 
         for dated, value in sorted(time_series.items()):
             if dated > self.ended_on:
-                return wave_time_series
+                return wave_timeline
 
             if dated >= self.started_on:
-                wave_time_series[dated] = value
+                wave_timeline[dated] = value
 
-        return wave_time_series
+        return wave_timeline
 
     def __repr__(self):
         f = '<Epidemic{} start={} end={} days={}>'

@@ -260,14 +260,18 @@ class OcController(Controller):
 
         export = OCWavesExport()
         csv_path = export.to_json_file()
-        print(csv_path)
-
-        breakpoint()
+        print('Exported to:', csv_path)
 
         analysis = OcWaveAnalysis(test=False)
         print('avg_positive_rates:', len(analysis.avg_positive_rates))
         print('windows:', len(analysis.epidemic.windows))
         print('phases:', len(analysis.epidemic.phases))
         print('smoothed phases:', len(analysis.epidemic.smoothed_phases))
+
+        last_phase = analysis.epidemic.smoothed_phases[-1]
+        print('last_phase primary timeline:', len(last_phase.get_timeline('primary').keys()))
+
+        breakpoint()
+
         pprint(analysis.epidemic.smoothed_phases)
         pprint(analysis.epidemic.waves)

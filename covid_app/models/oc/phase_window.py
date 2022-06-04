@@ -9,8 +9,9 @@ class PhaseWindow:
         self.date = dated
         self.values = values
         self.value = values[floor(len(values) / 2)]
-        self.flat_slope_threshold = opts.get('flat_slope_threshold',
-                                             WAVE_ANALYSIS_CONFIG['flat_slope_threshold'])
+
+        c = WAVE_ANALYSIS_CONFIG
+        self.flat_slope_threshold = opts.get('flat_slope_threshold', c['flat_slope_threshold'])
 
     @property
     def value_change(self):

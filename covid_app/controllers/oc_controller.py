@@ -260,6 +260,7 @@ class OcController(Controller):
 
         export = OCWavesExport()
         waves_csv_path = export.waves_to_json_file()
+        print('Data source:', export.data_source_path)
         print('Waves exported to:', waves_csv_path)
         phases_csv_path = export.phases_to_json_file()
         print('Phases exported to:', phases_csv_path)

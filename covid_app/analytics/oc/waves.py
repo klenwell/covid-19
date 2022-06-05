@@ -1,4 +1,4 @@
-from os.path import join as path_join
+from os.path import join as path_join, exists as path_exists
 from functools import cached_property
 from datetime import datetime, timedelta
 import time
@@ -14,6 +14,18 @@ from covid_app.models.oc.epidemic import Epidemic
 DATE_F = '%Y-%m-%d'
 START_DATE = '2020-03-05'
 SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
+
+# Export column names
+# This should match column names in datasource file
+COL_NAMES = {
+    'tests_admin': 'New Tests Administered',
+    'tests_positive': 'Pos Tests Administered',
+    'new_cases': 'New Cases',
+    'hospitalizations': 'Hospitalizations',
+    'icu_cases': 'ICU',
+    'deaths': 'New Deaths'
+}
+
 
 
 class OcWaveAnalysis:
@@ -42,16 +54,31 @@ class OcWaveAnalysis:
         return epidemic
 
     #
-    # Daily Export Extract
+    # Data Source
     # I'm extracting data from an export csv.
     #
+    @property
+    def data_source_path(self):
+        fname_f = 'oc-hca-{}.csv'
+
+        # Find latest in dashboard, going back from today
+        today = datetime.now().date()
+        for days_back in range(14):
+            dated = today - timedelta(days=days_back)
+            fname = fname_f.format(dated.strftime('%Y%m%d'))
+            fpath = path_join(DATA_ROOT, 'oc', 'daily', fname)
+            if path_exists(fpath):
+                return fpath
+
+        raise ValueError('Could not find file.')
+
     @property
     def daily_oc_export_path(self):
         return path_join(DATA_ROOT, 'oc', 'oc-hca.csv')
 
     @cached_property
     def export_rows(self):
-        with open(self.daily_oc_export_path, newline='') as f:
+        with open(self.data_source_path, newline='') as f:
             reader = csv.DictReader(f)
             rows = list(reader)
         return rows
@@ -65,32 +92,32 @@ class OcWaveAnalysis:
         return export_rows
 
     #
-    # Export Dataset
-    # Dated Timeseries (pl)
+    # Export Datasets
+    # Map dates to dated_values.
     #
     @cached_property
     def tests_admin(self):
-        return self.extract_timeseries_by_column('Tests Admin')
+        return self.extract_timeseries_by_column(COL_NAMES['tests_admin'])
 
     @cached_property
     def tests_positive(self):
-        return self.extract_timeseries_by_column('Pos Tests Admin')
+        return self.extract_timeseries_by_column(COL_NAMES['tests_positive'])
 
     @cached_property
     def new_cases(self):
-        return self.extract_timeseries_by_column('Cases Reported')
+        return self.extract_timeseries_by_column(COL_NAMES['new_cases'])
 
     @cached_property
     def hospitalizations(self):
-        return self.extract_timeseries_by_column('Hospital')
+        return self.extract_timeseries_by_column(COL_NAMES['hospitalizations'])
 
     @cached_property
     def icu_cases(self):
-        return self.extract_timeseries_by_column('ICU')
+        return self.extract_timeseries_by_column(COL_NAMES['icu_cases'])
 
     @cached_property
     def deaths(self):
-        return self.extract_timeseries_by_column('Deaths')
+        return self.extract_timeseries_by_column(COL_NAMES['deaths'])
 
     @cached_property
     def avg_positive_rates(self):
@@ -150,9 +177,10 @@ class OcWaveAnalysis:
 
     @property
     def end_date(self):
+        col = COL_NAMES
         for row in self.export_rows:
             try:
-                int(row['Tests Admin']) and int(row['Pos Tests Admin'])
+                int(row[col['tests_admin']]) and int(row[col['tests_positive']])
                 return datetime.strptime(row['Date'], DATE_F).date()
             except ValueError:
                 pass

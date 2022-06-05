@@ -36,6 +36,7 @@ class OCWavesExport:
     #
     # Properties
     #
+    # Paths
     @property
     def waves_json_path(self):
         file_name = 'waves.json'
@@ -45,6 +46,10 @@ class OCWavesExport:
     def phases_json_path(self):
         file_name = 'phases.json'
         return path_join(JSON_DATA_PATH, file_name)
+
+    @property
+    def data_source_path(self):
+        return self.analysis.data_source_path
 
     # Extracts
     @cached_property

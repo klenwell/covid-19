@@ -203,8 +203,9 @@ class OCWavesExport:
         for wave in self.epidemic.waves:
             total_cases = self.sum_timeline(wave.get_timeline('new_cases'))
             total_deaths = self.sum_timeline(wave.get_timeline('deaths'))
-            max_hosps = self.find_max_date_and_value(wave.get_timeline('hospitalizations'))
-            max_icus = self.find_max_date_and_value(wave.get_timeline('icu_cases'))
+            max_case_avg = self.find_max_date_and_value(wave.get_timeline('avg_new_cases'))
+            max_hosps = self.find_max_date_and_value(wave.get_timeline('hospitalizations'), 0)
+            max_icus = self.find_max_date_and_value(wave.get_timeline('icu_cases'), 0)
             wave_data = {
                 'startedOn': wave.started_on.strftime(DATE_OUT_F),
                 'endedOn': wave.ended_on.strftime(DATE_OUT_F),
@@ -219,6 +220,7 @@ class OCWavesExport:
                     'date': wave.floored_on.strftime(DATE_OUT_F),
                     'value': round(wave.floor_value, 2)
                 },
+                'maxCaseAvg': max_case_avg,
                 'maxHospitalizations': max_hosps,
                 'maxIcuCases': max_icus,
                 'totalTests': sum(wave.get_timeline('tests_admin').values()),
@@ -230,7 +232,7 @@ class OCWavesExport:
                     'avgPositiveRates': self.to_dataset(wave.timeline),
                     'tests': self.to_dataset(wave.get_timeline('tests_admin')),
                     'positiveTests': self.to_dataset(wave.get_timeline('tests_positive')),
-                    'cases': self.to_dataset(wave.get_timeline('new_cases'))
+                    'avgCases': self.to_dataset(wave.get_timeline('avg_new_cases'))
                 }
 
             }
@@ -241,12 +243,13 @@ class OCWavesExport:
     def prep_phases_cases(self):
         pass
 
-    def find_max_date_and_value(self, timeline):
+    def find_max_date_and_value(self, timeline, precision=2):
         values = [v for v in timeline.values() if v is not None]
         max_value = max(values)
         for dated, value in timeline.items():
             if value == max_value:
-                return {'date': dated.strftime(DATE_OUT_F), 'value': max_value}
+                value = round(value, precision) if precision is not None else value
+                return {'date': dated.strftime(DATE_OUT_F), 'value': value}
 
     def sum_timeline(self, timeline):
         values = [v for v in timeline.values() if v is not None]

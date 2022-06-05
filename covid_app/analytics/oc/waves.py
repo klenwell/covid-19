@@ -32,6 +32,7 @@ class OcWaveAnalysis:
             'tests_admin': self.tests_admin,
             'tests_positive': self.tests_positive,
             'new_cases': self.new_cases,
+            'avg_new_cases': self.avg_new_cases,
             'hospitalizations': self.hospitalizations,
             'icu_cases': self.icu_cases,
             'deaths': self.deaths
@@ -106,6 +107,20 @@ class OcWaveAnalysis:
                 tests.append(self.tests_admin[prev_date])
                 positives.append(self.tests_positive[prev_date])
             dated_values[dated] = sum(positives) / sum(tests) * 100
+
+        return dated_values
+
+    @cached_property
+    def avg_new_cases(self):
+        dated_values = {}
+
+        for dated in self.dates:
+            cases = []
+            positives = []
+            for days_back in range(7):
+                prev_date = dated - timedelta(days=days_back)
+                cases.append(self.new_cases[prev_date])
+            dated_values[dated] = sum(cases) / len(cases)
 
         return dated_values
 

@@ -116,7 +116,7 @@ class OcController(Controller):
         vars = {
             'json_path': waves_json_path,
             'notes': [
-                'Data Source: {}'.format(waves_json_path),
+                'Data Source: {}'.format(export.data_source_path),
                 'Total Waves: {}'.format(wave_count),
                 'Total Smoothed Phases: {}'.format(smoothed_phase_count),
                 'Total Phases: {}'.format(phase_count),

@@ -27,7 +27,6 @@ COL_NAMES = {
 }
 
 
-
 class OcWaveAnalysis:
     #
     # Properties
@@ -61,7 +60,7 @@ class OcWaveAnalysis:
     def data_source_path(self):
         fname_f = 'oc-hca-{}.csv'
 
-        # Find latest in dashboard, going back from today
+        # Find latest file by date in directory, going backwards from today
         today = datetime.now().date()
         for days_back in range(14):
             dated = today - timedelta(days=days_back)
@@ -143,7 +142,6 @@ class OcWaveAnalysis:
 
         for dated in self.dates:
             cases = []
-            positives = []
             for days_back in range(7):
                 prev_date = dated - timedelta(days=days_back)
                 cases.append(self.new_cases[prev_date])

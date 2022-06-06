@@ -43,11 +43,6 @@ class OCWavesExport:
         return path_join(JSON_DATA_PATH, file_name)
 
     @property
-    def phases_json_path(self):
-        file_name = 'phases.json'
-        return path_join(JSON_DATA_PATH, file_name)
-
-    @property
     def data_source_path(self):
         return self.analysis.data_source_path
 
@@ -184,21 +179,6 @@ class OCWavesExport:
 
         return self.waves_json_path
 
-    def phases_to_json_file(self):
-        schema = JSON_SCHEMA.copy()
-
-        schema['data'] = self.prep_phases_cases()
-        schema['meta'] = {
-            'createdAt': self.iso_timestamp,
-            'lastUpdatedOn': self.analysis.end_date.strftime(DATE_OUT_F)
-        }
-
-        # pretty print
-        with open(self.phases_json_path, 'w') as f:
-            f.write(json.dumps(schema, indent=4))
-
-        return self.phases_json_path
-
     #
     # Private
     #
@@ -244,9 +224,6 @@ class OCWavesExport:
             waves.append(wave_data)
 
         return waves
-
-    def prep_phases_cases(self):
-        pass
 
     def find_max_date_and_value(self, timeline, precision=2):
         values = [v for v in timeline.values() if v is not None]

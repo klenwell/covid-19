@@ -169,7 +169,7 @@ class Epidemic:
         """
         timeline = {}
 
-        # TODO: Cover every date between start_date and end_date?
+        # This will leave any gaps from timeseries in timeline. That's better for graphing.
         for dated, value in sorted(time_series.items()):
             if dated > end_date:
                 return timeline

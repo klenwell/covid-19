@@ -30,6 +30,7 @@ class PhaseMergingError(Exception):
             phase, prev_phase)
         super().__init__(message)
 
+
 class WaveExtractionError(Exception):
     def __init__(self, prev_phase, next_phase):
         message = 'Unexpected phase combination:\n{}\n{}'.format(prev_phase, next_phase)
@@ -50,14 +51,29 @@ def sliding_window(iterable, n):
 
 
 class Epidemic:
-    def __init__(self, time_series, **opts):
-        self.time_series = time_series
+    def __init__(self, time_series, opts=None, datasets=None):
+        """Datasets is dict of dicts mapping dates to values. They get added as timelines
+        mapping dates (in time_series date range) to values. Example:
+
+        datasets = {'key1': {<date>: 1.2, <date>:2.5, ...}, 'key2': timeseries2}
+        """
+        self.timeline = time_series
+        self.timelines = {
+            'primary': time_series
+        }
+
+        # Opts
+        c = WAVE_ANALYSIS_CONFIG
+        opts = opts if opts is not None else {}
         self.debug = opts.get('debug', False)
-        self.window_size = opts.get('window_size', WAVE_ANALYSIS_CONFIG['window_size'])
-        self.flat_slope_threshold = opts.get('flat_slope_threshold',
-                                             WAVE_ANALYSIS_CONFIG['flat_slope_threshold'])
-        self.min_phase_size = opts.get('min_phase_size',
-                                       WAVE_ANALYSIS_CONFIG['min_phase_size'])
+        self.window_size = opts.get('window_size', c['window_size'])
+        self.flat_slope_threshold = opts.get('flat_slope_threshold', c['flat_slope_threshold'])
+        self.min_phase_size = opts.get('min_phase_size', c['min_phase_size'])
+
+        # Datasets
+        datasets = datasets if datasets is not None else {}
+        for key, dataset in datasets.items():
+            self.add_timeline(key, dataset)
 
     #
     # Properties
@@ -74,7 +90,7 @@ class Epidemic:
     def phases(self):
         phases = []
         prev_window = self.windows[0]
-        open_phase = WavePhase(prev_window)
+        open_phase = WavePhase(prev_window, self)
 
         for window in self.windows[1:]:
             trend_change = window.trend != prev_window.trend
@@ -82,7 +98,9 @@ class Epidemic:
             if trend_change:
                 open_phase.end(window)
                 phases.append(open_phase)
-                open_phase = WavePhase(window)
+                open_phase = WavePhase(window, self)
+            else:
+                open_phase.add_window(window)
 
             prev_window = window
 
@@ -101,8 +119,8 @@ class Epidemic:
             window_rates = []
 
             for n in range(-half_window_len, half_window_len+1):
-                rate_date = dated + timedelta(days=n)
-                rate = self.time_series.get(rate_date)
+                window_date = dated + timedelta(days=n)
+                rate = self.timeline.get(window_date)
                 if rate:
                     window_rates.append(rate)
 
@@ -131,11 +149,36 @@ class Epidemic:
 
     @cached_property
     def dates(self):
-        return sorted(self.time_series.keys())
+        return sorted(self.timeline.keys())
 
     #
     # Methods
     #
+    def add_timeline(self, key, time_series):
+        timeline = {}
+        for dated in self.dates:
+            timeline[dated] = time_series.get(dated)
+        self.timelines[key] = timeline
+        return timeline
+
+    def extract_timeline_by_start_end_dates(self, time_series, start_date, end_date):
+        """Extract timeline for time series datapoints falling within range of the
+        start and end date.
+
+        This is useful for nested classes: waves and phases
+        """
+        timeline = {}
+
+        # This will leave any gaps from timeseries in timeline. That's better for graphing.
+        for dated, value in sorted(time_series.items()):
+            if dated > end_date:
+                return timeline
+
+            if dated >= start_date:
+                timeline[dated] = value
+
+        return timeline
+
     def generate_waves(self, phases):
         waves = []
         prev_phase = []
@@ -160,12 +203,12 @@ class Epidemic:
                 wave_phases = [phase]
             # Lull
             elif phase.is_flat():
-                wave = EpidemicWave([phase], self.time_series)
+                wave = EpidemicWave([phase], self)
                 waves.append(wave)
             # End wave
             elif prev_phase.is_rising() and phase.is_falling():
                 wave_phases.append(phase)
-                wave = EpidemicWave(wave_phases, self.time_series)
+                wave = EpidemicWave(wave_phases, self)
                 waves.append(wave)
             # Should not see this case
             else:
@@ -175,7 +218,7 @@ class Epidemic:
 
         # A new wave?
         if len(wave_phases) > 0:
-            wave = EpidemicWave(wave_phases, self.time_series)
+            wave = EpidemicWave(wave_phases, self)
             waves.append(wave)
 
         return waves

@@ -1,13 +1,16 @@
 from datetime import date
 from cement import Controller
 from cement import ex as expose
+from pprint import pformat
 
-from covid_app.services.oc_health_service import OCHealthService
 from covid_app.exports.oc_daily_data import OcDailyDataExport
 from covid_app.exports.oc_daily_testing import OcDailyTestsExport
 from covid_app.exports.oc_immunity import OCImmunityExport
 from covid_app.exports.oc_wastewater import OCWastewaterExport
 from covid_app.exports.oc.metrics import OCMetricsExport
+from covid_app.exports.oc.waves import OCWavesExport
+from covid_app.services.oc_health_service import OCHealthService
+
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
@@ -95,6 +98,30 @@ class OcController(Controller):
                 'Latest positive rate update: {}'.format(export.latest_test_update),
                 'Latest wastewater update: {}'.format(export.latest_wastewater_update),
                 'Run time: {} s'.format(round(export.run_time, 2))
+            ]
+        }
+        self.app.render(vars, 'oc/json-export.jinja2')
+
+    # python app.py oc waves-json-file
+    @expose(help="Output JSON file to docs/data/json/oc/waves.json.")
+    def waves_json_file(self):
+        export = OCWavesExport(test=False)
+        waves_json_path = export.waves_to_json_file()
+
+        wave_count = len(export.analysis.epidemic.waves)
+        smoothed_phase_count = len(export.analysis.epidemic.smoothed_phases)
+        phase_count = len(export.analysis.epidemic.phases)
+        waves = pformat(export.analysis.epidemic.waves)
+
+        vars = {
+            'json_path': waves_json_path,
+            'notes': [
+                'Data Source: {}'.format(export.data_source_path),
+                'Total Waves: {}'.format(wave_count),
+                'Total Smoothed Phases: {}'.format(smoothed_phase_count),
+                'Total Phases: {}'.format(phase_count),
+                'Run time: {} s'.format(round(export.run_time, 2)),
+                'Waves:\n{}'.format(waves)
             ]
         }
         self.app.render(vars, 'oc/json-export.jinja2')
@@ -257,12 +284,26 @@ class OcController(Controller):
         from covid_app.analytics.oc.waves import OcWaveAnalysis
         from pprint import pprint
 
+        export = OCWavesExport()
+        waves_json_path = export.waves_to_json_file()
+        print('Data source:', export.data_source_path)
+        print('Waves exported to:', waves_json_path)
+        phases_json_path = export.phases_to_json_file()
+        print('Phases exported to:', phases_json_path)
+
         analysis = OcWaveAnalysis(test=False)
         print('avg_positive_rates:', len(analysis.avg_positive_rates))
         print('windows:', len(analysis.epidemic.windows))
         print('phases:', len(analysis.epidemic.phases))
         print('smoothed phases:', len(analysis.epidemic.smoothed_phases))
-        pprint(analysis.epidemic.smoothed_phases)
-        pprint(analysis.epidemic.waves)
+
+        last_wave = analysis.epidemic.waves[-1]
+        print('last_wave timeline:', len(last_wave.timeline.keys()))
+
+        last_phase = analysis.epidemic.smoothed_phases[-1]
+        print('last_phase primary timeline:', len(last_phase.get_timeline('primary').keys()))
 
         breakpoint()
+
+        pprint(analysis.epidemic.smoothed_phases)
+        pprint(analysis.epidemic.waves)

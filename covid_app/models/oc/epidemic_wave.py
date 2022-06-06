@@ -10,9 +10,17 @@ from functools import cached_property
 
 
 class EpidemicWave:
-    def __init__(self, phases, time_series):
+    def __init__(self, phases, epidemic):
         self.phases = phases
-        self.time_series = self.extract_wave_time_series(time_series)
+        self.epidemic = epidemic
+        self.timeline = epidemic.extract_timeline_by_start_end_dates(
+            epidemic.timeline,
+            self.started_on,
+            self.ended_on
+        )
+        self.timelines = {
+            'primary': self.timeline
+        }
 
     #
     # Properties
@@ -33,9 +41,25 @@ class EpidemicWave:
     def ended_on(self):
         return self.end_phase.ended_on
 
+    @property
+    def peak_value(self):
+        return max(self.timeline.values())
+
+    @property
+    def peaked_on(self):
+        return self.find_date_by_value(self.peak_value)
+
+    @property
+    def floor_value(self):
+        return min(self.timeline.values())
+
+    @property
+    def floored_on(self):
+        return self.find_date_by_value(self.floor_value)
+
     @cached_property
     def dates(self):
-        return sorted(self.time_series.keys())
+        return sorted(self.timeline.keys())
 
     @property
     def days(self):
@@ -53,19 +77,20 @@ class EpidemicWave:
     def is_active(self):
         return self.start_phase.is_rising() and not self.end_phases.is_falling()
 
-    def extract_wave_time_series(self, time_series):
-        wave_time_series = {}
+    def get_timeline(self, key):
+        return self.epidemic.extract_timeline_by_start_end_dates(
+            self.epidemic.timelines[key],
+            self.started_on,
+            self.ended_on
+        )
 
-        for dated, value in sorted(time_series.items()):
-            if dated > self.ended_on:
-                return wave_time_series
-
-            if dated >= self.started_on:
-                wave_time_series[dated] = value
-
-        return wave_time_series
+    def find_date_by_value(self, search_value):
+        for dated, value in self.timeline.items():
+            if value == search_value:
+                return dated
 
     def __repr__(self):
-        f = '<Epidemic{} start={} end={} days={}>'
+        f = '<Epidemic{} start={} end={} days={} peak={} peak_rate={:.2f}>'
         label = 'Wave' if self.is_wave() else 'Lull'
-        return f.format(label, self.started_on, self.ended_on, self.days)
+        return f.format(label, self.started_on, self.ended_on, self.days, self.peaked_on,
+                        self.peak_value)

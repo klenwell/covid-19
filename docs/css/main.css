@@ -195,3 +195,10 @@ table.waves td.chart {
 table.waves td.chart div.chart-wrapper {
   display: inline-block;
 }
+
+/*
+ * Waves Chart
+**/
+section#oc-covid-waves div.chart-block {
+  height: 300px;
+}

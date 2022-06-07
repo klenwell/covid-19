@@ -477,6 +477,11 @@
           class="tab-pane fade" role="tabpanel">
           <section id="oc-covid-waves">
             <h3>Epidemic Waves</h3>
+
+            <div class="chart-block">
+              <canvas id="waves-chart"></canvas>
+            </div>
+
             <table class="table table-sm waves">
               <caption>Loading...</caption>
               <thead>
@@ -532,6 +537,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer">
     </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js">
+    </script>
 
     <script src="js/oc-metrics-model.js"></script>
     <script src="js/oc-metrics-table.js"></script>
@@ -539,5 +547,6 @@
     <script src="js/oc-dashboard.js"></script>
     <script src="js/oc-waves-model.js"></script>
     <script src="js/oc-waves-table.js"></script>
+    <script src="js/oc-waves-chart.js"></script>
   </body>
 </html>

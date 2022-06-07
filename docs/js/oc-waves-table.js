@@ -37,10 +37,8 @@ const OcWavesTable = (function() {
 
   const populate = function(model) {
     console.log("populate table:", model)
-    let num = 0
-    model.waves.forEach((wave) => {
-      num++
-      let $tr = appendWaveRow(wave, num)
+    model.waves.forEach((wave, num) => {
+      let $tr = appendWaveRow(wave, num + 1)
       let $canvas = appendChartCell($tr, wave)
       let $chart = enableChart($canvas, wave)
     })
@@ -102,7 +100,7 @@ const OcWavesTable = (function() {
   }
 
   const enableChart = function($chart, wave) {
-    console.debug('enableChart', $chart, wave)
+    //console.debug('enableChart', $chart, wave)
     const waveColor = '#ff0000'
     const lullColor = '#e08600'
     const chartColor = wave.type === 'wave' ? waveColor : lullColor

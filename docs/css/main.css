@@ -152,3 +152,14 @@ table.trends td.test-positive-rate.falling {
 table.trends td.test-positive-rate.rising {
   background-color: LightCoral;
 }
+
+/*
+ * Waves Table
+**/
+table.waves td.chart {
+  text-align: center;
+}
+
+table.waves td.chart div.chart-wrapper {
+  display: inline-block;
+}

@@ -53,14 +53,15 @@ const OcWavesTable = (function() {
     let num = 0
     model.waves.forEach((wave) => {
       num++
-      appendWaveRow(wave, num)
+      let $tr = appendWaveRow(wave, num)
+      let $canvas = appendChartCell($tr, wave)
+      let $chart = enableChart($canvas, wave)
     })
   }
 
   const appendWaveRow = function(wave, num) {
     const $tr = $('<tr />')
     $tr.addClass(wave.type)
-    console.log('TODO: append', wave)
 
     appendCell($tr, 'index', num)
     appendCell($tr, 'cycle', wave.type)
@@ -68,8 +69,9 @@ const OcWavesTable = (function() {
     appendCell($tr, 'end-date', wave.endedOn)
     appendCell($tr, 'days', wave.days)
     appendPeakCell($tr, wave.maxPositiveRate)
-    appendGraphCell($tr, wave)
+
     $tableBody.append($tr)
+    return $tr
   }
 
   const appendCell = function($tr, className, html) {
@@ -77,6 +79,7 @@ const OcWavesTable = (function() {
     $td.addClass(className)
     $td.html(html)
     $tr.append($td)
+    return $td
   }
 
   const appendPeakCell = function($tr, peak) {
@@ -87,8 +90,75 @@ const OcWavesTable = (function() {
     appendCell($tr, 'peak', $div)
   }
 
-  const appendGraphCell = function($tr, wave) {
-    appendCell($tr, 'graph', 'TODO')
+  const appendChartCell = function($tr, wave) {
+    const canvasId = `mini-chart-${wave.startedOn}`
+    const height = 60
+
+    // Set widths proportional to length in days
+    const maxWidth = 120
+    const refDuration = 90 // days
+    const canvasWidth = Math.round(wave.days / refDuration * maxWidth)
+
+    // See https://www.chartjs.org/docs/latest/getting-started/usage.html
+    const $canvas = $('<canvas />')
+      .attr('id', canvasId)
+      .attr('width', canvasWidth)
+      .attr('height', height)
+
+    // To center things
+    const $chartWrapper = $('<div />')
+      .addClass('chart-wrapper')
+      .append($canvas)
+
+    appendCell($tr, 'chart', $chartWrapper)
+    return $canvas
+  }
+
+  const enableChart = function($chart, wave) {
+    console.debug('enableChart', $chart, wave)
+    const waveColor = '#ff0000'
+    const lullColor = '#e08600'
+    const chartColor = wave.type === 'wave' ? waveColor : lullColor
+
+    // Refer: https://www.ethangunderson.com/writing/sparklines-in-chart.js/
+    const options = {
+      events: [],
+      responsive: false,
+      borderColor: chartColor,
+      backgroundColor: `${chartColor}75`,
+      fill: true,
+      borderWidth: 1,
+      scales: {
+        x: { display: false },
+        y: {
+          display: false,
+          min: 0,
+          max: 26
+        }
+      },
+      plugins: {
+        legend: {
+          display: false,
+          labels: { display: false }
+        },
+        tooltips: { display: false }
+      }
+    }
+    const data = {
+      labels: wave.datasets.dates,
+      datasets: [
+        {
+          data: wave.datasets.avgPositiveRates,
+          pointRadius: 0
+        }
+      ]
+    }
+    const config = {
+      type: 'line',
+      data: data,
+      options: options
+    }
+    return new Chart($chart, config)
   }
 
   /*

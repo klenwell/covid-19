@@ -2,21 +2,7 @@
  * OC Waves Table View Model
  *
  * Uses jQuery module pattern: https://wiki.klenwell.com/view/JQuery
- */
-
- class OcWavesModel {
-  constructor(jsonData) {
-    this.data = jsonData.data
-    this.meta = jsonData.meta
-    this.dateTime = luxon.DateTime
-    console.warn("TODO: my own file")
-  }
-
-  get waves() {
-    return this.data
-  }
-}
-
+**/
 const OcWavesTable = (function() {
   /*
    * Constants

@@ -29,6 +29,7 @@ const OcWavesTable = (function() {
    * Public Methods
    */
   const render = function() {
+    $tableBody = $(SELECTOR).find('caption').html('')
     $tableBody = $(SELECTOR).find('tbody')
     extractJsonData(JSON_URL)
   }

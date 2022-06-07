@@ -24,6 +24,26 @@ div.container section + section {
 }
 
 /*
+ * Nav Pills
+**/
+ul#pills-tab {
+  padding-bottom: 1rem;
+}
+
+ul#pills-tab .nav-link {
+  color: #e08600;
+}
+
+ul#pills-tab .nav-link:focus, ul#pills-tab .nav-link:hover {
+  color: #ff8c00;
+}
+
+ul#pills-tab .nav-link.active, ul#pills-tab .show > .nav-link {
+	color: white;
+	background-color: #e08600;
+}
+
+/*
  * Tables
 **/
 table th {
@@ -156,6 +176,18 @@ table.trends td.test-positive-rate.rising {
 /*
  * Waves Table
 **/
+/* table.waves tr.wave {
+  background-color: #ff000025
+}
+
+table.waves tr.lull {
+  background-color: #e0860025
+} */
+
+table.waves td {
+  padding: 0rem .25rem;
+}
+
 table.waves td.chart {
   text-align: center;
 }

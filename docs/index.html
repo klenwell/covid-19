@@ -10,11 +10,9 @@
       integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
       crossorigin="anonymous">
     <link href="css/main.css" rel="stylesheet">
-
   </head>
 
   <body>
-
     <!-- Source: https://getbootstrap.com/docs/5.2/examples/headers/ -->
     <div class="container">
       <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -52,398 +50,436 @@
         </ul>
       </header>
 
-      <!-- FIXME: Tabs POC -->
-      <!-- Nav tabs -->
+      <!--
+        Nav tabs
+        Source: https://getbootstrap.com/docs/5.0/components/navs-tabs/#javascript-behavior
+      -->
       <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
+          <button
+            id="pills-metrics-tab" data-bs-target="#pills-metrics" aria-controls="pills-metrics"
+            class="nav-link active"  data-bs-toggle="pill"
+            type="button" role="tab"  aria-selected="true">
+            Metrics
+          </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
+          <button
+            id="pills-weekly-tab" data-bs-target="#pills-weekly" aria-controls="pills-weekly"
+            class="nav-link"  data-bs-toggle="pill"
+            type="button" role="tab"  aria-selected="true">
+            Week-by-Week
+          </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
+          <button
+            id="pills-waves-tab" data-bs-target="#pills-waves" aria-controls="pills-waves"
+            class="nav-link"  data-bs-toggle="pill"
+            type="button" role="tab"  aria-selected="true">
+            Waves
+          </button>
         </li>
       </ul>
+
+      <!--
+        Tab Content
+      -->
       <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">Home</div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Profile</div>
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">Contact</div>
+        <!--
+          Metrics Tab View
+        -->
+        <div
+          id="pills-metrics" aria-labelledby="pills-metrics-tab"
+          class="tab-pane fade show active" role="tabpanel" >
+          <section id="oc-covid-metrics">
+            <h3>Latest Metrics</h3>
+            <table class="table metrics">
+              <caption></caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="capstone"></th>
+                  <th scope="col">Metric</th>
+                  <th scope="col">Updated</th>
+                  <th scope="col">Latest</th>
+                  <th scope="col">Level</th>
+                  <th scope="col">Trend</th>
+                  <th scope="col">7-Day Change</th>
+                  <th scope="col">14-Day Change</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="rate" data-metric="positiveRate">
+                  <th scope="row" class="capstone" rowspan="3">Less Lag &#129070;</th>
+                  <th scope="row">
+                    Test-Positive Rate
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <td class="updated-on">
+                    <span class="value"></span>
+                  </td>
+                  <td class="latest">
+                    <span class="value"></span>
+                  </td>
+                  <td class="level">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="trend">
+                    <span class="value"></span>
+                  </td>
+                  <td class="delta-7d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="delta-14d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                </tr>
+                <tr class="wastewater" data-metric="wastewater">
+                  <th scope="row">
+                    Wastewater Concentration
+                    <span class="sub-th">7-day average (copies/ml)</span>
+                  </th>
+                  <td class="updated-on">
+                    <span class="value"></span>
+                  </td>
+                  <td class="latest">
+                    <span class="value"></span>
+                  </td>
+                  <td class="level">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="trend">
+                    <span class="value"></span>
+                  </td>
+                  <td class="delta-7d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="delta-14d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                </tr>
+                <tr class="cases" data-metric="cases">
+                  <th scope="row">
+                    Daily New Cases
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <td class="updated-on">
+                    <span class="value"></span>
+                  </td>
+                  <td class="latest">
+                    <span class="value"></span>
+                  </td>
+                  <td class="level">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="trend">
+                    <span class="value"></span>
+                  </td>
+                  <td class="delta-7d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="delta-14d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                </tr>
+                <tr class="hospitalizations" data-metric="hospitalCases">
+                  <th class="capstone" scope="row" rowspan="3">&#129068; More Lag</th>
+                  <th scope="row">
+                    Hospitalizations
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <td class="updated-on">
+                    <span class="value"></span>
+                  </td>
+                  <td class="latest">
+                    <span class="value"></span>
+                  </td>
+                  <td class="level">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="trend">
+                    <span class="value"></span>
+                  </td>
+                  <td class="delta-7d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="delta-14d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                </tr>
+                <tr class="icus" data-metric="icuCases">
+                  <th scope="row">
+                    ICU Cases
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <td class="updated-on">
+                    <span class="value"></span>
+                  </td>
+                  <td class="latest">
+                    <span class="value"></span>
+                  </td>
+                  <td class="level">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="trend">
+                    <span class="value"></span>
+                  </td>
+                  <td class="delta-7d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="delta-14d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                </tr>
+                <tr class="deaths" data-metric="deaths">
+                  <th scope="row">
+                    Deaths
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <td class="updated-on">
+                    <span class="value"></span>
+                  </td>
+                  <td class="latest">
+                    <span class="value"></span>
+                  </td>
+                  <td class="level">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="trend">
+                    <span class="value"></span>
+                  </td>
+                  <td class="delta-7d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                  <td class="delta-14d">
+                    <span class="value"></span>
+                    <span class="note"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4>Notes</h4>
+            <ul>
+              <li>
+                Data extracted from JSON export:
+                <a target="_blank" href="https://github.com/klenwell/covid-19/blob/master/docs/data/json/oc/metrics.json">docs/data/json/oc/metrics.json</a>.
+                (File is updated as data becomes available.)
+              </li>
+              <li>
+                Data sourced from
+                <a target="_blank" href="https://occovid19.ochealthinfo.com/coronavirus-in-oc">OC Health Care Agency</a> and
+                <a target="_blank" href="https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/Wastewater-Surveillance.aspx">CA Dept of Public Health</a>.
+              </li>
+              <li>Table modeled after <a target="_blank" href="https://twitter.com/MicahPollak/status/1528887857670238212">Micah's Metric Matrix</a>.</li>
+              <li>Level quartiles: low=0-25, moderate=25-50, high=50-75, very high=75-100</li>
+              <li>Questions, comments, or issues? Email Tom at klenwell@gmail.com.</li>
+            </ul>
+          </section>
+        </div>
+
+        <!--
+          Week-to-Week Tab View
+        -->
+        <div
+          id="pills-weekly" aria-labelledby="pills-weekly-tab"
+          class="tab-pane fade" role="tabpanel" >
+          <section id="week-to-week-trends">
+            <h3>Week-by-Week Trends</h3>
+            <table class="table trends">
+              <caption>Under development...</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Week</th>
+                  <th scope="col">Test Positive Rate</th>
+                  <th scope="col">
+                    New Tests Admin'd
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <th scope="col">
+                    Positive Tests
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <th scope="col">
+                    Wastewater
+                    <span class="sub-th">7-day average</span>
+                    <span class="sub-th">(copies per milliliter)</span>
+                  </th>
+                  <th scope="col">
+                    Hospital Cases
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <th scope="col">Deaths</th>
+                  <th scope="col">End Date</th>
+                  <th scope="col">Start Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="week-1">
+                  <th scope="row">
+                    Last Week*
+                  </th>
+                  <td class="test-positive-rate">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="admin-tests">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="positive-tests">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="wastewater">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="hospital-cases">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="deaths">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="end-date"></td>
+                  <td class="start-date"></td>
+                </tr>
+                <tr class="week-2">
+                  <th scope="row">2 Weeks Ago</th>
+                  <td class="test-positive-rate">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="admin-tests">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="positive-tests">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="wastewater">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="hospital-cases">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="deaths">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="end-date"></td>
+                  <td class="start-date"></td>
+                </tr>
+                <tr class="week-3">
+                  <th scope="row">3 Weeks Ago</th>
+                  <td class="test-positive-rate">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="admin-tests">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="positive-tests">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="wastewater">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="hospital-cases">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="deaths">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="end-date"></td>
+                  <td class="start-date"></td>
+                </tr>
+                <tr class="week-4">
+                  <th scope="row">4 Weeks Ago</th>
+                  <td class="test-positive-rate">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="admin-tests">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="positive-tests">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="wastewater">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="hospital-cases">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="deaths">
+                    <span class="value"></span>
+                    <span class="delta"></span>
+                  </td>
+                  <td class="end-date"></td>
+                  <td class="start-date"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4>Notes</h4>
+            <ul>
+              <li>Test data for <strong>last week</strong> not yet fully reported.</li>
+              <li>
+                Data extracted from Google sheet:
+                <a target="_blank" href="https://docs.google.com/spreadsheets/d/1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4/">OC COVID-19 Data v2</a>
+              </li>
+              <li>
+                Data sourced from
+                <a target="_blank" href="https://occovid19.ochealthinfo.com/coronavirus-in-oc">OC Health Care Agency</a> and
+                <a target="_blank" href="https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/Wastewater-Surveillance.aspx">CA Dept of Public Health</a>.
+              </li>
+              <li>Questions, comments, or issues? Email Tom at klenwell@gmail.com.</li>
+            </ul>
+          </section>
+        </div>
+
+        <!--
+          Waves Tab View
+        -->
+        <div
+          id="pills-waves" aria-labelledby="pills-waves-tab"
+          class="tab-pane fade" role="tabpanel" >
+          TBA: Waves
+        </div>
       </div>
-      <hr />
 
 
-
-
-      <section id="oc-covid-metrics">
-        <h3>Latest Metrics</h3>
-        <table class="table metrics">
-          <caption></caption>
-          <thead>
-            <tr>
-              <th scope="col" class="capstone"></th>
-              <th scope="col">Metric</th>
-              <th scope="col">Updated</th>
-              <th scope="col">Latest</th>
-              <th scope="col">Level</th>
-              <th scope="col">Trend</th>
-              <th scope="col">7-Day Change</th>
-              <th scope="col">14-Day Change</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="rate" data-metric="positiveRate">
-              <th scope="row" class="capstone" rowspan="3">Less Lag &#129070;</th>
-              <th scope="row">
-                Test-Positive Rate
-                <span class="sub-th">7-day average</span>
-              </th>
-              <td class="updated-on">
-                <span class="value"></span>
-              </td>
-              <td class="latest">
-                <span class="value"></span>
-              </td>
-              <td class="level">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="trend">
-                <span class="value"></span>
-              </td>
-              <td class="delta-7d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="delta-14d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-            </tr>
-            <tr class="wastewater" data-metric="wastewater">
-              <th scope="row">
-                Wastewater Concentration
-                <span class="sub-th">7-day average (copies/ml)</span>
-              </th>
-              <td class="updated-on">
-                <span class="value"></span>
-              </td>
-              <td class="latest">
-                <span class="value"></span>
-              </td>
-              <td class="level">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="trend">
-                <span class="value"></span>
-              </td>
-              <td class="delta-7d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="delta-14d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-            </tr>
-            <tr class="cases" data-metric="cases">
-              <th scope="row">
-                Daily New Cases
-                <span class="sub-th">7-day average</span>
-              </th>
-              <td class="updated-on">
-                <span class="value"></span>
-              </td>
-              <td class="latest">
-                <span class="value"></span>
-              </td>
-              <td class="level">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="trend">
-                <span class="value"></span>
-              </td>
-              <td class="delta-7d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="delta-14d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-            </tr>
-            <tr class="hospitalizations" data-metric="hospitalCases">
-              <th class="capstone" scope="row" rowspan="3">&#129068; More Lag</th>
-              <th scope="row">
-                Hospitalizations
-                <span class="sub-th">7-day average</span>
-              </th>
-              <td class="updated-on">
-                <span class="value"></span>
-              </td>
-              <td class="latest">
-                <span class="value"></span>
-              </td>
-              <td class="level">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="trend">
-                <span class="value"></span>
-              </td>
-              <td class="delta-7d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="delta-14d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-            </tr>
-            <tr class="icus" data-metric="icuCases">
-              <th scope="row">
-                ICU Cases
-                <span class="sub-th">7-day average</span>
-              </th>
-              <td class="updated-on">
-                <span class="value"></span>
-              </td>
-              <td class="latest">
-                <span class="value"></span>
-              </td>
-              <td class="level">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="trend">
-                <span class="value"></span>
-              </td>
-              <td class="delta-7d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="delta-14d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-            </tr>
-            <tr class="deaths" data-metric="deaths">
-              <th scope="row">
-                Deaths
-                <span class="sub-th">7-day average</span>
-              </th>
-              <td class="updated-on">
-                <span class="value"></span>
-              </td>
-              <td class="latest">
-                <span class="value"></span>
-              </td>
-              <td class="level">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="trend">
-                <span class="value"></span>
-              </td>
-              <td class="delta-7d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-              <td class="delta-14d">
-                <span class="value"></span>
-                <span class="note"></span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h4>Notes</h4>
-        <ul>
-          <li>
-            Data extracted from JSON export:
-            <a target="_blank" href="https://github.com/klenwell/covid-19/blob/master/docs/data/json/oc/metrics.json">docs/data/json/oc/metrics.json</a>.
-            (File is updated as data becomes available.)
-          </li>
-          <li>
-            Data sourced from
-            <a target="_blank" href="https://occovid19.ochealthinfo.com/coronavirus-in-oc">OC Health Care Agency</a> and
-            <a target="_blank" href="https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/Wastewater-Surveillance.aspx">CA Dept of Public Health</a>.
-          </li>
-          <li>Table modeled after <a target="_blank" href="https://twitter.com/MicahPollak/status/1528887857670238212">Micah's Metric Matrix</a>.</li>
-          <li>Level quartiles: low=0-25, moderate=25-50, high=50-75, very high=75-100</li>
-          <li>Questions, comments, or issues? Email Tom at klenwell@gmail.com.</li>
-        </ul>
-      </section>
-
-      <section id="week-to-week-trends">
-        <h3>Week-by-Week Trends</h3>
-        <table class="table trends">
-          <caption>Under development...</caption>
-          <thead>
-            <tr>
-              <th scope="col">Week</th>
-              <th scope="col">Test Positive Rate</th>
-              <th scope="col">
-                New Tests Admin'd
-                <span class="sub-th">7-day average</span>
-              </th>
-              <th scope="col">
-                Positive Tests
-                <span class="sub-th">7-day average</span>
-              </th>
-              <th scope="col">
-                Wastewater
-                <span class="sub-th">7-day average</span>
-                <span class="sub-th">(copies per milliliter)</span>
-              </th>
-              <th scope="col">
-                Hospital Cases
-                <span class="sub-th">7-day average</span>
-              </th>
-              <th scope="col">Deaths</th>
-              <th scope="col">End Date</th>
-              <th scope="col">Start Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="week-1">
-              <th scope="row">
-                Last Week*
-              </th>
-              <td class="test-positive-rate">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="admin-tests">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="positive-tests">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="wastewater">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="hospital-cases">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="deaths">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="end-date"></td>
-              <td class="start-date"></td>
-            </tr>
-            <tr class="week-2">
-              <th scope="row">2 Weeks Ago</th>
-              <td class="test-positive-rate">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="admin-tests">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="positive-tests">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="wastewater">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="hospital-cases">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="deaths">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="end-date"></td>
-              <td class="start-date"></td>
-            </tr>
-            <tr class="week-3">
-              <th scope="row">3 Weeks Ago</th>
-              <td class="test-positive-rate">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="admin-tests">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="positive-tests">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="wastewater">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="hospital-cases">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="deaths">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="end-date"></td>
-              <td class="start-date"></td>
-            </tr>
-            <tr class="week-4">
-              <th scope="row">4 Weeks Ago</th>
-              <td class="test-positive-rate">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="admin-tests">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="positive-tests">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="wastewater">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="hospital-cases">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="deaths">
-                <span class="value"></span>
-                <span class="delta"></span>
-              </td>
-              <td class="end-date"></td>
-              <td class="start-date"></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h4>Notes</h4>
-        <ul>
-          <li>Test data for <strong>last week</strong> not yet fully reported.</li>
-          <li>
-            Data extracted from Google sheet:
-            <a target="_blank" href="https://docs.google.com/spreadsheets/d/1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4/">OC COVID-19 Data v2</a>
-          </li>
-          <li>
-            Data sourced from
-            <a target="_blank" href="https://occovid19.ochealthinfo.com/coronavirus-in-oc">OC Health Care Agency</a> and
-            <a target="_blank" href="https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/Wastewater-Surveillance.aspx">CA Dept of Public Health</a>.
-          </li>
-          <li>Questions, comments, or issues? Email Tom at klenwell@gmail.com.</li>
-        </ul>
-      </section>
 
     </div>
 

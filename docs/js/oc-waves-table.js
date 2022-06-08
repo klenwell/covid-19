@@ -35,7 +35,7 @@ const OcWavesTable = (function() {
   }
 
   const populate = function(model) {
-    console.log("populate table:", model)
+    //console.log("populate table:", model)
     model.waves.forEach((wave, num) => {
       let $tr = appendWaveRow(wave, num + 1)
       let $canvas = appendChartCell($tr, wave)

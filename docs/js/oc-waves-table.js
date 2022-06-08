@@ -173,6 +173,7 @@ const OcWavesTable = (function() {
         tooltips: { display: false }
       }
     }
+
     const data = {
       labels: wave.datasets.dates,
       datasets: [

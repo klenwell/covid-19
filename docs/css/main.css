@@ -39,8 +39,8 @@ ul#pills-tab .nav-link:focus, ul#pills-tab .nav-link:hover {
 }
 
 ul#pills-tab .nav-link.active, ul#pills-tab .show > .nav-link {
-	color: white;
-	background-color: #e08600;
+  color: white;
+  background-color: #e08600;
 }
 
 /*

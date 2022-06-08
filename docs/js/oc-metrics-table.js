@@ -108,6 +108,6 @@ const OcMetricTable = (function() {
  * Main block: these are the things that happen on page load.
  */
 $(document).ready(function() {
-  OcMetricTable.render()
   OcMetricTable.syncUrlToTab()
+  OcMetricTable.render()
 })

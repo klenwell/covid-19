@@ -35,13 +35,35 @@ class OcWavesChart {
       return title
     }
 
+    const yTickFormatter = (value, index, ticks) => {
+      console.log(value, value % 5 === 0)
+      return value % 5 === 0 ? `${value}%` : ''
+    }
+
     return {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
         x: {
           type: 'time',
-          parser: 'yyyy-MM-dd'
+          parser: 'yyyy-MM-dd',
+          grid: { display: false },
+          ticks: {
+            stepSize: 2,
+            callback: (value, index, ticks) => index % 2 === 0 ? value : ''
+          }
+        },
+        y: {
+          max: 28,
+          min: 0,
+          title: {
+            display: true,
+            text: 'Test Positive Rate'
+          },
+          ticks: {
+            stepSize: 5,
+            callback: (value, index, ticks) => value % 5 === 0 ? `${value}%` : ''
+          }
         }
       },
       plugins: {

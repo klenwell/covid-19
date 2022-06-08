@@ -201,4 +201,5 @@ table.waves td.chart div.chart-wrapper {
 **/
 section#oc-covid-waves div.chart-block {
   height: 300px;
+  margin: 2rem 0;
 }

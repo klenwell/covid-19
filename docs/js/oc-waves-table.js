@@ -15,7 +15,7 @@ const OcWavesTable = (function() {
    * Public Methods
    */
   const render = function() {
-    $tableBody = $(SELECTOR).find('caption').html('')
+    $(SELECTOR).find('caption').html('')
     $tableBody = $(SELECTOR).find('tbody')
     extractJsonData(JSON_URL)
   }
@@ -30,7 +30,6 @@ const OcWavesTable = (function() {
   }
 
   const onFetchComplete = function(jsonData) {
-    console.log('onFetchComplete:', jsonData)
     const model = new OcWavesModel(jsonData)
     populate(model)
   }

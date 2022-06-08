@@ -27,6 +27,14 @@ class OcWavesChart {
   }
 
   get options() {
+    const tooltipTitleFormatter = (contexts) => {
+      const dateF = 'MMMM d, yyyy'
+      const context = contexts[0]
+      const title = this.dateTime.fromSeconds(context.parsed.x / 1000).toFormat(dateF)
+      //console.log('tooltipTitleFormatter', title, context)
+      return title
+    }
+
     return {
       responsive: true,
       maintainAspectRatio: false,
@@ -40,6 +48,12 @@ class OcWavesChart {
         legend: {
           position: 'left',
           labels: { usePointStyle: true }
+        },
+        tooltip: {
+          callbacks: {
+            title: tooltipTitleFormatter,
+            label: ctx => `Positive Rate: ${ctx.formattedValue}%`
+          }
         }
       }
     }
@@ -71,6 +85,10 @@ class OcWavesChart {
         borderColor: chartColor,
         backgroundColor: `${chartColor}75`,
         fill: true,
+        borderWidth: 1,
+        pointStyle: 'circle',
+        pointRadius: 2,
+        pointHoverRadius: 8,
         data: data
       }
 

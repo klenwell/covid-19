@@ -96,8 +96,8 @@ const OcWavesTable = (function() {
   }
 
   const appendHospitalizationsCell = function($tr, wave) {
-    const valueText = `<b>${wave.maxHospitalizations.value}</b> patients`
-    const noteHtml = `peaked on <b>${wave.maxHospitalizations.date}</b>`
+    const valueText = `<b>${wave.maxHospitalizations.value}</b>`
+    const noteHtml = `on <b>${wave.maxHospitalizations.date}</b>`
 
     const $div = $('<div />')
     const $valueSpan = $('<span />').addClass('value').html(valueText)

@@ -35,6 +35,12 @@ class OcWavesChart {
           type: 'time',
           parser: 'yyyy-MM-dd'
         }
+      },
+      plugins: {
+        legend: {
+          position: 'left',
+          labels: { usePointStyle: true }
+        }
       }
     }
   }
@@ -59,8 +65,9 @@ class OcWavesChart {
         return { x: dated, y: posRate }
       })
 
+      // Refer: https://www.chartjs.org/docs/next/samples/scales/time-line.html
       let dataset = {
-        label: num + 1,
+        label: `(${num + 1}) ${wave.type}`,
         borderColor: chartColor,
         backgroundColor: `${chartColor}75`,
         fill: true,
@@ -68,7 +75,6 @@ class OcWavesChart {
       }
 
       datasets.push(dataset)
-      console.log(dataset)
     })
 
     return datasets
@@ -78,7 +84,6 @@ class OcWavesChart {
    * Methods
   **/
   render() {
-    console.log('render chart config', this.config)
     return new Chart(this.canvas, this.config)
   }
 

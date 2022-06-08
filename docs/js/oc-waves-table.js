@@ -54,6 +54,9 @@ const OcWavesTable = (function() {
     appendCell($tr, 'end-date', wave.endedOn)
     appendCell($tr, 'days', wave.days)
     appendPeakCell($tr, wave.maxPositiveRate)
+    appendCasesCell($tr, wave)
+    appendHospitalizationsCell($tr, wave)
+    appendDeathsCell($tr, wave)
 
     $tableBody.append($tr)
     return $tr
@@ -68,11 +71,53 @@ const OcWavesTable = (function() {
   }
 
   const appendPeakCell = function($tr, peak) {
+    const valueHtml = `<b>${peak.value}</b>%`
+    const noteHtml = `on <b>${peak.date}</b>`
+
     const $div = $('<div />')
-    const $valueSpan = $('<span />').addClass('value').html(`${peak.value}%`)
-    const $dateSpan = $('<span />').addClass('note').html(`on <b>${peak.date}</b>`)
+    const $valueSpan = $('<span />').addClass('value').html(valueHtml)
+    const $dateSpan = $('<span />').addClass('note').html(noteHtml)
+
     $div.append($valueSpan).append($dateSpan)
     appendCell($tr, 'peak', $div)
+  }
+
+  const appendCasesCell = function($tr, wave) {
+    const dailyAvg = (wave.totalCases / wave.days).toFixed(1)
+    const valueText = `<b>${dailyAvg}</b>/day`
+    const noteHtml = `Total: <b>${wave.totalCases}</b>`
+
+    const $div = $('<div />')
+    const $valueSpan = $('<span />').addClass('value').html(valueText)
+    const $noteSpan = $('<span />').addClass('note').html(noteHtml)
+
+    $div.append($valueSpan).append($noteSpan)
+    appendCell($tr, 'cases', $div)
+  }
+
+  const appendHospitalizationsCell = function($tr, wave) {
+    const valueText = `<b>${wave.maxHospitalizations.value}</b> patients`
+    const noteHtml = `peaked on <b>${wave.maxHospitalizations.date}</b>`
+
+    const $div = $('<div />')
+    const $valueSpan = $('<span />').addClass('value').html(valueText)
+    const $noteSpan = $('<span />').addClass('note').html(noteHtml)
+
+    $div.append($valueSpan).append($noteSpan)
+    appendCell($tr, 'hospitalizations', $div)
+  }
+
+  const appendDeathsCell = function($tr, wave) {
+    const dailyAvg = (wave.totalDeaths / wave.days).toFixed(1)
+    const valueText = `<b>${dailyAvg}</b>/day`
+    const noteHtml = `Total: <b>${wave.totalDeaths}</b>`
+
+    const $div = $('<div />')
+    const $valueSpan = $('<span />').addClass('value').html(valueText)
+    const $noteSpan = $('<span />').addClass('note').html(noteHtml)
+
+    $div.append($valueSpan).append($noteSpan)
+    appendCell($tr, 'deaths', $div)
   }
 
   const appendChartCell = function($tr, wave) {

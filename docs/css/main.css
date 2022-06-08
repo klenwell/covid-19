@@ -69,6 +69,11 @@ table .sub-th {
   font-weight: normal;
 }
 
+table span.note {
+  display: block;
+  font-size: 0.8em;
+}
+
 table span.delta {
   font-weight: bold;
 }
@@ -113,11 +118,6 @@ table.metrics span.value {
 
 table.metrics span.postfix {
   font-weight: normal;
-}
-
-table.metrics span.note {
-  display: block;
-  font-size: 0.8em;
 }
 
 table tbody tr.rate th.capstone {

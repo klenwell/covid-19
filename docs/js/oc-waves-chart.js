@@ -30,7 +30,10 @@ class OcWavesChart {
     const tooltipTitleFormatter = (contexts) => {
       const dateF = 'MMMM d, yyyy'
       const context = contexts[0]
-      const title = this.dateTime.fromSeconds(context.parsed.x / 1000).toFormat(dateF)
+      const label = context.dataset.label.split(' ')
+      const date = this.dateTime.fromSeconds(context.parsed.x / 1000).toFormat(dateF)
+      const day = context.dataIndex + 1
+      const title = `${date}: day ${day} of ${label[1]}`
       //console.log('tooltipTitleFormatter', title, context)
       return title
     }
@@ -109,7 +112,7 @@ class OcWavesChart {
         fill: true,
         borderWidth: 1,
         pointStyle: 'circle',
-        pointRadius: 2,
+        pointRadius: 0,
         pointHoverRadius: 8,
         data: data
       }
@@ -133,7 +136,6 @@ class OcWavesChart {
  * Main block: these are the things that happen on page load.
  */
  $( document ).on(OC_WAVES_MODEL_LOAD_EVENT, (event, model) => {
-   console.log('event received', event, model)
    const chart = new OcWavesChart(model)
    chart.render()
  })

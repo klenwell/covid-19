@@ -117,6 +117,10 @@ class OcWastewaterExtract:
         return [row for row in self.oc_rows if row['Lab Id'] == 'CAL3']
 
     @cached_property
+    def dwrl_rows(self):
+        return [row for row in self.oc_rows if row['Lab Id'] == 'DWRL']
+
+    @cached_property
     def lab_samples(self):
         labs = {}
         lab_header = 'Lab Id'

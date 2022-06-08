@@ -189,6 +189,7 @@ const OcWavesTable = (function() {
       data: data,
       options: options
     }
+
     return new Chart($chart, config)
   }
 

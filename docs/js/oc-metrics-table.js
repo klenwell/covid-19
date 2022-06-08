@@ -17,6 +17,42 @@ const OcMetricTable = (function() {
     extractJsonData(JSON_URL)
   }
 
+  // Based on https://stackoverflow.com/a/12138756/1093087
+  const syncUrlToTab = function() {
+    const homeHash = '#metrics'
+    const hash = window.location.hash;
+    const hashSel = `ul.nav-pills button[data-bs-target="${hash}"]`
+
+    // https://stackoverflow.com/a/5298684/1093087
+    const removeHash = () => {
+      const loc = window.location
+      history.pushState("", document.title, loc.pathname + loc.search)
+      console.log('removeHash', loc.pathname + loc.search)
+    }
+
+    // Onload: open tab if hash found
+    if (hash) {
+      console.log('redirect to tab', hash)
+      hash && $(hashSel).tab('show')
+    }
+
+    // On pill click, update URL hash
+    $('.nav-pills button').click(function (e) {
+      const pillHash = $(this).data('bsTarget')
+      $(this).tab('show')
+
+      if ( pillHash == homeHash ) {
+        removeHash()
+      }
+      else {
+        window.location.hash = pillHash
+      }
+
+      const scrollmem = $('body').scrollTop() || $('html').scrollTop()
+      $('html,body').scrollTop(scrollmem)
+    })
+  }
+
   /*
    * Private Methods
    */
@@ -63,7 +99,8 @@ const OcMetricTable = (function() {
    * Public API
    */
   return {
-    render: render
+    render: render,
+    syncUrlToTab: syncUrlToTab
   }
 })()
 
@@ -71,5 +108,6 @@ const OcMetricTable = (function() {
  * Main block: these are the things that happen on page load.
  */
 $(document).ready(function() {
+  OcMetricTable.syncUrlToTab()
   OcMetricTable.render()
 })

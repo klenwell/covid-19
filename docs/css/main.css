@@ -24,6 +24,26 @@ div.container section + section {
 }
 
 /*
+ * Nav Pills
+**/
+ul#pills-tab {
+  padding-bottom: 1rem;
+}
+
+ul#pills-tab .nav-link {
+  color: #e08600;
+}
+
+ul#pills-tab .nav-link:focus, ul#pills-tab .nav-link:hover {
+  color: #ff8c00;
+}
+
+ul#pills-tab .nav-link.active, ul#pills-tab .show > .nav-link {
+  color: white;
+  background-color: #e08600;
+}
+
+/*
  * Tables
 **/
 table th {
@@ -47,6 +67,11 @@ table .sub-th {
   display: block;
   font-size: 0.8em;
   font-weight: normal;
+}
+
+table span.note {
+  display: block;
+  font-size: 0.8em;
 }
 
 table span.delta {
@@ -93,11 +118,6 @@ table.metrics span.value {
 
 table.metrics span.postfix {
   font-weight: normal;
-}
-
-table.metrics span.note {
-  display: block;
-  font-size: 0.8em;
 }
 
 table tbody tr.rate th.capstone {
@@ -151,4 +171,35 @@ table.trends td.test-positive-rate.falling {
 
 table.trends td.test-positive-rate.rising {
   background-color: LightCoral;
+}
+
+/*
+ * Waves Table
+**/
+/* table.waves tr.wave {
+  background-color: #ff000025
+}
+
+table.waves tr.lull {
+  background-color: #e0860025
+} */
+
+table.waves td {
+  padding: 0rem .25rem;
+}
+
+table.waves td.chart {
+  text-align: center;
+}
+
+table.waves td.chart div.chart-wrapper {
+  display: inline-block;
+}
+
+/*
+ * Waves Chart
+**/
+section#oc-covid-waves div.chart-block {
+  height: 300px;
+  margin: 2rem 0;
 }

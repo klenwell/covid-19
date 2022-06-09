@@ -85,10 +85,7 @@ class OCWastewaterExport:
     def extract_data_to_csv_row(self, dated):
         cal3 = self.extract.cal3_samples.get(dated, {})
         dwrl = self.extract.dwrl_samples.get(dated, {})
-        divider = '<-- {} | {} -->'.format(
-            cal3.get('Lab Id', 'xxx'),
-            dwrl.get('Lab Id', 'xxx'),
-        )
+        divider = self.format_lab_row_divider(cal3, dwrl)
 
         return [
             dated,
@@ -99,10 +96,28 @@ class OCWastewaterExport:
             cal3.get('Lab Id'),
             cal3.get('virus'),
             cal3.get('units'),
-            '<-- CAL3 | DWRL -->',
+            divider,
             dwrl.get('virus_ml_7d_avg'),
             dwrl.get('virus_ml'),
             dwrl.get('Ten Rollapply'),
             dwrl.get('virus'),
             dwrl.get('units')
         ]
+
+    def format_lab_row_divider(self, cal3, dwrl):
+        divider_f = '{} {} {}'
+
+        cal3_lab_id = cal3.get('Lab Id')
+        dwrl_lab_id = dwrl.get('Lab Id')
+
+        cal3_reported = cal3_lab_id is not None
+        dwrl_reported = dwrl_lab_id is not None
+
+        if cal3_reported and dwrl_reported:
+            return divider_f.format(cal3_lab_id, '|', dwrl_lab_id)
+        elif cal3_reported:
+            return cal3_lab_id
+        elif dwrl_reported:
+            return dwrl_lab_id
+        else:
+            return ''

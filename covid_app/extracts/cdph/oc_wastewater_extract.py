@@ -207,7 +207,7 @@ class OcWastewaterExtract:
             csv_path = self.sample_csv_path
 
         print('NOTE: using mock data from sample csv: {}'.format(csv_path))
-        time.sleep(2)
+        time.sleep(1)
 
         with open(csv_path) as csvfile:
             reader = csv.DictReader(csvfile)

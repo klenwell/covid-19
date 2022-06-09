@@ -49,25 +49,32 @@ class OcWastewaterExtract:
     @cached_property
     def viral_counts(self):
         records = {}
-        for date, sample in self.dated_samples.items():
+        for date, sample in self.cal3_samples.items():
             records[date] = sample['virus']
         return records
 
     @cached_property
     def viral_k_counts(self):
         records = {}
-        for date, sample in self.dated_samples.items():
+        for date, sample in self.cal3_samples.items():
             records[date] = sample['virus_k']
         return records
 
     @cached_property
     def ordered_viral_counts(self):
-        return sorted([(d, s['virus_k']) for (d, s) in self.dated_samples.items()])
+        return sorted([(d, s['virus_k']) for (d, s) in self.cal3_samples.items()])
 
     @cached_property
-    def dated_samples(self):
+    def cal3_samples(self):
         dated_samples = {}
         for row in self.cal3_rows:
+            dated_samples[row['date']] = row
+        return dated_samples
+
+    @cached_property
+    def dwrl_samples(self):
+        dated_samples = {}
+        for row in self.dwrl_rows:
             dated_samples[row['date']] = row
         return dated_samples
 

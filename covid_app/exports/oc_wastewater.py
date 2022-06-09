@@ -14,19 +14,18 @@ EXPORT_FILE_NAME = 'oc-wastewater.csv'
 
 CSV_HEADER = [
     'Date',
-    'K-Virus 7d Avg',
-    'Virus',
-    'Virus (k)',
-    'Virus (ln)',
+    'Virus/ml 7d Avg',
+    'Virus/ml',
     'Rolling 10d Avg',
     'Source',
     'Lab ID',
+    'Virus',
     'Units',
     '<- CAL3 | DWRL ->',
-    'K-Virus 7d Avg',
-    'Virus',
-    'Virus (k)',
+    'Virus/ml 7d Avg',
+    'Virus/ml',
     'Rolling 10d Avg',
+    'Virus',
     'Units'
 ]
 
@@ -41,7 +40,7 @@ class OCWastewaterExport:
 
     @cached_property
     def extract(self):
-        return OcWastewaterExtract()
+        return OcWastewaterExtract(self.use_mock)
 
     @property
     def dates(self):
@@ -65,7 +64,8 @@ class OCWastewaterExport:
     #
     # Instance Method
     #
-    def __init__(self):
+    def __init__(self, mock=False):
+        self.use_mock = mock
         self.run_time_start = time.time()
 
     def to_csv(self):
@@ -85,21 +85,24 @@ class OCWastewaterExport:
     def extract_data_to_csv_row(self, dated):
         cal3 = self.extract.cal3_samples.get(dated, {})
         dwrl = self.extract.dwrl_samples.get(dated, {})
+        divider = '<-- {} | {} -->'.format(
+            cal3.get('Lab Id', 'xxx'),
+            dwrl.get('Lab Id', 'xxx'),
+        )
 
         return [
             dated,
-            self.extract.viral_counts_7d_avg.get(dated),
-            cal3.get('virus'),
-            cal3.get('virus_k'),
-            cal3.get('log_virus'),
-            cal3.get('Ten_Rollapply'),
+            cal3.get('virus_ml_7d_avg'),
+            cal3.get('virus_ml'),
+            cal3.get('Ten Rollapply'),
             cal3.get('data_source'),
             cal3.get('Lab Id'),
+            cal3.get('virus'),
             cal3.get('units'),
-            '<-- CAL | DWR -->',
-            dwrl.get('virus_7d_avg'),
+            '<-- CAL3 | DWRL -->',
+            dwrl.get('virus_ml_7d_avg'),
+            dwrl.get('virus_ml'),
+            dwrl.get('Ten Rollapply'),
             dwrl.get('virus'),
-            dwrl.get('virus_k'),
-            dwrl.get('Ten_Rollapply'),
             dwrl.get('units')
         ]

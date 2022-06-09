@@ -72,10 +72,16 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/immunity.jinja2')
 
-    # python app.py oc wastewater
-    @expose(help="Export wastewater data to csv file.")
+    # python app.py oc wastewater [--mock]
+    @expose(
+        help="Export wastewater data to csv file.",
+        arguments=[
+            (['--mock'], dict(action='store_true', help='mock data using sample file'))
+        ]
+    )
     def wastewater(self):
-        export = OCWastewaterExport()
+        use_mock = self.app.pargs.mock
+        export = OCWastewaterExport(mock=use_mock)
         export.to_csv()
         vars = {
             'export': export,

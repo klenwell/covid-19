@@ -21,6 +21,12 @@ CSV_HEADER = [
     'Rolling 10d Avg',
     'Source',
     'Lab ID',
+    'Units',
+    '<- CAL3 | DWRL ->',
+    'K-Virus 7d Avg',
+    'Virus',
+    'Virus (k)',
+    'Rolling 10d Avg',
     'Units'
 ]
 
@@ -77,16 +83,23 @@ class OCWastewaterExport:
     # Private
     #
     def extract_data_to_csv_row(self, dated):
-        row = self.extract.dated_samples.get(dated, {})
+        cal3 = self.extract.cal3_samples.get(dated, {})
+        dwrl = self.extract.dwrl_samples.get(dated, {})
 
         return [
             dated,
             self.extract.viral_counts_7d_avg.get(dated),
-            row.get('virus'),
-            row.get('virus_k'),
-            row.get('log_virus'),
-            row.get('Ten_Rollapply'),
-            row.get('data_source'),
-            row.get('Lab Id'),
-            row.get('units'),
+            cal3.get('virus'),
+            cal3.get('virus_k'),
+            cal3.get('log_virus'),
+            cal3.get('Ten_Rollapply'),
+            cal3.get('data_source'),
+            cal3.get('Lab Id'),
+            cal3.get('units'),
+            '<-- CAL | DWR -->',
+            dwrl.get('virus_7d_avg'),
+            dwrl.get('virus'),
+            dwrl.get('virus_k'),
+            dwrl.get('Ten_Rollapply'),
+            dwrl.get('units')
         ]

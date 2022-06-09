@@ -14,6 +14,9 @@ from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
 JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
 JSON_FILE_NAME = 'metrics.json'
 
+# Wastewater Lab: CAL3 or DWRL
+WASTEWATER_LAB = 'DWRL'
+
 JSON_SCHEMA = {
     'testPositiveRate': {},
     'dailyNewCases': {},
@@ -37,7 +40,7 @@ class OCMetricsExport:
     # Extracts
     @cached_property
     def waste_extract(self):
-        return OcWastewaterExtract()
+        return OcWastewaterExtract(mock=self.test)
 
     @cached_property
     def case_extract(self):
@@ -58,10 +61,6 @@ class OCMetricsExport:
                 return dated
 
     @cached_property
-    def latest_wastewater_update(self):
-        return self.waste_extract.ends_on
-
-    @cached_property
     def latest_hospital_case_update(self):
         for dated in self.case_dates:
             if self.case_extract.hospitalizations.get(dated) not in ('', None):
@@ -78,6 +77,10 @@ class OCMetricsExport:
         for dated in self.case_dates:
             if self.case_extract.new_deaths.get(dated) not in ('', None):
                 return dated
+
+    @cached_property
+    def latest_wastewater_update(self):
+        return self.waste_extract.latest_update_by_lab(WASTEWATER_LAB)
 
     # Date sets
     @property
@@ -188,7 +191,6 @@ class OCMetricsExport:
 
         if self.test:
             print('[WARNING] In test mode: loading sample data.')
-            self.waste_extract.load_test_csv()
             self.case_extract.mock_api_calls()
 
     def to_json_file(self):
@@ -222,7 +224,7 @@ class OCMetricsExport:
 
     def prep_wastewater(self):
         updated_on = self.latest_wastewater_update
-        dataset = self.waste_extract.viral_counts_7d_avg
+        dataset = self.waste_extract.viral_counts_7d_avg_by_lab(WASTEWATER_LAB)
         return self.prep_metric(dataset, updated_on)
 
     def prep_hospital_cases(self):
@@ -271,7 +273,9 @@ class OCMetricsExport:
         F is the frequency for the score of interest
         N is the number of scores in the distribution
         """
-        sorted_values = sorted(all_values)
+        # Wastewater may have some None values
+        non_empty_values = [v for v in all_values if v is not None]
+        sorted_values = sorted(non_empty_values)
         cf = sorted_values.index(value)
         freq = sorted_values.count(value)
         return (cf + (.5 * freq)) / len(sorted_values) * 100

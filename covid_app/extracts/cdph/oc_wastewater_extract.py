@@ -13,6 +13,7 @@ import requests
 import csv
 import codecs
 import math
+import time
 from os.path import dirname, abspath, join as path_join
 from functools import cached_property
 from datetime import datetime, timedelta
@@ -30,6 +31,7 @@ class OcWastewaterExtract:
     #
     # Properties
     #
+    # Data Source Info
     @property
     def url(self):
         return EXTRACT_URL_F.format(EXTRACT_URL, EXTRACT_PATH)
@@ -39,42 +41,13 @@ class OcWastewaterExtract:
         root_dir = dirname(dirname(dirname(dirname(abspath(__file__)))))
         return path_join(root_dir, 'data/samples/Cal-SuWers.csv')
 
-    @cached_property
-    def viral_counts_7d_avg(self):
-        records = {}
-        for date in self.dates:
-            records[date] = self.compute_viral_count_7d_avg_for_date(date)
-        return records
-
-    @cached_property
-    def viral_counts(self):
-        records = {}
-        for date, sample in self.dated_samples.items():
-            records[date] = sample['virus']
-        return records
-
-    @cached_property
-    def viral_k_counts(self):
-        records = {}
-        for date, sample in self.dated_samples.items():
-            records[date] = sample['virus_k']
-        return records
-
-    @cached_property
-    def ordered_viral_counts(self):
-        return sorted([(d, s['virus_k']) for (d, s) in self.dated_samples.items()])
-
-    @cached_property
-    def dated_samples(self):
-        dated_samples = {}
-        for row in self.cal3_rows:
-            dated_samples[row['date']] = row
-        return dated_samples
-
+    # Data
     @cached_property
     def csv_rows(self):
-        if self.test_csv_rows:
-            return self.test_csv_rows
+        """This property triggers call to CDPH site. It's expensive.
+        """
+        if self.use_mock:
+            return self.load_test_csv()
 
         # Large stream pattern: https://stackoverflow.com/a/38677650/1093087
         rows = []
@@ -87,6 +60,42 @@ class OcWastewaterExtract:
                 rows.append(row)
 
         return rows
+
+    @cached_property
+    def cal3_samples(self):
+        dated_samples = {}
+        dated_pre_samples = {}
+
+        for row in self.cal3_rows:
+            if row['Ten Rollapply'] != '':
+                dated_pre_samples[row['date']] = row
+
+        # Add 7-day ml avg
+        for dated in self.dates:
+            pre_sample = dated_pre_samples.get(dated, {})
+            pre_sample['virus_ml_7d_avg'] = \
+                self.compute_viral_count_7d_avg_for_date(dated, dated_pre_samples)
+            dated_samples[dated] = pre_sample
+
+        return dated_samples
+
+    @cached_property
+    def dwrl_samples(self):
+        dated_samples = {}
+        dated_pre_samples = {}
+
+        for row in self.dwrl_rows:
+            if row['Ten Rollapply'] != '':
+                dated_pre_samples[row['date']] = row
+
+        # Add 7-day ml avg
+        for dated in self.dates:
+            pre_sample = dated_pre_samples.get(dated, {})
+            pre_sample['virus_ml_7d_avg'] = \
+                self.compute_viral_count_7d_avg_for_date(dated, dated_pre_samples)
+            dated_samples[dated] = pre_sample
+
+        return dated_samples
 
     @cached_property
     def oc_rows(self):
@@ -104,7 +113,7 @@ class OcWastewaterExtract:
 
             row['date'] = self.date_str_to_date(date)
             row['virus'] = int(round(float(concentrate.replace(',', ''))))
-            row['virus_k'] = row['virus'] / 1000
+            row['virus_ml'] = row['virus'] / 1000
 
             if row['virus'] > 0:
                 row['log_virus'] = math.log(row['virus'])
@@ -114,12 +123,13 @@ class OcWastewaterExtract:
 
     @cached_property
     def cal3_rows(self):
-        return [row for row in self.oc_rows if row['Lab Id'] == 'CAL3']
+        return [row for row in self.oc_rows if row['Lab Id'].upper() == 'CAL3']
 
     @cached_property
     def dwrl_rows(self):
-        return [row for row in self.oc_rows if row['Lab Id'] == 'DWRL']
+        return [row for row in self.oc_rows if row['Lab Id'].upper() == 'DWRL']
 
+    # Lab Info
     @cached_property
     def lab_samples(self):
         labs = {}
@@ -143,10 +153,11 @@ class OcWastewaterExtract:
     def oc_labs(self):
         return self.lab_counts.keys()
 
+    # Dates
     @cached_property
     def report_dates(self):
         dates = []
-        for row in self.cal3_rows:
+        for row in self.oc_rows:
             dates.append(row['date'])
         return sorted(list(set(dates)))
 
@@ -171,36 +182,61 @@ class OcWastewaterExtract:
         return self.report_dates[-1]
 
     @cached_property
-    def newest_sample(self):
-        csv_rows = [(self.date_str_to_date(r['Sample Date']), r) for r in self.csv_rows]
-        sorted_rows = sorted(csv_rows, key=lambda r: r[0])
-        return sorted_rows[-1]
+    def newest_samples(self):
+        cal3_rows = [(r['date'], r) for r in self.cal3_rows]
+        dwrl_rows = [(r['date'], r) for r in self.dwrl_rows]
+
+        sorted_cal3_rows = sorted(cal3_rows, key=lambda r: r[0])
+        sorted_dwrl_rows = sorted(dwrl_rows, key=lambda r: r[0])
+
+        return {
+            'CAL3': sorted_cal3_rows[-1],
+            'DWRL': sorted_dwrl_rows[-1]
+        }
 
     #
     # Instance Methods
     #
-    def __init__(self):
-        self.test_csv_rows = None
+    def __init__(self, mock=False):
+        self.use_mock = mock
 
     def load_test_csv(self, csv_path=None):
-        self.test_csv_rows = []
+        rows = []
 
         if csv_path is None:
             csv_path = self.sample_csv_path
 
+        print('NOTE: using mock data from sample csv: {}'.format(csv_path))
+        time.sleep(1)
+
         with open(csv_path) as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                self.test_csv_rows.append(row)
+                rows.append(row)
 
-        return csv_path
+        return rows
 
-    def compute_viral_count_7d_avg_for_date(self, dated):
+    def latest_update_by_lab(self, lab):
+        lab = lab.upper()
+        return self.newest_samples[lab][0]
+
+    def viral_counts_7d_avg_by_lab(self, lab):
+        dataset = {}
+        lab = lab.upper()
+        samples = self.dwrl_samples if lab == 'DWRL' else self.cal3_samples
+
+        for dated in self.dates:
+            dataset[dated] = samples[dated]['virus_ml_7d_avg']
+
+        return dataset
+
+    def compute_viral_count_7d_avg_for_date(self, dated, dated_samples):
         viral_counts = []
 
         for days_back in range(7):
             back_date = dated - timedelta(days=days_back)
-            viral_count = self.viral_k_counts.get(back_date)
+            sample = dated_samples.get(back_date, {})
+            viral_count = sample.get('virus_ml')
 
             if viral_count:
                 viral_counts.append(viral_count)
@@ -232,9 +268,10 @@ if __name__ == "__main__":
     extract = OcWastewaterExtract()
 
     if sys.argv[-1] == '--live':
+        extract.use_mock = False
         print('Using live data from {}'.format(extract.url))
     else:
-        extract.load_test_csv()
+        extract.use_mock = True
         print("Using sample csv: {}".format(extract.sample_csv_path))
 
     print('Latest sample:', extract.newest_sample)

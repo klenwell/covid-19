@@ -14,13 +14,18 @@ EXPORT_FILE_NAME = 'oc-wastewater.csv'
 
 CSV_HEADER = [
     'Date',
-    'K-Virus 7d Avg',
-    'Virus',
-    'Virus (k)',
-    'Virus (ln)',
+    'Virus/ml 7d Avg',
+    'Virus/ml',
     'Rolling 10d Avg',
     'Source',
     'Lab ID',
+    'Virus',
+    'Units',
+    '<- CAL3 | DWRL ->',
+    'Virus/ml 7d Avg',
+    'Virus/ml',
+    'Rolling 10d Avg',
+    'Virus',
     'Units'
 ]
 
@@ -35,7 +40,7 @@ class OCWastewaterExport:
 
     @cached_property
     def extract(self):
-        return OcWastewaterExtract()
+        return OcWastewaterExtract(self.use_mock)
 
     @property
     def dates(self):
@@ -59,7 +64,8 @@ class OCWastewaterExport:
     #
     # Instance Method
     #
-    def __init__(self):
+    def __init__(self, mock=False):
+        self.use_mock = mock
         self.run_time_start = time.time()
 
     def to_csv(self):
@@ -77,16 +83,41 @@ class OCWastewaterExport:
     # Private
     #
     def extract_data_to_csv_row(self, dated):
-        row = self.extract.dated_samples.get(dated, {})
+        cal3 = self.extract.cal3_samples.get(dated, {})
+        dwrl = self.extract.dwrl_samples.get(dated, {})
+        divider = self.format_lab_row_divider(cal3, dwrl)
 
         return [
             dated,
-            self.extract.viral_counts_7d_avg.get(dated),
-            row.get('virus'),
-            row.get('virus_k'),
-            row.get('log_virus'),
-            row.get('Ten_Rollapply'),
-            row.get('data_source'),
-            row.get('Lab Id'),
-            row.get('units'),
+            cal3.get('virus_ml_7d_avg'),
+            cal3.get('virus_ml'),
+            cal3.get('Ten Rollapply'),
+            cal3.get('data_source'),
+            cal3.get('Lab Id'),
+            cal3.get('virus'),
+            cal3.get('units'),
+            divider,
+            dwrl.get('virus_ml_7d_avg'),
+            dwrl.get('virus_ml'),
+            dwrl.get('Ten Rollapply'),
+            dwrl.get('virus'),
+            dwrl.get('units')
         ]
+
+    def format_lab_row_divider(self, cal3, dwrl):
+        divider_f = '{} {} {}'
+
+        cal3_lab_id = cal3.get('Lab Id')
+        dwrl_lab_id = dwrl.get('Lab Id')
+
+        cal3_reported = cal3_lab_id is not None
+        dwrl_reported = dwrl_lab_id is not None
+
+        if cal3_reported and dwrl_reported:
+            return divider_f.format(cal3_lab_id, '|', dwrl_lab_id)
+        elif cal3_reported:
+            return cal3_lab_id
+        elif dwrl_reported:
+            return dwrl_lab_id
+        else:
+            return ''

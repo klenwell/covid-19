@@ -31,6 +31,17 @@ class OcWastewaterExtract:
     #
     # Properties
     #
+    # Data Source Info
+    @property
+    def url(self):
+        return EXTRACT_URL_F.format(EXTRACT_URL, EXTRACT_PATH)
+
+    @property
+    def sample_csv_path(self):
+        root_dir = dirname(dirname(dirname(dirname(abspath(__file__)))))
+        return path_join(root_dir, 'data/samples/Cal-SuWers.csv')
+
+    # Data
     @cached_property
     def csv_rows(self):
         """This property triggers call to CDPH site. It's expensive.
@@ -49,40 +60,6 @@ class OcWastewaterExtract:
                 rows.append(row)
 
         return rows
-
-    @property
-    def url(self):
-        return EXTRACT_URL_F.format(EXTRACT_URL, EXTRACT_PATH)
-
-    @property
-    def sample_csv_path(self):
-        root_dir = dirname(dirname(dirname(dirname(abspath(__file__)))))
-        return path_join(root_dir, 'data/samples/Cal-SuWers.csv')
-
-    @cached_property
-    def viral_counts_7d_avg(self):
-        records = {}
-        for date in self.dates:
-            records[date] = self.compute_viral_count_7d_avg_for_date(date)
-        return records
-
-    @cached_property
-    def viral_counts(self):
-        records = {}
-        for date, sample in self.cal3_samples.items():
-            records[date] = sample['virus']
-        return records
-
-    @cached_property
-    def viral_k_counts(self):
-        records = {}
-        for date, sample in self.cal3_samples.items():
-            records[date] = sample.get('virus_ml')
-        return records
-
-    @cached_property
-    def ordered_viral_counts(self):
-        return sorted([(d, s.get('virus_ml')) for (d, s) in self.cal3_samples.items()])
 
     @cached_property
     def cal3_samples(self):
@@ -152,6 +129,7 @@ class OcWastewaterExtract:
     def dwrl_rows(self):
         return [row for row in self.oc_rows if row['Lab Id'].upper() == 'DWRL']
 
+    # Lab Info
     @cached_property
     def lab_samples(self):
         labs = {}
@@ -175,6 +153,7 @@ class OcWastewaterExtract:
     def oc_labs(self):
         return self.lab_counts.keys()
 
+    # Dates
     @cached_property
     def report_dates(self):
         dates = []

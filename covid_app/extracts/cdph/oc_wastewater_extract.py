@@ -146,11 +146,11 @@ class OcWastewaterExtract:
 
     @cached_property
     def cal3_rows(self):
-        return [row for row in self.oc_rows if row['Lab Id'] == 'CAL3']
+        return [row for row in self.oc_rows if row['Lab Id'].upper() == 'CAL3']
 
     @cached_property
     def dwrl_rows(self):
-        return [row for row in self.oc_rows if row['Lab Id'] == 'DWRL']
+        return [row for row in self.oc_rows if row['Lab Id'].upper() == 'DWRL']
 
     @cached_property
     def lab_samples(self):
@@ -204,8 +204,11 @@ class OcWastewaterExtract:
 
     @cached_property
     def newest_samples(self):
-        sorted_cal3_rows = [(r['date'], r) for r in self.cal3_rows]
-        sorted_dwrl_rows = [(r['date'], r) for r in self.dwrl_rows]
+        cal3_rows = [(r['date'], r) for r in self.cal3_rows]
+        dwrl_rows = [(r['date'], r) for r in self.dwrl_rows]
+
+        sorted_cal3_rows = sorted(cal3_rows, key=lambda r: r[0])
+        sorted_dwrl_rows = sorted(dwrl_rows, key=lambda r: r[0])
 
         return {
             'CAL3': sorted_cal3_rows[-1],
@@ -233,6 +236,20 @@ class OcWastewaterExtract:
                 rows.append(row)
 
         return rows
+
+    def latest_update_by_lab(self, lab):
+        lab = lab.upper()
+        return self.newest_samples[lab][0]
+
+    def viral_counts_7d_avg_by_lab(self, lab):
+        dataset = {}
+        lab = lab.upper()
+        samples = self.dwrl_samples if lab == 'DWRL' else self.cal3_samples
+
+        for dated in self.dates:
+            dataset[dated] = samples[dated]['virus_ml_7d_avg']
+
+        return dataset
 
     def compute_viral_count_7d_avg_for_date(self, dated, dated_samples):
         viral_counts = []

@@ -1,5 +1,5 @@
 /*
- * OC Waves Table View Model
+ * OC Waves Table Component
  *
  * Uses jQuery module pattern: https://wiki.klenwell.com/view/JQuery
 **/
@@ -8,32 +8,19 @@ const OcWavesTable = (function() {
    * Constants
    */
   const SELECTOR = 'section#oc-covid-waves table'
-  const JSON_URL = 'data/json/oc/waves.json'
-  const $table = null;
 
   /*
    * Public Methods
    */
-  const render = function() {
+  const render = function(model) {
     $(SELECTOR).find('caption').html('')
     $tableBody = $(SELECTOR).find('tbody')
-    extractJsonData(JSON_URL)
+    populate(model)
   }
 
   /*
    * Private Methods
    */
-  const extractJsonData = function(jsonUrl) {
-    fetch(jsonUrl)
-      .then(response => response.json())
-      .then(data => onFetchComplete(data))
-  }
-
-  const onFetchComplete = function(jsonData) {
-    const model = new OcWavesModel(jsonData)
-    populate(model)
-  }
-
   const populate = function(model) {
     //console.log("populate table:", model)
     model.waves.forEach((wave, num) => {
@@ -201,9 +188,10 @@ const OcWavesTable = (function() {
   }
 })()
 
+
 /*
- * Main block: these are the things that happen on page load.
- */
-$(document).ready(function() {
-  OcWavesTable.render()
+ * Main block: these are the things that happen on designated event.
+**/
+$(document).on(OcWavesModel.dataReady, (event, model) => {
+  OcWavesTable.render(model)
 })

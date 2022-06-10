@@ -16,8 +16,8 @@ DATE_OUT_F = '%Y-%m-%d'
 JSON_SCHEMA = {
     'phases': {},
     'meta': {
-        'createdOn': '{date}',
-        'lastUpdatedOn': '{date}'
+        'createdAt': '{date}',
+        'dataLastUpdated': '{date}'
     }
 }
 
@@ -51,6 +51,7 @@ class OCPhasesExport:
         return self.analysis.epidemic
 
     # Data
+    @cached_property
     def phases(self):
         return self.analysis.epidemic.smoothed_phases
 
@@ -70,13 +71,13 @@ class OCPhasesExport:
     #
     # Instance Method
     #
-    def phases_to_json_file(self):
+    def to_json_file(self):
         schema = JSON_SCHEMA.copy()
 
-        schema['data'] = self.prep_phases_data()
+        schema['phases'] = self.prep_phases_data()
         schema['meta'] = {
             'createdAt': self.iso_timestamp,
-            'lastUpdatedOn': self.analysis.end_date.strftime(DATE_OUT_F)
+            'dataLastUpdated': self.analysis.end_date.strftime(DATE_OUT_F)
         }
 
         # pretty print

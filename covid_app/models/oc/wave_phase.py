@@ -83,6 +83,10 @@ class WavePhase:
         if self.trend is not None:
             return labels[self.trend]
 
+    @property
+    def timeline(self):
+        return self.extract_timeline(self.epidemic.timeline)
+
     # Methods
     def add_window(self, window):
         self.windows.append(window)

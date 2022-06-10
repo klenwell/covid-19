@@ -11,9 +11,8 @@ from functools import cached_property
 import csv
 from datetime import timedelta, date
 
-from config.app import DATA_ROOT
-from covid_app.extracts.oc_hca.daily_covid19_extract import (DailyCovid19Extract as OcExtract,
-                                                             OC_POPULATION)
+from config.app import DATA_ROOT, OC_POPULATION
+from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract as OcExtract
 from covid_app.extracts.san_diego_county import (SanDiegoCountyDailyExtract as SdExtract,
                                                  TOTAL_POPULATION as SD_POPULATION)
 

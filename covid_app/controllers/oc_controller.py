@@ -9,6 +9,7 @@ from covid_app.exports.oc_immunity import OCImmunityExport
 from covid_app.exports.oc_wastewater import OCWastewaterExport
 from covid_app.exports.oc.metrics import OCMetricsExport
 from covid_app.exports.oc.waves import OCWavesExport
+from covid_app.exports.oc.phases import OCPhasesExport
 from covid_app.services.oc_health_service import OCHealthService
 
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
@@ -128,6 +129,22 @@ class OcController(Controller):
                 'Total Phases: {}'.format(phase_count),
                 'Run time: {} s'.format(round(export.run_time, 2)),
                 'Waves:\n{}'.format(waves)
+            ]
+        }
+        self.app.render(vars, 'oc/json-export.jinja2')
+
+    # python app.py oc phases-json-file
+    @expose(help="Output JSON file to docs/data/json/oc/phases.json.")
+    def phases_json_file(self):
+        export = OCPhasesExport(test=False)
+        json_path = export.to_json_file()
+
+        vars = {
+            'json_path': json_path,
+            'notes': [
+                'Data Source: {}'.format(export.data_source_path),
+                'Total Phases: {}'.format(len(export.phases)),
+                'Run time: {} s'.format(round(export.run_time, 2)),
             ]
         }
         self.app.render(vars, 'oc/json-export.jinja2')
@@ -290,12 +307,11 @@ class OcController(Controller):
         from covid_app.analytics.oc.waves import OcWaveAnalysis
         from pprint import pprint
 
-        export = OCWavesExport()
-        waves_json_path = export.waves_to_json_file()
-        print('Data source:', export.data_source_path)
-        print('Waves exported to:', waves_json_path)
-        phases_json_path = export.phases_to_json_file()
-        print('Phases exported to:', phases_json_path)
+        export = OCPhasesExport()
+        json_path = export.to_json_file()
+        print('Phases exported to:', json_path)
+
+        breakpoint()
 
         analysis = OcWaveAnalysis(test=False)
         print('avg_positive_rates:', len(analysis.avg_positive_rates))
@@ -308,8 +324,6 @@ class OcController(Controller):
 
         last_phase = analysis.epidemic.smoothed_phases[-1]
         print('last_phase primary timeline:', len(last_phase.get_timeline('primary').keys()))
-
-        breakpoint()
 
         pprint(analysis.epidemic.smoothed_phases)
         pprint(analysis.epidemic.waves)

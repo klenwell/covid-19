@@ -6,12 +6,15 @@ APP_ROOT = path_join(PROJECT_ROOT, 'covid_app')
 DATA_ROOT = path_join(PROJECT_ROOT, 'data')
 GH_PAGES_ROOT = path_join(PROJECT_ROOT, 'docs')
 
-# OC Wave Analysis
+# OC Config
+OC_POPULATION = 3222498
+
+# Wave Analysis
 WAVE_ANALYSIS_CONFIG = {
     'window_size': 5,
 
     # Slope value distinguishing plateaus from rise/falls
-    'flat_slope_threshold': 5,
+    'flat_slope_threshold': .05,
 
     # This is the minimum size a phase needs to be (in days) not be flagged as micro
     # and merged.

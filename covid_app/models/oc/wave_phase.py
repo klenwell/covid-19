@@ -26,6 +26,10 @@ class WavePhase:
         return self.windows[0]
 
     @property
+    def last_window(self):
+        return self.windows[-1]
+
+    @property
     def start_value(self):
         return self.start_window.value
 
@@ -35,6 +39,10 @@ class WavePhase:
             return self.end_window.value
 
     @property
+    def last_value(self):
+        return self.last_window.value
+
+    @property
     def days(self):
         if not self.is_ended():
             return None
@@ -42,24 +50,25 @@ class WavePhase:
 
     @property
     def value_diff(self):
-        if not self.is_ended():
-            return None
-        return self.end_value - self.start_value
+        return self.last_value - self.start_value
+
+    @property
+    def slope(self):
+        return self.value_diff / self.days
 
     @property
     def kslope(self):
-        if not self.is_ended():
-            return None
-        return self.value_diff / self.days * 100
+        # kilo-slope
+        return self.slope * 1000
 
     @property
     def trend(self):
-        if self.kslope is None:
+        if self.slope is None:
             return None
 
-        if self.kslope > self.flat_slope_threshold:
+        if self.slope > self.flat_slope_threshold:
             return 1
-        elif self.kslope < -self.flat_slope_threshold:
+        elif self.slope < -self.flat_slope_threshold:
             return -1
         else:
             return 0
@@ -73,6 +82,10 @@ class WavePhase:
         }
         if self.trend is not None:
             return labels[self.trend]
+
+    @property
+    def timeline(self):
+        return self.extract_timeline(self.epidemic.timeline)
 
     # Methods
     def add_window(self, window):

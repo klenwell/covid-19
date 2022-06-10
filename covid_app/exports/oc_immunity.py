@@ -3,7 +3,7 @@ import csv
 from functools import cached_property
 import time
 
-from config.app import DATA_ROOT
+from config.app import DATA_ROOT, OC_POPULATION
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
 from covid_app.extracts.cdph.oc_vaccines_daily_extract import OcVaccinesDailyExtract
 from covid_app.models.oc.immune_cohort import ImmuneCohort
@@ -25,7 +25,6 @@ CSV_HEADER = [
     'Booster'
 ]
 
-OC_POPULATION = 3000000
 INFECTIOUS_WINDOW = 14              # days
 VACCINE_IMMUNITY_WINDOW = 9 * 30    # days
 INFECTION_IMMUNITY_WINDOW = 6 * 30  # days

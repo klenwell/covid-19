@@ -8,13 +8,13 @@ See versions directory, for latest version of class doing actual extraction.
 """
 import requests
 
+from config.app import OC_POPULATION
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v1 import DailyCovid19ExtractV1
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v2 import DailyCovid19ExtractV2
 from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
 
 
 EXTRACT_URL = 'https://occovid19.ochealthinfo.com/coronavirus-in-oc'
-OC_POPULATION = 3222498
 
 
 class ExtractError(Exception):

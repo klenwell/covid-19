@@ -22,10 +22,6 @@ class PhaseWindow:
         return self.value_change / len(self.values)
 
     @property
-    def kslope(self):
-        return self.slope * 100
-
-    @property
     def stdev(self):
         return statistics.stdev(self.values)
 
@@ -35,9 +31,9 @@ class PhaseWindow:
 
     @property
     def trend(self):
-        if self.kslope > self.flat_slope_threshold:
+        if self.slope > self.flat_slope_threshold:
             return 1
-        elif self.kslope < -self.flat_slope_threshold:
+        elif self.slope < -self.flat_slope_threshold:
             return -1
         else:
             return 0
@@ -51,5 +47,5 @@ class PhaseWindow:
         return self.values[-1]
 
     def __repr__(self):
-        f = '<PhaseWindow middate={} days={} kslope={:.1f} stdev={:.3f} trend={}>'
-        return f.format(self.date, len(self.values), self.kslope, self.stdev, self.trend)
+        f = '<PhaseWindow middate={} days={} slope={:.3f} stdev={:.3f} trend={}>'
+        return f.format(self.date, len(self.values), self.slope, self.stdev, self.trend)

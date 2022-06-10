@@ -4,7 +4,7 @@ from datetime import timedelta, datetime
 import time
 import json
 
-from config.app import GH_PAGES_ROOT
+from config.app import GH_PAGES_ROOT, OC_POPULATION
 from covid_app.analytics.oc.waves import OcWaveAnalysis
 
 
@@ -92,56 +92,24 @@ class OCPhasesExport:
         phases = []
 
         for phase in self.phases:
-            total_cases = self.sum_timeline(phase.get_timeline('new_cases'))
-            total_deaths = self.sum_timeline(phase.get_timeline('deaths'))
-            max_case_avg = self.find_max_date_and_value(phase.get_timeline('avg_new_cases'))
-            max_hosps = self.find_max_date_and_value(phase.get_timeline('hospitalizations'), 0)
-            max_icus = self.find_max_date_and_value(phase.get_timeline('icu_cases'), 0)
+            avg_pos_rate = phase.timeline
             phase_data = {
                 'startedOn': phase.started_on.strftime(DATE_OUT_F),
                 'endedOn': phase.ended_on.strftime(DATE_OUT_F),
                 'trend': phase.trending,
                 'days': phase.days,
-                'peakedOn': phase.peaked_on.strftime(DATE_OUT_F),
-                'maxPositiveRate': {
-                    'date': phase.peaked_on.strftime(DATE_OUT_F),
-                    'value': round(phase.peak_value, 2)
-                },
-                'minPositiveRate': {
-                    'date': phase.floored_on.strftime(DATE_OUT_F),
-                    'value': round(phase.floor_value, 2)
-                },
-                'maxCaseAvg': max_case_avg,
-                'maxHospitalizations': max_hosps,
-                'maxIcuCases': max_icus,
-                'totalTests': sum(phase.get_timeline('tests_admin').values()),
-                'totalPositiveTests': sum(phase.get_timeline('tests_positive').values()),
-                'totalCases': total_cases,
-                'totalDeaths': total_deaths,
+                'startPositiveRate': avg_pos_rate[phase.started_on],
+                'endPositiveRate': avg_pos_rate[phase.ended_on],
+                'pop_slope': phase.slope * OC_POPULATION,
                 'datasets': {
                     'dates': [d.strftime(DATE_OUT_F) for d in sorted(phase.timeline.keys())],
                     'avgPositiveRates': self.to_dataset(phase.timeline),
-                    'tests': self.to_dataset(phase.get_timeline('tests_admin')),
-                    'positiveTests': self.to_dataset(phase.get_timeline('tests_positive')),
                     'avgCases': self.to_dataset(phase.get_timeline('avg_new_cases'))
                 }
-
             }
             phases.append(phase_data)
 
         return phases
-
-    def find_max_date_and_value(self, timeline, precision=2):
-        values = [v for v in timeline.values() if v is not None]
-        max_value = max(values)
-        for dated, value in timeline.items():
-            if value == max_value:
-                value = round(value, precision) if precision is not None else value
-                return {'date': dated.strftime(DATE_OUT_F), 'value': value}
-
-    def sum_timeline(self, timeline):
-        values = [v for v in timeline.values() if v is not None]
-        return sum(values)
 
     def to_dataset(self, timeline, precision=2):
         """Converts dict {date: value...} to list of values (correlated to date list).

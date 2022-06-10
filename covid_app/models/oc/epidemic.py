@@ -297,8 +297,8 @@ class Epidemic:
                 continue
 
             # Now figure out what to do with micro phases.
-            prev_phase_slope = prev_phase.kslope if prev_phase is not None else inf
-            prev_phase_flatter = abs(prev_phase_slope) < abs(next_phase.kslope)
+            prev_phase_slope = prev_phase.slope if prev_phase is not None else inf
+            prev_phase_flatter = abs(prev_phase_slope) < abs(next_phase.slope)
             prev_phase_higher = prev_phase and prev_phase.end_value > next_phase.end_value
 
             # If no previous, just merge with next phase

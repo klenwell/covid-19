@@ -121,11 +121,3 @@ class OCPhasesExport:
             value = round(value, precision) if precision is not None else value
             dataset.append(value)
         return dataset
-
-    def week_avg_from_date(self, daily_values, from_date):
-        values = []
-        for n in range(7):
-            dated = from_date - timedelta(days=n)
-            value = daily_values[dated]
-            values.append(value)
-        return sum(values) / len(values)

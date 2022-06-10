@@ -133,6 +133,22 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/json-export.jinja2')
 
+    # python app.py oc phases-json-file
+    @expose(help="Output JSON file to docs/data/json/oc/phases.json.")
+    def phases_json_file(self):
+        export = OCPhasesExport(test=False)
+        json_path = export.to_json_file()
+
+        vars = {
+            'json_path': json_path,
+            'notes': [
+                'Data Source: {}'.format(export.data_source_path),
+                'Total Phases: {}'.format(len(export.phases)),
+                'Run time: {} s'.format(round(export.run_time, 2)),
+            ]
+        }
+        self.app.render(vars, 'oc/json-export.jinja2')
+
     #
     # Analytics
     #

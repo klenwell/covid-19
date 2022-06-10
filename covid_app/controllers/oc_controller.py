@@ -291,11 +291,11 @@ class OcController(Controller):
         from pprint import pprint
 
         export = OCWavesExport()
-        waves_json_path = export.waves_to_json_file()
-        print('Data source:', export.data_source_path)
-        print('Waves exported to:', waves_json_path)
-        phases_json_path = export.phases_to_json_file()
-        print('Phases exported to:', phases_json_path)
+        # waves_json_path = export.waves_to_json_file()
+        # print('Data source:', export.data_source_path)
+        # print('Waves exported to:', waves_json_path)
+        # phases_json_path = export.phases_to_json_file()
+        # print('Phases exported to:', phases_json_path)
 
         analysis = OcWaveAnalysis(test=False)
         print('avg_positive_rates:', len(analysis.avg_positive_rates))

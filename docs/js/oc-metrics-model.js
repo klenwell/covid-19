@@ -1,21 +1,35 @@
 /*
  * OcMetricsModel
  *
- * This is really more a decorator or helper module than a data model.
+ * This is really as much a decorator or view helper as a data model.
+ *
+ * TODO: Move helper methods to metrics table component: oc-metrics-table.js
  *
  * Uses JS Class template:
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
- */
+**/
+const OcMetricsModelConfig = {
+  readyEvent: 'OcMetricsModel:data:ready',
+  extractUrl: 'data/json/oc/metrics.json'
+}
 
- class OcMetricsModel {
-  constructor(jsonData) {
-    this.data = jsonData
+
+class OcMetricsModel {
+  constructor(config) {
+    this.config = config
+    this.data = {}
     this.dateTime = luxon.DateTime
   }
 
   /*
    * Getters
   **/
+  // For use by component as on event string to confirm data loaded:
+  // $(document).on(OcMetricsModel.dataReady, (event, model) => {})
+  static get dataReady() {
+    return OcMetricsModelConfig.readyEvent
+  }
+
   get cases() {
     const metric = this.data.dailyNewCases
     const postfix = '/day'
@@ -53,8 +67,27 @@
   }
 
   /*
-   * Methods
+   * Public Methods
   **/
+  fetchData() {
+    fetch(this.config.extractUrl)
+      .then(response => response.json())
+      .then(data => this.onFetchComplete(data))
+  }
+
+  /*
+   * Private Methods
+  **/
+  onFetchComplete(jsonData) {
+    this.data = jsonData
+    this.triggerReadyEvent()
+  }
+
+  triggerReadyEvent() {
+    console.log(this.config.readyEvent, this)
+    $(document).trigger(this.config.readyEvent, [this])
+  }
+
   mapMetric(metric, postfix) {
     const level = this.mapLevel(metric.percentile)
     const percentileOrd = this.mapOrd(metric.percentile)
@@ -135,3 +168,12 @@
     return [,'st','nd','rd'][n/10%10^1&&n%10]||'th'
   }
 }
+
+
+/*
+ * Main block: these are the things that happen on page load.
+**/
+$(document).ready(function() {
+  const model = new OcMetricsModel(OcMetricsModelConfig)
+  model.fetchData()
+})

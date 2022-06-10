@@ -8,13 +8,12 @@ const OcMetricTable = (function() {
    * Constants
    */
   const SELECTOR = 'section#oc-covid-metrics table'
-  const JSON_URL = 'data/json/oc/metrics.json'
 
   /*
    * Public Methods
    */
-  const render = function() {
-    extractJsonData(JSON_URL)
+  const render = function(model) {
+    populate(model)
   }
 
   // Based on https://stackoverflow.com/a/12138756/1093087
@@ -56,21 +55,7 @@ const OcMetricTable = (function() {
   /*
    * Private Methods
    */
-  const extractJsonData = function(jsonUrl) {
-    fetch(jsonUrl)
-      .then(response => response.json())
-      .then(data => onFetchComplete(data))
-  }
-
-  const onFetchComplete = function(jsonData) {
-    console.log('onFetchComplete:', jsonData)
-    const model = new OcMetricsModel(jsonData)
-    populate(model)
-  }
-
   const populate = function(model) {
-    console.log("populate table:", model)
-
     $(`${SELECTOR} tbody tr`).each((_, el) => {
       const $tr = $(el)
       const rowGetter = $tr.data('metric')
@@ -105,9 +90,12 @@ const OcMetricTable = (function() {
 })()
 
 /*
- * Main block: these are the things that happen on page load.
- */
-$(document).ready(function() {
+ * Main block: these are the things that happen on designatved events.
+**/
+$(document).ready(() => {
   OcMetricTable.syncUrlToTab()
-  OcMetricTable.render()
+})
+
+$(document).on(OcMetricsModel.dataReady, (event, model) => {
+  OcMetricTable.render(model)
 })

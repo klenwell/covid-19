@@ -5,7 +5,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 **/
 const OcWavesModelConfig = {
-  readyEvent: 'wavesData:ready',
+  readyEvent: 'OcWavesModel:data:ready',
   extractUrl: 'data/json/oc/waves.json'
 }
 

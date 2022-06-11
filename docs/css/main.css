@@ -188,6 +188,36 @@ table.waves td {
   padding: 0rem .25rem;
 }
 
+table.waves td {
+  padding: 0rem .25rem;
+}
+
+/* https://stackoverflow.com/a/41263493/1093087 */
+table.waves td.index span.circled {
+  background: black;
+  color: white;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  text-align: center;
+  display: flex;
+  height: 2em;
+  font-family: var(--bs-body-font-family);
+}
+
+table.waves tr.rising td.index span.circled {
+  background: #ee675c;
+}
+
+table.waves tr.flat td.index span.circled {
+  background: #e08600;
+}
+
+table.waves tr.falling td.index span.circled {
+  background: #1967d2;
+}
+
 table.waves td.chart {
   text-align: center;
 }
@@ -201,15 +231,15 @@ section#oc-covid-phases tr td.trend {
 }
 
 section#oc-covid-phases tr.rising td.trend {
-  color: #ff0000
+  color: #ee675c;
 }
 
 section#oc-covid-phases tr.flat td.trend {
-  color: #e08600
+  color: #e08600;
 }
 
 section#oc-covid-phases tr.falling td.trend {
-  color: #1967d2
+  color: #1967d2;
 }
 
 /*

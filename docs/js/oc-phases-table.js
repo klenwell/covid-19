@@ -8,13 +8,13 @@ const OcPhasesTable = (function() {
    * Constants
    */
   const SELECTOR = 'section#oc-covid-phases table'
+  const $tableBody = $(SELECTOR).find('tbody')
 
   /*
    * Public Methods
    */
   const render = function(model) {
     $(SELECTOR).find('caption').html('')
-    $tableBody = $(SELECTOR).find('tbody')
     populate(model)
   }
 
@@ -24,38 +24,43 @@ const OcPhasesTable = (function() {
   const populate = function(model) {
     //console.log("populate table:", model)
     model.phases.forEach((phase, num) => {
-      let $tr = appendRow(phase, num + 1)
+      let $tr = indexedRow(phase, num + 1)
       let $canvas = appendChartCell($tr, phase)
-      let $chart = enableChart($canvas, phase)
+      $tableBody.append($tr)
+      enableChart($canvas, phase)
     })
   }
 
-  const appendRow = function(phase, num) {
-    const $tr = $('<tr />')
-    $tr.addClass(phase.trend)
+  const indexedRow = function(phase, num) {
+    const $tr = $('<tr />').addClass(phase.trend)
 
-    appendCell($tr, 'index', num)
-    appendCell($tr, 'trend', phase.trend)
-    appendCell($tr, 'start-date', phase.startedOn)
-    appendCell($tr, 'end-date', phase.endedOn)
-    appendCell($tr, 'days', phase.days)
-    appendPositveRateCell($tr, phase)
-    appendPopSlopeCell($tr, phase.popSlope)
-    appendNotesCell($tr, phase)
+    $tr.append(indexCell(num))
+    $tr.append(classCell('trend', phase.trend))
+    $tr.append(classCell('start-date', phase.startedOn))
+    $tr.append(classCell('end-date', phase.endedOn))
+    $tr.append(classCell('days', phase.days))
+    $tr.append(positiveRateCell(phase))
+    $tr.append(popSlopeCell(phase.popSlope))
+    $tr.append(notesCell(phase))
 
-    $tableBody.append($tr)
     return $tr
   }
 
-  const appendCell = function($tr, className, html) {
+  const classCell = function(className, html) {
     const $td = $('<td />')
     $td.addClass(className)
     $td.html(html)
-    $tr.append($td)
     return $td
   }
 
-  const appendPositveRateCell = function($tr, phase) {
+  const indexCell = function(num) {
+    const $td = $('<td />').addClass('index')
+    const $span = $('<span />').addClass('circled').html(num)
+    $td.append($span)
+    return $td
+  }
+
+  const positiveRateCell = function(phase) {
     const startRate = phase.startPositiveRate.toFixed(1)
     const endRate = phase.endPositiveRate.toFixed(1)
     const valueHtml = `<b>${startRate}</b>% &#10145; <b>${endRate}</b>%`
@@ -64,26 +69,25 @@ const OcPhasesTable = (function() {
     const $valueSpan = $('<span />').addClass('value').html(valueHtml)
 
     $div.append($valueSpan)
-    appendCell($tr, 'rate', $div)
+    return classCell('rate', $div)
   }
 
-  const appendPopSlopeCell = function($tr, popSlope) {
+  const popSlopeCell = function(popSlope) {
     // https://stackoverflow.com/a/32154217/1093087
     const nf = new Intl.NumberFormat('en-US');
     const valueText = `<b>${nf.format(popSlope.toFixed(1))}</b>/day`
-
 
     const $div = $('<div />')
     const $valueSpan = $('<span />').addClass('value').html(valueText)
 
     $div.append($valueSpan)
-    appendCell($tr, 'slope', $div)
+    return classCell('slope', $div)
   }
 
-  const appendNotesCell = function($tr, wave) {
+  const notesCell = function(wave) {
     const $div = $('<div />')
     // TODO
-    appendCell($tr, 'notes', $div)
+    return classCell('notes', $div)
   }
 
   const appendChartCell = function($tr, phase) {
@@ -106,11 +110,11 @@ const OcPhasesTable = (function() {
       .addClass('chart-wrapper')
       .append($canvas)
 
-    appendCell($tr, 'chart', $chartWrapper)
+    $tr.append(classCell('chart', $chartWrapper))
     return $canvas
   }
 
-  const enableChart = function($chart, phase) {
+  const enableChart = function($canvas, phase) {
     //console.debug('enableChart', $chart, phase)
     const colorMap = {
       rising: '#ff0000',
@@ -160,7 +164,7 @@ const OcPhasesTable = (function() {
       options: options
     }
 
-    return new Chart($chart, config)
+    return new Chart($canvas, config)
   }
 
   /*

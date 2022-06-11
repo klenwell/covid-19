@@ -30,10 +30,10 @@ class OcPhasesChart {
     const tooltipTitleFormatter = (contexts) => {
       const dateF = 'MMMM d, yyyy'
       const context = contexts[0]
-      const label = context.dataset.label.split(' ')
+      const label = context.dataset.label
       const date = this.dateTime.fromSeconds(context.parsed.x / 1000).toFormat(dateF)
       const day = context.dataIndex + 1
-      const title = `${date}: day ${day} of ${label[1]}`
+      const title = `${date}: day ${day} of phase ${label}`
       //console.log('tooltipTitleFormatter', title, context)
       return title
     }
@@ -41,6 +41,8 @@ class OcPhasesChart {
     const yTickFormatter = (value, index, ticks) => {
       return value % 5 === 0 ? `${value}%` : ''
     }
+
+    const phaseAnnotations = this.annotations
 
     return {
       responsive: true,
@@ -79,9 +81,42 @@ class OcPhasesChart {
             title: tooltipTitleFormatter,
             label: ctx => `Positive Rate: ${ctx.formattedValue}%`
           }
+        },
+        annotation: {
+          annotations: phaseAnnotations
         }
       }
     }
+  }
+
+  get annotations() {
+    let annotations = {}
+
+    this.model.phases.forEach((phase, num) => {
+      let index = num + 1
+      let annotationKey = `line${index}`
+      let valueIndex = parseInt(Math.round(phase.datasets.dates.length / 2))
+      let value = phase.datasets.dates[valueIndex]
+
+      let phaseAnnotation = {
+        type: 'line',
+        scaleID: 'x',
+        value: value,
+        borderColor: '#ccc',
+        borderWidth: 0,
+        label: {
+          enabled: true,
+          position: "85%",
+          content: index,
+          backgroundColor: this.mapTrendToColor(phase.trend),
+          borderRadius: 12
+        }
+      }
+
+      annotations[annotationKey] = phaseAnnotation
+    })
+
+    return annotations
   }
 
   get data() {
@@ -95,12 +130,7 @@ class OcPhasesChart {
     const opacity = 75
 
     this.model.phases.forEach((phase, num) => {
-      const colorMap = {
-        rising: '#cb3c2c',
-        flat: '#f1c78a',
-        falling: '#1967d2'
-      }
-      const chartColor = colorMap[phase.trend]
+      const chartColor = this.mapTrendToColor(phase.trend)
 
       // Create an array of x,y maps: { x: '2017-01-06', y: 3.6 }
       let data = phase.datasets.dates.map((dated, i) => {
@@ -110,7 +140,7 @@ class OcPhasesChart {
 
       // Refer: https://www.chartjs.org/docs/next/samples/scales/time-line.html
       let dataset = {
-        label: `(${num + 1}) ${phase.trend}`,
+        label: num + 1,
         borderColor: chartColor,
         backgroundColor: `${chartColor}${opacity}`,
         fill: true,
@@ -132,6 +162,15 @@ class OcPhasesChart {
   **/
   render() {
     return new Chart(this.canvas, this.config)
+  }
+
+  mapTrendToColor(trend) {
+    const colorMap = {
+      rising: '#cb3c2c',
+      flat: '#f1c78a',
+      falling: '#1967d2'
+    }
+    return colorMap[trend]
   }
 
 }

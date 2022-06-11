@@ -144,7 +144,7 @@ const OcPhasesTable = (function() {
           display: false,
           labels: { display: false }
         },
-        tooltips: { display: false }
+        tooltips: { display: false },
       }
     }
 

@@ -1,9 +1,9 @@
 /*
- * OC Dashboard Javascript
+ * OC Trends Table Component
  *
  * Uses jQuery module pattern: https://wiki.klenwell.com/view/JQuery
  */
-const OcDashboard = (function() {
+const OcTrendsTable = (function() {
   /*
    * Constants
    */
@@ -13,10 +13,10 @@ const OcDashboard = (function() {
    * Public Methods
   **/
   const render = function(model) {
-     reloadDashboard(model)
+     reloadTable(model)
    }
 
-   const resetDashboard = function() {
+   const resetTable = function() {
      const csvUrl = OcTrendsModelConfig.csvUrl
      $(TRENDS_TABLE_SEL).find('caption').text(`Loading data from ${csvUrl}`)
    }
@@ -24,7 +24,7 @@ const OcDashboard = (function() {
   /*
    * Private Methods
   **/
-  const reloadDashboard = function(model) {
+  const reloadTable = function(model) {
     '1234'.split('').forEach(weekNum => reloadRow(weekNum, model))
     $(TRENDS_TABLE_SEL).find('caption').text('')
   }
@@ -100,7 +100,7 @@ const OcDashboard = (function() {
    */
   return {
     render: render,
-    resetDashboard: resetDashboard
+    resetTable: resetTable
   }
 })()
 
@@ -109,9 +109,9 @@ const OcDashboard = (function() {
  * Main block: these are the things that happen on designated event.
 **/
 $(document).on(OcTrendsModel.dataReady, (event, model) => {
-  OcDashboard.render(model)
+  OcTrendsTable.render(model)
 })
 
 $(document).ready(function() {
-  OcDashboard.resetDashboard()
+  OcTrendsTable.resetTable()
 })

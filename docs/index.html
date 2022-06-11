@@ -79,6 +79,14 @@
             Waves
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            id="pills-phases-tab" data-bs-target="#phases" aria-controls="phases"
+            class="nav-link"  data-bs-toggle="pill"
+            type="button" role="tab"  aria-selected="true">
+            Phases
+          </button>
+        </li>
       </ul>
 
       <!--
@@ -515,14 +523,54 @@
               </tbody>
             </table>
           </section>
-        </div>
-      </div>
+        </div> <!-- div#waves -->
 
+        <!--
+          Phases Tab View
+        -->
+        <div
+          id="phases" aria-labelledby="waves-tab"
+          class="tab-pane fade" role="tabpanel">
+          <section id="oc-covid-phases">
+            <h3>Epidemic Phases</h3>
 
+            <div class="chart-block">
+              <canvas id="phases-chart"></canvas>
+            </div>
 
-    </div>
+            <table class="table table-sm phases">
+              <caption>Loading...</caption>
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Phase</th>
+                  <th scope="col">Start Date</th>
+                  <th scope="col">End Date</th>
+                  <th scope="col">Days</th>
+                  <th scope="col">
+                    Test-Positive Rate
+                    <span class="sub-th">Start &#10145; End</span>
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <th scope="col">Pop Slope*</th>
+                  <th scope="col">Notes</th>
+                  <th scope="col">Graph</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </section>
+        </div> <!-- div#phases -->
 
-    <!-- Javascript -->
+      </div>  <!-- div.tab-content -->
+
+    </div> <!-- div.container -->
+
+    <!--
+      Javascript
+    -->
+    <!-- Third-Party (CDN) -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
       integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
@@ -554,10 +602,12 @@
       src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js">
     </script>
 
+    <!-- Models -->
     <script src="js/oc-metrics-model.js"></script>
     <script src="js/oc-trends-model.js"></script>
     <script src="js/oc-waves-model.js"></script>
 
+    <!-- Components -->
     <script src="js/oc-metrics-table.js"></script>
     <script src="js/oc-trends-table.js"></script>
     <script src="js/oc-waves-table.js"></script>

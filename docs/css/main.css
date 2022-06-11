@@ -207,11 +207,11 @@ table.waves td.index span.circled {
 }
 
 table.waves tr.rising td.index span.circled {
-  background: #ee675c;
+  background: #cb3c2c;
 }
 
 table.waves tr.flat td.index span.circled {
-  background: #e08600;
+  background: #f1c78a;
 }
 
 table.waves tr.falling td.index span.circled {
@@ -231,7 +231,7 @@ section#oc-covid-phases tr td.trend {
 }
 
 section#oc-covid-phases tr.rising td.trend {
-  color: #ee675c;
+  color: #cb3c2c;
 }
 
 section#oc-covid-phases tr.flat td.trend {

@@ -117,9 +117,9 @@ const OcPhasesTable = (function() {
   const enableChart = function($canvas, phase) {
     //console.debug('enableChart', $chart, phase)
     const colorMap = {
-      rising: '#ff0000',
-      flat: '#e08600',
-      falling: '#aecbfa'
+      rising: '#cb3c2c',
+      flat: '#f1c78a',
+      falling: '#1967d2'
     }
     const chartColor = colorMap[phase.trend]
 

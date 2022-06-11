@@ -95,8 +95,11 @@ class OcPhasesChart {
     this.model.phases.forEach((phase, num) => {
       let index = num + 1
       let annotationKey = `line${index}`
-      let valueIndex = parseInt(Math.round(phase.datasets.dates.length / 2))
+      let valueIndex = parseInt(Math.round(phase.datasets.dates.length / 2)) - 1
       let value = phase.datasets.dates[valueIndex]
+
+      // Add spaces to single digits allow space for border radius to expand to circle.
+      let labelContent = index < 10 ? ` ${index} ` : index
 
       let phaseAnnotation = {
         type: 'line',
@@ -107,7 +110,7 @@ class OcPhasesChart {
         label: {
           enabled: true,
           position: "85%",
-          content: index,
+          content: labelContent,
           backgroundColor: this.mapTrendToColor(phase.trend),
           borderRadius: 12
         }

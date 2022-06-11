@@ -57,6 +57,9 @@ class OcWavesModel {
 }
 
 
+/*
+ * Main block: these are the things that happen on page load.
+**/
 $(document).ready(function() {
   const model = new OcWavesModel(OcWavesModelConfig)
   model.fetchData()

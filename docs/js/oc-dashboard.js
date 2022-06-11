@@ -7,62 +7,35 @@ const OcDashboard = (function() {
   /*
    * Constants
    */
-  const SHEET_ID = '1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4'
-  const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Data`
   const TRENDS_TABLE_SEL = 'section#week-to-week-trends table'
 
   /*
    * Public Methods
-   */
-  const etl = function() {
-    resetDashboard()
-    extractCsvData(CSV_URL)
-  }
+  **/
+  const render = function(model) {
+     reloadDashboard(model)
+   }
+
+   const resetDashboard = function() {
+     const csvUrl = OcTrendsModelConfig.csvUrl
+     $(TRENDS_TABLE_SEL).find('caption').text(`Loading data from ${csvUrl}`)
+   }
 
   /*
    * Private Methods
-   */
-  const extractCsvData = function(csvUrl) {
-    const papaConfig = {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true,
-      download: true,
-      complete: onFetchComplete,
-      error: onFetchError
-    }
-
-    console.log(`Fetching data from ${csvUrl}`)
-    Papa.parse(csvUrl, papaConfig)
+  **/
+  const reloadDashboard = function(model) {
+    '1234'.split('').forEach(weekNum => reloadRow(weekNum, model))
+    $(TRENDS_TABLE_SEL).find('caption').text('')
   }
 
-  const onFetchComplete = function(results) {
-    console.log('onFetchComplete:', results)
-    const jsonData = transformCsvResults(results.data)
-    reloadDashboard(jsonData)
-  }
-
-  const transformCsvResults = function(csvRows) {
-    console.log("transformCsvResults:", csvRows)
-    $(TRENDS_TABLE_SEL).find('caption').text(`Data extracted.`)
-    OcTrendsModel.loadCsvResults(csvRows)
-    return OcTrendsModel.toJson()
-  }
-
-  const reloadDashboard = function(jsonData) {
-    console.log("loadResults:", jsonData)
-    $(TRENDS_TABLE_SEL).find('caption').text(`Data transformed.`)
-    '1234'.split('').forEach(weekNum => reloadRow(weekNum, jsonData))
-    $(TRENDS_TABLE_SEL).find('caption').text(`Data loaded.`)
-  }
-
-  const reloadRow = function(weekNum, jsonData) {
+  const reloadRow = function(weekNum, model) {
     const rowSel = `${TRENDS_TABLE_SEL} tr.week-${weekNum}`
     const valSel = 'span.value'
     const delSel = 'span.delta'
 
     const idx = parseInt(weekNum) - 1
-    const rowData = jsonData.week[idx]
+    const rowData = model.weeks[idx]
     const startDate = rowData.dateTime.minus({days: 6}).toFormat('yyyy-MM-dd')
 
     // Helper functions
@@ -78,7 +51,7 @@ const OcDashboard = (function() {
     const pctWrap = (value) => `(${asSignedPct(value)})`
 
     // Compute death delta
-    let prevWeekDeaths = jsonData.week[idx + 1].totalDeaths
+    let prevWeekDeaths = model.weeks[idx + 1].totalDeaths
     rowData.deathsDelta = OcTrendsModel.computePctChange(prevWeekDeaths, rowData.totalDeaths)
 
     // Update cells
@@ -122,26 +95,23 @@ const OcDashboard = (function() {
     setClass(rowData.deathsDelta, 'td.deaths')
   }
 
-  const resetDashboard = function() {
-    $(TRENDS_TABLE_SEL).find('caption').text(`Loading data from ${CSV_URL}`)
-  }
-
-  const onFetchError = function(err, file) {
-    console.error("ERROR:", err, file)
-    $(TRENDS_TABLE_SEL).find('caption').text('Sorry. There was an error fetching the data.')
-  }
-
   /*
    * Public API
    */
   return {
-    etl: etl
+    render: render,
+    resetDashboard: resetDashboard
   }
 })()
 
+
 /*
- * Main block: these are the things that happen on page load.
- */
+ * Main block: these are the things that happen on designated event.
+**/
+$(document).on(OcTrendsModel.dataReady, (event, model) => {
+  OcDashboard.render(model)
+})
+
 $(document).ready(function() {
-  OcDashboard.etl()
+  OcDashboard.resetDashboard()
 })

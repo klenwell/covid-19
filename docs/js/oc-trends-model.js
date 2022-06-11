@@ -1,67 +1,93 @@
 /*
  * OcTrendsModel
  *
- * Uses jQuery module pattern: https://wiki.klenwell.com/view/JQuery
- */
-const OcTrendsModel = (function() {
-  /*
-   * Constants
-   */
+ * Uses JS Class template:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+**/
+// Need to use this IIFE module pattern to interpolate sheetID string.
+// Usage: OcTrendsModelConfig.readyEvent
+const OcTrendsModelConfig = (function() {
+  const readyEvent = 'OcTrendsModel:data:ready'
+  const sheetID = '1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4'
+  const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&sheet=Data`
+
+  return {
+    readyEvent: readyEvent,
+    csvUrl: csvUrl
+  }
+})()
+
+
+class OcTrendsModel {
+  constructor(config) {
+    this.config = config
+    this.csvRows = []
+    this.url = config.csvUrl
+    this.csv = Papa
+    this.dateTime = luxon.DateTime
+  }
 
   /*
-   * Class Props
-   */
-  const DateTime = luxon.DateTime
-  let allRows = []
-  let trendRows = []
-  let weekDates = []
-  let datedRecords = {}
+   * Getters
+  **/
+  // For use by component as on event string to confirm data loaded:
+  // $(document).on(OcTrendsModel.dataReady, (event, model) => {})
+  static get dataReady() {
+    return OcTrendsModelConfig.readyEvent
+  }
 
-  /*
-   * Public Methods
-   */
-  const loadCsvResults = function(csvRows) {
-    allRows = csvRows
-    trendRows = filterTrendRows(csvRows)
-    trendRows = computeTrends(trendRows)
-    datedRecords = mapRowsToDates(trendRows)
-    weekDates = [
-      trendRows[0].date,
-      trendRows[7].date,
-      trendRows[14].date,
-      trendRows[21].date,
-      trendRows[28].date,
+  get weeks() {
+    return [
+      this.datedRows[this.weekDates[0]],
+      this.datedRows[this.weekDates[1]],
+      this.datedRows[this.weekDates[2]],
+      this.datedRows[this.weekDates[3]],
+      this.datedRows[this.weekDates[4]]
     ]
   }
 
-  const toJson = function() {
-    // Sum up deaths
-    weekDates.forEach((weekDate, idx) => {
-      let datedRecord = datedRecords[weekDate]
-      let startIdx = idx * 7
-      let endIdx = startIdx + 7
-
-      let weekDeaths = trendRows.slice(startIdx, endIdx).reduce((sum, trendRow) => {
-        let dailyDeaths = trendRow.deaths
-        return sum + dailyDeaths
-      }, 0)
-
-      // Update dated record (returned below)
-      datedRecord.totalDeaths = weekDeaths
-    })
-
-    return {
-      week: [
-        datedRecords[weekDates[0]],
-        datedRecords[weekDates[1]],
-        datedRecords[weekDates[2]],
-        datedRecords[weekDates[3]],
-        datedRecords[weekDates[4]]
-      ]
-    }
+  get weekDates() {
+    return [
+      this.trendRows[0].date,
+      this.trendRows[7].date,
+      this.trendRows[14].date,
+      this.trendRows[21].date,
+      this.trendRows[28].date
+    ]
   }
 
-  const computePctChange = function(oldValue, newValue) {
+  get trendRows() {
+    const trendRows = this.filterTrendRows(this.csvRows)
+    return this.computeTrends(trendRows)
+  }
+
+  get datedRows() {
+    let datedRows = {}
+
+    for (const row of this.trendRows) {
+      datedRows[row.date] = row
+    }
+
+    return datedRows
+  }
+
+  /*
+   * Public Methods
+  **/
+  fetchData() {
+    const papaConfig = {
+      header: true,
+      dynamicTyping: true,
+      skipEmptyLines: true,
+      download: true,
+      complete: (results) => this.onFetchComplete(results),
+      error: (err, file) => this.onFetchError(err, file)
+    }
+
+    this.csv.parse(this.url, papaConfig)
+  }
+
+  static computePctChange(oldValue, newValue) {
     if ( !oldValue || !newValue ) {
       return undefined
     }
@@ -70,82 +96,88 @@ const OcTrendsModel = (function() {
 
   /*
    * Private Methods
-   */
-   const filterTrendRows = function(rows) {
-     let filteredRows = []
-     const maxRows = 35
-
-     for (const row of rows) {
-       let isValid = !!row['Date'] && !!row['Test Pos Rate 7d Avg']
-
-       if ( !isValid ) {
-         continue
-       }
-
-       filteredRows.push({
-         ...row,
-         date: row['Date'],
-         dateTime: DateTime.fromFormat(row['Date'], 'yyyy-MM-dd'),
-         positiveRate: parseFloat(row['Test Pos Rate 7d Avg']),
-         adminTests: row["Tests Admin 7d Avg"],
-         positiveTests: row['Pos Tests 7d Avg'],
-         wastewater: row['Wastewater 7d (kv / L)'],
-         hospitalCases: row['Hospital Avg 7d'],
-         deaths: row['New Deaths']
-       })
-
-       if ( filteredRows.length >= maxRows ) {
-         break
-       }
-     }
-
-     return filteredRows
-   }
-
-   let computeTrends = function(rows) {
-     let updatedRows = []
-     let idx = 0
-
-     for (const row of rows) {
-       const prevWeekIdx = idx + 7
-       const prevWeekRow = rows[prevWeekIdx]
-       idx++
-
-       if ( prevWeekRow === undefined ) {
-         updatedRows.push(row)
-         continue
-       }
-
-       updatedRows.push({
-         ...row,
-         date: row['Date'],
-         positiveRateDelta: computePctChange(prevWeekRow.positiveRate, row.positiveRate),
-         adminTestsDelta: computePctChange(prevWeekRow.adminTests, row.adminTests),
-         positiveTestsDelta: computePctChange(prevWeekRow.positiveTests, row.positiveTests),
-         wastewaterDelta: computePctChange(prevWeekRow.wastewater, row.wastewater),
-         hospitalCasesDelta: computePctChange(prevWeekRow.hospitalCases, row.hospitalCases)
-       })
-     }
-
-     return updatedRows
-   }
-
-   const mapRowsToDates = function(rows) {
-     mappedRows = {}
-
-     for (const row of rows) {
-       mappedRows[row.date] = row
-     }
-
-     return mappedRows
-   }
-
-  /*
-   * Public API
-   */
-  return {
-    loadCsvResults: loadCsvResults,
-    toJson: toJson,
-    computePctChange: computePctChange
+  **/
+  onFetchComplete(results) {
+    this.csvRows = results.data
+    this.triggerReadyEvent()
   }
-})()
+
+  onFetchError(err, file) {
+    const message = `OcTrendsModel error: ${err} (file: ${file})`
+    console.error(message)
+  }
+
+  triggerReadyEvent() {
+    console.log(this.config.readyEvent, this)
+    $(document).trigger(this.config.readyEvent, [this])
+  }
+
+  filterTrendRows(rows) {
+    let filteredRows = []
+    const maxRows = 35
+
+    for (const row of rows) {
+      let isValid = !!row['Date'] && !!row['Test Pos Rate 7d Avg']
+
+      if ( !isValid ) {
+        continue
+      }
+
+      filteredRows.push({
+        ...row,
+        date: row['Date'],
+        dateTime: this.dateTime.fromFormat(row['Date'], 'yyyy-MM-dd'),
+        positiveRate: parseFloat(row['Test Pos Rate 7d Avg']),
+        adminTests: row["Tests Admin 7d Avg"],
+        positiveTests: row['Pos Tests 7d Avg'],
+        wastewater: row['Wastewater 7d (kv / L)'],
+        hospitalCases: row['Hospital Avg 7d'],
+        deaths: row['New Deaths']
+      })
+
+      if ( filteredRows.length >= maxRows ) {
+        break
+      }
+    }
+
+    return filteredRows
+  }
+
+  computeTrends(rows) {
+    let updatedRows = []
+    let idx = 0
+    const pctChange = (oldVal, newVal) => OcTrendsModel.computePctChange(oldVal, newVal)
+
+    for (const row of rows) {
+      const prevWeekIdx = idx + 7
+      const prevWeekRow = rows[prevWeekIdx]
+      idx++
+
+      if ( prevWeekRow === undefined ) {
+        updatedRows.push(row)
+        continue
+      }
+
+      updatedRows.push({
+        ...row,
+        date: row['Date'],
+        positiveRateDelta: pctChange(prevWeekRow.positiveRate, row.positiveRate),
+        adminTestsDelta: pctChange(prevWeekRow.adminTests, row.adminTests),
+        positiveTestsDelta: pctChange(prevWeekRow.positiveTests, row.positiveTests),
+        wastewaterDelta: pctChange(prevWeekRow.wastewater, row.wastewater),
+        hospitalCasesDelta: pctChange(prevWeekRow.hospitalCases, row.hospitalCases)
+      })
+    }
+
+    return updatedRows
+  }
+}
+
+
+/*
+ * Main block: these are the things that happen on page load.
+**/
+$(document).ready(function() {
+  const model = new OcTrendsModel(OcTrendsModelConfig)
+  model.fetchData()
+})

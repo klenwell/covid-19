@@ -132,10 +132,11 @@ class OcWavesChart {
 
 }
 
+
 /*
- * Main block: these are the things that happen on page load.
- */
- $( document ).on(OC_WAVES_MODEL_LOAD_EVENT, (event, model) => {
-   const chart = new OcWavesChart(model)
-   chart.render()
- })
+ * Main block: these are the things that happen on designated event.
+**/
+$(document).on(OcWavesModel.dataReady, (event, model) => {
+  const chart = new OcWavesChart(model)
+  chart.render()
+})

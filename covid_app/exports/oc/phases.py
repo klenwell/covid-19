@@ -101,7 +101,7 @@ class OCPhasesExport:
                 'days': phase.days,
                 'startPositiveRate': avg_pos_rate[phase.started_on],
                 'endPositiveRate': avg_pos_rate[phase.ended_on],
-                'pop_slope': phase.slope * OC_POPULATION,
+                'popSlope': phase.slope * OC_POPULATION,
                 'datasets': {
                     'dates': [d.strftime(DATE_OUT_F) for d in sorted(phase.timeline.keys())],
                     'avgPositiveRates': self.to_dataset(phase.timeline),

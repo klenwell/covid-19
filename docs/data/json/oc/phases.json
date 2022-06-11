@@ -7,7 +7,7 @@
             "days": 24,
             "startPositiveRate": 6.267029972752043,
             "endPositiveRate": 11.051091604771552,
-            "pop_slope": 642359.5433774834,
+            "popSlope": 642359.5433774834,
             "datasets": {
                 "dates": [
                     "2020-03-07",
@@ -99,7 +99,7 @@
             "days": 72,
             "startPositiveRate": 11.051091604771552,
             "endPositiveRate": 6.208277703604806,
-            "pop_slope": -216749.4182066949,
+            "popSlope": -216749.4182066949,
             "datasets": {
                 "dates": [
                     "2020-03-31",
@@ -335,7 +335,7 @@
             "days": 19,
             "startPositiveRate": 6.208277703604806,
             "endPositiveRate": 14.7086796509945,
-            "pop_slope": 1441712.0144557576,
+            "popSlope": 1441712.0144557576,
             "datasets": {
                 "dates": [
                     "2020-06-11",
@@ -412,7 +412,7 @@
             "days": 75,
             "startPositiveRate": 14.7086796509945,
             "endPositiveRate": 2.9979162465550853,
-            "pop_slope": -503172.1553237227,
+            "popSlope": -503172.1553237227,
             "datasets": {
                 "dates": [
                     "2020-06-30",
@@ -657,7 +657,7 @@
             "days": 49,
             "startPositiveRate": 2.9979162465550853,
             "endPositiveRate": 3.296684477325661,
-            "pop_slope": 19648.57196166774,
+            "popSlope": 19648.57196166774,
             "datasets": {
                 "dates": [
                     "2020-09-13",
@@ -824,7 +824,7 @@
             "days": 60,
             "startPositiveRate": 3.296684477325661,
             "endPositiveRate": 19.56235942598283,
-            "pop_slope": 873601.7498449638,
+            "popSlope": 873601.7498449638,
             "datasets": {
                 "dates": [
                     "2020-11-01",
@@ -1024,7 +1024,7 @@
             "days": 66,
             "startPositiveRate": 19.56235942598283,
             "endPositiveRate": 2.1143325671734075,
-            "pop_slope": -851912.6008554492,
+            "popSlope": -851912.6008554492,
             "datasets": {
                 "dates": [
                     "2020-12-31",
@@ -1242,7 +1242,7 @@
             "days": 108,
             "startPositiveRate": 2.1143325671734075,
             "endPositiveRate": 0.9633116567989906,
-            "pop_slope": -34344.09797814572,
+            "popSlope": -34344.09797814572,
             "datasets": {
                 "dates": [
                     "2021-03-07",
@@ -1586,7 +1586,7 @@
             "days": 40,
             "startPositiveRate": 0.9633116567989906,
             "endPositiveRate": 8.553143647842255,
-            "pop_slope": 611455.4602868235,
+            "popSlope": 611455.4602868235,
             "datasets": {
                 "dates": [
                     "2021-06-23",
@@ -1726,7 +1726,7 @@
             "days": 40,
             "startPositiveRate": 8.553143647842255,
             "endPositiveRate": 3.6698292652368534,
-            "pop_slope": -393411.77078292856,
+            "popSlope": -393411.77078292856,
             "datasets": {
                 "dates": [
                     "2021-08-02",
@@ -1866,7 +1866,7 @@
             "days": 93,
             "startPositiveRate": 3.6698292652368534,
             "endPositiveRate": 3.1840462976959123,
-            "pop_slope": -16832.630551986535,
+            "popSlope": -16832.630551986535,
             "datasets": {
                 "dates": [
                     "2021-09-11",
@@ -2165,7 +2165,7 @@
             "days": 22,
             "startPositiveRate": 3.1840462976959123,
             "endPositiveRate": 24.938376435478684,
-            "pop_slope": 3186512.9709247597,
+            "popSlope": 3186512.9709247597,
             "datasets": {
                 "dates": [
                     "2021-12-13",
@@ -2251,7 +2251,7 @@
             "days": 57,
             "startPositiveRate": 24.938376435478684,
             "endPositiveRate": 1.747361353345288,
-            "pop_slope": -1311105.2582481527,
+            "popSlope": -1311105.2582481527,
             "datasets": {
                 "dates": [
                     "2022-01-04",
@@ -2442,7 +2442,7 @@
             "days": 46,
             "startPositiveRate": 1.747361353345288,
             "endPositiveRate": 1.9821073316002098,
-            "pop_slope": 16444.96620509845,
+            "popSlope": 16444.96620509845,
             "datasets": {
                 "dates": [
                     "2022-03-02",
@@ -2600,7 +2600,7 @@
             "days": 48,
             "startPositiveRate": 1.9821073316002098,
             "endPositiveRate": 13.837216585243642,
-            "pop_slope": 795897.2054093219,
+            "popSlope": 795897.2054093219,
             "datasets": {
                 "dates": [
                     "2022-04-17",
@@ -2759,7 +2759,7 @@
         }
     ],
     "meta": {
-        "createdAt": "2022-06-10T11:35:34-07:00",
+        "createdAt": "2022-06-11T11:18:41-07:00",
         "dataLastUpdated": "2022-06-06"
     }
 }

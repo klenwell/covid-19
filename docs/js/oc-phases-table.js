@@ -88,11 +88,8 @@ class OcPhasesTable {
   }
 
   notesCell(index) {
-    const $div = $('<div />')
     const note = this.model.phaseNotes[index]
-    console.log(note, this.model.phaseNotes)
-    $div.html(note)
-    return this.classCell('notes', $div)
+    return this.classCell('notes', note)
   }
 
   chartCell($canvas) {

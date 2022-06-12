@@ -28,72 +28,48 @@ class OcPhasesChart {
   }
 
   get options() {
-    const tooltipTitleFormatter = (contexts) => {
-      const dateF = 'MMMM d, yyyy'
-      const context = contexts[0]
-      const label = context.dataset.label
-      const date = this.dateTime.fromSeconds(context.parsed.x / 1000).toFormat(dateF)
-      const day = context.dataIndex + 1
-      const title = `${date}: day ${day} of phase ${label}`
-      //console.log('tooltipTitleFormatter', title, context)
-      return title
-    }
-
-    const yTickFormatter = (value, index, ticks) => {
-      return value % 5 === 0 ? `${value}%` : ''
-    }
-
-    const phaseAnnotations = this.annotations
-
-    // Add line annotations for years
-    const numYears = this.dateTime.now().year - 2020
-    Array.from(Array(numYears)).map((_, n) => {
-      let year = 2021 + n
-      phaseAnnotations[`yearLine${year}`] = this.lineAnnotationForYear(year)
-    })
+    const scales = this.scales
+    const annotations = this.annotations
+    const tooltip = this.tooltip
 
     return {
       responsive: true,
       maintainAspectRatio: false,
-      scales: {
-        x: {
-          type: 'time',
-          parser: 'yyyy-MM-dd',
-          grid: { display: false },
-          ticks: {
-            stepSize: 2,
-            callback: (value, index, ticks) => index % 2 === 0 ? value : ''
-          }
-        },
-        y: {
-          max: 28,
-          min: 0,
-          title: {
-            display: true,
-            text: 'Test Positive Rate'
-          },
-          ticks: {
-            stepSize: 5,
-            callback: (value, index, ticks) => value % 5 === 0 ? `${value}%` : ''
-          }
-        }
-      },
+      scales: scales,
       plugins: {
-        legend: {
-          display: false,
-          position: 'left',
-          labels: { usePointStyle: true }
-        },
-        tooltip: {
-          callbacks: {
-            title: tooltipTitleFormatter,
-            label: ctx => `Positive Rate: ${ctx.formattedValue}%`
-          }
-        },
-        annotation: {
-          annotations: phaseAnnotations
-        }
+        legend: { display: false },
+        annotation: { annotations: annotations },
+        tooltip: tooltip
       }
+    }
+  }
+
+  get scales() {
+    const xScale = {
+      type: 'time',
+      parser: 'yyyy-MM-dd',
+      grid: { display: false },
+      ticks: {
+        stepSize: 2,
+        callback: (value, index, ticks) => index % 2 === 0 ? value : ''
+      }
+    }
+    const yScale = {
+      max: 30,
+      min: 0,
+      title: {
+        display: true,
+        text: 'Test Positive Rate'
+      },
+      ticks: {
+        stepSize: 5,
+        callback: (value, index, ticks) => value % 5 === 0 ? `${value}%` : ''
+      }
+    }
+
+    return {
+      x: xScale,
+      y: yScale
     }
   }
 
@@ -127,7 +103,37 @@ class OcPhasesChart {
       annotations[annotationKey] = phaseAnnotation
     })
 
+    // Add line annotations for years
+    const numYears = this.dateTime.now().year - 2020
+    Array.from(Array(numYears)).map((_, n) => {
+      let year = 2021 + n
+      annotations[`yearLine${year}`] = this.lineAnnotationForYear(year)
+    })
+
     return annotations
+  }
+
+  get tooltip() {
+    const tooltipTitleFormatter = (contexts) => {
+      const dateF = 'MMMM d, yyyy'
+      const context = contexts[0]
+      const label = context.dataset.label
+      const date = this.dateTime.fromSeconds(context.parsed.x / 1000).toFormat(dateF)
+      const day = context.dataIndex + 1
+      const title = `${date}: day ${day} of phase ${label}`
+      //console.log('tooltipTitleFormatter', title, context)
+      return title
+    }
+    const yTickFormatter = (value, index, ticks) => {
+      return value % 5 === 0 ? `${value}%` : ''
+    }
+
+    return {
+      callbacks: {
+        title: tooltipTitleFormatter,
+        label: ctx => `Positive Rate: ${ctx.formattedValue}%`
+      }
+    }
   }
 
   get data() {

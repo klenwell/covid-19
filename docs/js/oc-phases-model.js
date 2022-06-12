@@ -29,6 +29,18 @@ class OcPhasesModel {
   }
 
   get phaseNotes() {
+    const urls = {
+      'Alpha': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Alpha_variant',
+      'Delta': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Delta_variant',
+      'Omicron': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Omicron_variant',
+      'Omicron 2': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Omicron_variant#Sublineages_and_BA.2_subvariant'
+    }
+
+    const link = (variant) => {
+      const href = urls[variant]
+      return `<a class="variant" target="_blank" href="${href}">${variant}</a>`
+    }
+
     return {
       // index: note (html)
       1: 'First Wave',
@@ -36,16 +48,16 @@ class OcPhasesModel {
       3: 'Summer Re-Opening Surge',
       4: 'CA Indoor Dining Shutdown Down Cycle',
       5: 'Autumn Lull',
-      6: 'Holiday <span class="variant">Alpha</span> Surge',
+      6: `Holiday ${link('Alpha')} Surge`,
       7: 'Post-Alpha Down Cycle',
       8: 'Spring Lull',
-      9: 'Summer <span class="variant">Delta</span> Surge',
+      9: `Summer ${link('Delta')} Surge`,
       10: 'Post-Delta Down Cycle',
       11: 'Autumn Lull',
-      12: 'Holiday <span class="variant">Omicron</span> Surge',
+      12: `Holiday ${link('Omicron')} Surge`,
       13: 'Post-Omicron Down Cycle',
       14: 'Spring Lull',
-      15: 'Summer <span class="variant">Omicron 2</span> Surge'
+      15: `Summer ${link('Omicron 2')} Surge`,
     }
   }
 

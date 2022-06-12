@@ -44,6 +44,13 @@ class OcPhasesChart {
 
     const phaseAnnotations = this.annotations
 
+    // Add line annotations for years
+    const numYears = this.dateTime.now().year - 2020
+    Array.from(Array(numYears)).map((_, n) => {
+      let year = 2021 + n
+      phaseAnnotations[`yearLine${year}`] = this.lineAnnotationForYear(year)
+    })
+
     return {
       responsive: true,
       maintainAspectRatio: false,
@@ -176,6 +183,27 @@ class OcPhasesChart {
     return colorMap[trend]
   }
 
+  lineAnnotationForYear(year) {
+    const labelColor = "#e08600"
+    const lineColor = "#CCCCCC"
+    const value = `${year}-01-01`
+
+    return {
+      type: 'line',
+      scaleID: 'x',
+      value: value,
+      borderColor: lineColor,
+      borderWidth: 3,
+      drawTime: 'beforeDatasetsDraw',
+      label: {
+        enabled: true,
+        position: "2%",
+        content: year,
+        backgroundColor: labelColor,
+        borderRadius: 12
+      }
+    }
+  }
 }
 
 

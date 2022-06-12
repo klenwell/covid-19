@@ -71,6 +71,7 @@ class OcWavesChart {
       },
       plugins: {
         legend: {
+          display: false,
           position: 'left',
           labels: { usePointStyle: true }
         },
@@ -94,8 +95,8 @@ class OcWavesChart {
     let datasets = []
 
     this.model.waves.forEach((wave, num) => {
-      const waveColor = '#ff0000'
-      const lullColor = '#e08600'
+      const waveColor = '#cb3c2c'
+      const lullColor = '#f1c78a'
       const chartColor = wave.type === 'wave' ? waveColor : lullColor
 
       // Create an array of x,y maps: { x: '2017-01-06', y: 3.6 }

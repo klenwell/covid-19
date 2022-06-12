@@ -1,7 +1,8 @@
 /*
  * OC Phases Chart Component
  *
- * Uses jQuery module pattern: https://wiki.klenwell.com/view/JQuery
+ * Uses JS Class template:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 **/
 class OcPhasesChart {
   constructor(model) {

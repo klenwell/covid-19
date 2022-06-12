@@ -194,7 +194,10 @@ table.waves td {
 
 /* https://stackoverflow.com/a/41263493/1093087 */
 table.waves td.index span.circled {
-  background: black;
+  background: #666; /* Overridden below */
+  height: 2em;
+  min-width: 1.6em;
+  font-family: var(--bs-body-font-family);
   color: white;
   font-weight: bold;
   justify-content: center;
@@ -202,8 +205,6 @@ table.waves td.index span.circled {
   border-radius: 100%;
   text-align: center;
   display: flex;
-  height: 2em;
-  font-family: var(--bs-body-font-family);
 }
 
 table.waves tr.rising td.index span.circled {
@@ -240,6 +241,15 @@ section#oc-covid-phases tr.flat td.trend {
 
 section#oc-covid-phases tr.falling td.trend {
   color: #1967d2;
+}
+
+section#oc-covid-phases td.notes {
+  font-family: var(--bs-body-font-family);
+}
+
+section#oc-covid-phases td.notes span.variant {
+  font-weight: bold;
+  color: #cb3c2c;
 }
 
 /*

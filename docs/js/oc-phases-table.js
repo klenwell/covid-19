@@ -42,7 +42,7 @@ class OcPhasesTable {
     $tr.append(this.classCell('days', phase.days))
     $tr.append(this.positiveRateCell(phase))
     $tr.append(this.popSlopeCell(phase.popSlope))
-    $tr.append(this.notesCell(phase))
+    $tr.append(this.notesCell(index))
     $tr.append(this.chartCell($chartCanvas))
 
     this.enableChart($chartCanvas, phase)
@@ -87,9 +87,11 @@ class OcPhasesTable {
     return this.classCell('slope', $div)
   }
 
-  notesCell(popSlope) {
+  notesCell(index) {
     const $div = $('<div />')
-    // TODO
+    const note = this.model.phaseNotes[index]
+    console.log(note, this.model.phaseNotes)
+    $div.html(note)
     return this.classCell('notes', $div)
   }
 

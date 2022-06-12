@@ -28,6 +28,27 @@ class OcPhasesModel {
     return OcPhasesModelConfig.readyEvent
   }
 
+  get phaseNotes() {
+    return {
+      // index: note (html)
+      1: 'First Wave',
+      2: 'CA Stay-at-Home Order Down Cycle',
+      3: 'Summer Re-Opening Surge',
+      4: 'CA Indoor Dining Shutdown Down Cycle',
+      5: 'Autumn Lull',
+      6: 'Holiday <span class="variant">Alpha</span> Surge',
+      7: 'Post-Alpha Down Cycle',
+      8: 'Spring Lull',
+      9: 'Summer <span class="variant">Delta</span> Surge',
+      10: 'Post-Delta Down Cycle',
+      11: 'Autumn Lull',
+      12: 'Holiday <span class="variant">Omicron</span> Surge',
+      13: 'Post-Omicron Down Cycle',
+      14: 'Spring Lull',
+      15: 'Summer <span class="variant">Omicron 2</span> Surge'
+    }
+  }
+
   /*
    * Public Methods
   **/

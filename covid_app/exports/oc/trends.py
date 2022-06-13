@@ -5,7 +5,7 @@ import time
 import json
 
 from config.app import GH_PAGES_ROOT
-from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+from covid_app.extracts.local.oc.daily_hca import OcDailyHcaExtract
 from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
 
 #
@@ -40,7 +40,16 @@ class OcTrendsExport:
 
     @cached_property
     def case_extract(self):
-        pass
+        return OcDailyHcaExtract()
+
+    # Export Keys
+    @cached_property
+    def weeks(self):
+        return []
+
+    @property
+    def meta(self):
+        return {}
 
     # Latest Update Dates
     @cached_property
@@ -185,15 +194,11 @@ class OcTrendsExport:
         self.run_time_end = None
         self.test = test
 
-        if self.test:
-            print('[WARNING] In test mode: loading sample data.')
-            self.case_extract.mock_api_calls()
-
     def to_json_file(self):
         trends = JSON_SCHEMA.copy()
 
-        trends['weeks'] = []
-        trends['meta'] = {}
+        trends['weeks'] = self.weeks
+        trends['meta'] = self.meta
 
         # pretty print
         with open(self.json_path, 'w') as f:

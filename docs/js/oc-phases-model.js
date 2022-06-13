@@ -44,20 +44,55 @@ class OcPhasesModel {
     return {
       // index: note (html)
       1: 'First Wave',
-      2: 'CA Stay-at-Home Order Down Cycle',
+      2: 'CA Stay-at-Home Order Drop',
       3: 'Summer Re-Opening Surge',
-      4: 'CA Indoor Dining Shutdown Down Cycle',
+      4: 'CA Indoor Dining Shutdown Drop',
       5: 'Autumn Lull',
       6: `Holiday ${link('Alpha')} Surge`,
-      7: 'Post-Alpha Down Cycle',
+      7: 'Post-Alpha Drop',
       8: 'Spring Lull',
       9: `Summer ${link('Delta')} Surge`,
-      10: 'Post-Delta Down Cycle',
+      10: 'Post-Delta Drop',
       11: 'Autumn Lull',
       12: `Holiday ${link('Omicron')} Surge`,
-      13: 'Post-Omicron Down Cycle',
+      13: 'Post-Omicron Drop',
       14: 'Spring Lull',
       15: `Summer ${link('Omicron 2')} Surge`,
+    }
+  }
+
+  get completePhases() {
+    return this.phases.slice(0, -1)
+  }
+
+  get activePhase() {
+    return this.phases.slice(-1)
+  }
+
+  get risingPhases() {
+    return this.completePhases.filter((phase) => phase.trend === 'rising')
+  }
+
+  get fallingPhases() {
+    return this.completePhases.filter((phase) => phase.trend === 'falling')
+  }
+
+  get flatPhases() {
+    return this.completePhases.filter((phase) => phase.trend === 'flat')
+  }
+
+  get averageDurations() {
+    const risingDurations = this.risingPhases.map((phase) => phase.days)
+    const fallingDurations = this.fallingPhases.map((phase) => phase.days)
+    const flatDurations = this.flatPhases.map((phase) => phase.days)
+
+    const sum = (arr) => arr.reduce((acc, n) => acc + n, 0)
+    const avg = (arr) => sum(arr) / arr.length
+
+    return {
+      rising: avg(risingDurations),
+      falling: avg(fallingDurations),
+      flat: avg(flatDurations)
     }
   }
 

@@ -50,7 +50,7 @@ class OcPhasesModel {
       5: 'Autumn Lull',
       6: `Holiday ${link('Alpha')} Surge`,
       7: 'Post-Alpha Drop',
-      8: 'Spring Lull',
+      8: 'Spring "Hot Vax Summer" Lull',
       9: `Summer ${link('Delta')} Surge`,
       10: 'Post-Delta Drop',
       11: 'Autumn Lull',

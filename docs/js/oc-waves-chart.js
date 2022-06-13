@@ -57,7 +57,7 @@ class OcWavesChart {
           }
         },
         y: {
-          max: 28,
+          max: 30,
           min: 0,
           title: {
             display: true,

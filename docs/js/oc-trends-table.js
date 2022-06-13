@@ -39,10 +39,10 @@ const OcTrendsTable = (function() {
     const startDate = rowData.dateTime.minus({days: 6}).toFormat('yyyy-MM-dd')
 
     // Helper functions
-    const asNum = (value, fixed) => !!value ? value.toFixed(fixed !== undefined ? fixed : 1) : 'n/a'
-    const asPct = (value) => !!value ? `${value.toFixed(1)}%` : 'n/a'
+    const asNum = (value, fixed) => !isNaN(value) ? value.toFixed(fixed !== undefined ? fixed : 1) : 'n/a'
+    const asPct = (value) => !isNaN(value) ? `${value.toFixed(1)}%` : 'n/a'
     const asSignedPct = (value) => {
-      if ( !value ) {
+      if ( isNaN(value) ) {
         return 'n/a'
       }
       const sign = value > 0 ? '+' : '';

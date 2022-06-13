@@ -151,6 +151,7 @@ class OcTrendsModel {
     for (const row of rows) {
       const prevWeekIdx = idx + 7
       const prevWeekRow = rows[prevWeekIdx]
+      const totalDeaths = this.sumDeaths(rows, idx, prevWeekIdx-1)
       idx++
 
       if ( prevWeekRow === undefined ) {
@@ -165,11 +166,24 @@ class OcTrendsModel {
         adminTestsDelta: pctChange(prevWeekRow.adminTests, row.adminTests),
         positiveTestsDelta: pctChange(prevWeekRow.positiveTests, row.positiveTests),
         wastewaterDelta: pctChange(prevWeekRow.wastewater, row.wastewater),
-        hospitalCasesDelta: pctChange(prevWeekRow.hospitalCases, row.hospitalCases)
+        hospitalCasesDelta: pctChange(prevWeekRow.hospitalCases, row.hospitalCases),
+        totalDeaths: totalDeaths
       })
     }
 
     return updatedRows
+  }
+
+  sumDeaths(rows, startIndex, endIndex) {
+    let sum = 0
+    if (endIndex < 5) { console.log('sumDeaths', rows, startIndex, endIndex) }
+
+    rows.slice(startIndex, endIndex).forEach(row => {
+      sum += row.deaths
+    })
+
+    if (endIndex < 5) { console.log('sum', sum) }
+    return sum
   }
 }
 

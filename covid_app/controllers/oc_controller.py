@@ -305,10 +305,11 @@ class OcController(Controller):
     @expose(help="For rapid testing and development.")
     def dev(self):
         from covid_app.exports.oc.trends import OcTrendsExport
-
         from pprint import pprint
 
         export = OcTrendsExport()
         extract = export.case_extract
-        print(extract.end_date)
+        print(export.week_dates)
+        print(export.wastewater_7d_avg)
+        pprint(export.weeks)
         breakpoint()

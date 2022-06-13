@@ -79,9 +79,6 @@ class OcDailyHcaExtract:
 
     @cached_property
     def avg_positive_rates(self):
-        if self.test:
-            return self.test_avg_positive_rates
-
         dated_values = {}
 
         for dated in self.dates:

@@ -13,6 +13,7 @@ from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
 #
 JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
 JSON_FILE_NAME = 'trends.json'
+NUM_WEEKS = 5
 
 # Wastewater Lab: CAL3 or DWRL
 WASTEWATER_LAB = 'DWRL'
@@ -42,158 +43,106 @@ class OcTrendsExport:
     def case_extract(self):
         return OcDailyHcaExtract()
 
-    # Export Keys
+    # Export Data
     @cached_property
     def weeks(self):
-        return []
+        weeks_data = []
+        for n in range(NUM_WEEKS):
+            trends_data = self.dated_trends[self.week_dates[n]]
+            weeks_data.append(trends_data)
+        return weeks_data
 
     @property
     def meta(self):
         return {}
 
-    # Latest Update Dates
+    # Datasets
     @cached_property
-    def latest_test_update(self):
-        for dated in self.case_dates:
-            if self.admin_tests.get(dated) and self.positive_tests.get(dated):
-                return dated
+    def test_positive_rates(self):
+        daily_values = {}
+        dataset = self.case_extract.avg_positive_rates
+
+        for dated in self.dates:
+            daily_values[dated] = dataset.get(dated)
+
+        return daily_values
 
     @cached_property
-    def latest_case_update(self):
-        dataset = self.case_extract.new_cases
-        for dated in self.case_dates:
-            if dataset.get(dated):
-                return dated
+    def admin_tests_7d_avg(self):
+        daily_values = {}
+        dataset = self.case_extract.tests_admin
+
+        for dated in self.dates:
+            week_avg = self.week_avg_from_date(dataset, dated)
+            daily_values[dated] = week_avg
+
+        return daily_values
 
     @cached_property
-    def latest_hospital_case_update(self):
-        for dated in self.case_dates:
-            if self.case_extract.hospitalizations.get(dated) not in ('', None):
-                return dated
+    def positive_tests_7d_avg(self):
+        daily_values = {}
+        dataset = self.case_extract.tests_positive
+
+        for dated in self.dates:
+            week_avg = self.week_avg_from_date(dataset, dated)
+            daily_values[dated] = week_avg
+
+        return daily_values
 
     @cached_property
-    def latest_icu_case_update(self):
-        for dated in self.case_dates:
-            if self.case_extract.icu_cases.get(dated) not in ('', None):
-                return dated
+    def hospital_cases_7d_avg(self):
+        daily_values = {}
+        dataset = self.case_extract.hospitalizations
+
+        for dated in self.dates:
+            week_avg = self.week_avg_from_date(dataset, dated)
+            daily_values[dated] = week_avg
+
+        return daily_values
 
     @cached_property
-    def latest_death_update(self):
-        for dated in self.case_dates:
-            if self.case_extract.new_deaths.get(dated) not in ('', None):
-                return dated
+    def wastewater_7d_avg(self):
+        daily_values = {}
+        dataset = {}
+
+        for dated in self.dates:
+            daily_values[dated] = dataset.get(dated)
+
+        return daily_values
+
+    @cached_property
+    def dated_trends(self):
+        trends = {}
+        for end_date in self.dates:
+            trend = self.compute_trends(end_date)
+            trends[end_date] = trend
+        return trends
+
+    # Dates
+    @property
+    def dates(self):
+        num_dates = (NUM_WEEKS + 1) * 7
+        return self.case_extract.dates[-num_dates:]
+
+    @property
+    def week_dates(self):
+        week_dates = []
+        most_recent_dates = sorted(self.dates, reverse=True)
+
+        for n in range(5):
+            offset = n * 7
+            dated = most_recent_dates[offset]
+            week_dates.append(dated)
+
+        return week_dates
 
     @cached_property
     def latest_wastewater_update(self):
         return self.waste_extract.latest_update_by_lab(WASTEWATER_LAB)
 
-    # Date sets
-    @property
-    def case_dates(self):
-        return sorted(self.case_extract.dates, reverse=True)
-
-    # Dataset aliases
-    @property
-    def admin_tests(self):
-        return self.case_extract.new_tests_administered
-
-    @property
-    def positive_tests(self):
-        return self.case_extract.new_positive_tests_administered
-
-    # Avgs datasets
-    @cached_property
-    def postive_rate_7d_avgs(self):
-        daily_values = {}
-
-        # Source: https://stackoverflow.com/a/993367/1093087
-        start_from = self.latest_test_update
-        max_length = len(self.admin_tests) - 14
-        dates = [start_from - timedelta(days=n) for n in range(max_length)]
-
-        for dated in dates:
-            avg_tests_admin = self.week_avg_from_date(self.admin_tests, dated)
-            avg_tests_pos = self.week_avg_from_date(self.positive_tests, dated)
-            daily_values[dated] = avg_tests_pos / avg_tests_admin * 100.0
-
-        return daily_values
-
-    @cached_property
-    def case_7d_avgs(self):
-        daily_values = {}
-        dataset = self.case_extract.new_cases
-        start_from = self.latest_case_update
-        max_length = len(dataset) - 14
-
-        dates = [start_from - timedelta(days=n) for n in range(max_length)]
-
-        for dated in dates:
-            week_avg = self.week_avg_from_date(dataset, dated)
-            daily_values[dated] = week_avg
-
-        return daily_values
-
-    @cached_property
-    def hospital_7d_avgs(self):
-        daily_values = {}
-        dataset = self.case_extract.hospitalizations
-        start_from = self.latest_hospital_case_update
-        max_length = len(dataset) - 14
-
-        dates = [start_from - timedelta(days=n) for n in range(max_length)]
-
-        for dated in dates:
-            week_avg = self.week_avg_from_date(dataset, dated)
-            daily_values[dated] = week_avg
-
-        return daily_values
-
-    @cached_property
-    def icu_7d_avgs(self):
-        daily_values = {}
-        dataset = self.case_extract.icu_cases
-        start_from = self.latest_icu_case_update
-        max_length = len(dataset) - 14
-
-        dates = [start_from - timedelta(days=n) for n in range(max_length)]
-
-        for dated in dates:
-            week_avg = self.week_avg_from_date(dataset, dated)
-            daily_values[dated] = week_avg
-
-        return daily_values
-
-    @cached_property
-    def death_7d_avgs(self):
-        daily_values = {}
-        dataset = self.case_extract.new_deaths
-        start_from = self.latest_death_update
-        max_length = len(dataset) - 14
-
-        dates = [start_from - timedelta(days=n) for n in range(max_length)]
-
-        for dated in dates:
-            week_avg = self.week_avg_from_date(dataset, dated)
-            daily_values[dated] = week_avg
-
-        return daily_values
-
-    # Etc
-    @property
-    def run_time(self):
-        if not self.run_time_end:
-            self.run_time_end = time.time()
-
-        return self.run_time_end - self.run_time_start
-
     #
     # Instance Method
     #
-    def __init__(self, test=False):
-        self.run_time_start = time.time()
-        self.run_time_end = None
-        self.test = test
-
     def to_json_file(self):
         trends = JSON_SCHEMA.copy()
 
@@ -209,9 +158,71 @@ class OcTrendsExport:
     #
     # Private
     #
+    def compute_trends(self, end_date):
+        start_date = end_date - timedelta(days=6)
+        compare_end_date = end_date - timedelta(days=7)
+        compare_start_date = compare_end_date - timedelta(days=6)
+
+        return {
+            'startDate': start_date.strftime(DATE_OUT_F),
+            'endDate': end_date.strftime(DATE_OUT_F),
+            'testPositiveRate': {
+                'value': self.test_positive_rates[end_date],
+                'delta': self.compute_change(
+                    self.test_positive_rates.get(compare_end_date),
+                    self.test_positive_rates[end_date]
+                )
+            },
+            'adminTests': {
+                'average7d': self.admin_tests_7d_avg[end_date],
+                'delta': self.compute_change(
+                    self.admin_tests_7d_avg.get(compare_end_date),
+                    self.admin_tests_7d_avg[end_date]
+                )
+            },
+            'positiveTests': {
+                'average7d': self.positive_tests_7d_avg[end_date],
+                'delta': self.compute_change(
+                    self.positive_tests_7d_avg.get(compare_end_date),
+                    self.positive_tests_7d_avg[end_date]
+                )
+            },
+            'wastewater': {
+                'average7d': 'self.wastewater_7d_avg[end_date]',
+                'delta': 'TODO'
+            },
+            'hospitalCases': {
+                'average7d': self.hospital_cases_7d_avg[end_date],
+                'delta': self.compute_change(
+                    self.hospital_cases_7d_avg.get(compare_end_date),
+                    self.hospital_cases_7d_avg[end_date]
+                )
+            },
+            'deaths': {
+                'total': self.sum_deaths(start_date, end_date),
+                'delta': self.compute_change(
+                    self.sum_deaths(compare_start_date, compare_end_date),
+                    self.sum_deaths(start_date, end_date)
+                )
+            }
+        }
+
+    def sum_deaths(self, start_date, end_date):
+        deaths = []
+        days = (end_date - start_date).days
+
+        for n in range(days+1):
+            dated = start_date + timedelta(days=n)
+            num_deaths = self.case_extract.deaths.get(dated, 0)
+            deaths.append(num_deaths)
+
+        return sum(deaths)
+
     def compute_change(self, old, new):
         """Source: https://stackoverflow.com/q/30926840/1093087
         """
+        if not old:
+            return None
         return (new - old) / old * 100.0
 
     def week_avg_from_date(self, daily_values, from_date):

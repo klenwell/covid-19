@@ -6,16 +6,19 @@
 **/
 // Need to use this IIFE module pattern to interpolate sheetID string.
 // Usage: OcTrendsModelConfig.readyEvent
-const OcTrendsModelConfig = (function() {
-  const readyEvent = 'OcTrendsModel:data:ready'
-  const sheetID = '1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4'
-  const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&sheet=Data`
+const OcTrendsModelConfig = {
+  readyEvent: 'OcTrendsModel:data:ready',
+  extractUrl: 'data/json/oc/trends.json'
+}
 
-  return {
-    readyEvent: readyEvent,
-    csvUrl: csvUrl
+
+class OcTrendsModel {
+  constructor(config) {
+    this.config = config
+    this.data = {}
+    this.dateTime = luxon.DateTime
   }
-})()
+}
 
 
 class OcTrendsModel {

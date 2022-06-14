@@ -124,9 +124,6 @@ class OcPhasesChart {
       //console.log('tooltipTitleFormatter', title, context)
       return title
     }
-    const yTickFormatter = (value, index, ticks) => {
-      return value % 5 === 0 ? `${value}%` : ''
-    }
 
     return {
       callbacks: {

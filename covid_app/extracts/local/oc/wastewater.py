@@ -52,9 +52,9 @@ class OcWastewaterExtract:
         for dated in self.dates:
             row = self.dated_export_rows[dated]
             record = {
-                'avg_virus_7d': row[av7d_idx],
-                'virus_ml': row[vpml_idx],
-                'virus_l': row[vpl_idx]
+                'avg_virus_7d': self.to_f(row[av7d_idx]),
+                'virus_ml': self.to_f(row[vpml_idx]),
+                'virus_l': self.to_i(row[vpl_idx])
             }
             dated_record[dated] = record
 
@@ -70,9 +70,9 @@ class OcWastewaterExtract:
         for dated in self.dates:
             row = self.dated_export_rows[dated]
             record = {
-                'avg_virus_7d': row[av7d_idx],
-                'virus_ml': row[vpml_idx],
-                'virus_l': row[vpl_idx]
+                'avg_virus_7d': self.to_f(row[av7d_idx]),
+                'virus_ml': self.to_f(row[vpml_idx]),
+                'virus_l': self.to_i(row[vpl_idx])
             }
             dated_record[dated] = record
 
@@ -121,3 +121,14 @@ class OcWastewaterExtract:
     #
     # Instance Methods
     #
+    def to_f(self, value):
+        if value is None or value == '':
+            return None
+        else:
+            return float(value)
+
+    def to_i(self, value):
+        if value is None or value == '':
+            return None
+        else:
+            return int(value)

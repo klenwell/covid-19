@@ -1,12 +1,12 @@
 from os.path import join as path_join
 from functools import cached_property
-from datetime import timedelta
+from datetime import timedelta, datetime
 import time
 import json
 
 from config.app import GH_PAGES_ROOT
 from covid_app.extracts.local.oc.daily_hca import OcDailyHcaExtract
-from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
+from covid_app.extracts.local.oc.wastewater import OcWastewaterExtract
 
 #
 # Constants
@@ -14,9 +14,6 @@ from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
 JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
 JSON_FILE_NAME = 'trends.json'
 NUM_WEEKS = 5
-
-# Wastewater Lab: CAL3 or DWRL
-WASTEWATER_LAB = 'DWRL'
 
 JSON_SCHEMA = {
     'weeks': [],
@@ -37,7 +34,7 @@ class OcTrendsExport:
     # Extracts
     @cached_property
     def waste_extract(self):
-        pass
+        return OcWastewaterExtract()
 
     @cached_property
     def case_extract(self):
@@ -54,9 +51,23 @@ class OcTrendsExport:
 
     @property
     def meta(self):
-        return {}
+        return {
+            'createdAt': self.iso_timestamp,
+            'dataLastUpdated': self.end_date.strftime(DATE_OUT_F)
+        }
 
     # Datasets
+    @cached_property
+    def wastewater_7d_avg(self):
+        daily_values = {}
+        dataset = self.waste_extract.dwrl
+
+        for dated in self.dates:
+            lab = dataset.get(dated, {})
+            daily_values[dated] = lab.get('avg_virus_7d')
+
+        return daily_values
+
     @cached_property
     def test_positive_rates(self):
         daily_values = {}
@@ -101,16 +112,6 @@ class OcTrendsExport:
         return daily_values
 
     @cached_property
-    def wastewater_7d_avg(self):
-        daily_values = {}
-        dataset = {}
-
-        for dated in self.dates:
-            daily_values[dated] = dataset.get(dated)
-
-        return daily_values
-
-    @cached_property
     def dated_trends(self):
         trends = {}
         for end_date in self.dates:
@@ -136,9 +137,14 @@ class OcTrendsExport:
 
         return week_dates
 
-    @cached_property
-    def latest_wastewater_update(self):
-        return self.waste_extract.latest_update_by_lab(WASTEWATER_LAB)
+    @property
+    def end_date(self):
+        return self.dates[-1]
+
+    @property
+    def iso_timestamp(self):
+        # Source: https://stackoverflow.com/a/28147286/1093087
+        return datetime.now().astimezone().replace(microsecond=0).isoformat()
 
     #
     # Instance Method
@@ -151,7 +157,7 @@ class OcTrendsExport:
 
         # pretty print
         with open(self.json_path, 'w') as f:
-            f.write(json.dumps(metrics, indent=4))
+            f.write(json.dumps(trends, indent=4))
 
         return self.json_path
 
@@ -188,8 +194,11 @@ class OcTrendsExport:
                 )
             },
             'wastewater': {
-                'average7d': 'self.wastewater_7d_avg[end_date]',
-                'delta': 'TODO'
+                'average7d': self.wastewater_7d_avg.get(end_date),
+                'delta': self.compute_change(
+                    self.wastewater_7d_avg.get(compare_end_date),
+                    self.wastewater_7d_avg.get(end_date)
+                )
             },
             'hospitalCases': {
                 'average7d': self.hospital_cases_7d_avg[end_date],

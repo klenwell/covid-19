@@ -10,6 +10,7 @@ from covid_app.exports.oc_wastewater import OCWastewaterExport
 from covid_app.exports.oc.metrics import OCMetricsExport
 from covid_app.exports.oc.waves import OCWavesExport
 from covid_app.exports.oc.phases import OCPhasesExport
+from covid_app.exports.oc.trends import OcTrendsExport
 from covid_app.services.oc_health_service import OCHealthService
 
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
@@ -145,6 +146,21 @@ class OcController(Controller):
                 'Data Source: {}'.format(export.data_source_path),
                 'Total Phases: {}'.format(len(export.phases)),
                 'Run time: {} s'.format(round(export.run_time, 2)),
+            ]
+        }
+        self.app.render(vars, 'oc/json-export.jinja2')
+
+    # python app.py oc trends-json-file
+    @expose(help="Output JSON file to docs/data/json/oc/trends.json.")
+    def trends_json_file(self):
+        export = OcTrendsExport()
+        json_path = export.to_json_file()
+
+        vars = {
+            'json_path': json_path,
+            'notes': [
+                'Start Date: {}'.format(export.weeks[0]['startDate']),
+                'End Date: {}'.format(export.weeks[0]['endDate']),
             ]
         }
         self.app.render(vars, 'oc/json-export.jinja2')
@@ -304,14 +320,9 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.exports.oc.trends import OcTrendsExport
-        from covid_app.extracts.local.oc.wastewater import OcWastewaterExtract
         from pprint import pprint
 
         export = OcTrendsExport()
-        extract = OcWastewaterExtract()
-        print(export.week_dates)
-        print(export.wastewater_7d_avg)
         pprint(export.weeks)
-        print(extract.dwrl[extract.end_date])
+        print(export.to_json_file())
         breakpoint()

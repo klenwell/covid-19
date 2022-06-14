@@ -4,8 +4,6 @@
  * Uses JS Class template:
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 **/
-// Need to use this IIFE module pattern to interpolate sheetID string.
-// Usage: OcTrendsModelConfig.readyEvent
 const OcTrendsModelConfig = {
   readyEvent: 'OcTrendsModel:data:ready',
   extractUrl: 'data/json/oc/trends.json'
@@ -17,6 +15,42 @@ class OcTrendsModel {
     this.config = config
     this.data = {}
     this.dateTime = luxon.DateTime
+  }
+
+  /*
+   * Getters
+  **/
+  // For use by component as on event string to confirm data loaded:
+  // $(document).on(OcTrendsModel.dataReady, (event, model) => {})
+  static get dataReady() {
+    return OcTrendsModelConfig.readyEvent
+  }
+
+  get weeks() {
+    return this.data.weeks
+  }
+
+  /*
+   * Public Methods
+  **/
+  fetchData() {
+    fetch(this.config.extractUrl)
+      .then(response => response.json())
+      .then(data => this.onFetchComplete(data))
+  }
+
+  /*
+   * Private Methods
+  **/
+  onFetchComplete(jsonData) {
+    this.data = jsonData
+    this.triggerReadyEvent()
+  }
+
+  triggerReadyEvent() {
+    console.log(this.config.readyEvent, this)
+    console.log(this.weeks)
+    $(document).trigger(this.config.readyEvent, [this])
   }
 }
 

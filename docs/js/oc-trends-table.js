@@ -1,117 +1,149 @@
 /*
  * OC Trends Table Component
  *
- * Uses jQuery module pattern: https://wiki.klenwell.com/view/JQuery
- */
-const OcTrendsTable = (function() {
-  /*
-   * Constants
-   */
-  const TRENDS_TABLE_SEL = 'section#week-to-week-trends table'
+ * Uses JS Class template:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+**/
+class OcTrendsTable {
+  constructor(model) {
+    const selector = 'section#oc-covid-trends table'
+
+    this.model = model
+    this.dateTime = luxon.DateTime
+    this.formatNumber = new Intl.NumberFormat('en-US').format;
+    this.table = $(selector)
+    this.tableBody = this.table.find('tbody')
+  }
 
   /*
-   * Public Methods
+   * Getters
   **/
-  const render = function(model) {
-     reloadTable(model)
-   }
-
-   const resetTable = function() {
-     const csvUrl = OcTrendsModelConfig.csvUrl
-     $(TRENDS_TABLE_SEL).find('caption').text(`Loading data from ${csvUrl}`)
-   }
+  get weekLabels() {
+    return [
+      'Last Week*',
+      '2 Weeks Ago',
+      '3 Weeks Ago',
+      '4 Weeks Ago'
+    ]
+  }
 
   /*
-   * Private Methods
+   * Methods
   **/
-  const reloadTable = function(model) {
-    '1234'.split('').forEach(weekNum => reloadRow(weekNum, model))
-    $(TRENDS_TABLE_SEL).find('caption').text('')
+  resetTable() {
+    const extractUrl = OcTrendsModelConfig.extractUrl
+    this.table.find('caption').text(`Loading data from ${extractUrl}`)
   }
 
-  const reloadRow = function(weekNum, model) {
-    const rowSel = `${TRENDS_TABLE_SEL} tr.week-${weekNum}`
-    const valSel = 'span.value'
-    const delSel = 'span.delta'
+  render() {
+    this.table.find('caption').html('')
 
-    const idx = parseInt(weekNum) - 1
-    const rowData = model.weeks[idx]
-    const startDate = rowData.dateTime.minus({days: 6}).toFormat('yyyy-MM-dd')
+    this.weekLabels.forEach((label, idx) => {
+      let week = this.model.weeks[idx]
+      let $tr = this.weekRow(label, week, idx + 1)
+      this.tableBody.append($tr)
+    })
+  }
 
-    // Helper functions
-    const asNum = (value, fixed) => !!value ? value.toFixed(fixed !== undefined ? fixed : 1) : 'n/a'
-    const asPct = (value) => !!value ? `${value.toFixed(1)}%` : 'n/a'
-    const asSignedPct = (value) => {
-      if ( !value ) {
-        return 'n/a'
-      }
-      const sign = value > 0 ? '+' : '';
-      return `${sign}${value.toFixed(1)}%`
+  weekRow(label, week, weekNum) {
+    const className = `week-${weekNum}`
+    const $tr = $('<tr />').addClass(className)
+
+    $tr.append(this.labelCell(label))
+    $tr.append(this.rateCell(week.testPositiveRate))
+    $tr.append(this.avg7dCell('admin-tests', week.adminTests))
+    $tr.append(this.avg7dCell('positive-tests', week.positiveTests))
+    $tr.append(this.avg7dCell('wastewater', week.wastewater))
+    $tr.append(this.avg7dCell('hospital-cases', week.hospitalCases))
+    $tr.append(this.deathCell(week.deaths))
+    $tr.append(this.dateCell(week.endDate))
+    $tr.append(this.dateCell(week.startDate))
+
+    return $tr
+  }
+
+  valueDeltaCell(className, value, delta) {
+    const trendClass = this.mapDeltaToTrend(delta)
+    const $td = $('<td />').addClass(className).addClass(trendClass)
+    const deltaHtml = `(${this.fmtSignedPct(delta)})`
+    const $valueSpan = $('<span />').addClass('value').html(value)
+    const $deltaSpan = $('<span />').addClass('delta').html(deltaHtml)
+    $td.append($valueSpan).append($deltaSpan)
+    return $td
+  }
+
+  avg7dCell(className, metric, precision) {
+    const value = this.fmtNum(metric.average7d, precision)
+    return this.valueDeltaCell(className, value, metric.delta)
+  }
+
+  labelCell(label) {
+    return $('<th />').attr('scope', 'row').html(label)
+  }
+
+  dateCell(date) {
+    const $td = $('<td />').addClass('date')
+    $td.html(date)
+    return $td
+  }
+
+  rateCell(rate) {
+    const value = this.fmtPct(rate.value)
+    return this.valueDeltaCell('test-positive-rate', value, rate.delta)
+  }
+
+  deathCell(deaths) {
+    return this.valueDeltaCell('deaths', deaths.total, deaths.delta)
+  }
+
+  fmtNum(value, precision) {
+    const isNum = (v) => !isNaN(v)
+    const fixed = precision !== undefined ? precision : 1
+    const nonVal = 'n/a'
+    return isNum(value) ? this.formatNumber(value.toFixed(fixed)) : nonVal
+  }
+
+  fmtPct(value) {
+    if ( isNaN(value) ) {
+      return 'n/a'
     }
-    const pctWrap = (value) => `(${asSignedPct(value)})`
-
-    // Compute death delta
-    let prevWeekDeaths = model.weeks[idx + 1].totalDeaths
-    rowData.deathsDelta = OcTrendsModel.computePctChange(prevWeekDeaths, rowData.totalDeaths)
-
-    // Update cells
-    $(`${rowSel} td.test-positive-rate ${valSel}`).text(asPct(rowData.positiveRate))
-    $(`${rowSel} td.test-positive-rate ${delSel}`).text(pctWrap(rowData.positiveRateDelta))
-    $(`${rowSel} td.admin-tests ${valSel}`).text(asNum(rowData.adminTests))
-    $(`${rowSel} td.admin-tests ${delSel}`).text(pctWrap(rowData.adminTestsDelta))
-    $(`${rowSel} td.positive-tests ${valSel}`).text(asNum(rowData.positiveTests, 1))
-    $(`${rowSel} td.positive-tests ${delSel}`).text(pctWrap(rowData.positiveTestsDelta))
-    $(`${rowSel} td.wastewater ${valSel}`).text(asNum(rowData.wastewater, 1))
-    $(`${rowSel} td.wastewater ${delSel}`).text(pctWrap(rowData.wastewaterDelta))
-    $(`${rowSel} td.hospital-cases ${valSel}`).text(asNum(rowData.hospitalCases, 1))
-    $(`${rowSel} td.hospital-cases ${delSel}`).text(pctWrap(rowData.hospitalCasesDelta))
-    $(`${rowSel} td.deaths ${valSel}`).text(asNum(rowData.totalDeaths, 0))
-    $(`${rowSel} td.deaths ${delSel}`).text(pctWrap(rowData.deathsDelta))
-    $(`${rowSel} td.start-date`).text(startDate)
-    $(`${rowSel} td.end-date`).text(rowData.date)
-
-    // Set cell styles
-    updateRowStyling(rowSel, rowData)
+    return `${value.toFixed(1)}%`
   }
 
-  const updateRowStyling = function(rowSel, rowData) {
-    const setClass = (delta, tdSel) => {
-      let className = ''
-      if (delta > 0) {
-        className = 'rising'
-      }
-      else if (delta < 0) {
-        className = 'falling'
-      }
-
-      $(`${rowSel} ${tdSel}`).addClass(className)
+  fmtSignedPct(value) {
+    if ( isNaN(value) ) {
+      return 'n/a'
     }
-
-    setClass(rowData.positiveRateDelta, 'td.test-positive-rate')
-    setClass(rowData.adminTestsDelta, 'td.admin-tests')
-    setClass(rowData.positiveTestsDelta, 'td.positive-tests')
-    setClass(rowData.wastewaterDelta, 'td.wastewater')
-    setClass(rowData.hospitalCasesDelta, 'td.hospital-cases')
-    setClass(rowData.deathsDelta, 'td.deaths')
+    const sign = value > 0 ? '+' : '';
+    return `${sign}${value.toFixed(1)}%`
   }
 
-  /*
-   * Public API
-   */
-  return {
-    render: render,
-    resetTable: resetTable
+  mapDeltaToTrend(delta) {
+    if (isNaN(delta)) {
+      return 'nan'
+    }
+    else if (delta > 0) {
+      return 'rising'
+    }
+    else if (delta < 0) {
+      return 'falling'
+    }
+    else {
+      return 'flat'
+    }
   }
-})()
+}
 
 
 /*
  * Main block: these are the things that happen on designated event.
 **/
 $(document).on(OcTrendsModel.dataReady, (event, model) => {
-  OcTrendsTable.render(model)
+  const table = new OcTrendsTable(model)
+  table.render()
 })
 
 $(document).ready(function() {
-  OcTrendsTable.resetTable()
+  const table = new OcTrendsTable(null)
+  table.resetTable()
 })

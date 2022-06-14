@@ -155,6 +155,10 @@ table.metrics tr.deaths th { background-color: #e08600; }
 /*
  * Trends Table
 **/
+table.trends td span.delta {
+  margin-left: 0.5rem;
+}
+
 table.trends td.falling span.delta,
 table.trends td.admin-tests.rising span.delta {
   color: ForestGreen;

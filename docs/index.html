@@ -308,7 +308,7 @@
         <div
           id="weekly" aria-labelledby="weekly-tab"
           class="tab-pane fade" role="tabpanel" >
-          <section id="week-to-week-trends">
+          <section id="oc-covid-trends">
             <h3>Week-by-Week Trends</h3>
             <table class="table trends">
               <caption>Loading...</caption>
@@ -339,124 +339,6 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="week-1">
-                  <th scope="row">
-                    Last Week*
-                  </th>
-                  <td class="test-positive-rate">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="admin-tests">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="positive-tests">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="wastewater">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="hospital-cases">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="deaths">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="end-date"></td>
-                  <td class="start-date"></td>
-                </tr>
-                <tr class="week-2">
-                  <th scope="row">2 Weeks Ago</th>
-                  <td class="test-positive-rate">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="admin-tests">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="positive-tests">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="wastewater">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="hospital-cases">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="deaths">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="end-date"></td>
-                  <td class="start-date"></td>
-                </tr>
-                <tr class="week-3">
-                  <th scope="row">3 Weeks Ago</th>
-                  <td class="test-positive-rate">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="admin-tests">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="positive-tests">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="wastewater">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="hospital-cases">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="deaths">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="end-date"></td>
-                  <td class="start-date"></td>
-                </tr>
-                <tr class="week-4">
-                  <th scope="row">4 Weeks Ago</th>
-                  <td class="test-positive-rate">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="admin-tests">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="positive-tests">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="wastewater">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="hospital-cases">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="deaths">
-                    <span class="value"></span>
-                    <span class="delta"></span>
-                  </td>
-                  <td class="end-date"></td>
-                  <td class="start-date"></td>
-                </tr>
               </tbody>
             </table>
 
@@ -464,9 +346,10 @@
             <ul>
               <li>Test data for <strong>last week</strong> not yet fully reported.</li>
               <li>
-                Data extracted from Google sheet:
-                <a target="_blank" href="https://docs.google.com/spreadsheets/d/1M7BfyPuwHQiavFtH59sgI9lJ7HjBpjXdBB-5BWv15K4/">OC COVID-19 Data v2</a>
-              </li>
+                Data extracted from JSON export:
+                <a target="_blank" href="https://github.com/klenwell/covid-19/blob/master/docs/data/json/oc/trends.json">
+                  docs/data/json/oc/trends.json
+                </a>.
               <li>
                 Data sourced from
                 <a target="_blank" href="https://occovid19.ochealthinfo.com/coronavirus-in-oc">OC Health Care Agency</a> and
@@ -609,12 +492,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous">
-    </script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"
-      integrity="sha512-SGWgwwRA8xZgEoKiex3UubkSkV1zSE1BS6O4pXcaxcNtUlQsOmOmhVnDwIvqGRfEmuz83tIGL13cXMZn6upPyg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer">
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/luxon@2.4.0/build/global/luxon.min.js"

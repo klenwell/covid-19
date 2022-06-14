@@ -1,0 +1,148 @@
+{
+    "weeks": [
+        {
+            "startDate": "2022-05-31",
+            "endDate": "2022-06-06",
+            "testPositiveRate": {
+                "value": 13.562564545346808,
+                "delta": 53.609146292647246
+            },
+            "adminTests": {
+                "average7d": 8438.142857142857,
+                "delta": -29.285637323564277
+            },
+            "positiveTests": {
+                "average7d": 1144.4285714285713,
+                "delta": 8.623728813559303
+            },
+            "wastewater": {
+                "average7d": 562.0,
+                "delta": -3.6020583190394513
+            },
+            "hospitalCases": {
+                "average7d": 141.57142857142858,
+                "delta": 5.650319829424316
+            },
+            "deaths": {
+                "total": 11,
+                "delta": 83.33333333333334
+            }
+        },
+        {
+            "startDate": "2022-05-24",
+            "endDate": "2022-05-30",
+            "testPositiveRate": {
+                "value": 8.829268876677562,
+                "delta": 22.221723451240376
+            },
+            "adminTests": {
+                "average7d": 11932.714285714286,
+                "delta": -12.650325225357118
+            },
+            "positiveTests": {
+                "average7d": 1053.5714285714287,
+                "delta": 6.760277938621893
+            },
+            "wastewater": {
+                "average7d": 583.0,
+                "delta": 51.03626943005182
+            },
+            "hospitalCases": {
+                "average7d": 134.0,
+                "delta": 13.559322033898304
+            },
+            "deaths": {
+                "total": 6,
+                "delta": 20.0
+            }
+        },
+        {
+            "startDate": "2022-05-17",
+            "endDate": "2022-05-23",
+            "testPositiveRate": {
+                "value": 7.223976742726873,
+                "delta": 22.745970981911253
+            },
+            "adminTests": {
+                "average7d": 13660.857142857143,
+                "delta": 0.03347490428270128
+            },
+            "positiveTests": {
+                "average7d": 986.8571428571429,
+                "delta": 22.78706007820833
+            },
+            "wastewater": {
+                "average7d": 386.0,
+                "delta": 52.569169960474305
+            },
+            "hospitalCases": {
+                "average7d": 118.0,
+                "delta": 35.18821603927986
+            },
+            "deaths": {
+                "total": 5,
+                "delta": -58.333333333333336
+            }
+        },
+        {
+            "startDate": "2022-05-10",
+            "endDate": "2022-05-16",
+            "testPositiveRate": {
+                "value": 5.885306609201415,
+                "delta": 28.029493753791606
+            },
+            "adminTests": {
+                "average7d": 13656.285714285714,
+                "delta": 2.718559271039279
+            },
+            "positiveTests": {
+                "average7d": 803.7142857142857,
+                "delta": 31.510051425899952
+            },
+            "wastewater": {
+                "average7d": 253.0,
+                "delta": 24.63054187192118
+            },
+            "hospitalCases": {
+                "average7d": 87.28571428571429,
+                "delta": -11.062590975254722
+            },
+            "deaths": {
+                "total": 12,
+                "delta": 200.0
+            }
+        },
+        {
+            "startDate": "2022-05-03",
+            "endDate": "2022-05-09",
+            "testPositiveRate": {
+                "value": 4.5968365855755176,
+                "delta": 31.76202512304166
+            },
+            "adminTests": {
+                "average7d": 13294.857142857143,
+                "delta": 5.620119847466869
+            },
+            "positiveTests": {
+                "average7d": 611.1428571428571,
+                "delta": 39.16720884840597
+            },
+            "wastewater": {
+                "average7d": 203.0,
+                "delta": 76.52173913043478
+            },
+            "hospitalCases": {
+                "average7d": 98.14285714285714,
+                "delta": 28.41121495327102
+            },
+            "deaths": {
+                "total": 4,
+                "delta": -76.47058823529412
+            }
+        }
+    ],
+    "meta": {
+        "createdAt": "2022-06-13T19:10:46-07:00",
+        "dataLastUpdated": "2022-06-06"
+    }
+}

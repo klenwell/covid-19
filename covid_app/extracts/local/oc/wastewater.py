@@ -4,13 +4,11 @@ Local Daily CSPH Wastewater Extract
 csv source: data/oc/oc-wastewater.csv
 """
 import csv
-from os.path import join as path_join, exists as path_exists
+from os.path import join as path_join
 from functools import cached_property
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from config.app import DATA_ROOT
-from covid_app.exports.oc_wastewater import CSV_HEADER
-from covid_app.extracts.cdph.oc_wastewater_extract import START_DATE
 
 
 DATE_F = '%Y-%m-%d'
@@ -44,7 +42,7 @@ class OcWastewaterExtract:
     #
     @cached_property
     def dwrl(self):
-        dated_record = {}
+        dated_records = {}
         av7d_idx = 9
         vpml_idx = 10
         vpl_idx = 12
@@ -56,13 +54,13 @@ class OcWastewaterExtract:
                 'virus_ml': self.to_f(row[vpml_idx]),
                 'virus_l': self.to_i(row[vpl_idx])
             }
-            dated_record[dated] = record
+            dated_records[dated] = record
 
-        return dated_record
+        return dated_records
 
     @cached_property
     def cal3(self):
-        dated_record = {}
+        dated_records = {}
         av7d_idx = 1
         vpml_idx = 2
         vpl_idx = 6
@@ -74,9 +72,9 @@ class OcWastewaterExtract:
                 'virus_ml': self.to_f(row[vpml_idx]),
                 'virus_l': self.to_i(row[vpl_idx])
             }
-            dated_record[dated] = record
+            dated_records[dated] = record
 
-        return dated_record
+        return dated_records
 
     # Data Source
     # I'm extracting data from an export csv.

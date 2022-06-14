@@ -16,7 +16,6 @@ from config.app import DATA_ROOT
 
 DATE_F = '%Y-%m-%d'
 START_DATE = '2020-03-05'
-SAMPLE_DATA_CSV = path_join(DATA_ROOT, 'samples', 'oc-rates.csv')
 
 # Export column names
 # This should match column names in datasource file

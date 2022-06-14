@@ -1,7 +1,6 @@
 from os.path import join as path_join
 from functools import cached_property
 from datetime import timedelta, datetime
-import time
 import json
 
 from config.app import GH_PAGES_ROOT

@@ -17,8 +17,8 @@ const OcTrendsTable = (function() {
    }
 
    const resetTable = function() {
-     const csvUrl = OcTrendsModelConfig.csvUrl
-     $(TRENDS_TABLE_SEL).find('caption').text(`Loading data from ${csvUrl}`)
+     const extractUrl = OcTrendsModelConfig.extractUrl
+     $(TRENDS_TABLE_SEL).find('caption').text(`Loading data from ${extractUrl}`)
    }
 
   /*
@@ -35,8 +35,7 @@ const OcTrendsTable = (function() {
     const delSel = 'span.delta'
 
     const idx = parseInt(weekNum) - 1
-    const rowData = model.weeks[idx]
-    const startDate = rowData.dateTime.minus({days: 6}).toFormat('yyyy-MM-dd')
+    const week = model.weeks[idx]
 
     // Helper functions
     const asNum = (value, fixed) => !isNaN(value) ? value.toFixed(fixed !== undefined ? fixed : 1) : 'n/a'
@@ -50,31 +49,27 @@ const OcTrendsTable = (function() {
     }
     const pctWrap = (value) => `(${asSignedPct(value)})`
 
-    // Compute death delta
-    let prevWeekDeaths = model.weeks[idx + 1].totalDeaths
-    rowData.deathsDelta = OcTrendsModel.computePctChange(prevWeekDeaths, rowData.totalDeaths)
-
     // Update cells
-    $(`${rowSel} td.test-positive-rate ${valSel}`).text(asPct(rowData.positiveRate))
-    $(`${rowSel} td.test-positive-rate ${delSel}`).text(pctWrap(rowData.positiveRateDelta))
-    $(`${rowSel} td.admin-tests ${valSel}`).text(asNum(rowData.adminTests))
-    $(`${rowSel} td.admin-tests ${delSel}`).text(pctWrap(rowData.adminTestsDelta))
-    $(`${rowSel} td.positive-tests ${valSel}`).text(asNum(rowData.positiveTests, 1))
-    $(`${rowSel} td.positive-tests ${delSel}`).text(pctWrap(rowData.positiveTestsDelta))
-    $(`${rowSel} td.wastewater ${valSel}`).text(asNum(rowData.wastewater, 1))
-    $(`${rowSel} td.wastewater ${delSel}`).text(pctWrap(rowData.wastewaterDelta))
-    $(`${rowSel} td.hospital-cases ${valSel}`).text(asNum(rowData.hospitalCases, 1))
-    $(`${rowSel} td.hospital-cases ${delSel}`).text(pctWrap(rowData.hospitalCasesDelta))
-    $(`${rowSel} td.deaths ${valSel}`).text(asNum(rowData.totalDeaths, 0))
-    $(`${rowSel} td.deaths ${delSel}`).text(pctWrap(rowData.deathsDelta))
-    $(`${rowSel} td.start-date`).text(startDate)
-    $(`${rowSel} td.end-date`).text(rowData.date)
+    $(`${rowSel} td.test-positive-rate ${valSel}`).text(asPct(week.testPositiveRate.value))
+    $(`${rowSel} td.test-positive-rate ${delSel}`).text(pctWrap(week.testPositiveRate.delta))
+    $(`${rowSel} td.admin-tests ${valSel}`).text(asNum(week.adminTests.average7d))
+    $(`${rowSel} td.admin-tests ${delSel}`).text(pctWrap(week.adminTests.delta))
+    $(`${rowSel} td.positive-tests ${valSel}`).text(asNum(week.positiveTests.average7d, 1))
+    $(`${rowSel} td.positive-tests ${delSel}`).text(pctWrap(week.positiveTests.delta))
+    $(`${rowSel} td.wastewater ${valSel}`).text(asNum(week.wastewater.average7d, 0))
+    $(`${rowSel} td.wastewater ${delSel}`).text(pctWrap(week.wastewater.delta))
+    $(`${rowSel} td.hospital-cases ${valSel}`).text(asNum(week.hospitalCases.average7d, 1))
+    $(`${rowSel} td.hospital-cases ${delSel}`).text(pctWrap(week.hospitalCases.delta))
+    $(`${rowSel} td.deaths ${valSel}`).text(asNum(week.deaths.total, 0))
+    $(`${rowSel} td.deaths ${delSel}`).text(pctWrap(week.deaths.delta))
+    $(`${rowSel} td.start-date`).text(week.startDate)
+    $(`${rowSel} td.end-date`).text(week.endDate)
 
     // Set cell styles
-    updateRowStyling(rowSel, rowData)
+    updateRowStyling(rowSel, week)
   }
 
-  const updateRowStyling = function(rowSel, rowData) {
+  const updateRowStyling = function(rowSel, week) {
     const setClass = (delta, tdSel) => {
       let className = ''
       if (delta > 0) {
@@ -87,12 +82,12 @@ const OcTrendsTable = (function() {
       $(`${rowSel} ${tdSel}`).addClass(className)
     }
 
-    setClass(rowData.positiveRateDelta, 'td.test-positive-rate')
-    setClass(rowData.adminTestsDelta, 'td.admin-tests')
-    setClass(rowData.positiveTestsDelta, 'td.positive-tests')
-    setClass(rowData.wastewaterDelta, 'td.wastewater')
-    setClass(rowData.hospitalCasesDelta, 'td.hospital-cases')
-    setClass(rowData.deathsDelta, 'td.deaths')
+    setClass(week.testPositiveRate.value, 'td.test-positive-rate')
+    setClass(week.adminTests.delta, 'td.admin-tests')
+    setClass(week.positiveTests.delta, 'td.positive-tests')
+    setClass(week.wastewater.delta, 'td.wastewater')
+    setClass(week.hospitalCases.delta, 'td.hospital-cases')
+    setClass(week.deaths.delta, 'td.deaths')
   }
 
   /*

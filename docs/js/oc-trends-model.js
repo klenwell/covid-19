@@ -49,7 +49,6 @@ class OcTrendsModel {
 
   triggerReadyEvent() {
     console.log(this.config.readyEvent, this)
-    console.log(this.weeks)
     $(document).trigger(this.config.readyEvent, [this])
   }
 }

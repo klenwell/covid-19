@@ -10,6 +10,7 @@ from covid_app.exports.oc_wastewater import OCWastewaterExport
 from covid_app.exports.oc.metrics import OCMetricsExport
 from covid_app.exports.oc.waves import OCWavesExport
 from covid_app.exports.oc.phases import OCPhasesExport
+from covid_app.exports.oc.trends import OcTrendsExport
 from covid_app.services.oc_health_service import OCHealthService
 
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
@@ -145,6 +146,21 @@ class OcController(Controller):
                 'Data Source: {}'.format(export.data_source_path),
                 'Total Phases: {}'.format(len(export.phases)),
                 'Run time: {} s'.format(round(export.run_time, 2)),
+            ]
+        }
+        self.app.render(vars, 'oc/json-export.jinja2')
+
+    # python app.py oc trends-json-file
+    @expose(help="Output JSON file to docs/data/json/oc/trends.json.")
+    def trends_json_file(self):
+        export = OcTrendsExport()
+        json_path = export.to_json_file()
+
+        vars = {
+            'json_path': json_path,
+            'notes': [
+                'Start Date: {}'.format(export.weeks[0]['startDate']),
+                'End Date: {}'.format(export.weeks[0]['endDate']),
             ]
         }
         self.app.render(vars, 'oc/json-export.jinja2')
@@ -304,26 +320,9 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.analytics.oc.waves import OcWaveAnalysis
         from pprint import pprint
 
-        export = OCPhasesExport()
-        json_path = export.to_json_file()
-        print('Phases exported to:', json_path)
-
+        export = OcTrendsExport()
+        pprint(export.weeks)
+        print(export.to_json_file())
         breakpoint()
-
-        analysis = OcWaveAnalysis(test=False)
-        print('avg_positive_rates:', len(analysis.avg_positive_rates))
-        print('windows:', len(analysis.epidemic.windows))
-        print('phases:', len(analysis.epidemic.phases))
-        print('smoothed phases:', len(analysis.epidemic.smoothed_phases))
-
-        last_wave = analysis.epidemic.waves[-1]
-        print('last_wave timeline:', len(last_wave.timeline.keys()))
-
-        last_phase = analysis.epidemic.smoothed_phases[-1]
-        print('last_phase primary timeline:', len(last_phase.get_timeline('primary').keys()))
-
-        pprint(analysis.epidemic.smoothed_phases)
-        pprint(analysis.epidemic.waves)

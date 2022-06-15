@@ -27,6 +27,10 @@ EXTRACT_URL_F = "{}{}?:showAppBanner=false&:display_count=n&:showVizHome=n&:orig
 START_DATE = '6/28/2021'
 
 
+class DataSourceError(Exception):
+    pass
+
+
 class OcWastewaterExtract:
     #
     # Properties
@@ -58,6 +62,10 @@ class OcWastewaterExtract:
             reader = csv.DictReader(str_iterator)
             for row in reader:
                 rows.append(row)
+
+        if len(rows) < 10:
+            f = "{} rows in file.\n\nSource can be manually checked at:\n{}"
+            raise DataSourceError(f.format(len(rows), self.url))
 
         return rows
 

@@ -97,7 +97,7 @@ class OCPhasesExport:
 
             # Divide slope by 100 for pop slope because the slope is the change in percentage
             # value (pos-rate * 100)
-            pop_slope = (phase.slope / 100)  * OC_POPULATION
+            pop_slope = (phase.slope / 100) * OC_POPULATION
 
             phase_data = {
                 'startedOn': phase.started_on.strftime(DATE_OUT_F),

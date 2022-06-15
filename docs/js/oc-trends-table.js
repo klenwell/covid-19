@@ -97,21 +97,20 @@ class OcTrendsTable {
   }
 
   fmtNum(value, precision) {
-    const isNum = (v) => !isNaN(v)
     const fixed = precision !== undefined ? precision : 1
     const nonVal = 'n/a'
-    return isNum(value) ? this.formatNumber(value.toFixed(fixed)) : nonVal
+    return this.isNum(value) ? this.formatNumber(value.toFixed(fixed)) : nonVal
   }
 
   fmtPct(value) {
-    if ( isNaN(value) ) {
+    if ( ! this.isNum(value) ) {
       return 'n/a'
     }
     return `${value.toFixed(1)}%`
   }
 
   fmtSignedPct(value) {
-    if ( isNaN(value) ) {
+    if ( ! this.isNum(value) ) {
       return 'n/a'
     }
     const sign = value > 0 ? '+' : '';
@@ -131,6 +130,15 @@ class OcTrendsTable {
     else {
       return 'flat'
     }
+  }
+
+  isNum(value) {
+    // Why? See https://stackoverflow.com/q/115548/1093087
+    if ( value === null ) {
+      return false
+    }
+
+    return !isNaN(value)
   }
 }
 

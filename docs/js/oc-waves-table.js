@@ -132,8 +132,8 @@ const OcWavesTable = (function() {
 
   const enableChart = function($chart, wave) {
     //console.debug('enableChart', $chart, wave)
-    const waveColor = '#ff0000'
-    const lullColor = '#e08600'
+    const waveColor = '#cb3c2c'
+    const lullColor = '#f1c78a'
     const chartColor = wave.type === 'wave' ? waveColor : lullColor
 
     // Refer: https://www.ethangunderson.com/writing/sparklines-in-chart.js/

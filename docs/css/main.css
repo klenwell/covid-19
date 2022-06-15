@@ -178,7 +178,7 @@ table.trends td.test-positive-rate.rising {
 }
 
 /*
- * Waves Table
+ * Waves / Phases Table
 **/
 /* table.waves tr.wave {
   background-color: #ff000025
@@ -192,6 +192,37 @@ table.waves td {
   padding: 0rem .25rem;
 }
 
+table.waves td {
+  padding: 0rem .25rem;
+}
+
+/* https://stackoverflow.com/a/41263493/1093087 */
+table.waves td.index span.circled {
+  background: #666; /* Overridden below */
+  height: 28px;
+  width: 28px;
+  font-family: var(--bs-body-font-family);
+  color: white;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  text-align: center;
+  display: flex;
+}
+
+table.waves tr.rising td.index span.circled {
+  background: #cb3c2c;
+}
+
+table.waves tr.flat td.index span.circled {
+  background: #f1c78a;
+}
+
+table.waves tr.falling td.index span.circled {
+  background: #1967d2;
+}
+
 table.waves td.chart {
   text-align: center;
 }
@@ -200,10 +231,40 @@ table.waves td.chart div.chart-wrapper {
   display: inline-block;
 }
 
+section#oc-covid-phases tr td.trend {
+  font-weight: bold;
+}
+
+section#oc-covid-phases tr.rising td.trend {
+  color: #cb3c2c;
+}
+
+section#oc-covid-phases tr.flat td.trend {
+  color: #e08600;
+}
+
+section#oc-covid-phases tr.falling td.trend {
+  color: #1967d2;
+}
+
+section#oc-covid-phases td.notes {
+  font-family: var(--bs-body-font-family);
+}
+
+section#oc-covid-phases td.notes a.variant {
+  font-weight: bold;
+  color: #cb3c2c;
+  text-decoration: none;
+}
+
+section#oc-covid-phases td.notes a.variant:hover {
+  text-decoration: underline;
+}
+
 /*
  * Waves Chart
 **/
-section#oc-covid-waves div.chart-block {
+div.chart-block {
   height: 300px;
   margin: 2rem 0;
 }

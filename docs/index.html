@@ -88,6 +88,14 @@
             Waves
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            id="pills-phases-tab" data-bs-target="#phases" aria-controls="phases"
+            class="nav-link"  data-bs-toggle="pill"
+            type="button" role="tab"  aria-selected="true">
+            Phases
+          </button>
+        </li>
       </ul>
 
       <!--
@@ -304,7 +312,7 @@
         </div>
 
         <!--
-          Week-to-Week Tab View
+          Trends Tab View
         -->
         <div
           id="weekly" aria-labelledby="weekly-tab"
@@ -367,7 +375,7 @@
           id="waves" aria-labelledby="waves-tab"
           class="tab-pane fade" role="tabpanel">
           <section id="oc-covid-waves">
-            <h3>Epidemic Waves</h3>
+            <h3>COVID-19 Waves &bull; Orange County, CA</h3>
 
             <div class="chart-block">
               <canvas id="waves-chart"></canvas>
@@ -406,11 +414,82 @@
               </tbody>
             </table>
           </section>
-        </div>
-      </div>
-    </div>
+        </div> <!-- div#waves -->
 
-    <!-- Javascript -->
+        <!--
+          Phases Tab View
+        -->
+        <div
+          id="phases" aria-labelledby="waves-tab"
+          class="tab-pane fade" role="tabpanel">
+          <section id="oc-covid-phases">
+            <h3>COVID-19 Phases &bull; Orange County, CA</h3>
+
+            <div class="chart-block">
+              <canvas id="phases-chart"></canvas>
+            </div>
+
+            <h4>Legend</h4>
+            <table class="table table-sm waves">
+              <caption>Loading...</caption>
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Trend</th>
+                  <th scope="col">Start Date</th>
+                  <th scope="col">End Date</th>
+                  <th scope="col">Days</th>
+                  <th scope="col">
+                    Test-Positive Rate
+                    <span class="sub-th">Start &#10145; End</span>
+                    <span class="sub-th">7-day average</span>
+                  </th>
+                  <th scope="col">Pop Slope*</th>
+                  <th scope="col">Notes</th>
+                  <th scope="col">Graph</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+
+            <h4>Notes</h4>
+            <ul>
+              <li>
+                *<b>Pop Slope</b> is the slope of the average change in test-positive rate
+                during this phase multiplied by the county population (~3M): <code>change pct
+                rate / days &times; pop</code>. One way to think about this: imagine
+                testing data accurately represented the entire population (it doesn't).
+                This would be how many more (or less) people would be infected each day
+                of this phase.
+              </li>
+              <li>
+                Data extracted from JSON export:
+                <a target="_blank" href="https://github.com/klenwell/covid-19/blob/master/docs/data/json/oc/phases.json">
+                  docs/data/json/oc/phases.json
+                </a>.
+                (File is updated as data becomes available.)
+              </li>
+              <li>
+                Data sourced from
+                <a target="_blank" href="https://occovid19.ochealthinfo.com/coronavirus-in-oc">OC Health Care Agency</a>.
+              </li>
+              <li>
+                More info on wave and phase detection here:
+                <a target="_blank" href="https://github.com/klenwell/covid-19/pull/69">
+                  https://github.com/klenwell/covid-19/pull/69
+                </a>.
+              </li>
+            </ul>
+          </section>
+        </div> <!-- div#phases -->
+      </div>  <!-- div.tab-content -->
+    </div> <!-- div.container -->
+
+    <!--
+      Javascript
+    -->
+    <!-- Third-Party (CDN) -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
       integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
@@ -433,16 +512,27 @@
       referrerpolicy="no-referrer">
     </script>
     <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.4.0/chartjs-plugin-annotation.min.js"
+      integrity="sha512-HrwQrg8S/xLPE6Qwe7XOghA/FOxX+tuVF4TxbvS73/zKJSs/b1gVl/P4MsdfTFWYFYg/ISVNYIINcg35Xvr6QQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer">
+    </script>
+    <script
       src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js">
     </script>
 
+    <!-- Models -->
     <script src="js/oc-metrics-model.js"></script>
     <script src="js/oc-trends-model.js"></script>
     <script src="js/oc-waves-model.js"></script>
+    <script src="js/oc-phases-model.js"></script>
 
+    <!-- Components -->
     <script src="js/oc-metrics-table.js"></script>
     <script src="js/oc-trends-table.js"></script>
     <script src="js/oc-waves-table.js"></script>
     <script src="js/oc-waves-chart.js"></script>
+    <script src="js/oc-phases-table.js"></script>
+    <script src="js/oc-phases-chart.js"></script>
   </body>
 </html>

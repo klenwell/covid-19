@@ -6,7 +6,7 @@ import json
 
 from config.app import GH_PAGES_ROOT
 from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
-from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
+from covid_app.extracts.local.oc.wastewater import OcWastewaterExtract
 
 #
 # Constants
@@ -40,7 +40,7 @@ class OCMetricsExport:
     # Extracts
     @cached_property
     def waste_extract(self):
-        return OcWastewaterExtract(mock=self.test)
+        return OcWastewaterExtract()
 
     @cached_property
     def case_extract(self):

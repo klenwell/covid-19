@@ -320,9 +320,14 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
+        from covid_app.extracts.local.oc.wastewater import OcWastewaterExtract
         from pprint import pprint
+
+        extract = OcWastewaterExtract()
+        pprint(extract.newest_samples)
+
+        breakpoint()
 
         export = OcTrendsExport()
         pprint(export.weeks)
         print(export.to_json_file())
-        breakpoint()

@@ -229,7 +229,7 @@ class OcTrendsExport:
     def compute_change(self, old, new):
         """Source: https://stackoverflow.com/q/30926840/1093087
         """
-        if not old:
+        if not (old and new):
             return None
         return (new - old) / old * 100.0
 

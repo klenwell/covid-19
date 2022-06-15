@@ -27,6 +27,58 @@ class OcWavesChart {
   }
 
   get options() {
+    const scales = this.scales
+    const plugins = this.plugins
+
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: scales,
+      plugins: plugins
+    }
+  }
+
+  get scales() {
+    const xScale = {
+      type: 'time',
+      parser: 'yyyy-MM-dd',
+      grid: { display: false },
+      ticks: {
+        stepSize: 2,
+        callback: (value, index, ticks) => index % 2 === 0 ? value : ''
+      }
+    }
+    const yScale = {
+      max: 30,
+      min: 0,
+      title: {
+        display: true,
+        text: 'Test Positive Rate'
+      },
+      ticks: {
+        stepSize: 5,
+        callback: (value, index, ticks) => value % 5 === 0 ? `${value}%` : ''
+      }
+    }
+
+    return {
+      x: xScale,
+      y: yScale
+    }
+  }
+
+  get plugins() {
+    return {
+      legend: {
+        display: false,
+        position: 'left',
+        labels: { usePointStyle: true }
+      },
+      tooltip: () => this.tooltip
+    }
+  }
+
+  get tooltip() {
     const tooltipTitleFormatter = (contexts) => {
       const dateF = 'MMMM d, yyyy'
       const context = contexts[0]
@@ -38,48 +90,10 @@ class OcWavesChart {
       return title
     }
 
-    const yTickFormatter = (value, index, ticks) => {
-      console.log(value, value % 5 === 0)
-      return value % 5 === 0 ? `${value}%` : ''
-    }
-
     return {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          type: 'time',
-          parser: 'yyyy-MM-dd',
-          grid: { display: false },
-          ticks: {
-            stepSize: 2,
-            callback: (value, index, ticks) => index % 2 === 0 ? value : ''
-          }
-        },
-        y: {
-          max: 28,
-          min: 0,
-          title: {
-            display: true,
-            text: 'Test Positive Rate'
-          },
-          ticks: {
-            stepSize: 5,
-            callback: (value, index, ticks) => value % 5 === 0 ? `${value}%` : ''
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          position: 'left',
-          labels: { usePointStyle: true }
-        },
-        tooltip: {
-          callbacks: {
-            title: tooltipTitleFormatter,
-            label: ctx => `Positive Rate: ${ctx.formattedValue}%`
-          }
-        }
+      callbacks: {
+        title: tooltipTitleFormatter,
+        label: ctx => `Positive Rate: ${ctx.formattedValue}%`
       }
     }
   }
@@ -94,8 +108,8 @@ class OcWavesChart {
     let datasets = []
 
     this.model.waves.forEach((wave, num) => {
-      const waveColor = '#ff0000'
-      const lullColor = '#e08600'
+      const waveColor = '#cb3c2c'
+      const lullColor = '#f1c78a'
       const chartColor = wave.type === 'wave' ? waveColor : lullColor
 
       // Create an array of x,y maps: { x: '2017-01-06', y: 3.6 }

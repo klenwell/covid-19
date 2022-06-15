@@ -116,9 +116,45 @@ class OcWastewaterExtract:
     def first_date(self):
         return self.row_dates[0]
 
+    @cached_property
+    def newest_samples(self):
+        newest = {
+            'CAL3': None,
+            'DWRL': None
+        }
+
+        for dated in sorted(self.dates, reverse=True):
+            cal3_sample = self.cal3.get(dated, {}).get('virus_l') is not None
+            dwrl_sample = self.dwrl.get(dated, {}).get('virus_l') is not None
+
+            if newest['CAL3'] is None and cal3_sample:
+                newest['CAL3'] = dated
+
+            if newest['DWRL'] is None and dwrl_sample:
+                newest['DWRL'] = dated
+
+            if newest['CAL3'] is not None and newest['DWRL'] is not None:
+                break
+
+        return newest
+
     #
     # Instance Methods
     #
+    def latest_update_by_lab(self, lab):
+        lab = lab.upper()
+        return self.newest_samples[lab]
+
+    def viral_counts_7d_avg_by_lab(self, lab):
+        dataset = {}
+        lab = lab.upper()
+        samples = self.dwrl if lab == 'DWRL' else self.cal3
+
+        for dated in self.dates:
+            dataset[dated] = samples[dated]['avg_virus_7d']
+
+        return dataset
+
     def to_f(self, value):
         if value is None or value == '':
             return None

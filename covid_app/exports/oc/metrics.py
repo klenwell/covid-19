@@ -5,7 +5,7 @@ import time
 import json
 
 from config.app import GH_PAGES_ROOT
-from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+from covid_app.extracts.local.oc.daily_hca import OcDailyHcaExtract
 from covid_app.extracts.local.oc.wastewater import OcWastewaterExtract
 
 #
@@ -44,7 +44,7 @@ class OCMetricsExport:
 
     @cached_property
     def case_extract(self):
-        return DailyCovid19Extract.latest()
+        return OcDailyHcaExtract()
 
     # Latest Update Dates
     @cached_property
@@ -75,7 +75,7 @@ class OCMetricsExport:
     @cached_property
     def latest_death_update(self):
         for dated in self.case_dates:
-            if self.case_extract.new_deaths.get(dated) not in ('', None):
+            if self.case_extract.deaths.get(dated) not in ('', None):
                 return dated
 
     @cached_property
@@ -90,11 +90,11 @@ class OCMetricsExport:
     # Dataset aliases
     @property
     def admin_tests(self):
-        return self.case_extract.new_tests_administered
+        return self.case_extract.tests_admin
 
     @property
     def positive_tests(self):
-        return self.case_extract.new_positive_tests_administered
+        return self.case_extract.tests_positive
 
     # Avgs datasets
     @cached_property
@@ -161,7 +161,7 @@ class OCMetricsExport:
     @cached_property
     def death_7d_avgs(self):
         daily_values = {}
-        dataset = self.case_extract.new_deaths
+        dataset = self.case_extract.deaths
         start_from = self.latest_death_update
         max_length = len(dataset) - 14
 

@@ -5,6 +5,7 @@ import time
 import csv
 
 from config.app import DATA_ROOT
+from covid_app.extracts.local.oc.daily_hca import OcDailyHcaExtract
 from covid_app.models.oc.epidemic import Epidemic
 
 
@@ -52,35 +53,17 @@ class OcWaveAnalysis:
         epidemic = Epidemic(self.avg_positive_rates, opts, datasets)
         return epidemic
 
-    #
-    # Data Source
-    # I'm extracting data from an export csv.
-    #
+    @cached_property
+    def hca_extract(self):
+        return OcDailyHcaExtract()
+
     @property
     def data_source_path(self):
-        fname_f = 'oc-hca-{}.csv'
-
-        # Find latest file by date in directory, going backwards from today
-        today = datetime.now().date()
-        for days_back in range(14):
-            dated = today - timedelta(days=days_back)
-            fname = fname_f.format(dated.strftime('%Y%m%d'))
-            fpath = path_join(DATA_ROOT, 'oc', 'daily', fname)
-            if path_exists(fpath):
-                return fpath
-
-        raise ValueError('Could not find file.')
-
-    @property
-    def daily_oc_export_path(self):
-        return path_join(DATA_ROOT, 'oc', 'oc-hca.csv')
+        return self.hca_extract.csv_path
 
     @cached_property
     def export_rows(self):
-        with open(self.data_source_path, newline='') as f:
-            reader = csv.DictReader(f)
-            rows = list(reader)
-        return rows
+        return self.hca_extract.export_rows
 
     @cached_property
     def dated_export_rows(self):
@@ -96,58 +79,38 @@ class OcWaveAnalysis:
     #
     @cached_property
     def tests_admin(self):
-        return self.extract_timeseries_by_column(COL_NAMES['tests_admin'])
+        return self.hca_extract.tests_admin
 
     @cached_property
     def tests_positive(self):
-        return self.extract_timeseries_by_column(COL_NAMES['tests_positive'])
+        return self.hca_extract.tests_positive
 
     @cached_property
     def new_cases(self):
-        return self.extract_timeseries_by_column(COL_NAMES['new_cases'])
+        return self.hca_extract.new_cases
 
     @cached_property
     def hospitalizations(self):
-        return self.extract_timeseries_by_column(COL_NAMES['hospitalizations'])
+        return self.hca_extract.hospitalizations
 
     @cached_property
     def icu_cases(self):
-        return self.extract_timeseries_by_column(COL_NAMES['icu_cases'])
+        return self.hca_extract.icu_cases
 
     @cached_property
     def deaths(self):
-        return self.extract_timeseries_by_column(COL_NAMES['deaths'])
+        return self.hca_extract.deaths
 
     @cached_property
     def avg_positive_rates(self):
         if self.test:
             return self.test_avg_positive_rates
-
-        dated_values = {}
-
-        for dated in self.dates:
-            tests = []
-            positives = []
-            for days_back in range(7):
-                prev_date = dated - timedelta(days=days_back)
-                tests.append(self.tests_admin[prev_date])
-                positives.append(self.tests_positive[prev_date])
-            dated_values[dated] = sum(positives) / sum(tests) * 100
-
-        return dated_values
+        else:
+            return self.hca_extract.avg_positive_rates
 
     @cached_property
     def avg_new_cases(self):
-        dated_values = {}
-
-        for dated in self.dates:
-            cases = []
-            for days_back in range(7):
-                prev_date = dated - timedelta(days=days_back)
-                cases.append(self.new_cases[prev_date])
-            dated_values[dated] = sum(cases) / len(cases)
-
-        return dated_values
+        return self.hca_extract.avg_new_cases
 
     #
     # Test Data
@@ -198,17 +161,6 @@ class OcWaveAnalysis:
         self.run_time_start = time.time()
         self.run_time_end = None
         self.test = test
-
-    def extract_timeseries_by_column(self, col_name, value_callback=int):
-        dated_values = {}
-        for dated in self.dated_export_rows.keys():
-            try:
-                value = self.dated_export_rows[dated][col_name]
-                value = value_callback(value) if value_callback(value) is not None else value
-                dated_values[dated] = value
-            except ValueError:
-                pass
-        return dated_values
 
     def windows_to_csv(self):
         csv_path = path_join(DATA_ROOT, 'oc', 'analytics', 'windows.csv')
@@ -280,7 +232,3 @@ class OcWaveAnalysis:
     #
     # Private
     #
-    def compute_change(self, old, new):
-        """Source: https://stackoverflow.com/q/30926840/1093087
-        """
-        return (new - old) / old * 100.0

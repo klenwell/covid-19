@@ -10,7 +10,6 @@ class OcTrendsTable {
 
     this.model = model
     this.dateTime = luxon.DateTime
-    this.formatNumber = new Intl.NumberFormat('en-US').format;
     this.table = $(selector)
     this.tableBody = this.table.find('tbody')
   }
@@ -97,16 +96,21 @@ class OcTrendsTable {
   }
 
   fmtNum(value, precision) {
+    const locale = 'en-US'
     const fixed = precision !== undefined ? precision : 1
+    const config = {
+      maximumFractionDigits: fixed,
+      minimumFractionDigits: fixed
+    }
     const nonVal = 'n/a'
-    return this.isNum(value) ? this.formatNumber(value.toFixed(fixed)) : nonVal
+    return this.isNum(value) ? value.toLocaleString(locale, config) : nonVal
   }
 
   fmtPct(value) {
     if ( ! this.isNum(value) ) {
       return 'n/a'
     }
-    return `${value.toFixed(1)}%`
+    return `${this.fmtNum(value, 1)}%`
   }
 
   fmtSignedPct(value) {
@@ -114,7 +118,7 @@ class OcTrendsTable {
       return 'n/a'
     }
     const sign = value > 0 ? '+' : '';
-    return `${sign}${value.toFixed(1)}%`
+    return `${sign}${this.fmtNum(value, 1)}%`
   }
 
   mapDeltaToTrend(delta) {

@@ -85,7 +85,7 @@ class OCMetricsExport:
     # Date sets
     @property
     def case_dates(self):
-        return sorted(self.case_extract.dates, reverse=True)
+        return sorted(self.case_extract.row_dates, reverse=True)
 
     # Dataset aliases
     @property

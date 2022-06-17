@@ -11,7 +11,7 @@ from covid_app.exports.oc.metrics import OCMetricsExport
 from covid_app.exports.oc.waves import OCWavesExport
 from covid_app.exports.oc.phases import OCPhasesExport
 from covid_app.exports.oc.trends import OcTrendsExport
-from covid_app.services.oc_health_service import OCHealthService
+from covid_app.exports.oc.historical import OcHistoricalExport
 
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
@@ -48,12 +48,21 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/daily-v2.jinja2')
 
-    # python app.py oc daily
+    # python app.py oc nightly
     @expose(help="Export data from OC HCA site to csv file.")
-    def daily(self):
-        service = OCHealthService.export_daily_csv()
-        vars = {'service': service}
-        self.app.render(vars, 'oc/daily.jinja2')
+    def nightly(self):
+        export = OcHistoricalExport()
+        csv_path = export.to_csv_file()
+        vars = {
+            'csv_path': csv_path,
+            'notes': [
+                'Start Date: {}'.format(export.extract.starts_on),
+                'End Date: {}'.format(export.extract.ends_on),
+                'Rows: {}'.format(len(export.extract.dates)),
+                'Run time: {} s'.format(round(export.run_time, 2))
+            ]
+        }
+        self.app.render(vars, 'oc/csv-export.jinja2')
 
     # python app.py oc daily-tests
     @expose(help="Export daily OC HCA testing data to csv file.")

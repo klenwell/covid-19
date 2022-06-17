@@ -10,7 +10,6 @@ class OcPhasesTable {
 
     this.model = model
     this.dateTime = luxon.DateTime
-    this.formatNumber = new Intl.NumberFormat('en-US').format;
     this.table = $(selector)
     this.tableBody = this.table.find('tbody')
   }
@@ -77,7 +76,7 @@ class OcPhasesTable {
 
   popSlopeCell(popSlope) {
     // https://stackoverflow.com/a/32154217/1093087
-    const slope = this.formatNumber(popSlope.toFixed(1))
+    const slope = this.fmtNum(popSlope, 1)
     const valueText = `<b>${slope}</b>/day`
 
     const $div = $('<div />')
@@ -165,6 +164,26 @@ class OcPhasesTable {
     }
 
     return new Chart($canvas, config)
+  }
+
+  fmtNum(value, precision) {
+    const locale = 'en-US'
+    const fixed = precision !== undefined ? precision : 1
+    const config = {
+      maximumFractionDigits: fixed,
+      minimumFractionDigits: fixed
+    }
+    const nonVal = 'n/a'
+    return this.isNum(value) ? value.toLocaleString(locale, config) : nonVal
+  }
+
+  isNum(value) {
+    // Why? See https://stackoverflow.com/q/115548/1093087
+    if ( value === null ) {
+      return false
+    }
+
+    return !isNaN(value)
   }
 
   mapTrendToColor(trend) {

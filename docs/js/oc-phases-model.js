@@ -56,8 +56,9 @@ class OcPhasesModel {
       11: 'Autumn Lull',
       12: `Holiday ${link('Omicron')} Surge`,
       13: 'Post-Omicron Drop',
-      14: 'Spring Lull',
-      15: `Summer ${link('Omicron 2')} Surge<br />(Ongoing)`,
+      14: 'Early Spring Lull',
+      15: `Late Spring ${link('Omicron 2')} Surge`,
+      16: `Post-Omicron-2 Drop?`
     }
   }
 

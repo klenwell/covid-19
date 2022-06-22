@@ -198,18 +198,20 @@ class Epidemic:
             # print('generate_waves', prev_phase, phase)
             # New wave
             if prev_phase.is_falling() and phase.is_rising():
-                wave_phases = [phase]
+                wave_phases.append(phase)
             elif prev_phase.is_flat() and phase.is_rising():
-                wave_phases = [phase]
+                wave_phases.append(phase)
             # Lull
             elif phase.is_flat():
                 wave = EpidemicWave([phase], self)
                 waves.append(wave)
+                wave_phases = []
             # End wave
             elif prev_phase.is_rising() and phase.is_falling():
                 wave_phases.append(phase)
                 wave = EpidemicWave(wave_phases, self)
                 waves.append(wave)
+                wave_phases = []
             # Should not see this case
             else:
                 raise WaveExtractionError(prev_phase, phase)

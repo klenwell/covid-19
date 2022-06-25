@@ -198,7 +198,7 @@ class OcWastewaterExtract:
         sorted_dwrl_rows = sorted(dwrl_rows, key=lambda r: r[0])
 
         return {
-            'CAL3': sorted_cal3_rows[-1],
+            'CAL3': sorted_cal3_rows[-1] if len(sorted_cal3_rows) > 0 else None,
             'DWRL': sorted_dwrl_rows[-1]
         }
 
@@ -226,7 +226,12 @@ class OcWastewaterExtract:
 
     def latest_update_by_lab(self, lab):
         lab = lab.upper()
-        return self.newest_samples[lab][0]
+        lab_data = self.newest_samples.get(lab)
+
+        if not lab_data:
+            return None
+        else:
+            return lab_data[0]
 
     def viral_counts_7d_avg_by_lab(self, lab):
         dataset = {}

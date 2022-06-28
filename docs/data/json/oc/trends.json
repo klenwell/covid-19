@@ -16,8 +16,8 @@
                 "delta": -32.561160424334275
             },
             "wastewater": {
-                "average7d": null,
-                "delta": null
+                "average7d": 698.1683333333334,
+                "delta": 12.669461027594686
             },
             "hospitalCases": {
                 "average7d": 177.42857142857142,
@@ -44,8 +44,8 @@
                 "delta": -9.315794640227733
             },
             "wastewater": {
-                "average7d": 620.0,
-                "delta": 10.320284697508896
+                "average7d": 619.6606666666667,
+                "delta": 10.28803312825928
             },
             "hospitalCases": {
                 "average7d": 190.14285714285714,
@@ -72,8 +72,8 @@
                 "delta": 37.997832565700335
             },
             "wastewater": {
-                "average7d": 562.0,
-                "delta": -3.6020583190394513
+                "average7d": 561.8566666666667,
+                "delta": -3.5775780700299036
             },
             "hospitalCases": {
                 "average7d": 141.57142857142858,
@@ -100,8 +100,8 @@
                 "delta": 6.707140792136461
             },
             "wastewater": {
-                "average7d": 583.0,
-                "delta": 51.03626943005182
+                "average7d": 582.7033333333333,
+                "delta": 51.02253446172663
             },
             "hospitalCases": {
                 "average7d": 134.0,
@@ -128,8 +128,8 @@
                 "delta": 22.833806818181827
             },
             "wastewater": {
-                "average7d": 386.0,
-                "delta": 52.569169960474305
+                "average7d": 385.8386666666667,
+                "delta": 52.404802626988
             },
             "hospitalCases": {
                 "average7d": 118.0,
@@ -142,7 +142,7 @@
         }
     ],
     "meta": {
-        "createdAt": "2022-06-24T21:26:16-07:00",
+        "createdAt": "2022-06-27T21:17:00-07:00",
         "dataLastUpdated": "2022-06-20"
     }
 }

@@ -148,13 +148,15 @@ class OcController(Controller):
     def phases_json_file(self):
         export = OCPhasesExport(test=False)
         json_path = export.to_json_file()
+        phases = pformat(export.analysis.epidemic.smoothed_phases)
 
         vars = {
             'json_path': json_path,
             'notes': [
                 'Data Source: {}'.format(export.data_source_path),
                 'Total Phases: {}'.format(len(export.phases)),
-                'Run time: {} s'.format(round(export.run_time, 2)),
+                'Phases:\n{}'.format(phases),
+                'Run time: {} s'.format(round(export.run_time, 2))
             ]
         }
         self.app.render(vars, 'oc/json-export.jinja2')

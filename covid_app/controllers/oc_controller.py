@@ -316,6 +316,14 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
+        from covid_app.extracts.oc_hca.daily_extract import OcHcaDailyExtract
+
+        extract = OcHcaDailyExtract()
+        dates = extract.new_case_dates
+        deaths = extract.new_deaths
+
+        breakpoint()
+
         from covid_app.extracts.local.oc.wastewater import OcWastewaterExtract
         from pprint import pprint
 

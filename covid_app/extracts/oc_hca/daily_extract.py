@@ -5,6 +5,7 @@ For info on data source, see:
 https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services
 """
 import requests
+import urllib.parse
 import json
 from os.path import join as path_join
 from functools import cached_property
@@ -13,7 +14,10 @@ from datetime import datetime, timedelta
 from config.app import DATA_ROOT
 
 
-EXTRACT_URL = 'https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services'
+# URL parts for HCA data API
+API_ID = 'LORzk2hk9xzHouw9'
+API_DOMAIN = 'https://services2.arcgis.com'
+API_URL_F = '{}/{}/ArcGIS/rest/services/{}/FeatureServer/0/query'
 
 
 class DataSourceError(Exception):
@@ -55,76 +59,76 @@ class OcHcaDailyExtract:
 
     # Data Extracts
     @cached_property
-    def daily_case_logs(self):
+    def daily_case_time_series(self):
         endpoint = 'occovid_case_csv'
         where_not_null_field = 'daily_cases_repo'
         json_data = self.fetch_json_data(endpoint, where_not_null_field)
         return self.extract_from_json_data(json_data)
 
     @cached_property
-    def daily_test_logs(self):
+    def daily_test_time_series(self):
         endpoint = 'occovid_pcr_csv'
         where_not_null_field = 'daily_test_repo'
         json_data = self.fetch_json_data(endpoint, where_not_null_field)
         return self.extract_from_json_data(json_data)
 
     @cached_property
-    def daily_hospitalization_logs(self):
+    def daily_hospitalization_time_series(self):
         endpoint = 'occovid_hospicu_csv'
         where_not_null_field = 'hospital'
         json_data = self.fetch_json_data(endpoint, where_not_null_field)
         return self.extract_from_json_data(json_data)
 
     @cached_property
-    def daily_death_logs(self):
+    def daily_death_time_series(self):
         endpoint = 'occovid_death_csv'
         where_not_null_field = 'daily_dth'
         json_data = self.fetch_json_data(endpoint, where_not_null_field)
         return self.extract_from_json_data(json_data)
 
-    # Data Series
+    # Data Series (mapped to dates)
     @cached_property
     def new_cases(self):
         key = 'daily_cases_repo'
-        daily_logs = self.daily_case_logs
-        return self.extract_from_daily_logs(daily_logs, key)
+        time_series = self.daily_case_time_series
+        return self.extract_from_time_series(time_series, key)
 
     @cached_property
     def new_tests_reported(self):
         key = 'daily_test_repo'
-        daily_logs = self.daily_test_logs
-        return self.extract_from_daily_logs(daily_logs, key)
+        time_series = self.daily_test_time_series
+        return self.extract_from_time_series(time_series, key)
 
     @cached_property
     def new_tests_administered(self):
         key = 'daily_spec'
-        daily_logs = self.daily_test_logs
-        return self.extract_from_daily_logs(daily_logs, key)
+        time_series = self.daily_test_time_series
+        return self.extract_from_time_series(time_series, key)
 
     @cached_property
     def new_positive_tests_administered(self):
         key = 'daily_pos_spec'
-        daily_logs = self.daily_test_logs
-        return self.extract_from_daily_logs(daily_logs, key)
+        time_series = self.daily_test_time_series
+        return self.extract_from_time_series(time_series, key)
 
     @cached_property
     def hospitalizations(self):
         key = 'hospital'
-        daily_logs = self.daily_hospitalization_logs
-        return self.extract_from_daily_logs(daily_logs, key)
+        time_series = self.daily_hospitalization_time_series
+        return self.extract_from_time_series(time_series, key)
 
     @cached_property
     def icu_cases(self):
         key = 'icu'
-        daily_logs = self.daily_hospitalization_logs
-        return self.extract_from_daily_logs(daily_logs, key)
+        time_series = self.daily_hospitalization_time_series
+        return self.extract_from_time_series(time_series, key)
 
     @cached_property
     def total_snf_cases(self):
         # SNF refers to Skilled Nursing Facilities
         key = 'snf_cases'
-        daily_logs = self.daily_case_logs
-        return self.extract_from_daily_logs(daily_logs, key)
+        time_series = self.daily_case_time_series
+        return self.extract_from_time_series(time_series, key)
 
     @cached_property
     def new_snf_cases(self):
@@ -148,8 +152,8 @@ class OcHcaDailyExtract:
     @cached_property
     def new_deaths(self):
         key = 'daily_dth'
-        daily_logs = self.daily_death_logs
-        return self.extract_from_daily_logs(daily_logs, key)
+        time_series = self.daily_death_time_series
+        return self.extract_from_time_series(time_series, key)
 
     # Dates
     @property
@@ -186,8 +190,18 @@ class OcHcaDailyExtract:
     #
     # Private
     #
+    def build_endpoint_url(self, endpoint):
+        return API_URL_F.format(API_DOMAIN, API_ID, endpoint)
+
+    def build_query_params(self, where_not_null_field):
+        # Source: https://stackoverflow.com/a/23497912/1093087
+        query_params = self.query_params.copy()
+        query_params['where'] = query_params['where'].format(where_not_null_field)
+        return urllib.parse.urlencode(query_params, safe=':+*')
+
     def fetch_json_data(self, endpoint, where_not_null_field):
-        url = EXTRACT_URL_F.format(EXTRACT_URL, endpoint, where_not_null_field)
+        url = self.build_endpoint_url(endpoint)
+        query_params = self.build_query_params(where_not_null_field)
 
         if self.fetch_samples:
             sample_file_name = 'oc-hca-{}.json'.format(endpoint)
@@ -197,7 +211,7 @@ class OcHcaDailyExtract:
             with open(json_path) as f:
                 return json.load(f)
         else:
-            response = requests.get(url)
+            response = requests.get(url, params=query_params)
             response.raise_for_status()
             return response.json()
 
@@ -206,20 +220,20 @@ class OcHcaDailyExtract:
         data = [f['attributes'] for f in features if f.get('attributes')]
         return data
 
-    def extract_from_daily_logs(self, daily_logs, key):
+    def extract_from_time_series(self, time_series, key):
         daily_values = {}
 
         # Normalize the timestamp key. In cases feed, it's "Date", in tests feed "date".
-        if 'Date' in daily_logs[0]:
+        if 'Date' in time_series[0]:
             timestamp_key = 'Date'
         else:
             timestamp_key = 'date'
 
-        for daily_log in daily_logs:
-            timestamp = daily_log[timestamp_key]
-            log_date = self.timestamp_to_date(timestamp)
-            value = daily_log[key]
-            daily_values[log_date] = value
+        for daily_data in time_series:
+            timestamp = daily_data[timestamp_key]
+            dated = self.timestamp_to_date(timestamp)
+            value = daily_data[key]
+            daily_values[dated] = value
 
         return daily_values
 

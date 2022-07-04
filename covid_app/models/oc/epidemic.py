@@ -344,6 +344,13 @@ class Epidemic:
             # on to next loop
             prev_phase = phase
 
-        # Don't forget last phase
-        merged_phases.append(phases[-1])
+        # Don't forget last phase. If micro just merge with previous.
+        last_phase = phases[-1]
+        if last_phase.is_micro():
+            last_merged_phase = merged_phases.pop()
+            last_merged_phase = last_merged_phase.merge(last_phase)
+            merged_phases.append(last_merged_phase)
+        else:
+            merged_phases.append(phases[-1])
+
         return merged_phases

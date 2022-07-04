@@ -181,11 +181,11 @@ class OcHcaDailyExtract:
     #
     # Instance Methods
     #
-    def __init__(self):
-        self.fetch_samples = False
+    def __init__(self, mock=False):
+        self.fetch_samples = mock
 
     def mock_api_calls(self):
-        self.fetch_samples = True
+        self.fetch_samples = mock
 
     #
     # Private

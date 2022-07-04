@@ -318,7 +318,7 @@ class OcController(Controller):
     def dev(self):
         from covid_app.extracts.oc_hca.daily_extract import OcHcaDailyExtract
 
-        extract = OcHcaDailyExtract()
+        extract = OcHcaDailyExtract(mock=True)
         dates = extract.new_case_dates
         deaths = extract.new_deaths
 

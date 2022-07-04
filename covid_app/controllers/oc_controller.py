@@ -15,7 +15,6 @@ from covid_app.exports.oc.historical import OcHistoricalExport
 
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
-from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 from covid_app.analytics.oc_vs_sd_analysis import OrangeCoVsSanDiegoAnalysis
 from covid_app.analytics.oc_august_testing import OcAugustTestAnalysis
 from covid_app.analytics.oc_monthly_testing import OcMonthlyTestAnalysis
@@ -228,20 +227,6 @@ class OcController(Controller):
             'analysis': analysis
         }
         self.app.render(vars, 'oc/test-delays-analysis.jinja2')
-
-    # python app.py oc analyze-hospitalizations
-    @expose(help="Analyze hospitalizations based on data.")
-    def analyze_hospitalizations(self):
-        # Generate CSV
-        analysis = OcHospitalizationsAnalysis()
-        csv_path = analysis.to_csv()
-
-        # Render view
-        vars = {
-            'csv_path': csv_path,
-            'analysis': analysis
-        }
-        print(vars)
 
     # python app.py oc vs-sd
     @expose(

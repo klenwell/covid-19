@@ -17,7 +17,6 @@ from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
 from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
 from covid_app.analytics.oc_vs_sd_analysis import OrangeCoVsSanDiegoAnalysis
-from covid_app.analytics.oc_summer_surge import OcSummerSurgeAnalysis
 from covid_app.analytics.oc_august_testing import OcAugustTestAnalysis
 from covid_app.analytics.oc_monthly_testing import OcMonthlyTestAnalysis
 from covid_app.analytics.oc_daily_testing import OcDailyTestingAnalysis
@@ -250,20 +249,6 @@ class OcController(Controller):
         help="Analyze hospitalizations based on data.")
     def compare_san_diego_county(self):
         analysis = OrangeCoVsSanDiegoAnalysis()
-        csv_path = analysis.to_csv()
-
-        # Render view
-        vars = {
-            'csv_path': csv_path,
-            'analysis': analysis
-        }
-        print(vars)
-
-    # python app.py oc analyze-surge
-    @expose(help="Analyze hospitalizations based on data.")
-    def analyze_surge(self):
-        # Generate CSV
-        analysis = OcSummerSurgeAnalysis()
         csv_path = analysis.to_csv()
 
         # Render view

@@ -8,7 +8,7 @@ import csv
 
 from config.app import DATA_ROOT
 from covid_app.models.oc.covid_virus_test import CovidVirusTest
-from covid_app.extracts.oc_hca.versions.daily_covid19_extract_v3 import DailyCovid19ExtractV3
+from covid_app.extracts.oc_hca.daily_extract import OcHcaDailyExtract
 
 
 OC_DATA_PATH = path_join(DATA_ROOT, 'oc')
@@ -70,7 +70,7 @@ class OcTestingAnalysis:
     #
     @cached_property
     def extract(self):
-        return DailyCovid19ExtractV3()
+        return OcHcaDailyExtract()
 
     @cached_property
     def daily_test_logs(self):

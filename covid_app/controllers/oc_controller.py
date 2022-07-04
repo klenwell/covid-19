@@ -275,6 +275,7 @@ class OcController(Controller):
         extract = OcHcaDailyExtract(mock=True)
         dates = extract.new_case_dates
         deaths = extract.new_deaths
+        print(len(dates), len(deaths))
 
         breakpoint()
 

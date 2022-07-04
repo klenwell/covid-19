@@ -30,10 +30,6 @@ class OcHcaDailyExtract:
     #
     # Data Source Info
     @property
-    def url(self):
-        return EXTRACT_URL_F.format(EXTRACT_URL, EXTRACT_PATH)
-
-    @property
     def query_params(self):
         return {
             'where': '{}+IS+NOT+NULL',
@@ -185,7 +181,7 @@ class OcHcaDailyExtract:
         self.fetch_samples = mock
 
     def mock_api_calls(self):
-        self.fetch_samples = mock
+        self.fetch_samples = True
 
     #
     # Private

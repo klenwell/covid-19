@@ -14,7 +14,7 @@ import csv
 import time
 
 from config.app import DATA_ROOT
-from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+from covid_app.extracts.oc_hca.daily_extract import OcHcaDailyExtract
 
 
 #
@@ -35,7 +35,7 @@ class OcHistoricalExport:
     #
     @cached_property
     def extract(self):
-        return DailyCovid19Extract.latest()
+        return OcHcaDailyExtract()
 
     @property
     def csv_path(self):

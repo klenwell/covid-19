@@ -4,7 +4,7 @@ from functools import cached_property
 import time
 
 from config.app import DATA_ROOT, OC_POPULATION
-from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+from covid_app.extracts.oc_hca.daily_extract import OcHcaDailyExtract
 from covid_app.extracts.cdph.oc_vaccines_daily_extract import OcVaccinesDailyExtract
 from covid_app.models.oc.immune_cohort import ImmuneCohort
 
@@ -48,7 +48,7 @@ class OCImmunityExport:
 
     @cached_property
     def case_extract(self):
-        return DailyCovid19Extract.latest()
+        return OcHcaDailyExtract()
 
     @cached_property
     def vax_extract(self):

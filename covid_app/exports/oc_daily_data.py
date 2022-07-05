@@ -4,7 +4,7 @@ from functools import cached_property
 import time
 
 from config.app import DATA_ROOT
-from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+from covid_app.extracts.oc_hca.daily_extract import OcHcaDailyExtract
 
 
 #
@@ -35,7 +35,7 @@ class OcDailyDataExport:
 
     @cached_property
     def oc_hca_extract(self):
-        return DailyCovid19Extract.latest()
+        return OcHcaDailyExtract()
 
     @property
     def dates(self):

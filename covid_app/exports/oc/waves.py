@@ -5,7 +5,7 @@ import time
 import json
 
 from config.app import GH_PAGES_ROOT
-from covid_app.extracts.oc_hca.daily_covid19_extract import DailyCovid19Extract
+from covid_app.extracts.oc_hca.daily_extract import OcHcaDailyExtract
 from covid_app.analytics.oc.waves import OcWaveAnalysis
 
 
@@ -53,7 +53,7 @@ class OCWavesExport:
 
     @cached_property
     def case_extract(self):
-        return DailyCovid19Extract.latest()
+        return OcHcaDailyExtract()
 
     @property
     def epidemic(self):

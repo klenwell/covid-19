@@ -15,9 +15,6 @@ from covid_app.exports.oc.historical import OcHistoricalExport
 
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
-from covid_app.analytics.oc_hospitalizations import OcHospitalizationsAnalysis
-from covid_app.analytics.oc_vs_sd_analysis import OrangeCoVsSanDiegoAnalysis
-from covid_app.analytics.oc_summer_surge import OcSummerSurgeAnalysis
 from covid_app.analytics.oc_august_testing import OcAugustTestAnalysis
 from covid_app.analytics.oc_monthly_testing import OcMonthlyTestAnalysis
 from covid_app.analytics.oc_daily_testing import OcDailyTestingAnalysis
@@ -232,49 +229,6 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/test-delays-analysis.jinja2')
 
-    # python app.py oc analyze-hospitalizations
-    @expose(help="Analyze hospitalizations based on data.")
-    def analyze_hospitalizations(self):
-        # Generate CSV
-        analysis = OcHospitalizationsAnalysis()
-        csv_path = analysis.to_csv()
-
-        # Render view
-        vars = {
-            'csv_path': csv_path,
-            'analysis': analysis
-        }
-        print(vars)
-
-    # python app.py oc vs-sd
-    @expose(
-        aliases=['vs-sd'],
-        help="Analyze hospitalizations based on data.")
-    def compare_san_diego_county(self):
-        analysis = OrangeCoVsSanDiegoAnalysis()
-        csv_path = analysis.to_csv()
-
-        # Render view
-        vars = {
-            'csv_path': csv_path,
-            'analysis': analysis
-        }
-        print(vars)
-
-    # python app.py oc analyze-surge
-    @expose(help="Analyze hospitalizations based on data.")
-    def analyze_surge(self):
-        # Generate CSV
-        analysis = OcSummerSurgeAnalysis()
-        csv_path = analysis.to_csv()
-
-        # Render view
-        vars = {
-            'csv_path': csv_path,
-            'analysis': analysis
-        }
-        print(vars)
-
     # python app.py oc analyze-aug-tests
     @expose(help="Analyze test patterns in OC for August 2020.")
     def analyze_aug_tests(self):
@@ -318,6 +272,15 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
+        from covid_app.extracts.oc_hca.daily_extract import OcHcaDailyExtract
+
+        extract = OcHcaDailyExtract(mock=True)
+        dates = extract.new_case_dates
+        deaths = extract.new_deaths
+        print(len(dates), len(deaths))
+
+        breakpoint()
+
         from covid_app.extracts.local.oc.wastewater import OcWastewaterExtract
         from pprint import pprint
 

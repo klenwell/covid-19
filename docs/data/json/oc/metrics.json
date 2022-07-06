@@ -1,25 +1,25 @@
 {
     "testPositiveRate": {
-        "updatedOn": "2022-06-27",
-        "latest": 15.37,
-        "percentile": 92.62,
-        "d7Date": "2022-06-20",
-        "d7Value": 15.34,
-        "d7DeltaPct": 0.16,
-        "d14Date": "2022-06-13",
-        "d14Value": 14.63,
-        "d14DeltaPct": 5.03
+        "updatedOn": "2022-07-04",
+        "latest": 17.19,
+        "percentile": 95.29,
+        "d7Date": "2022-06-27",
+        "d7Value": 16.26,
+        "d7DeltaPct": 5.73,
+        "d14Date": "2022-06-20",
+        "d14Value": 15.39,
+        "d14DeltaPct": 11.71
     },
     "dailyNewCases": {
-        "updatedOn": "2022-07-01",
-        "latest": 1073.43,
-        "percentile": 86.94,
-        "d7Date": "2022-06-24",
-        "d7Value": 1043.86,
-        "d7DeltaPct": 2.83,
-        "d14Date": "2022-06-17",
-        "d14Value": 961.0,
-        "d14DeltaPct": 11.7
+        "updatedOn": "2022-07-05",
+        "latest": 926.86,
+        "percentile": 82.42,
+        "d7Date": "2022-06-28",
+        "d7Value": 1058.29,
+        "d7DeltaPct": -12.42,
+        "d14Date": "2022-06-21",
+        "d14Value": 957.29,
+        "d14DeltaPct": -3.18
     },
     "wastewater": {
         "updatedOn": "2022-06-20",
@@ -33,36 +33,36 @@
         "d14DeltaPct": 24.26
     },
     "hospitalCases": {
-        "updatedOn": "2022-06-30",
-        "latest": 208.86,
-        "percentile": 47.15,
-        "d7Date": "2022-06-23",
-        "d7Value": 178.71,
-        "d7DeltaPct": 16.87,
-        "d14Date": "2022-06-16",
-        "d14Value": 188.29,
-        "d14DeltaPct": 10.93
+        "updatedOn": "2022-07-01",
+        "latest": 213.29,
+        "percentile": 48.76,
+        "d7Date": "2022-06-24",
+        "d7Value": 181.29,
+        "d7DeltaPct": 17.65,
+        "d14Date": "2022-06-17",
+        "d14Value": 186.71,
+        "d14DeltaPct": 14.23
     },
     "icuCases": {
-        "updatedOn": "2022-06-30",
-        "latest": 28.14,
-        "percentile": 25.46,
-        "d7Date": "2022-06-23",
-        "d7Value": 23.29,
-        "d7DeltaPct": 20.86,
-        "d14Date": "2022-06-16",
-        "d14Value": 19.14,
-        "d14DeltaPct": 47.01
+        "updatedOn": "2022-07-01",
+        "latest": 28.0,
+        "percentile": 25.37,
+        "d7Date": "2022-06-24",
+        "d7Value": 24.29,
+        "d7DeltaPct": 15.29,
+        "d14Date": "2022-06-17",
+        "d14Value": 20.0,
+        "d14DeltaPct": 40.0
     },
     "deaths": {
-        "updatedOn": "2022-07-01",
-        "latest": 4.14,
-        "percentile": 39.46,
-        "d7Date": "2022-06-24",
-        "d7Value": 2.14,
-        "d7DeltaPct": 93.33,
-        "d14Date": "2022-06-17",
-        "d14Value": 2.0,
-        "d14DeltaPct": 107.14
+        "updatedOn": "2022-07-05",
+        "latest": 3.29,
+        "percentile": 32.24,
+        "d7Date": "2022-06-28",
+        "d7Value": 1.71,
+        "d7DeltaPct": 91.67,
+        "d14Date": "2022-06-21",
+        "d14Value": 2.14,
+        "d14DeltaPct": 53.33
     }
 }

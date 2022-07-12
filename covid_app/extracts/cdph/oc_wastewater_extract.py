@@ -199,7 +199,7 @@ class OcWastewaterExtract:
 
         return {
             'CAL3': sorted_cal3_rows[-1] if len(sorted_cal3_rows) > 0 else None,
-            'DWRL': sorted_dwrl_rows[-1]
+            'DWRL': sorted_dwrl_rows[-1] if len(sorted_dwrl_rows) > 0 else None
         }
 
     #

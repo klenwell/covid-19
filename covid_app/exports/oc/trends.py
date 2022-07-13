@@ -14,6 +14,9 @@ JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
 JSON_FILE_NAME = 'trends.json'
 NUM_WEEKS = 5
 
+# Wastewater Lab: CAL3 or DWRL
+WASTEWATER_LAB = 'CAL3'
+
 JSON_SCHEMA = {
     'weeks': [],
     'meta': {}
@@ -59,7 +62,9 @@ class OcTrendsExport:
     @cached_property
     def wastewater_7d_avg(self):
         daily_values = {}
-        dataset = self.waste_extract.dwrl
+        default_dataset = self.waste_extract.dwrl
+        lab = WASTEWATER_LAB.lower()
+        dataset = getattr(self.waste_extract, lab, default_dataset)
 
         for dated in self.dates:
             lab = dataset.get(dated, {})

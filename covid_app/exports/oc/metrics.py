@@ -15,7 +15,7 @@ JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
 JSON_FILE_NAME = 'metrics.json'
 
 # Wastewater Lab: CAL3 or DWRL
-WASTEWATER_LAB = 'DWRL'
+WASTEWATER_LAB = 'CAL3'
 
 JSON_SCHEMA = {
     'testPositiveRate': {},

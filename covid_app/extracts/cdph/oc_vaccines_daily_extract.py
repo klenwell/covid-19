@@ -1,8 +1,11 @@
 """
 CA Department of Health Vaccines Extract
 
-For info on data source, see:
-https://data.ca.gov/api/1/util/snippet/api_info.html?resource_id=c020ef6b-2116-4775-b11d-9df2875096ab
+For data source, see CDPH Data Portal:
+https://data.ca.gov/dataset/covid-19-vaccine-progress-dashboard-data
+
+The CDPH will occasionally update the resource ID (EXTRACT_ID below). For more info, see:
+https://github.com/klenwell/covid-19/issues/82
 """
 import requests
 from functools import cached_property
@@ -10,7 +13,7 @@ from datetime import datetime, timedelta
 
 
 EXTRACT_URL = 'https://data.ca.gov/api/3/action/datastore_search_sql'
-EXTRACT_ID = '92172873-f424-4635-ad38-71ea1c9ffcc4'
+EXTRACT_ID = 'eef88868-0cfc-4655-8a5a-3d1af1d23498'
 EXTRACT_CO = 'Orange'
 EXTRACT_URL_F = "{}?sql=SELECT%20*%20from%20%22{}%22%20WHERE%20%22county%22%20LIKE%20%27{}%27"
 START_DATE = '2020-08-01'

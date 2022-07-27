@@ -43,9 +43,9 @@ class OcWastewaterExtract:
     @cached_property
     def dwrl(self):
         dated_records = {}
-        av7d_idx = 9
-        vpml_idx = 10
-        vpl_idx = 12
+        av7d_idx = 7
+        vpml_idx = 8
+        vpl_idx = 9
 
         for dated in self.dates:
             row = self.dated_export_rows[dated]
@@ -63,7 +63,7 @@ class OcWastewaterExtract:
         dated_records = {}
         av7d_idx = 1
         vpml_idx = 2
-        vpl_idx = 6
+        vpl_idx = 4
 
         for dated in self.dates:
             row = self.dated_export_rows[dated]

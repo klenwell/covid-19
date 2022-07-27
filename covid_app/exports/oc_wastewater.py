@@ -4,7 +4,7 @@ from functools import cached_property
 import time
 
 from config.app import DATA_ROOT
-from covid_app.extracts.cdph.oc_wastewater_extract import OcWastewaterExtract
+from covid_app.extracts.cdph.oc_detailed_wastewater_extract import OcWastewaterExtract
 
 #
 # Constants
@@ -16,15 +16,12 @@ CSV_HEADER = [
     'Date',
     'Virus/ml 7d Avg',
     'Virus/ml',
-    'Rolling 10d Avg',
-    'Source',
     'Lab ID',
     'Virus',
     'Units',
     '<- CAL3 | DWRL ->',
     'Virus/ml 7d Avg',
     'Virus/ml',
-    'Rolling 10d Avg',
     'Virus',
     'Units'
 ]
@@ -91,15 +88,12 @@ class OCWastewaterExport:
             dated,
             cal3.get('virus_ml_7d_avg'),
             cal3.get('virus_ml'),
-            cal3.get('Ten Rollapply'),
-            cal3.get('data_source'),
-            cal3.get('Lab Id'),
+            cal3.get('lab_id'),
             cal3.get('virus'),
             cal3.get('units'),
             divider,
             dwrl.get('virus_ml_7d_avg'),
             dwrl.get('virus_ml'),
-            dwrl.get('Ten Rollapply'),
             dwrl.get('virus'),
             dwrl.get('units')
         ]

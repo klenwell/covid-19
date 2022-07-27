@@ -72,9 +72,9 @@ class OcWastewaterExtract:
         dated_samples = {}
         dated_pre_samples = {}
 
+        # This used to be used to filter out duplicate or empty rows.
         for row in self.cal3_rows:
-            if row['Ten Rollapply'] != '':
-                dated_pre_samples[row['date']] = row
+            dated_pre_samples[row['date']] = row
 
         # Add 7-day ml avg
         for dated in self.dates:
@@ -91,8 +91,7 @@ class OcWastewaterExtract:
         dated_pre_samples = {}
 
         for row in self.dwrl_rows:
-            if row['Ten Rollapply'] != '':
-                dated_pre_samples[row['date']] = row
+            dated_pre_samples[row['date']] = row
 
         # Add 7-day ml avg
         for dated in self.dates:

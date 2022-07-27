@@ -106,15 +106,16 @@ class OcWastewaterExtract:
     @cached_property
     def oc_rows(self):
         rows = []
-        county_header = 'Wwtp Name'
+        zip_header = 'zipcode'
+        county_zip = 92708
 
         for row in self.csv_rows:
-            county = row.get(county_header)
-            date = row['Sample Date']
-            concentrate = row.get('Concentration', '0.0')
+            zipcode = row.get(zip_header)
+            date = row['sample_collect_date']
+            concentrate = row.get('pcr_target_avg_conc', '0.0')
 
             # Collect only OC rows
-            if county.lower() != EXTRACT_CO.lower():
+            if int(zipcode) != county_zip:
                 continue
 
             row['date'] = self.date_str_to_date(date)
@@ -129,17 +130,17 @@ class OcWastewaterExtract:
 
     @cached_property
     def cal3_rows(self):
-        return [row for row in self.oc_rows if row['Lab Id'].upper() == 'CAL3']
+        return [row for row in self.oc_rows if row['lab_id'].upper() == 'CAL3']
 
     @cached_property
     def dwrl_rows(self):
-        return [row for row in self.oc_rows if row['Lab Id'].upper() == 'DWRL']
+        return [row for row in self.oc_rows if row['lab_id'].upper() == 'DWRL']
 
     # Lab Info
     @cached_property
     def lab_samples(self):
         labs = {}
-        lab_header = 'Lab Id'
+        lab_header = 'lab_id'
         for row in self.oc_rows:
             lab = row.get(lab_header)
             if lab in labs:
@@ -198,6 +199,19 @@ class OcWastewaterExtract:
         return {
             'CAL3': sorted_cal3_rows[-1] if len(sorted_cal3_rows) > 0 else None,
             'DWRL': sorted_dwrl_rows[-1] if len(sorted_dwrl_rows) > 0 else None
+        }
+
+    @cached_property
+    def lab_range(self):
+        cal3_dates = sorted([r['date'] for r in self.cal3_rows])
+        dwrl_dates = sorted([r['date'] for r in self.dwrl_rows])
+
+        cal3_count = len(cal3_dates)
+        dwrl_count = len(dwrl_dates)
+
+        return {
+            'CAL3': (cal3_dates[0], cal3_dates[-1], cal3_count) if cal3_count > 0 else None,
+            'DWRL': (dwrl_dates[0], dwrl_dates[-1], dwrl_count) if dwrl_count > 0 else None
         }
 
     #
@@ -266,5 +280,8 @@ class OcWastewaterExtract:
         return response
 
     def date_str_to_date(self, date_str):
+        """date_str will have format like: 2/1/2022 12:00:00 AM
+        """
         format = '%m/%d/%Y'
-        return datetime.strptime(date_str, format).date()
+        date_sub = date_str.split(' ')[0]
+        return datetime.strptime(date_sub, format).date()

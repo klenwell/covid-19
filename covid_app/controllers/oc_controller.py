@@ -276,8 +276,11 @@ class OcController(Controller):
         from pprint import pprint
 
         extract = OcWastewaterExtract(mock=True)
-        pprint(extract.use_mock)
-        pprint(extract.sample_csv_path)
+        print(extract.use_mock)
+        print(extract.sample_csv_path)
         print(len(extract.csv_rows))
+        pprint(extract.newest_samples)
+        pprint(extract.lab_counts)
+        pprint(extract.lab_range)
 
         breakpoint()

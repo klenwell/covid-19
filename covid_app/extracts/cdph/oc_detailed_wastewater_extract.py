@@ -4,7 +4,6 @@ CA Department of Wastewater Extract
 For info on data source, see:
 https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/CalSuWers-Dashboard.aspx
 """
-import sys
 import requests
 import csv
 import codecs

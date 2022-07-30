@@ -15,7 +15,7 @@ JSON_FILE_NAME = 'trends.json'
 NUM_WEEKS = 5
 
 # Wastewater Lab: CAL3 or DWRL
-WASTEWATER_LAB = 'CAL3'
+WASTEWATER_LAB = 'DWRL'
 
 JSON_SCHEMA = {
     'weeks': [],

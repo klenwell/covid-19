@@ -18,7 +18,6 @@ from contextlib import closing
 DATASET_ID = 'b8c6ee3b-539d-4d62-8fa2-c7cd17c16656'
 RESOURCE_ID = '16bb2698-c243-4b66-a6e8-4861ee66f8bf'
 EXTRACT_URL = 'https://data.ca.gov'
-EXTRACT_CO = 'Orange'
 EXTRACT_URL_F = "{}/dataset/{}/resource/{}/download/master-covid-public.csv"
 SAMPLE_CSV = 'data/samples/cdph-master-wastewater.csv'
 START_DATE = '6/28/2021'

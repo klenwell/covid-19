@@ -33,7 +33,7 @@ class OcPhasesModel {
       'Alpha': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Alpha_variant',
       'Delta': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Delta_variant',
       'Omicron': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Omicron_variant',
-      'Omicron 2': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Omicron_variant#Sublineages_and_BA.2_subvariant'
+      'Second Omicron': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Omicron_variant#Sublineages_and_BA.2_subvariant'
     }
 
     const link = (variant) => {
@@ -57,7 +57,7 @@ class OcPhasesModel {
       12: `Holiday ${link('Omicron')} Surge`,
       13: 'Post-Omicron Drop',
       14: 'Mini Spring Lull',
-      15: `Early Summer ${link('Omicron 2')} Surge<br />(Ongoing)`,
+      15: `${link('Second Omicron')} Surge<br />(Ongoing)`,
     }
   }
 

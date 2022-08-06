@@ -16,8 +16,8 @@
                 "delta": -33.0914083954492
             },
             "wastewater": {
-                "average7d": null,
-                "delta": null
+                "average7d": 495.36999999999995,
+                "delta": -42.12336236038198
             },
             "hospitalCases": {
                 "average7d": 324.0,
@@ -142,7 +142,7 @@
         }
     ],
     "meta": {
-        "createdAt": "2022-08-02T20:34:04-07:00",
+        "createdAt": "2022-08-05T21:33:37-07:00",
         "dataLastUpdated": "2022-08-01"
     }
 }

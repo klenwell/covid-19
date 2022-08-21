@@ -61,13 +61,13 @@ class OcTimeSeriesJsonExport:
         for dated in self.dates:
             record = {
                 'date': dated,
-                'wastewater': 0.0,
-                'tests': 0.0,
-                'positive-rate': 0.0,
-                'cases': 0.0,
-                'hospital-cases': 0.0,
-                'icu-cases': 0.0,
-                'deaths': 0.0
+                'wastewater': self.wastewater_7d_avg.get(dated),
+                'tests': self.admin_tests_7d_avg.get(dated),
+                'positive-rate': self.test_positive_rates.get(dated),
+                'cases': self.case_extract.avg_new_cases.get(dated),
+                'hospital-cases': self.hospital_cases_7d_avg.get(dated),
+                'icu-cases': self.icu_cases_7d_avg.get(dated),
+                'deaths': self.deaths_7d_avg.get(dated),
             }
             dated_series.append(record)
         return dated_series
@@ -136,6 +136,28 @@ class OcTimeSeriesJsonExport:
 
         return daily_values
 
+    @cached_property
+    def icu_cases_7d_avg(self):
+        daily_values = {}
+        dataset = self.case_extract.icu_cases
+
+        for dated in self.dates:
+            week_avg = self.week_avg_from_date(dataset, dated)
+            daily_values[dated] = week_avg
+
+        return daily_values
+
+    @cached_property
+    def deaths_7d_avg(self):
+        daily_values = {}
+        dataset = self.case_extract.deaths
+
+        for dated in self.dates:
+            week_avg = self.week_avg_from_date(dataset, dated)
+            daily_values[dated] = week_avg
+
+        return daily_values
+
     # Dates
     @property
     def dates(self):
@@ -174,3 +196,14 @@ class OcTimeSeriesJsonExport:
     #
     # Private
     #
+    def week_avg_from_date(self, daily_values, from_date):
+        values = []
+        for n in range(7):
+            dated = from_date - timedelta(days=n)
+            value = daily_values.get(dated)
+
+            if value is None:
+                return None
+
+            values.append(value)
+        return sum(values) / len(values)

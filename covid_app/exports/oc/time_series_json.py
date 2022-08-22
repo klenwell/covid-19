@@ -60,14 +60,14 @@ class OcTimeSeriesJsonExport:
         dated_series = []
         for dated in self.dates:
             record = {
-                'date': dated,
+                'date': dated.strftime(DATE_OUT_F),
                 'wastewater': self.wastewater_7d_avg.get(dated),
                 'tests': self.admin_tests_7d_avg.get(dated),
                 'positive-rate': self.test_positive_rates.get(dated),
                 'cases': self.case_extract.avg_new_cases.get(dated),
                 'hospital-cases': self.hospital_cases_7d_avg.get(dated),
                 'icu-cases': self.icu_cases_7d_avg.get(dated),
-                'deaths': self.deaths_7d_avg.get(dated),
+                'deaths': self.deaths_7d_avg.get(dated)
             }
             dated_series.append(record)
         return dated_series
@@ -189,7 +189,7 @@ class OcTimeSeriesJsonExport:
 
         # pretty print
         with open(self.json_path, 'w') as f:
-            f.write(json.dumps(trends, indent=4))
+            f.write(json.dumps(time_series, indent=4))
 
         return self.json_path
 

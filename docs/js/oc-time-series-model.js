@@ -46,6 +46,14 @@ class OcTimeSeriesModel {
     return this.timeSeries.map((dated) => dated['positive-rate'])
   }
 
+  get caseSeries() {
+    return this.timeSeries.map((dated) => dated.cases)
+  }
+
+  get hospitalCaseSeries() {
+    return this.timeSeries.map((dated) => dated['hospital-cases'])
+  }
+
   /*
    * Public Methods
   **/

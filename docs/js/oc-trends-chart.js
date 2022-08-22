@@ -20,6 +20,8 @@ class OcTrendsChart {
 
   // Refer: https://stackoverflow.com/a/48143738/1093087
   get config() {
+    console.log('scales', this.scales)
+    console.log('options', this.options)
     return {
       type: 'line',
       data: this.data,
@@ -54,32 +56,10 @@ class OcTrendsChart {
         callback: (value, index, ticks) => index % 2 === 0 ? value : ''
       }
     }
-    const yScale = {
-      yAxes: [{
-        id: 'wastewater',
-        type: 'linear',
-        position: 'left',
-        ticks: {
-          min: 0,
-          max: this.model.maxValues.wastewater,
-          //stepSize: 20,
-          fontColor: 'brown'
-        }
-      }, {
-        id: 'positive-rate',
-        type: 'linear',
-        position: 'left',
-        ticks: {
-          min: 0,
-          max: this.model.maxValues['positive-rate'],
-          //stepSize: 20,
-          fontColor: 'orange'
-        }
-      }]
-    }
 
     return {
-      yAxes: yScale
+      x: xScale,
+      y: this.yAxes
     }
   }
 
@@ -116,30 +96,58 @@ class OcTrendsChart {
   }
 
   get datasets() {
-    console.log('positiveRateSeries', this.model.positiveRateSeries)
-    return [{
-      label: 'wastewater',
-      yAxisID: 'wastewater',
-      borderColor: 'brown',
+    console.log('caseSeries', this.model.caseSeries)
+    return [
+      this.configureDataset('wastewater', this.model.wastewaterSeries, 'brown'),
+      this.configureDataset('positive-rate', this.model.positiveRateSeries, 'red'),
+      this.configureDataset('cases', this.model.caseSeries, 'orange'),
+      this.configureDataset('hospital-cases', this.model.hospitalCaseSeries, 'purple'),
+    ]
+  }
+
+  configureDataset(id, data, borderColor) {
+    return {
+      label: id,
+      yAxisID: id,
+      borderColor: borderColor,
       backgroundColor: 'white',
-      data: this.model.wastewaterSeries,
+      data: data,
       fill: false,
       borderWidth: 1,
       pointStyle: 'circle',
       pointRadius: 0,
       pointHoverRadius: 8,
-    }, {
-      label: 'positive rate',
-      yAxisID: 'positive-rate',
-      borderColor: 'orange',
-      backgroundColor: 'white',
-      data: this.model.positiveRateSeries,
-      fill: false,
-      borderWidth: 1,
-      pointStyle: 'circle',
-      pointRadius: 0,
-      pointHoverRadius: 8,
-    }]
+    }
+  }
+
+  get yAxes() {
+    return {
+      'wastewater': this.configureYScale('wastewater', 'left', 'brown'),
+      'positive-rate': this.configureYScale('positive-rate', 'left', 'red'),
+      'cases': this.configureYScale('cases', 'right', 'orange'),
+      'hospital-cases': this.configureYScale('hospital-cases', 'right', 'purple')
+    }
+  }
+
+  configureYScale(id, position, color) {
+    const max = this.model.maxValues[id]
+    const stepSize = max / 5
+    const smoothStepSize = Math.ceil(stepSize)
+    const smoothMax = smoothStepSize * 5
+    console.log(id, smoothStepSize, smoothMax, position)
+
+    return {
+      axis: 'y',
+      type: 'linear',
+      grace: 0,
+      position: position,
+      min: 0,
+      max: smoothMax,
+      ticks: {
+        stepSize: smoothStepSize,
+        color: color
+      }
+    }
   }
 
   /*

@@ -1,7 +1,6 @@
 from os.path import join as path_join
 from functools import cached_property
-from datetime import timedelta, datetime, date
-from dataclasses import dataclass
+from datetime import timedelta, datetime
 import json
 
 from config.app import GH_PAGES_ROOT
@@ -33,8 +32,6 @@ JSON_DATE_RECORD_SCHEMA = {
     'icu-cases': 0.0,
     'deaths': 0.0
 }
-
-
 
 
 class OcTimeSeriesJsonExport:

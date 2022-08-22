@@ -12,6 +12,7 @@ from covid_app.exports.oc.waves import OCWavesExport
 from covid_app.exports.oc.phases import OCPhasesExport
 from covid_app.exports.oc.trends import OcTrendsExport
 from covid_app.exports.oc.historical import OcHistoricalExport
+from covid_app.exports.oc.time_series_json import OcTimeSeriesJsonExport
 
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
@@ -173,6 +174,21 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/json-export.jinja2')
 
+    # python app.py oc time-series-json-file
+    @expose(help="Output JSON file to docs/data/json/oc/time-series.json.")
+    def time_series_json_file(self):
+        export = OcTimeSeriesJsonExport()
+        json_path = export.to_json_file()
+
+        vars = {
+            'json_path': json_path,
+            'notes': [
+                'Start Date: {}'.format(export.start_date),
+                'End Date: {}'.format(export.end_date),
+            ]
+        }
+        self.app.render(vars, 'oc/json-export.jinja2')
+
     #
     # Analytics
     #
@@ -282,4 +298,4 @@ class OcController(Controller):
         breakpoint()
 
         json_path = export.to_json_file()
-        print(json_path)
+        pprint(json_path)

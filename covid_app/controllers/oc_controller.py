@@ -294,8 +294,9 @@ class OcController(Controller):
         export = OcTimeSeriesJsonExport()
         print(export.start_date)
         print(export.end_date)
+        pprint(export.max_values)
 
         breakpoint()
 
         json_path = export.to_json_file()
-        pprint(json_path)
+        print(json_path)

@@ -19,7 +19,8 @@ WASTEWATER_LAB = 'DWRL'
 
 JSON_SCHEMA = {
     'meta': {},
-    'dates': []
+    'dates': [],
+    'max-values': {}
 }
 
 JSON_DATE_RECORD_SCHEMA = {
@@ -68,6 +69,21 @@ class OcTimeSeriesJsonExport:
             }
             dated_series.append(record)
         return dated_series
+
+    @cached_property
+    def max_values(self):
+        def series_values(key):
+            return [r[key] for r in self.date_series if r[key] is not None]
+
+        return {
+            'wastewater': max(series_values('wastewater')),
+            'tests': max(series_values('tests')),
+            'positive-rate': max(series_values('positive-rate')),
+            'cases': max(series_values('cases')),
+            'hospital-cases': max(series_values('hospital-cases')),
+            'icu-cases': max(series_values('icu-cases')),
+            'deaths': max(series_values('deaths'))
+        }
 
     @property
     def meta(self):
@@ -182,6 +198,7 @@ class OcTimeSeriesJsonExport:
         time_series = JSON_SCHEMA.copy()
 
         time_series['dates'] = self.date_series
+        time_series['max-values'] = self.max_values
         time_series['meta'] = self.meta
 
         # pretty print

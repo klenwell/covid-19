@@ -39,7 +39,7 @@ class OcTrendsChart {
       maintainAspectRatio: false,
       scales: scales,
       plugins: {
-        legend: { display: false },
+        legend: { display: true },
         //annotation: { annotations: annotations },
         //tooltip: tooltip
       }
@@ -57,10 +57,9 @@ class OcTrendsChart {
       }
     }
 
-    return {
-      x: xScale,
-      y: this.yAxes
-    }
+    let scales = this.yAxes
+    scales['x'] = xScale
+    return scales
   }
 
   get annotations() {
@@ -96,54 +95,61 @@ class OcTrendsChart {
   }
 
   get datasets() {
-    console.log('caseSeries', this.model.caseSeries)
     return [
-      this.configureDataset('wastewater', this.model.wastewaterSeries, 'brown'),
-      this.configureDataset('positive-rate', this.model.positiveRateSeries, 'red'),
-      this.configureDataset('cases', this.model.caseSeries, 'orange'),
-      this.configureDataset('hospital-cases', this.model.hospitalCaseSeries, 'purple'),
+      this.configureDataset('wastewater', this.model.wastewaterSeries, '#996600'),
+      this.configureDataset('positive-rate', this.model.positiveRateSeries, '#e68a00'),
+      this.configureDataset('cases', this.model.caseSeries, '#cc5200'),
+      this.configureDataset('hospital-cases', this.model.hospitalCaseSeries, '#cc0000'),
+      this.configureDataset('icu-cases', this.model.icuCaseSeries, '#800080'),
+      this.configureDataset('deaths', this.model.deathSeries, '#000000'),
     ]
   }
 
-  configureDataset(id, data, borderColor) {
+  configureDataset(id, data, color) {
+    const opacity = 10
+    const backgroundColor = `${color}${opacity}`
+
     return {
       label: id,
       yAxisID: id,
-      borderColor: borderColor,
-      backgroundColor: 'white',
+      borderColor: color,
+      backgroundColor: backgroundColor,
       data: data,
-      fill: false,
-      borderWidth: 1,
+      fill: 'origin',
+      borderWidth: 2,
       pointStyle: 'circle',
       pointRadius: 0,
       pointHoverRadius: 8,
+      grid: { display: false },
     }
   }
 
   get yAxes() {
     return {
       'wastewater': this.configureYScale('wastewater', 'left', 'brown'),
-      'positive-rate': this.configureYScale('positive-rate', 'left', 'red'),
-      'cases': this.configureYScale('cases', 'right', 'orange'),
-      'hospital-cases': this.configureYScale('hospital-cases', 'right', 'purple')
+      'positive-rate': this.configureYScale('positive-rate', 'left', 'orangered'),
+      'cases': this.configureYScale('cases', 'left', 'orange'),
+      'hospital-cases': this.configureYScale('hospital-cases', 'right', 'red'),
+      'icu-cases': this.configureYScale('icu-cases', 'right', 'purple'),
+      'deaths': this.configureYScale('deaths', 'right', 'black')
     }
   }
 
   configureYScale(id, position, color) {
     const max = this.model.maxValues[id]
-    const stepSize = max / 5
+    const tickCount = 5
+    const stepSize = (max * 1.05) / tickCount
     const smoothStepSize = Math.ceil(stepSize)
-    const smoothMax = smoothStepSize * 5
-    console.log(id, smoothStepSize, smoothMax, position)
+    const smoothMax = smoothStepSize * tickCount
 
     return {
       axis: 'y',
       type: 'linear',
-      grace: 0,
       position: position,
       min: 0,
       max: smoothMax,
       ticks: {
+        count: tickCount,
         stepSize: smoothStepSize,
         color: color
       }
@@ -155,37 +161,6 @@ class OcTrendsChart {
   **/
   render() {
     return new Chart(this.canvas, this.config)
-  }
-
-  mapTrendToColor(trend) {
-    const colorMap = {
-      rising: '#cb3c2c',
-      flat: '#f1c78a',
-      falling: '#1967d2'
-    }
-    return colorMap[trend]
-  }
-
-  lineAnnotationForYear(year) {
-    const labelColor = "#e08600"
-    const lineColor = "#CCCCCC"
-    const value = `${year}-01-01`
-
-    return {
-      type: 'line',
-      scaleID: 'x',
-      value: value,
-      borderColor: lineColor,
-      borderWidth: 3,
-      drawTime: 'beforeDatasetsDraw',
-      label: {
-        enabled: true,
-        position: "2%",
-        content: year,
-        backgroundColor: labelColor,
-        borderRadius: 12
-      }
-    }
   }
 }
 

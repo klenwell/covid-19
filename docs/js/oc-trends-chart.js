@@ -96,13 +96,31 @@ class OcTrendsChart {
 
   get datasets() {
     return [
-      this.configureDataset('wastewater', this.model.wastewaterSeries, '#996600'),
-      this.configureDataset('positive-rate', this.model.positiveRateSeries, '#e68a00'),
-      this.configureDataset('cases', this.model.caseSeries, '#cc5200'),
-      this.configureDataset('hospital-cases', this.model.hospitalCaseSeries, '#cc0000'),
+      this.configureDataset('wastewater', this.model.wastewaterSeries, '#3377ff'),
+      this.configureDataset('positive-rate', this.model.positiveRateSeries, '#ff9933'),
+      this.configureDataset('cases', this.model.caseSeries, '#527a7a'),
+      this.configureDataset('hospital-cases', this.model.hospitalCaseSeries, '#e60000'),
       this.configureDataset('icu-cases', this.model.icuCaseSeries, '#800080'),
       this.configureDataset('deaths', this.model.deathSeries, '#000000'),
     ]
+  }
+
+  get yAxes() {
+    return {
+      'wastewater': this.configureYScale('wastewater', 'left', '#3377ff'),
+      'positive-rate': this.configureYScale('positive-rate', 'left', '#ff9933'),
+      'cases': this.configureYScale('cases', 'left', '#527a7a'),
+      'hospital-cases': this.configureYScale('hospital-cases', 'right', '#e60000'),
+      'icu-cases': this.configureYScale('icu-cases', 'right', '#800080'),
+      'deaths': this.configureYScale('deaths', 'right', '#000000')
+    }
+  }
+
+  /*
+   * Methods
+  **/
+  render() {
+    return new Chart(this.canvas, this.config)
   }
 
   configureDataset(id, data, color) {
@@ -121,17 +139,6 @@ class OcTrendsChart {
       pointRadius: 0,
       pointHoverRadius: 8,
       grid: { display: false },
-    }
-  }
-
-  get yAxes() {
-    return {
-      'wastewater': this.configureYScale('wastewater', 'left', 'brown'),
-      'positive-rate': this.configureYScale('positive-rate', 'left', 'orangered'),
-      'cases': this.configureYScale('cases', 'left', 'orange'),
-      'hospital-cases': this.configureYScale('hospital-cases', 'right', 'red'),
-      'icu-cases': this.configureYScale('icu-cases', 'right', 'purple'),
-      'deaths': this.configureYScale('deaths', 'right', 'black')
     }
   }
 
@@ -154,13 +161,6 @@ class OcTrendsChart {
         color: color
       }
     }
-  }
-
-  /*
-   * Methods
-  **/
-  render() {
-    return new Chart(this.canvas, this.config)
   }
 }
 

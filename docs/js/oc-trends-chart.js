@@ -107,8 +107,8 @@ class OcTrendsChart {
 
   get yAxes() {
     return {
-      'wastewater': this.configureYScale('wastewater', 'left', '#3377ff'),
-      'positive-rate': this.configureYScale('positive-rate', 'left', '#ff9933'),
+      'wastewater': this.configureYScale('wastewater', 'left', '#3377ff', 'virus/ml'),
+      'positive-rate': this.configureYScale('positive-rate', 'left', '#ff9933', '%'),
       'cases': this.configureYScale('cases', 'left', '#527a7a'),
       'hospital-cases': this.configureYScale('hospital-cases', 'right', '#e60000'),
       'icu-cases': this.configureYScale('icu-cases', 'right', '#800080'),
@@ -142,12 +142,21 @@ class OcTrendsChart {
     }
   }
 
-  configureYScale(id, position, color) {
+  configureYScale(id, position, color, tickLabel) {
     const max = this.model.maxValues[id]
     const tickCount = 5
     const stepSize = (max * 1.05) / tickCount
     const smoothStepSize = Math.ceil(stepSize)
     const smoothMax = smoothStepSize * tickCount
+
+    let tickCallback = (value, index, _) => (index == 0) ? 'per day' : value
+
+    if ( tickLabel == '%' ) {
+      tickCallback = (value, index, _) => `${value}%`
+    }
+    else if ( tickLabel == 'virus/ml' ) {
+      tickCallback = (value, index, _) => (index == 0) ? tickLabel : value
+    }
 
     return {
       axis: 'y',
@@ -158,7 +167,8 @@ class OcTrendsChart {
       ticks: {
         count: tickCount,
         stepSize: smoothStepSize,
-        color: color
+        color: color,
+        callback: tickCallback
       }
     }
   }

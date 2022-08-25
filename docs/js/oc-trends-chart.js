@@ -20,8 +20,6 @@ class OcTrendsChart {
 
   // Refer: https://stackoverflow.com/a/48143738/1093087
   get config() {
-    console.log('scales', this.scales)
-    console.log('options', this.options)
     return {
       type: 'line',
       data: this.data,
@@ -40,8 +38,7 @@ class OcTrendsChart {
       scales: scales,
       plugins: {
         legend: { display: true },
-        //annotation: { annotations: annotations },
-        //tooltip: tooltip
+        tooltip: tooltip
       }
     }
   }
@@ -62,27 +59,20 @@ class OcTrendsChart {
     return scales
   }
 
-  get annotations() {
-    let annotations = {}
-    return {}
-  }
-
   get tooltip() {
     const tooltipTitleFormatter = (contexts) => {
       const dateF = 'MMMM d, yyyy'
       const context = contexts[0]
-      const label = context.dataset.label
       const date = this.dateTime.fromSeconds(context.parsed.x / 1000).toFormat(dateF)
-      const day = context.dataIndex + 1
-      const title = `${date}: day ${day} of phase ${label}`
-      //console.log('tooltipTitleFormatter', title, context)
-      return title
+      return date
     }
 
     return {
       callbacks: {
         title: tooltipTitleFormatter,
-        label: ctx => `Positive Rate: ${ctx.formattedValue}%`
+        label: ctx => `${ctx.dataset.label}: ${this.fmtNum(ctx.raw)}`,
+        // To debug in console, uncomment:
+        //beforeLabel: ctx => console.log(ctx)
       }
     }
   }
@@ -171,6 +161,16 @@ class OcTrendsChart {
         callback: tickCallback
       }
     }
+  }
+
+  fmtNum(value, precision) {
+    const locale = 'en-US'
+    const fixed = precision !== undefined ? precision : 1
+    const config = {
+      maximumFractionDigits: fixed,
+      minimumFractionDigits: fixed
+    }
+    return value.toLocaleString(locale, config)
   }
 }
 

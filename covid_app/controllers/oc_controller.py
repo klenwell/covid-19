@@ -12,6 +12,7 @@ from covid_app.exports.oc.waves import OCWavesExport
 from covid_app.exports.oc.phases import OCPhasesExport
 from covid_app.exports.oc.trends import OcTrendsExport
 from covid_app.exports.oc.historical import OcHistoricalExport
+from covid_app.exports.oc.time_series_json import OcTimeSeriesJsonExport
 
 from covid_app.analytics.oc_by_day import OcByDayAnalysis
 from covid_app.analytics.oc_testing import OcTestingAnalysis
@@ -173,6 +174,21 @@ class OcController(Controller):
         }
         self.app.render(vars, 'oc/json-export.jinja2')
 
+    # python app.py oc time-series-json-file
+    @expose(help="Output JSON file to docs/data/json/oc/time-series.json.")
+    def time_series_json_file(self):
+        export = OcTimeSeriesJsonExport()
+        json_path = export.to_json_file()
+
+        vars = {
+            'json_path': json_path,
+            'notes': [
+                'Start Date: {}'.format(export.start_date),
+                'End Date: {}'.format(export.end_date),
+            ]
+        }
+        self.app.render(vars, 'oc/json-export.jinja2')
+
     #
     # Analytics
     #
@@ -272,15 +288,15 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.extracts.cdph.oc_detailed_wastewater_extract import OcWastewaterExtract
+        from covid_app.exports.oc.time_series_json import OcTimeSeriesJsonExport
         from pprint import pprint
 
-        extract = OcWastewaterExtract(mock=True)
-        print(extract.use_mock)
-        print(extract.sample_csv_path)
-        print(len(extract.csv_rows))
-        pprint(extract.newest_samples)
-        pprint(extract.lab_counts)
-        pprint(extract.lab_range)
+        export = OcTimeSeriesJsonExport()
+        print(export.start_date)
+        print(export.end_date)
+        pprint(export.max_values)
 
         breakpoint()
+
+        json_path = export.to_json_file()
+        print(json_path)

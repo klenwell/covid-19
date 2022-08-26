@@ -77,10 +77,10 @@
         </li>
         <li class="nav-item" role="presentation">
           <button
-            id="pills-weekly-tab" data-bs-target="#weekly" aria-controls="weekly"
+            id="pills-trends-tab" data-bs-target="#trends" aria-controls="trends"
             class="nav-link"  data-bs-toggle="pill"
             type="button" role="tab"  aria-selected="true">
-            Week-by-Week
+            Trends
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -318,7 +318,7 @@
           Trends Tab View
         -->
         <div
-          id="weekly" aria-labelledby="weekly-tab"
+          id="trends" aria-labelledby="trends-tab"
           class="tab-pane fade" role="tabpanel" >
           <section id="oc-covid-trends">
             <h3>Week-by-Week Trends</h3>
@@ -368,6 +368,11 @@
                 <a target="_blank" href="https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/COVID-19/Wastewater-Surveillance.aspx">CA Dept of Public Health</a>.
               </li>
             </ul>
+
+            <h3 class="mt-5">Historical Trends Chart</h3>
+            <div class="chart-block mt-1">
+              <canvas id="trends-chart"></canvas>
+            </div>
           </section>
         </div>
 
@@ -527,12 +532,14 @@
     <!-- Models -->
     <script src="js/oc-metrics-model.js"></script>
     <script src="js/oc-trends-model.js"></script>
+    <script src="js/oc-time-series-model.js"></script>
     <script src="js/oc-waves-model.js"></script>
     <script src="js/oc-phases-model.js"></script>
 
     <!-- Components -->
     <script src="js/oc-metrics-table.js"></script>
     <script src="js/oc-trends-table.js"></script>
+    <script src="js/oc-trends-chart.js"></script>
     <script src="js/oc-waves-table.js"></script>
     <script src="js/oc-waves-chart.js"></script>
     <script src="js/oc-phases-table.js"></script>

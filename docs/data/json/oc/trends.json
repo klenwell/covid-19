@@ -44,8 +44,8 @@
                 "delta": -17.41924572974801
             },
             "wastewater": {
-                "average7d": null,
-                "delta": null
+                "average7d": 432.3473333333334,
+                "delta": -8.983149445951979
             },
             "hospitalCases": {
                 "average7d": 268.57142857142856,
@@ -72,8 +72,8 @@
                 "delta": -14.822817631806394
             },
             "wastewater": {
-                "average7d": 385.039,
-                "delta": -48.15004172264473
+                "average7d": 475.019,
+                "delta": -36.03319318055827
             },
             "hospitalCases": {
                 "average7d": 298.2857142857143,
@@ -142,7 +142,7 @@
         }
     ],
     "meta": {
-        "createdAt": "2022-08-30T20:14:55-07:00",
+        "createdAt": "2022-09-02T07:59:33-07:00",
         "dataLastUpdated": "2022-08-29"
     }
 }

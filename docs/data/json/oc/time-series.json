@@ -1,7 +1,7 @@
 {
     "meta": {
-        "createdAt": "2022-09-02T07:59:42-07:00",
-        "dataLastUpdated": "2022-08-30"
+        "createdAt": "2022-09-03T08:41:29-07:00",
+        "dataLastUpdated": "2022-09-02"
     },
     "dates": [
         {
@@ -9026,7 +9026,7 @@
         },
         {
             "date": "2022-08-24",
-            "wastewater": 395.81550000000004,
+            "wastewater": 392.12466666666666,
             "tests": 5764.857142857143,
             "positive-rate": 11.072012687713734,
             "cases": 575.1428571428571,
@@ -9036,7 +9036,7 @@
         },
         {
             "date": "2022-08-25",
-            "wastewater": 395.81550000000004,
+            "wastewater": 392.12466666666666,
             "tests": 5659.857142857143,
             "positive-rate": 10.717080188798304,
             "cases": 575.1428571428571,
@@ -9046,7 +9046,7 @@
         },
         {
             "date": "2022-08-26",
-            "wastewater": null,
+            "wastewater": 392.12466666666666,
             "tests": 5622.714285714285,
             "positive-rate": 10.594781371477934,
             "cases": 508.85714285714283,
@@ -9056,7 +9056,7 @@
         },
         {
             "date": "2022-08-27",
-            "wastewater": null,
+            "wastewater": 392.12466666666666,
             "tests": 5565.571428571428,
             "positive-rate": 10.326240406581277,
             "cases": 508.85714285714283,
@@ -9066,7 +9066,7 @@
         },
         {
             "date": "2022-08-28",
-            "wastewater": null,
+            "wastewater": 386.18533333333335,
             "tests": 5373.714285714285,
             "positive-rate": 9.99042960442365,
             "cases": 508.85714285714283,
@@ -9076,7 +9076,7 @@
         },
         {
             "date": "2022-08-29",
-            "wastewater": null,
+            "wastewater": 353.664,
             "tests": 4427.0,
             "positive-rate": 9.78411694472232,
             "cases": 508.85714285714283,
@@ -9086,13 +9086,43 @@
         },
         {
             "date": "2022-08-30",
+            "wastewater": 353.664,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 218.42857142857142,
+            "icu-cases": 29.0,
+            "deaths": 2.857142857142857
+        },
+        {
+            "date": "2022-08-31",
+            "wastewater": null,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 218.14285714285714,
+            "icu-cases": 30.714285714285715,
+            "deaths": 2.857142857142857
+        },
+        {
+            "date": "2022-09-01",
+            "wastewater": null,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 214.71428571428572,
+            "icu-cases": 29.571428571428573,
+            "deaths": 2.857142857142857
+        },
+        {
+            "date": "2022-09-02",
             "wastewater": null,
             "tests": null,
             "positive-rate": null,
             "cases": null,
             "hospital-cases": null,
             "icu-cases": null,
-            "deaths": 2.857142857142857
+            "deaths": 1.8571428571428572
         }
     ],
     "max-values": {

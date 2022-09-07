@@ -102,6 +102,7 @@ class OcTrendsExport:
             try:
                 week_avg = self.week_avg_from_date(dataset, dated)
                 daily_values[dated] = week_avg
+            # This will occur when data is missing. Just leave the date blank.
             except KeyError:
                 daily_values[dated] = None
 
@@ -116,6 +117,7 @@ class OcTrendsExport:
             try:
                 week_avg = self.week_avg_from_date(dataset, dated)
                 daily_values[dated] = week_avg
+            # This will occur when data is missing. Just leave the date blank.
             except KeyError:
                 daily_values[dated] = None
 

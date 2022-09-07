@@ -99,8 +99,11 @@ class OcTrendsExport:
         dataset = self.case_extract.tests_positive
 
         for dated in self.dates:
-            week_avg = self.week_avg_from_date(dataset, dated)
-            daily_values[dated] = week_avg
+            try:
+                week_avg = self.week_avg_from_date(dataset, dated)
+                daily_values[dated] = week_avg
+            except KeyError:
+                daily_values[dated] = None
 
         return daily_values
 
@@ -110,8 +113,11 @@ class OcTrendsExport:
         dataset = self.case_extract.hospitalizations
 
         for dated in self.dates:
-            week_avg = self.week_avg_from_date(dataset, dated)
-            daily_values[dated] = week_avg
+            try:
+                week_avg = self.week_avg_from_date(dataset, dated)
+                daily_values[dated] = week_avg
+            except KeyError:
+                daily_values[dated] = None
 
         return daily_values
 

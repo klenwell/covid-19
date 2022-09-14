@@ -1,6 +1,6 @@
 {
     "meta": {
-        "createdAt": "2022-09-09T21:07:52-07:00",
+        "createdAt": "2022-09-13T19:36:11-07:00",
         "dataLastUpdated": "2022-09-09"
     },
     "dates": [
@@ -9136,7 +9136,7 @@
         },
         {
             "date": "2022-09-04",
-            "wastewater": 298.16200000000003,
+            "wastewater": 344.16900000000004,
             "tests": 4762.571428571428,
             "positive-rate": 8.533805267262583,
             "cases": 427.2857142857143,
@@ -9146,7 +9146,7 @@
         },
         {
             "date": "2022-09-05",
-            "wastewater": 301.247,
+            "wastewater": 317.1856666666667,
             "tests": 3863.8571428571427,
             "positive-rate": 8.56287203756424,
             "cases": 427.2857142857143,
@@ -9156,7 +9156,7 @@
         },
         {
             "date": "2022-09-06",
-            "wastewater": null,
+            "wastewater": 317.1856666666667,
             "tests": null,
             "positive-rate": null,
             "cases": null,
@@ -9166,7 +9166,7 @@
         },
         {
             "date": "2022-09-07",
-            "wastewater": null,
+            "wastewater": 325.155,
             "tests": null,
             "positive-rate": null,
             "cases": null,
@@ -9176,7 +9176,7 @@
         },
         {
             "date": "2022-09-08",
-            "wastewater": null,
+            "wastewater": 325.155,
             "tests": null,
             "positive-rate": null,
             "cases": null,

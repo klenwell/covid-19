@@ -112,8 +112,12 @@ class OcWastewaterExtract:
             concentrate = row.get('pcr_target_avg_conc', '0.0')
 
             # Collect only OC rows
-            if int(zipcode) != county_zip:
-                continue
+            try:
+                if int(zipcode) != county_zip:
+                    continue
+            except ValueError as e:
+                print('Skip {}: {}'.format(zipcode, e))
+
 
             row['date'] = self.date_str_to_date(date)
             row['virus'] = int(round(float(concentrate.replace(',', ''))))

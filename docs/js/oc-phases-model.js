@@ -58,7 +58,8 @@ class OcPhasesModel {
       13: 'Post-Omicron Drop',
       14: 'Covid Spring Break 2022',
       15: `${link('Second Omicron')} Surge`,
-      16: 'Second Omicron Drop<br />(Ongoing)',
+      16: 'Second Omicron Drop',
+      17: 'Goblin Lull<br />(Ongoing)',
     }
   }
 

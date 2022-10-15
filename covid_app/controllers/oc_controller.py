@@ -153,7 +153,8 @@ class OcController(Controller):
             'notes': [
                 'Data Source: {}'.format(export.data_source_path),
                 'Total Phases: {}'.format(len(export.phases)),
-                'Phases:\n{}'.format(phases),
+                'Phases:\n{}'.format(pformat(export.analysis.epidemic.phases)),
+                'Smoothed Phases:\n{}'.format(phases),
                 'Run time: {} s'.format(round(export.run_time, 2))
             ]
         }

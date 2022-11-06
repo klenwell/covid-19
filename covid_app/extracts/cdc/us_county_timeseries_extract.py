@@ -152,11 +152,11 @@ class CdcCountyTimeseriesExtract:
 
         for dated in self.daily_logs:
             daily_log = self.daily_logs[dated]
-            value = daily_log[field_key]
 
             try:
+                value = daily_log[field_key]
                 daily_values[dated] = data_type(value)
-            except (TypeError, ValueError):
+            except (TypeError, ValueError, KeyError):
                 daily_values[dated] = None
 
         return daily_values

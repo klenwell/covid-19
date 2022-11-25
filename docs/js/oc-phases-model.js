@@ -33,7 +33,8 @@ class OcPhasesModel {
       'Alpha': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Alpha_variant',
       'Delta': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Delta_variant',
       'Omicron': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Omicron_variant',
-      'Second Omicron': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Omicron_variant#Sublineages_and_BA.2_subvariant'
+      'Second Omicron': 'https://en.wikipedia.org/wiki/SARS-CoV-2_Omicron_variant#Sublineages_and_BA.2_subvariant',
+      'Variant Soup': 'https://www.cbsnews.com/news/fauci-final-covid-briefing-less-deadly-winter/'
     }
 
     const link = (variant) => {
@@ -60,7 +61,8 @@ class OcPhasesModel {
       15: 'Covid Spring Break 2022',
       16: `${link('Second Omicron')} Surge`,
       17: 'Second Omicron Drop',
-      18: 'Autumn Lull<br />(Ongoing)',
+      18: 'Autumn Lull',
+      19: `Holiday ${link('Variant Soup')} Surge<br />(Ongoing)`
     }
   }
 

@@ -14,7 +14,7 @@ WAVE_ANALYSIS_CONFIG = {
     'window_size': 5,
 
     # Slope value distinguishing plateaus from rise/falls
-    'flat_slope_threshold': .06,
+    'flat_slope_threshold': .05,
 
     # This is the minimum size a phase needs to be (in days) not be flagged as micro
     # and merged.

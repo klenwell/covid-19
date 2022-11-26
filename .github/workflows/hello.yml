@@ -3,7 +3,7 @@
 # References:
 # https://docs.github.com/en/actions/quickstart
 # https://github.com/GuillaumeFalourd/poc-github-actions/blob/main/.github/workflows/03-python-script-workflow.yml
-name: Hello Github
+name: hello-github
 run-name: ${{ github.actor }} is learning GitHub Actions
 on: [push]
 

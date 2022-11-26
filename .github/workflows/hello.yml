@@ -13,11 +13,17 @@ jobs:
     steps:
       - name: Checkout repository content
         uses: actions/checkout@v3
+
       - name: Setup Python Version
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
+
+      - name: Copy dist secrets file to avoid ModuleNotFoundError
+        run: cp config/secrets.py-dist config/secrets.py
+
       - name: Install Python dependencies
         run: pip install -r requirements.txt
+
       - name: Execute Python script
         run: python app.py gha hello

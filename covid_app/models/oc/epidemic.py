@@ -5,7 +5,7 @@ An epidemic is made up of waves which are made up of phases which are made up of
 phase windows which are made up of data points (from a time series.)
 """
 from functools import cached_property
-from datetime import timedelta
+from datetime import timedelta, date
 from math import floor, inf
 from pprint import pformat
 from itertools import islice
@@ -230,6 +230,10 @@ class Epidemic:
         series_is_jagged = self.phase_series_is_jagged(phases)
         n = 0
 
+        # It's tough to get the first drop right algorithmically. So we cheat and hardcode it.
+        phases = self.merge_fixed_phase(phases, date(2020, 3, 31), date(2020, 5, 24))
+        #breakpoint()
+
         while series_is_jagged:
             n += 1
             pre_merge_count = len(phases)
@@ -245,13 +249,27 @@ class Epidemic:
 
         return phases
 
+    def merge_fixed_phase(self, phases, start_date, end_date):
+        merged_phases = []
+
+        for n, phase in enumerate(phases):
+            if phase.started_on == start_date:
+                fixed_phase = phase
+            elif phase.started_on > start_date and phase.started_on < end_date:
+                fixed_phase = fixed_phase.merge(phase)
+            else:
+                merged_phases.append(phase)
+
+        merged_phases.append(fixed_phase)
+        return sorted(merged_phases, key=lambda p: p.started_on)
+
     def phase_series_is_jagged(self, phases):
         """These things are considered unjagged or unsmooth:
-        - any micro phases
+        - any micro phases (except last)
         - any consecutive phases with same trend
         """
         prev_phase = None
-        for phase in phases[:-1]:
+        for phase in phases[:-2]:
             if phase.is_micro():
                 return True
             if prev_phase and prev_phase.trend == phase.trend:
@@ -275,6 +293,44 @@ class Epidemic:
         return merged_phases
 
     def merge_micro_phases(self, phases):
+        # merge_nearest_micro_phase
+        merged_phases = []
+
+        def diff_phases(p1, p2):
+            return abs(p2 - p1)
+
+        # Find the micro phases with the smallest slope diff with neighbor
+        phase_diffs = []
+        for n in range(len(phases) - 1):
+            phase = phases[n]
+            next_phase = phases[n + 1]
+            if not phase.is_micro():
+                continue
+
+            phase_diff = diff_phases(phase.slope, next_phase.slope)
+            phase_diffs.append((phase_diff, n))
+
+        if len(phase_diffs) < 1:
+            return phases
+
+        sorted_phase_diffs = sorted(phase_diffs, key=lambda d: d[0])
+        merge_at = sorted_phase_diffs[0][1]
+        #print(merge_at, sorted_phase_diffs)
+
+        # Now merge those 2 phases with smallest slope diff
+        for n, phase in enumerate(phases):
+            if n == merge_at:
+                next_phase = phases[n + 1]
+                phase = phase.merge(next_phase)
+                merged_phases.append(phase)
+            elif n == merge_at + 1:
+                continue
+            else:
+                merged_phases.append(phase)
+
+        return merged_phases
+
+    def merge_micro_phases_v1(self, phases):
         merged_phases = []
         prev_phase = None
         merge_on_next_loop = False

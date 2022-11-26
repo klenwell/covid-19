@@ -11,6 +11,11 @@ class GithubActionController(Controller):
     #
     # Other Commands
     #
+    # python app.py gha hello
+    @expose(help="Simple script that outputs hello.")
+    def hello(self):
+        print('Hello Github!')
+
     # python app.py gha dev
     @expose(help="For rapid testing and development.")
     def dev(self):

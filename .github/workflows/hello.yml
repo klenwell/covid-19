@@ -1,0 +1,23 @@
+# My first Github action
+#
+# References:
+# https://docs.github.com/en/actions/quickstart
+# https://github.com/GuillaumeFalourd/poc-github-actions/blob/main/.github/workflows/03-python-script-workflow.yml
+name: Hello Github
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+
+jobs:
+  test-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository content
+        uses: actions/checkout@v3
+      - name: Setup Python Version
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      - name: Execute Python script
+        run: python app.py gha hello

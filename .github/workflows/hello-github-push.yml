@@ -8,7 +8,7 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 on: [push]
 
 jobs:
-  test-hello:
+  hello-github-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository content

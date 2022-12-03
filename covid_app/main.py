@@ -1,6 +1,7 @@
 from cement import App
 from .controllers.base_controller import BaseController
 from .controllers.oc_controller import OcController
+from .controllers.github_action_controller import GithubActionController
 
 
 class CovidApp(App):
@@ -13,4 +14,4 @@ class CovidApp(App):
         output_handler = 'jinja2'
         template_dir = './covid_app/views'
 
-        handlers = [BaseController, OcController]
+        handlers = [BaseController, OcController, GithubActionController]

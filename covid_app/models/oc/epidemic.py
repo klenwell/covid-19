@@ -247,6 +247,14 @@ class Epidemic:
             if series_is_jagged and len(phases) == pre_merge_count:
                 raise PhaseSmoothingError(phases)
 
+        # If last phase is less than 7 days, merge it with penultimate
+        last_phase = phases[-1]
+        if last_phase.days < 7:
+            last_phase = phases.pop()
+            penult_phase = phases.pop()
+            last_phase = penult_phase.merge(last_phase)
+            phases.append(last_phase)
+
         return phases
 
     def merge_fixed_phase(self, phases, start_date, end_date):

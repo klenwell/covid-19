@@ -203,9 +203,14 @@ class Epidemic:
                 wave_phases.append(phase)
             # Lull
             elif phase.is_flat():
-                wave = EpidemicWave([phase], self)
-                waves.append(wave)
-                wave_phases = []
+                # High plateau (lull after rise)
+                if prev_phase.is_rising():
+                    wave_phases.append(phase)
+                # New lull phase (after fall)
+                else:
+                    wave = EpidemicWave([phase], self)
+                    waves.append(wave)
+                    wave_phases = []
             # End wave
             elif prev_phase.is_rising() and phase.is_falling():
                 wave_phases.append(phase)

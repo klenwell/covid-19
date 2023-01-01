@@ -9,8 +9,8 @@ from functools import cached_property
 EXTRACT_URL_F = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties-{}.csv'
 DATE_F = '%Y-%m-%d'
 START_YEAR = 2020
+STOP_YEAR = 2022  # Or: datetime.today().year
 KENT_MI_FIPS = '26081'
-
 
 class NyTimesCountiesExtract:
     #
@@ -47,7 +47,7 @@ class NyTimesCountiesExtract:
 
     @property
     def pandemic_years(self):
-        num_years = datetime.today().year - START_YEAR
+        num_years = STOP_YEAR - START_YEAR
         for n in range(num_years + 1):
             year = START_YEAR + n
             yield year

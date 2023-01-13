@@ -237,6 +237,7 @@ class Epidemic:
 
         # It's tough to get the first drop right algorithmically. So we cheat and hardcode it.
         phases = self.merge_fixed_phase(phases, date(2020, 3, 31), date(2020, 5, 24))
+        phases = self.merge_fixed_phase(phases, date(2022, 11, 6), date(2022, 12, 31))
         #breakpoint()
 
         while series_is_jagged:

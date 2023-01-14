@@ -3,6 +3,8 @@ Class for breaking a data series (e.g. positive rate data) into waves and trough
 
 An epidemic is made up of waves which are made up of phases which are made up of
 phase windows which are made up of data points (from a time series.)
+
+See smooth_phases method for hardcoded phases.
 """
 from functools import cached_property
 from datetime import timedelta, date
@@ -15,6 +17,16 @@ from config.app import WAVE_ANALYSIS_CONFIG
 from covid_app.models.oc.epidemic_wave import EpidemicWave
 from covid_app.models.oc.wave_phase import WavePhase
 from covid_app.models.oc.phase_window import PhaseWindow
+
+
+# There are some phases that don't quite cooperate. So I cheat and hardcode them.
+# It's tough to get the first drop right algorithmically. So we cheat and hardcode it.
+# The 2022 winter surge was also weird so I just hardcoded it.
+HARDCODED_PHASES = (
+    # Start Date, End Date
+    (date(2020, 3, 31), date(2020, 5, 24)),  # First drop in early 2022: data was spotty.
+    (date(2022, 11, 6), date(2022, 12, 31))  # 2022 winter surge: weird mid-surge plateau.
+)
 
 
 class PhaseSmoothingError(Exception):
@@ -235,9 +247,9 @@ class Epidemic:
         series_is_jagged = self.phase_series_is_jagged(phases)
         n = 0
 
-        # It's tough to get the first drop right algorithmically. So we cheat and hardcode it.
-        phases = self.merge_fixed_phase(phases, date(2020, 3, 31), date(2020, 5, 24))
-        phases = self.merge_fixed_phase(phases, date(2022, 11, 6), date(2022, 12, 31))
+        # Hardcoded phases: see constant at top of file
+        for start_date, end_date in HARDCODED_PHASES:
+            phases = self.merge_fixed_phase(phases, start_date, end_date)
         #breakpoint()
 
         while series_is_jagged:

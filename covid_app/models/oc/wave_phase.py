@@ -1,3 +1,6 @@
+"""
+See Epidemic model (epidemic.py) for hardcoded phases.
+"""
 from config.app import WAVE_ANALYSIS_CONFIG
 
 

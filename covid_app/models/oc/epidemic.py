@@ -20,12 +20,10 @@ from covid_app.models.oc.phase_window import PhaseWindow
 
 
 # There are some phases that don't quite cooperate. So I cheat and hardcode them.
-# It's tough to get the first drop right algorithmically. So we cheat and hardcode it.
-# The 2022 winter surge was also weird so I just hardcoded it.
 HARDCODED_PHASES = (
     # Start Date, End Date
-    (date(2020, 3, 31), date(2020, 5, 24)),  # First drop in early 2022: data was spotty.
-    (date(2022, 11, 6), date(2022, 12, 31))  # 2022 winter surge: weird mid-surge plateau.
+    (date(2020, 3, 31), date(2020, 5, 24)),  # First drop in early 2020: data was spotty.
+    (date(2022, 11, 6), date(2022, 12, 31))  # 2022 holiday surge: weird mid-surge plateau.
 )
 
 

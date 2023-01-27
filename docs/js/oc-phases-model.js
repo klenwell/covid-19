@@ -62,7 +62,8 @@ class OcPhasesModel {
       16: `${link('Second Omicron')} Surge`,
       17: 'Second Omicron Drop',
       18: 'Autumn Lull',
-      19: `Holiday ${link('Variant Soup')} Surge<br />(Ongoing)`
+      19: `Holiday ${link('Variant Soup')} Surge`,
+      20: '2023 New Year Drop<br />(Ongoing)',
     }
   }
 

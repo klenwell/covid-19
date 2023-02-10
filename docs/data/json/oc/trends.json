@@ -1,19 +1,47 @@
 {
     "weeks": [
         {
+            "startDate": "2023-02-02",
+            "endDate": "2023-02-08",
+            "testPositiveRate": {
+                "value": 7.030269975456776,
+                "delta": 12.06110930425329
+            },
+            "adminTests": {
+                "average7d": 2619.285714285714,
+                "delta": -18.53645532501
+            },
+            "positiveTests": {
+                "average7d": 184.14285714285714,
+                "delta": -8.711048158640232
+            },
+            "wastewater": {
+                "average7d": null,
+                "delta": null
+            },
+            "hospitalCases": {
+                "average7d": 174.14285714285714,
+                "delta": 2.956081081081081
+            },
+            "deaths": {
+                "total": 57,
+                "delta": 119.23076923076923
+            }
+        },
+        {
             "startDate": "2023-01-26",
             "endDate": "2023-02-01",
             "testPositiveRate": {
-                "value": 6.4820302818039774,
-                "delta": 2.83814285362031
+                "value": 6.273603767716711,
+                "delta": -0.4203174269730404
             },
             "adminTests": {
-                "average7d": 2651.285714285714,
-                "delta": -17.387046516803917
+                "average7d": 3215.285714285714,
+                "delta": -0.35418603621552625
             },
             "positiveTests": {
-                "average7d": 171.85714285714286,
-                "delta": -15.042372881355925
+                "average7d": 201.71428571428572,
+                "delta": -0.7730147575544544
             },
             "wastewater": {
                 "average7d": null,
@@ -32,20 +60,20 @@
             "startDate": "2023-01-19",
             "endDate": "2023-01-25",
             "testPositiveRate": {
-                "value": 6.303138215001113,
-                "delta": -9.483737988561924
+                "value": 6.300084119183601,
+                "delta": -9.333572023922967
             },
             "adminTests": {
-                "average7d": 3209.285714285714,
-                "delta": -5.533829527774273
+                "average7d": 3226.714285714286,
+                "delta": -5.224068479355483
             },
             "positiveTests": {
-                "average7d": 202.28571428571428,
-                "delta": -14.492753623188415
+                "average7d": 203.28571428571428,
+                "delta": -14.070048309178752
             },
             "wastewater": {
-                "average7d": null,
-                "delta": null
+                "average7d": 240.49299999999997,
+                "delta": -13.642593215449752
             },
             "hospitalCases": {
                 "average7d": 203.0,
@@ -60,16 +88,16 @@
             "startDate": "2023-01-12",
             "endDate": "2023-01-18",
             "testPositiveRate": {
-                "value": 6.963542323703797,
-                "delta": -22.827083936547567
+                "value": 6.948640483383686,
+                "delta": -23.034034209237962
             },
             "adminTests": {
-                "average7d": 3397.285714285714,
-                "delta": -9.763223799043786
+                "average7d": 3404.5714285714284,
+                "delta": -9.672528805336576
             },
             "positiveTests": {
                 "average7d": 236.57142857142858,
-                "delta": -30.361648444070642
+                "delta": -30.478589420654906
             },
             "wastewater": {
                 "average7d": 278.48566666666665,
@@ -88,16 +116,16 @@
             "startDate": "2023-01-05",
             "endDate": "2023-01-11",
             "testPositiveRate": {
-                "value": 9.023298171055627,
-                "delta": -31.06714058923985
+                "value": 9.028198908429351,
+                "delta": -31.09897255673812
             },
             "adminTests": {
-                "average7d": 3764.8571428571427,
-                "delta": 6.76984159137867
+                "average7d": 3769.1428571428573,
+                "delta": 6.800518134715025
             },
             "positiveTests": {
-                "average7d": 339.7142857142857,
-                "delta": -26.40049520272361
+                "average7d": 340.2857142857143,
+                "delta": -26.413345690454126
             },
             "wastewater": {
                 "average7d": 338.9183333333333,
@@ -111,38 +139,10 @@
                 "total": 32,
                 "delta": 33.33333333333333
             }
-        },
-        {
-            "startDate": "2022-12-29",
-            "endDate": "2023-01-04",
-            "testPositiveRate": {
-                "value": 13.08998095855447,
-                "delta": -12.928797353685598
-            },
-            "adminTests": {
-                "average7d": 3526.1428571428573,
-                "delta": 1.9158511912135214
-            },
-            "positiveTests": {
-                "average7d": 461.57142857142856,
-                "delta": -11.260642680582256
-            },
-            "wastewater": {
-                "average7d": 581.748,
-                "delta": -36.7926749149446
-            },
-            "hospitalCases": {
-                "average7d": 338.85714285714283,
-                "delta": 5.892857142857135
-            },
-            "deaths": {
-                "total": 24,
-                "delta": -42.857142857142854
-            }
         }
     ],
     "meta": {
-        "createdAt": "2023-02-02T17:41:47-08:00",
-        "dataLastUpdated": "2023-02-01"
+        "createdAt": "2023-02-09T17:37:02-08:00",
+        "dataLastUpdated": "2023-02-08"
     }
 }

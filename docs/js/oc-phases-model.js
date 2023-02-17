@@ -64,7 +64,7 @@ class OcPhasesModel {
       18: 'Autumn Lull',
       19: `Holiday ${link('Variant Soup')} Surge`,
       20: '2023 New Year Drop',
-      21: 'Mid-Winter Lull<br />(Ongoing)',
+      21: 'Groundhog Day Lull<br />(Ongoing)',
     }
   }
 

@@ -20,10 +20,12 @@ from covid_app.models.oc.phase_window import PhaseWindow
 
 
 # There are some phases that don't quite cooperate. So I cheat and hardcode them.
+# Note: Start dates must match a phase.
 HARDCODED_PHASES = (
     # Start Date, End Date
-    (date(2020, 3, 31), date(2020, 5, 24)),  # First drop in early 2020: data was spotty.
-    (date(2022, 11, 6), date(2022, 12, 31))  # 2022 holiday surge: weird mid-surge plateau.
+    (date(2020, 3, 31), date(2020, 5, 24)),   # First drop in early 2020: data was spotty.
+    (date(2022, 11, 6), date(2022, 12, 31)),  # 2022 holiday surge: weird mid-surge plateau.
+    (date(2023, 1, 22), date(2023, 2, 4))     # 2023 winter mini-lull.
 )
 
 
@@ -280,6 +282,8 @@ class Epidemic:
             if phase.started_on == start_date:
                 fixed_phase = phase
             elif phase.started_on > start_date and phase.started_on < end_date:
+                # This expects a phase was already assigned to a phase above.
+                #print(phases[n-1:n+2])
                 fixed_phase = fixed_phase.merge(phase)
             else:
                 merged_phases.append(phase)

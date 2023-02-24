@@ -19,5 +19,5 @@ WAVE_ANALYSIS_CONFIG = {
     # This is the minimum size a phase needs to be (in days) not be flagged as micro
     # and merged.
     # TODO: reset to 14 after Holiday 2022 numbers settle.
-    'min_phase_size': 17
+    'min_phase_size': 13
 }

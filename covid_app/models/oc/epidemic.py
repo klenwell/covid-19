@@ -25,7 +25,7 @@ HARDCODED_PHASES = (
     # Start Date, End Date
     (date(2020, 3, 31), date(2020, 5, 24)),   # First drop in early 2020: data was spotty.
     (date(2022, 11, 6), date(2022, 12, 31)),  # 2022 holiday surge: weird mid-surge plateau.
-    (date(2023, 1, 22), date(2023, 2, 4))     # 2023 winter mini-lull.
+    #(date(2023, 1, 22), date(2023, 2, 4))     # 2023 winter mini-lull.
 )
 
 

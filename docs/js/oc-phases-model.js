@@ -65,7 +65,8 @@ class OcPhasesModel {
       19: `Holiday ${link('Variant Soup')} Surge`,
       20: '2023 New Year Drop',
       21: 'Groundhog Day Surge',
-      22: 'Whatever This Is<br />(Ongoing)',
+      22: 'The Drop of Lent',
+      23: 'Whatever This Is<br />(Ongoing)',
     }
   }
 

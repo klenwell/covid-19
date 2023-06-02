@@ -1,36 +1,36 @@
 {
     "testPositiveRate": {
-        "updatedOn": "2023-05-24",
-        "latest": 5.58,
-        "percentile": 49.09,
-        "d7Date": "2023-05-17",
-        "d7Value": 4.47,
-        "d7DeltaPct": 24.9,
-        "d14Date": "2023-05-10",
-        "d14Value": 4.22,
-        "d14DeltaPct": 32.45
+        "updatedOn": "2023-05-31",
+        "latest": 5.94,
+        "percentile": 51.77,
+        "d7Date": "2023-05-24",
+        "d7Value": 5.64,
+        "d7DeltaPct": 5.38,
+        "d14Date": "2023-05-17",
+        "d14Value": 4.45,
+        "d14DeltaPct": 33.58
     },
     "dailyNewCases": {
-        "updatedOn": "2023-05-25",
-        "latest": 62.29,
-        "percentile": 11.74,
-        "d7Date": "2023-05-18",
-        "d7Value": 66.14,
-        "d7DeltaPct": -5.83,
-        "d14Date": "2023-05-11",
-        "d14Value": 78.29,
-        "d14DeltaPct": -20.44
+        "updatedOn": "2023-06-01",
+        "latest": 62.43,
+        "percentile": 12.25,
+        "d7Date": "2023-05-25",
+        "d7Value": 62.29,
+        "d7DeltaPct": 0.23,
+        "d14Date": "2023-05-18",
+        "d14Value": 66.14,
+        "d14DeltaPct": -5.62
     },
     "wastewater": {
-        "updatedOn": "2023-04-23",
-        "latest": 109.29,
-        "percentile": 31.75,
-        "d7Date": "2023-04-16",
-        "d7Value": 129.09,
-        "d7DeltaPct": -15.34,
-        "d14Date": "2023-04-09",
-        "d14Value": 140.91,
-        "d14DeltaPct": -22.44
+        "updatedOn": "2023-05-17",
+        "latest": 125.92,
+        "percentile": 34.04,
+        "d7Date": "2023-05-10",
+        "d7Value": 121.58,
+        "d7DeltaPct": 3.57,
+        "d14Date": "2023-05-03",
+        "d14Value": 148.17,
+        "d14DeltaPct": -15.02
     },
     "hospitalCases": {
         "updatedOn": "2023-05-12",
@@ -55,14 +55,14 @@
         "d14DeltaPct": -28.89
     },
     "deaths": {
-        "updatedOn": "2023-05-25",
-        "latest": 1.71,
-        "percentile": 16.71,
-        "d7Date": "2023-05-18",
-        "d7Value": 1.57,
-        "d7DeltaPct": 9.09,
-        "d14Date": "2023-05-11",
-        "d14Value": 3.57,
-        "d14DeltaPct": -52.0
+        "updatedOn": "2023-06-01",
+        "latest": 1.57,
+        "percentile": 14.71,
+        "d7Date": "2023-05-25",
+        "d7Value": 1.71,
+        "d7DeltaPct": -8.33,
+        "d14Date": "2023-05-18",
+        "d14Value": 1.57,
+        "d14DeltaPct": 0.0
     }
 }

@@ -66,7 +66,8 @@ class OcPhasesModel {
       20: '2023 New Year Drop',
       21: 'Groundhog Day Surge',
       22: 'The Drop of Lent',
-      23: 'Whatever This Is<br />(Ongoing)',
+      23: 'Covid Spring Break 2023',
+      24: 'Summer Rumblings<br />(Ongoing)',
     }
   }
 

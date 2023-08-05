@@ -15,6 +15,7 @@ import time
 
 from config.app import DATA_ROOT
 from covid_app.extracts.oc_hca.daily_extract import OcHcaDailyExtract
+from covid_app.extracts.cdph.oc_hospitalization_extract import OcHospitalDataExtract
 
 
 #
@@ -36,6 +37,10 @@ class OcHistoricalExport:
     @cached_property
     def extract(self):
         return OcHcaDailyExtract()
+
+    @cached_property
+    def hospital_extract(self):
+        return OcHospitalDataExtract()
 
     @property
     def csv_path(self):
@@ -91,8 +96,8 @@ class OcHistoricalExport:
             self.extract.new_positive_tests_administered.get(dated),
             self.extract.new_tests_reported.get(dated),
             self.extract.new_cases.get(dated),
-            self.extract.hospitalizations.get(dated),
-            self.extract.icu_cases.get(dated),
+            self.hospital_extract.hospitalizations.get(dated),
+            self.hospital_extract.icu_cases.get(dated),
             self.extract.new_deaths.get(dated),
             self.extract.new_snf_cases.get(dated)
         ]

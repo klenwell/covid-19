@@ -21,11 +21,10 @@ from contextlib import closing
 
 
 EXTRACT_URL = 'https://data.chhs.ca.gov'
-EXTRACT_PATH_F = '/dataset/{}/resource/{}/download/{}'
+EXTRACT_PATH_F = 'dataset/{}/resource/{}/download/{}'
 DATASET_ID = '2df3e19e-9ee4-42a6-a087-9761f82033f6'
 RESOURCE_ID = '47af979d-8685-4981-bced-96a6b79d3ed5'
 CSV_FILE = 'covid19hospitalbycounty.csv'
-START_DATE = '6/28/2021'
 
 ROOT_DIR = dirname(dirname(dirname(dirname(abspath(__file__)))))
 SAMPLE_DATA_DIR = path_join(ROOT_DIR, 'data/samples')
@@ -80,7 +79,7 @@ class OcHospitalDataExtract:
     @cached_property
     def hospitalizations(self):
         dated_counts = {}
-        hospital_header = 'hospitalized_covid_patients'
+        hospital_header = 'hospitalized_covid_confirmed_patients'
 
         for row in self.oc_rows:
             value = row[hospital_header]
@@ -90,7 +89,7 @@ class OcHospitalDataExtract:
         return dated_counts
 
     @cached_property
-    def icu_patients(self):
+    def icu_cases(self):
         dated_counts = {}
         icu_header = 'icu_covid_confirmed_patients'
 
@@ -100,24 +99,6 @@ class OcHospitalDataExtract:
             dated_counts[row['date']] = int(float(count))
 
         return dated_counts
-
-    @cached_property
-    def hospitalization_7d_avgs(self):
-        dated_counts = {}
-        dated_pre_samples = {}
-
-        for row in self.cal3_rows:
-            if row['Ten Rollapply'] != '':
-                dated_pre_samples[row['date']] = row
-
-        # Add 7-day ml avg
-        for dated in self.dates:
-            pre_sample = dated_pre_samples.get(dated, {})
-            pre_sample['virus_ml_7d_avg'] = \
-                self.compute_viral_count_7d_avg_for_date(dated, dated_pre_samples)
-            dated_samples[dated] = pre_sample
-
-        return dated_samples
 
     @cached_property
     def oc_rows(self):
@@ -159,8 +140,6 @@ class OcHospitalDataExtract:
 
     @property
     def starts_on(self):
-        # Use START_DATE rather than self.report_dates[0] to avoid gaps in reporting
-        #return self.date_str_to_date(START_DATE)
         return self.report_dates[0]
 
     @property
@@ -188,32 +167,6 @@ class OcHospitalDataExtract:
                 rows.append(row)
 
         return rows
-
-    def viral_counts_7d_avg_by_lab(self, lab):
-        dataset = {}
-        lab = lab.upper()
-        samples = self.dwrl_samples if lab == 'DWRL' else self.cal3_samples
-
-        for dated in self.dates:
-            dataset[dated] = samples[dated]['virus_ml_7d_avg']
-
-        return dataset
-
-    def compute_viral_count_7d_avg_for_date(self, dated, dated_samples):
-        viral_counts = []
-
-        for days_back in range(7):
-            back_date = dated - timedelta(days=days_back)
-            sample = dated_samples.get(back_date, {})
-            viral_count = sample.get('virus_ml')
-
-            if viral_count:
-                viral_counts.append(viral_count)
-
-        if len(viral_counts) < 1:
-            return None
-        else:
-            return sum(viral_counts) / len(viral_counts)
 
     #
     # Private

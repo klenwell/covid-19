@@ -12,7 +12,6 @@ import sys
 import requests
 import csv
 import codecs
-import math
 import time
 from os.path import dirname, abspath, join as path_join
 from functools import cached_property
@@ -182,7 +181,7 @@ class OcHospitalDataExtract:
 
 #
 # For testing
-# python covid_app/extracts/cdph/oc_wastewater_extract.py [--live]
+# python covid_app/extracts/cdph/oc_hospitalization_extract.py [--live]
 #
 if __name__ == "__main__":
     extract = OcHospitalDataExtract()
@@ -193,8 +192,5 @@ if __name__ == "__main__":
     else:
         extract.use_mock = True
         print("Using sample csv: {}".format(extract.sample_csv_path))
-
-    #print('Latest sample:', extract.newest_sample)
-    #print('Latest OC sample:', extract.ends_on)
 
     breakpoint()

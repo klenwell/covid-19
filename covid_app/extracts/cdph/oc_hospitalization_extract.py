@@ -80,10 +80,12 @@ class OcHospitalDataExtract:
     @cached_property
     def hospitalizations(self):
         dated_counts = {}
-        hospital_header = 'hospitalized_covid_confirmed_patients'
+        hospital_header = 'hospitalized_covid_patients'
 
         for row in self.oc_rows:
-            dated_counts[row['date']] = row[hospital_header]
+            value = row[hospital_header]
+            count = value if value != '' else 0
+            dated_counts[row['date']] = int(float(count))
 
         return dated_counts
 
@@ -93,7 +95,9 @@ class OcHospitalDataExtract:
         icu_header = 'icu_covid_confirmed_patients'
 
         for row in self.oc_rows:
-            dated_counts[row['date']] = row[icu_header]
+            value = row[icu_header]
+            count = value if value != '' else 0
+            dated_counts[row['date']] = int(float(count))
 
         return dated_counts
 

@@ -1,6 +1,6 @@
 {
     "meta": {
-        "createdAt": "2023-08-03T18:01:18-07:00",
+        "createdAt": "2023-08-05T14:28:24-07:00",
         "dataLastUpdated": "2023-08-03"
     },
     "dates": [
@@ -310,8 +310,8 @@
             "tests": 733.0,
             "positive-rate": 9.354901578639643,
             "cases": 54.0,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 113.85714285714286,
+            "icu-cases": 53.0,
             "deaths": 1.4285714285714286
         },
         {
@@ -320,8 +320,8 @@
             "tests": 740.2857142857143,
             "positive-rate": 9.224237746043999,
             "cases": 57.285714285714285,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 123.85714285714286,
+            "icu-cases": 58.57142857142857,
             "deaths": 1.4285714285714286
         },
         {
@@ -330,8 +330,8 @@
             "tests": 730.2857142857143,
             "positive-rate": 9.135367762128325,
             "cases": 59.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 130.57142857142858,
+            "icu-cases": 63.0,
             "deaths": 1.4285714285714286
         },
         {
@@ -340,8 +340,8 @@
             "tests": 730.4285714285714,
             "positive-rate": 8.722863289653823,
             "cases": 59.857142857142854,
-            "hospital-cases": 136.0,
-            "icu-cases": 66.71428571428571,
+            "hospital-cases": 135.42857142857142,
+            "icu-cases": 66.42857142857143,
             "deaths": 1.1428571428571428
         },
         {
@@ -1990,8 +1990,8 @@
             "tests": 7082.0,
             "positive-rate": 2.9733327954169524,
             "cases": 159.0,
-            "hospital-cases": 195.28571428571428,
-            "icu-cases": 62.57142857142857,
+            "hospital-cases": 197.42857142857142,
+            "icu-cases": 64.0,
             "deaths": 4.857142857142857
         },
         {
@@ -2000,8 +2000,8 @@
             "tests": 7124.285714285715,
             "positive-rate": 2.987768197313014,
             "cases": 161.85714285714286,
-            "hospital-cases": 193.14285714285714,
-            "icu-cases": 63.714285714285715,
+            "hospital-cases": 195.28571428571428,
+            "icu-cases": 65.14285714285714,
             "deaths": 5.0
         },
         {
@@ -2010,8 +2010,8 @@
             "tests": 7227.857142857143,
             "positive-rate": 3.008202391540666,
             "cases": 175.28571428571428,
-            "hospital-cases": 188.71428571428572,
-            "icu-cases": 62.0,
+            "hospital-cases": 190.85714285714286,
+            "icu-cases": 63.42857142857143,
             "deaths": 5.0
         },
         {
@@ -2020,8 +2020,8 @@
             "tests": 7434.142857142857,
             "positive-rate": 2.993908414842714,
             "cases": 179.71428571428572,
-            "hospital-cases": 184.85714285714286,
-            "icu-cases": 59.714285714285715,
+            "hospital-cases": 187.0,
+            "icu-cases": 61.142857142857146,
             "deaths": 6.428571428571429
         },
         {
@@ -2030,8 +2030,8 @@
             "tests": 7592.428571428572,
             "positive-rate": 3.087662520932508,
             "cases": 182.71428571428572,
-            "hospital-cases": 180.57142857142858,
-            "icu-cases": 56.57142857142857,
+            "hospital-cases": 182.71428571428572,
+            "icu-cases": 58.0,
             "deaths": 9.285714285714286
         },
         {
@@ -2040,8 +2040,8 @@
             "tests": 7583.714285714285,
             "positive-rate": 3.192932223185021,
             "cases": 174.71428571428572,
-            "hospital-cases": 174.28571428571428,
-            "icu-cases": 54.57142857142857,
+            "hospital-cases": 176.42857142857142,
+            "icu-cases": 56.0,
             "deaths": 9.571428571428571
         },
         {
@@ -2050,8 +2050,8 @@
             "tests": 7766.571428571428,
             "positive-rate": 3.215244822131479,
             "cases": 179.71428571428572,
-            "hospital-cases": 167.71428571428572,
-            "icu-cases": 52.0,
+            "hospital-cases": 169.85714285714286,
+            "icu-cases": 53.42857142857143,
             "deaths": 11.571428571428571
         },
         {
@@ -3070,7 +3070,7 @@
             "tests": 20215.571428571428,
             "positive-rate": 17.91405493643514,
             "cases": 2842.285714285714,
-            "hospital-cases": 2154.4285714285716,
+            "hospital-cases": 2154.5714285714284,
             "icu-cases": 496.85714285714283,
             "deaths": 11.285714285714286
         },
@@ -3080,7 +3080,7 @@
             "tests": 20298.428571428572,
             "positive-rate": 17.540414810435713,
             "cases": 2637.0,
-            "hospital-cases": 2172.0,
+            "hospital-cases": 2172.4285714285716,
             "icu-cases": 497.85714285714283,
             "deaths": 9.857142857142858
         },
@@ -3090,7 +3090,7 @@
             "tests": 21866.285714285714,
             "positive-rate": 17.316939319500342,
             "cases": 2935.714285714286,
-            "hospital-cases": 2195.1428571428573,
+            "hospital-cases": 2195.5714285714284,
             "icu-cases": 499.7142857142857,
             "deaths": 13.857142857142858
         },
@@ -3100,7 +3100,7 @@
             "tests": 24587.0,
             "positive-rate": 16.979937132863476,
             "cases": 2812.5714285714284,
-            "hospital-cases": 2218.5714285714284,
+            "hospital-cases": 2219.0,
             "icu-cases": 502.85714285714283,
             "deaths": 13.857142857142858
         },
@@ -3110,7 +3110,7 @@
             "tests": 24105.285714285714,
             "positive-rate": 16.684544587138564,
             "cases": 3413.1428571428573,
-            "hospital-cases": 2230.0,
+            "hospital-cases": 2230.4285714285716,
             "icu-cases": 511.42857142857144,
             "deaths": 20.0
         },
@@ -3120,7 +3120,7 @@
             "tests": 23863.714285714286,
             "positive-rate": 16.499048166373335,
             "cases": 3859.0,
-            "hospital-cases": 2236.1428571428573,
+            "hospital-cases": 2236.5714285714284,
             "icu-cases": 517.7142857142857,
             "deaths": 27.142857142857142
         },
@@ -3130,7 +3130,7 @@
             "tests": 23522.14285714286,
             "positive-rate": 15.871367404573197,
             "cases": 3040.285714285714,
-            "hospital-cases": 2231.0,
+            "hospital-cases": 2231.4285714285716,
             "icu-cases": 522.1428571428571,
             "deaths": 27.714285714285715
         },
@@ -3140,7 +3140,7 @@
             "tests": 23420.428571428572,
             "positive-rate": 15.079631335281166,
             "cases": 3390.0,
-            "hospital-cases": 2221.1428571428573,
+            "hospital-cases": 2221.4285714285716,
             "icu-cases": 530.5714285714286,
             "deaths": 31.714285714285715
         },
@@ -4591,7 +4591,7 @@
             "positive-rate": 0.6160419821202631,
             "cases": 30.428571428571427,
             "hospital-cases": 60.857142857142854,
-            "icu-cases": 12.714285714285714,
+            "icu-cases": 12.571428571428571,
             "deaths": 2.5714285714285716
         },
         {
@@ -4601,7 +4601,7 @@
             "positive-rate": 0.6016739107008154,
             "cases": 30.142857142857142,
             "hospital-cases": 59.57142857142857,
-            "icu-cases": 11.571428571428571,
+            "icu-cases": 11.428571428571429,
             "deaths": 2.5714285714285716
         },
         {
@@ -4611,7 +4611,7 @@
             "positive-rate": 0.6365132557355595,
             "cases": 30.428571428571427,
             "hospital-cases": 58.42857142857143,
-            "icu-cases": 10.571428571428571,
+            "icu-cases": 10.428571428571429,
             "deaths": 3.2857142857142856
         },
         {
@@ -4621,7 +4621,7 @@
             "positive-rate": 0.6630401313763727,
             "cases": 29.714285714285715,
             "hospital-cases": 57.42857142857143,
-            "icu-cases": 10.285714285714286,
+            "icu-cases": 10.142857142857142,
             "deaths": 3.142857142857143
         },
         {
@@ -4631,7 +4631,7 @@
             "positive-rate": 0.668156054776385,
             "cases": 31.857142857142858,
             "hospital-cases": 57.0,
-            "icu-cases": 10.428571428571429,
+            "icu-cases": 10.285714285714286,
             "deaths": 3.142857142857143
         },
         {
@@ -4641,7 +4641,7 @@
             "positive-rate": 0.6774982748886519,
             "cases": 31.0,
             "hospital-cases": 55.42857142857143,
-            "icu-cases": 10.714285714285714,
+            "icu-cases": 10.571428571428571,
             "deaths": 3.142857142857143
         },
         {
@@ -4651,7 +4651,7 @@
             "positive-rate": 0.6489687906918133,
             "cases": 25.0,
             "hospital-cases": 54.57142857142857,
-            "icu-cases": 11.714285714285714,
+            "icu-cases": 11.571428571428571,
             "deaths": 2.4285714285714284
         },
         {
@@ -6830,7 +6830,7 @@
             "tests": 40092.28571428572,
             "positive-rate": 21.479372590380763,
             "cases": 7973.571428571428,
-            "hospital-cases": 1129.4285714285713,
+            "hospital-cases": 1129.142857142857,
             "icu-cases": 173.28571428571428,
             "deaths": 2.142857142857143
         },
@@ -6840,7 +6840,7 @@
             "tests": 36302.857142857145,
             "positive-rate": 21.50165276247442,
             "cases": 4695.714285714285,
-            "hospital-cases": 1155.7142857142858,
+            "hospital-cases": 1155.4285714285713,
             "icu-cases": 179.0,
             "deaths": 1.8571428571428572
         },
@@ -6850,7 +6850,7 @@
             "tests": 35690.0,
             "positive-rate": 20.603610455109475,
             "cases": 7489.714285714285,
-            "hospital-cases": 1178.7142857142858,
+            "hospital-cases": 1178.4285714285713,
             "icu-cases": 184.42857142857142,
             "deaths": 3.857142857142857
         },
@@ -6860,7 +6860,7 @@
             "tests": 34786.42857142857,
             "positive-rate": 19.94373832159504,
             "cases": 6513.857142857143,
-            "hospital-cases": 1194.5714285714287,
+            "hospital-cases": 1194.2857142857142,
             "icu-cases": 188.85714285714286,
             "deaths": 3.857142857142857
         },
@@ -6870,7 +6870,7 @@
             "tests": 33947.57142857143,
             "positive-rate": 19.281833752046225,
             "cases": 6241.285714285715,
-            "hospital-cases": 1193.142857142857,
+            "hospital-cases": 1192.857142857143,
             "icu-cases": 191.28571428571428,
             "deaths": 4.285714285714286
         },
@@ -6880,7 +6880,7 @@
             "tests": 33299.28571428572,
             "positive-rate": 18.358180141144167,
             "cases": 6636.0,
-            "hospital-cases": 1188.7142857142858,
+            "hospital-cases": 1188.4285714285713,
             "icu-cases": 194.28571428571428,
             "deaths": 4.571428571428571
         },
@@ -6890,7 +6890,7 @@
             "tests": 32773.42857142857,
             "positive-rate": 17.919133095626247,
             "cases": 6636.0,
-            "hospital-cases": 1183.2857142857142,
+            "hospital-cases": 1183.0,
             "icu-cases": 197.71428571428572,
             "deaths": 4.571428571428571
         },
@@ -7810,8 +7810,8 @@
             "tests": 12224.285714285714,
             "positive-rate": 2.649292976510459,
             "cases": 203.85714285714286,
-            "hospital-cases": 63.42857142857143,
-            "icu-cases": 13.571428571428571,
+            "hospital-cases": 63.57142857142857,
+            "icu-cases": 13.714285714285714,
             "deaths": 4.571428571428571
         },
         {
@@ -7820,8 +7820,8 @@
             "tests": 12500.714285714286,
             "positive-rate": 2.6764184903719785,
             "cases": 203.85714285714286,
-            "hospital-cases": 64.28571428571429,
-            "icu-cases": 14.0,
+            "hospital-cases": 64.42857142857143,
+            "icu-cases": 14.142857142857142,
             "deaths": 4.571428571428571
         },
         {
@@ -7830,8 +7830,8 @@
             "tests": 12688.285714285714,
             "positive-rate": 2.774212434416447,
             "cases": 246.0,
-            "hospital-cases": 64.57142857142857,
-            "icu-cases": 13.714285714285714,
+            "hospital-cases": 64.71428571428571,
+            "icu-cases": 13.857142857142858,
             "deaths": 4.428571428571429
         },
         {
@@ -7840,8 +7840,8 @@
             "tests": 12754.714285714286,
             "positive-rate": 2.926648970128692,
             "cases": 246.0,
-            "hospital-cases": 65.57142857142857,
-            "icu-cases": 13.285714285714286,
+            "hospital-cases": 65.71428571428571,
+            "icu-cases": 13.428571428571429,
             "deaths": 4.428571428571429
         },
         {
@@ -7850,8 +7850,8 @@
             "tests": 12746.714285714286,
             "positive-rate": 3.02598989095229,
             "cases": 246.0,
-            "hospital-cases": 67.28571428571429,
-            "icu-cases": 12.857142857142858,
+            "hospital-cases": 67.42857142857143,
+            "icu-cases": 13.0,
             "deaths": 4.428571428571429
         },
         {
@@ -7860,8 +7860,8 @@
             "tests": 12753.714285714286,
             "positive-rate": 3.097136968502173,
             "cases": 305.42857142857144,
-            "hospital-cases": 71.0,
-            "icu-cases": 12.428571428571429,
+            "hospital-cases": 71.14285714285714,
+            "icu-cases": 12.571428571428571,
             "deaths": 2.4285714285714284
         },
         {
@@ -7870,8 +7870,8 @@
             "tests": 12742.714285714286,
             "positive-rate": 3.2085561497326207,
             "cases": 305.42857142857144,
-            "hospital-cases": 73.42857142857143,
-            "icu-cases": 12.142857142857142,
+            "hospital-cases": 73.57142857142857,
+            "icu-cases": 12.285714285714286,
             "deaths": 2.4285714285714284
         },
         {
@@ -11630,8 +11630,8 @@
             "tests": 1861.0,
             "positive-rate": 4.45996775926921,
             "cases": 78.28571428571429,
-            "hospital-cases": 73.85714285714286,
-            "icu-cases": 9.142857142857142,
+            "hospital-cases": 76.28571428571429,
+            "icu-cases": 9.571428571428571,
             "deaths": 3.5714285714285716
         },
         {
@@ -11640,8 +11640,8 @@
             "tests": 1811.2857142857142,
             "positive-rate": 4.448300339143466,
             "cases": 78.28571428571429,
-            "hospital-cases": 73.85714285714286,
-            "icu-cases": 9.142857142857142,
+            "hospital-cases": 77.0,
+            "icu-cases": 9.571428571428571,
             "deaths": 3.5714285714285716
         },
         {
@@ -11650,8 +11650,8 @@
             "tests": 1817.7142857142858,
             "positive-rate": 4.220370952530651,
             "cases": 78.28571428571429,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 76.85714285714286,
+            "icu-cases": 9.571428571428571,
             "deaths": 3.5714285714285716
         },
         {
@@ -11660,8 +11660,8 @@
             "tests": 1798.7142857142858,
             "positive-rate": 4.24112461281868,
             "cases": 78.28571428571429,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 76.71428571428571,
+            "icu-cases": 10.0,
             "deaths": 3.5714285714285716
         },
         {
@@ -11670,8 +11670,8 @@
             "tests": 1738.2857142857142,
             "positive-rate": 4.23241288625904,
             "cases": 78.28571428571429,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 76.57142857142857,
+            "icu-cases": 10.142857142857142,
             "deaths": 3.5714285714285716
         },
         {
@@ -11680,8 +11680,8 @@
             "tests": 1605.4285714285713,
             "positive-rate": 4.440291866880227,
             "cases": 78.28571428571429,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 78.14285714285714,
+            "icu-cases": 10.428571428571429,
             "deaths": 3.5714285714285716
         },
         {
@@ -11690,8 +11690,8 @@
             "tests": 1509.4285714285713,
             "positive-rate": 4.4198372137043345,
             "cases": 78.28571428571429,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 78.0,
+            "icu-cases": 10.571428571428571,
             "deaths": 3.5714285714285716
         },
         {
@@ -11700,8 +11700,8 @@
             "tests": 1475.857142857143,
             "positive-rate": 4.33646307230665,
             "cases": 66.14285714285714,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 77.14285714285714,
+            "icu-cases": 10.285714285714286,
             "deaths": 1.5714285714285714
         },
         {
@@ -11710,8 +11710,8 @@
             "tests": 1425.142857142857,
             "positive-rate": 4.570970328789094,
             "cases": 66.14285714285714,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 77.57142857142857,
+            "icu-cases": 10.0,
             "deaths": 1.5714285714285714
         },
         {
@@ -11720,8 +11720,8 @@
             "tests": 1393.2857142857142,
             "positive-rate": 4.808776786629755,
             "cases": 66.14285714285714,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 77.71428571428571,
+            "icu-cases": 9.857142857142858,
             "deaths": 1.5714285714285714
         },
         {
@@ -11730,8 +11730,8 @@
             "tests": 1346.5714285714287,
             "positive-rate": 4.933163590070019,
             "cases": 66.14285714285714,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 77.42857142857143,
+            "icu-cases": 10.0,
             "deaths": 1.5714285714285714
         },
         {
@@ -11740,8 +11740,8 @@
             "tests": 1303.142857142857,
             "positive-rate": 4.998903749177812,
             "cases": 66.14285714285714,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 77.14285714285714,
+            "icu-cases": 9.285714285714286,
             "deaths": 1.5714285714285714
         },
         {
@@ -11750,8 +11750,8 @@
             "tests": 1256.2857142857142,
             "positive-rate": 5.20809642938367,
             "cases": 66.14285714285714,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 73.85714285714286,
+            "icu-cases": 8.571428571428571,
             "deaths": 1.5714285714285714
         },
         {
@@ -11760,8 +11760,8 @@
             "tests": 1223.857142857143,
             "positive-rate": 5.322750087545232,
             "cases": 66.14285714285714,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 71.42857142857143,
+            "icu-cases": 7.857142857142857,
             "deaths": 1.5714285714285714
         },
         {
@@ -11770,8 +11770,8 @@
             "tests": 1236.142857142857,
             "positive-rate": 5.246735236334219,
             "cases": 62.285714285714285,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 70.28571428571429,
+            "icu-cases": 7.571428571428571,
             "deaths": 1.7142857142857142
         },
         {
@@ -11780,8 +11780,8 @@
             "tests": 1222.7142857142858,
             "positive-rate": 5.409510456829069,
             "cases": 62.285714285714285,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 69.28571428571429,
+            "icu-cases": 7.571428571428571,
             "deaths": 1.7142857142857142
         },
         {
@@ -11790,8 +11790,8 @@
             "tests": 1215.142857142857,
             "positive-rate": 5.349165295085822,
             "cases": 62.285714285714285,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 68.71428571428571,
+            "icu-cases": 7.714285714285714,
             "deaths": 1.7142857142857142
         },
         {
@@ -11800,8 +11800,8 @@
             "tests": 1213.5714285714287,
             "positive-rate": 5.309005297233667,
             "cases": 62.285714285714285,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 68.85714285714286,
+            "icu-cases": 7.428571428571429,
             "deaths": 1.7142857142857142
         },
         {
@@ -11810,8 +11810,8 @@
             "tests": 1139.2857142857142,
             "positive-rate": 5.191222570532916,
             "cases": 62.285714285714285,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 66.85714285714286,
+            "icu-cases": 8.0,
             "deaths": 1.7142857142857142
         },
         {
@@ -11820,8 +11820,8 @@
             "tests": 1185.7142857142858,
             "positive-rate": 5.698795180722891,
             "cases": 62.285714285714285,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 66.57142857142857,
+            "icu-cases": 8.571428571428571,
             "deaths": 1.7142857142857142
         },
         {
@@ -11830,8 +11830,8 @@
             "tests": 1176.4285714285713,
             "positive-rate": 5.719489981785063,
             "cases": 62.285714285714285,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 66.28571428571429,
+            "icu-cases": 9.428571428571429,
             "deaths": 1.7142857142857142
         },
         {
@@ -11840,8 +11840,8 @@
             "tests": 1171.5714285714287,
             "positive-rate": 5.755395683453238,
             "cases": 62.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 66.28571428571429,
+            "icu-cases": 10.142857142857142,
             "deaths": 1.5714285714285714
         },
         {
@@ -11850,8 +11850,8 @@
             "tests": 1153.4285714285713,
             "positive-rate": 5.5858310626703,
             "cases": 62.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 66.71428571428571,
+            "icu-cases": 10.428571428571429,
             "deaths": 1.5714285714285714
         },
         {
@@ -11860,8 +11860,8 @@
             "tests": 1165.857142857143,
             "positive-rate": 5.587550545276314,
             "cases": 62.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 64.0,
+            "icu-cases": 10.428571428571429,
             "deaths": 1.5714285714285714
         },
         {
@@ -11870,8 +11870,8 @@
             "tests": 1168.142857142857,
             "positive-rate": 5.698911581264523,
             "cases": 62.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 63.0,
+            "icu-cases": 11.428571428571429,
             "deaths": 1.5714285714285714
         },
         {
@@ -11880,8 +11880,8 @@
             "tests": 1227.2857142857142,
             "positive-rate": 5.796764055406821,
             "cases": 62.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 63.57142857142857,
+            "icu-cases": 11.571428571428571,
             "deaths": 1.5714285714285714
         },
         {
@@ -11890,8 +11890,8 @@
             "tests": 1190.7142857142858,
             "positive-rate": 5.506898620275945,
             "cases": 62.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 63.714285714285715,
+            "icu-cases": 11.714285714285714,
             "deaths": 1.5714285714285714
         },
         {
@@ -11900,8 +11900,8 @@
             "tests": 1171.2857142857142,
             "positive-rate": 5.57385046956946,
             "cases": 62.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 63.57142857142857,
+            "icu-cases": 11.714285714285714,
             "deaths": 1.5714285714285714
         },
         {
@@ -11910,8 +11910,8 @@
             "tests": 1142.5714285714287,
             "positive-rate": 5.513878469617405,
             "cases": 59.857142857142854,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 62.285714285714285,
+            "icu-cases": 11.714285714285714,
             "deaths": 1.1428571428571428
         },
         {
@@ -11920,8 +11920,8 @@
             "tests": 1123.4285714285713,
             "positive-rate": 5.582400813835198,
             "cases": 59.857142857142854,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 61.714285714285715,
+            "icu-cases": 11.714285714285714,
             "deaths": 1.1428571428571428
         },
         {
@@ -11930,8 +11930,8 @@
             "tests": 1071.2857142857142,
             "positive-rate": 5.52073609814642,
             "cases": 59.857142857142854,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 62.0,
+            "icu-cases": 11.571428571428571,
             "deaths": 1.1428571428571428
         },
         {
@@ -11940,8 +11940,8 @@
             "tests": 1033.0,
             "positive-rate": 5.476420965288342,
             "cases": 59.857142857142854,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 60.714285714285715,
+            "icu-cases": 10.857142857142858,
             "deaths": 1.1428571428571428
         },
         {
@@ -11950,8 +11950,8 @@
             "tests": 1014.7142857142857,
             "positive-rate": 5.504716317049134,
             "cases": 59.857142857142854,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 58.714285714285715,
+            "icu-cases": 11.0,
             "deaths": 1.1428571428571428
         },
         {
@@ -11960,8 +11960,8 @@
             "tests": 995.1428571428571,
             "positive-rate": 5.239735859890899,
             "cases": 59.857142857142854,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 57.0,
+            "icu-cases": 10.428571428571429,
             "deaths": 1.1428571428571428
         },
         {
@@ -11970,8 +11970,8 @@
             "tests": 990.2857142857143,
             "positive-rate": 5.121177149451818,
             "cases": 59.857142857142854,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 54.285714285714285,
+            "icu-cases": 10.142857142857142,
             "deaths": 1.1428571428571428
         },
         {
@@ -11980,8 +11980,8 @@
             "tests": 949.0,
             "positive-rate": 5.419238295950625,
             "cases": 43.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 52.857142857142854,
+            "icu-cases": 9.0,
             "deaths": 1.7142857142857142
         },
         {
@@ -11990,8 +11990,8 @@
             "tests": 942.1428571428571,
             "positive-rate": 5.489006823351024,
             "cases": 43.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 50.714285714285715,
+            "icu-cases": 8.142857142857142,
             "deaths": 1.7142857142857142
         },
         {
@@ -12000,8 +12000,8 @@
             "tests": 972.0,
             "positive-rate": 5.849500293944739,
             "cases": 43.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 50.57142857142857,
+            "icu-cases": 7.571428571428571,
             "deaths": 1.7142857142857142
         },
         {
@@ -12010,8 +12010,8 @@
             "tests": 985.7142857142857,
             "positive-rate": 5.695652173913043,
             "cases": 43.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 50.57142857142857,
+            "icu-cases": 7.0,
             "deaths": 1.7142857142857142
         },
         {
@@ -12020,8 +12020,8 @@
             "tests": 960.0,
             "positive-rate": 5.684523809523809,
             "cases": 43.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 50.714285714285715,
+            "icu-cases": 6.142857142857143,
             "deaths": 1.7142857142857142
         },
         {
@@ -12030,8 +12030,8 @@
             "tests": 966.4285714285714,
             "positive-rate": 5.395417590539542,
             "cases": 43.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 50.0,
+            "icu-cases": 6.0,
             "deaths": 1.7142857142857142
         },
         {
@@ -12040,8 +12040,8 @@
             "tests": 953.0,
             "positive-rate": 5.501424074351672,
             "cases": 43.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 50.857142857142854,
+            "icu-cases": 5.428571428571429,
             "deaths": 1.7142857142857142
         },
         {
@@ -12050,8 +12050,8 @@
             "tests": 975.1428571428571,
             "positive-rate": 5.566949897450923,
             "cases": 360.2857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 49.714285714285715,
+            "icu-cases": 5.428571428571429,
             "deaths": 1.2857142857142858
         },
         {
@@ -12060,8 +12060,8 @@
             "tests": 955.8571428571429,
             "positive-rate": 5.679270662083396,
             "cases": 360.2857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 48.285714285714285,
+            "icu-cases": 5.285714285714286,
             "deaths": 1.2857142857142858
         },
         {
@@ -12070,8 +12070,8 @@
             "tests": 948.1428571428571,
             "positive-rate": 5.484405604941992,
             "cases": 360.2857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 46.57142857142857,
+            "icu-cases": 5.142857142857143,
             "deaths": 1.2857142857142858
         },
         {
@@ -12080,8 +12080,8 @@
             "tests": 941.0,
             "positive-rate": 5.571580385608016,
             "cases": 360.2857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 44.285714285714285,
+            "icu-cases": 5.0,
             "deaths": 1.2857142857142858
         },
         {
@@ -12090,8 +12090,8 @@
             "tests": 930.7142857142857,
             "positive-rate": 5.602455871066769,
             "cases": 360.2857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 42.142857142857146,
+            "icu-cases": 4.857142857142857,
             "deaths": 1.2857142857142858
         },
         {
@@ -12100,8 +12100,8 @@
             "tests": 871.4285714285714,
             "positive-rate": 5.852459016393443,
             "cases": 360.2857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 41.57142857142857,
+            "icu-cases": 4.714285714285714,
             "deaths": 1.2857142857142858
         },
         {
@@ -12110,8 +12110,8 @@
             "tests": 855.5714285714286,
             "positive-rate": 5.994322925363166,
             "cases": 360.2857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 39.142857142857146,
+            "icu-cases": 4.714285714285714,
             "deaths": 1.2857142857142858
         },
         {
@@ -12120,8 +12120,8 @@
             "tests": 850.7142857142857,
             "positive-rate": 5.82703610411419,
             "cases": 61.142857142857146,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 38.142857142857146,
+            "icu-cases": 4.857142857142857,
             "deaths": 1.4285714285714286
         },
         {
@@ -12130,8 +12130,8 @@
             "tests": 851.1428571428571,
             "positive-rate": 5.857670359180933,
             "cases": 61.142857142857146,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 37.0,
+            "icu-cases": 4.857142857142857,
             "deaths": 1.4285714285714286
         },
         {
@@ -12140,8 +12140,8 @@
             "tests": 852.5714285714286,
             "positive-rate": 5.814343163538874,
             "cases": 61.142857142857146,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 36.857142857142854,
+            "icu-cases": 5.0,
             "deaths": 1.4285714285714286
         },
         {
@@ -12150,8 +12150,8 @@
             "tests": 855.4285714285714,
             "positive-rate": 5.8450233800935205,
             "cases": 61.142857142857146,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 36.42857142857143,
+            "icu-cases": 4.714285714285714,
             "deaths": 1.4285714285714286
         },
         {
@@ -12160,8 +12160,8 @@
             "tests": 834.5714285714286,
             "positive-rate": 6.179390619650805,
             "cases": 61.142857142857146,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 37.0,
+            "icu-cases": 4.571428571428571,
             "deaths": 1.4285714285714286
         },
         {
@@ -12170,8 +12170,8 @@
             "tests": 778.2857142857143,
             "positive-rate": 6.644640234948605,
             "cases": 61.142857142857146,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 38.42857142857143,
+            "icu-cases": 4.571428571428571,
             "deaths": 1.4285714285714286
         },
         {
@@ -12180,8 +12180,8 @@
             "tests": 788.0,
             "positive-rate": 6.943437273386512,
             "cases": 61.142857142857146,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 41.285714285714285,
+            "icu-cases": 4.714285714285714,
             "deaths": 1.4285714285714286
         },
         {
@@ -12190,8 +12190,8 @@
             "tests": 775.4285714285714,
             "positive-rate": 7.59027266028003,
             "cases": 53.0,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 45.142857142857146,
+            "icu-cases": 5.0,
             "deaths": 1.0
         },
         {
@@ -12200,8 +12200,8 @@
             "tests": 785.7142857142857,
             "positive-rate": 7.618181818181818,
             "cases": 53.0,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 48.714285714285715,
+            "icu-cases": 5.142857142857143,
             "deaths": 1.0
         },
         {
@@ -12210,8 +12210,8 @@
             "tests": 786.0,
             "positive-rate": 7.797164667393675,
             "cases": 53.0,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 51.285714285714285,
+            "icu-cases": 5.428571428571429,
             "deaths": 1.0
         },
         {
@@ -12220,8 +12220,8 @@
             "tests": 786.1428571428571,
             "positive-rate": 8.050154461202979,
             "cases": 53.0,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 55.57142857142857,
+            "icu-cases": 6.0,
             "deaths": 1.0
         },
         {
@@ -12230,8 +12230,8 @@
             "tests": 800.8571428571429,
             "positive-rate": 7.937923653228683,
             "cases": 53.0,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 58.42857142857143,
+            "icu-cases": 6.285714285714286,
             "deaths": 1.0
         },
         {
@@ -12240,8 +12240,8 @@
             "tests": 867.0,
             "positive-rate": 7.74427418026034,
             "cases": 53.0,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 60.857142857142854,
+            "icu-cases": 6.285714285714286,
             "deaths": 1.0
         },
         {
@@ -12250,8 +12250,8 @@
             "tests": 869.4285714285714,
             "positive-rate": 7.525468287873808,
             "cases": 53.0,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 62.57142857142857,
+            "icu-cases": 6.285714285714286,
             "deaths": 1.0
         },
         {
@@ -12260,8 +12260,8 @@
             "tests": 867.1428571428571,
             "positive-rate": 7.446457990115321,
             "cases": 75.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 61.142857142857146,
+            "icu-cases": 5.857142857142857,
             "deaths": 0.14285714285714285
         },
         {
@@ -12270,8 +12270,8 @@
             "tests": 842.0,
             "positive-rate": 7.736681370885647,
             "cases": 75.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 61.714285714285715,
+            "icu-cases": 5.857142857142857,
             "deaths": 0.14285714285714285
         },
         {
@@ -12280,8 +12280,8 @@
             "tests": 818.4285714285714,
             "positive-rate": 7.627858264967709,
             "cases": 75.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 63.285714285714285,
+            "icu-cases": 5.571428571428571,
             "deaths": 0.14285714285714285
         },
         {
@@ -12290,8 +12290,8 @@
             "tests": 815.0,
             "positive-rate": 7.712532865907098,
             "cases": 75.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 60.857142857142854,
+            "icu-cases": 5.142857142857143,
             "deaths": 0.14285714285714285
         },
         {
@@ -12300,8 +12300,8 @@
             "tests": 826.0,
             "positive-rate": 8.024904877205119,
             "cases": 75.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 59.714285714285715,
+            "icu-cases": 5.142857142857143,
             "deaths": 0.14285714285714285
         },
         {
@@ -12310,8 +12310,8 @@
             "tests": 832.4285714285714,
             "positive-rate": 8.323322464389909,
             "cases": 75.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 59.285714285714285,
+            "icu-cases": 5.285714285714286,
             "deaths": 0.14285714285714285
         },
         {
@@ -12320,8 +12320,8 @@
             "tests": 812.4285714285714,
             "positive-rate": 8.704061895551257,
             "cases": 75.42857142857143,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 57.857142857142854,
+            "icu-cases": 5.428571428571429,
             "deaths": 0.14285714285714285
         },
         {
@@ -12330,8 +12330,8 @@
             "tests": 824.8571428571429,
             "positive-rate": 8.901974367855905,
             "cases": 74.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 58.57142857142857,
+            "icu-cases": 6.0,
             "deaths": 1.4285714285714286
         },
         {
@@ -12340,8 +12340,8 @@
             "tests": 840.8571428571429,
             "positive-rate": 8.987427794767244,
             "cases": 74.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 58.857142857142854,
+            "icu-cases": 6.714285714285714,
             "deaths": 1.4285714285714286
         },
         {
@@ -12350,8 +12350,8 @@
             "tests": 860.2857142857143,
             "positive-rate": 9.216207240119562,
             "cases": 74.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 57.714285714285715,
+            "icu-cases": 7.0,
             "deaths": 1.4285714285714286
         },
         {
@@ -12360,18 +12360,18 @@
             "tests": 861.8571428571429,
             "positive-rate": 9.39830929885629,
             "cases": 74.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 58.857142857142854,
+            "icu-cases": 7.142857142857143,
             "deaths": 1.4285714285714286
         },
         {
             "date": "2023-07-24",
-            "wastewater": null,
+            "wastewater": 215.62233333333333,
             "tests": 855.7142857142857,
             "positive-rate": 9.71619365609349,
             "cases": 74.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 58.285714285714285,
+            "icu-cases": 7.142857142857143,
             "deaths": 1.4285714285714286
         },
         {
@@ -12380,8 +12380,8 @@
             "tests": 855.7142857142857,
             "positive-rate": 10.133555926544242,
             "cases": 74.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 57.0,
+            "icu-cases": 7.142857142857143,
             "deaths": 1.4285714285714286
         },
         {
@@ -12390,8 +12390,8 @@
             "tests": 880.1428571428571,
             "positive-rate": 10.258074987826651,
             "cases": 74.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 55.857142857142854,
+            "icu-cases": 7.142857142857143,
             "deaths": 1.4285714285714286
         },
         {
@@ -12400,8 +12400,8 @@
             "tests": 863.7142857142857,
             "positive-rate": 10.420112471055242,
             "cases": 87.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 55.285714285714285,
+            "icu-cases": 7.0,
             "deaths": 0.7142857142857143
         },
         {
@@ -12410,8 +12410,8 @@
             "tests": 862.7142857142857,
             "positive-rate": 10.680576254346747,
             "cases": 87.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 51.857142857142854,
+            "icu-cases": 6.428571428571429,
             "deaths": 0.7142857142857143
         },
         {
@@ -12420,8 +12420,8 @@
             "tests": 863.8571428571429,
             "positive-rate": 11.112948569538613,
             "cases": 87.57142857142857,
-            "hospital-cases": null,
-            "icu-cases": null,
+            "hospital-cases": 50.142857142857146,
+            "icu-cases": 6.142857142857143,
             "deaths": 0.7142857142857143
         },
         {
@@ -12480,7 +12480,7 @@
         "tests": 45751.142857142855,
         "positive-rate": 25.038921655783646,
         "cases": 9339.857142857143,
-        "hospital-cases": 2236.1428571428573,
+        "hospital-cases": 2236.5714285714284,
         "icu-cases": 541.1428571428571,
         "deaths": 61.142857142857146
     }

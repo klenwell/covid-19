@@ -67,7 +67,8 @@ class OcPhasesModel {
       21: 'Groundhog Day Surge',
       22: 'The Drop of Lent',
       23: 'Covid Spring Break 2023',
-      24: 'Summer Heat Wave<br />(Ongoing)',
+      24: 'Summer Heat Wave',
+      25: 'A Cooling Trend<br />(Ongoing)',
     }
   }
 

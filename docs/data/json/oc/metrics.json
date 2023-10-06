@@ -1,25 +1,25 @@
 {
     "testPositiveRate": {
-        "updatedOn": "2023-09-27",
-        "latest": 13.5,
-        "percentile": 83.06,
-        "d7Date": "2023-09-20",
-        "d7Value": 14.79,
-        "d7DeltaPct": -8.75,
-        "d14Date": "2023-09-13",
-        "d14Value": 15.91,
-        "d14DeltaPct": -15.16
+        "updatedOn": "2023-10-04",
+        "latest": 10.81,
+        "percentile": 75.9,
+        "d7Date": "2023-09-27",
+        "d7Value": 13.05,
+        "d7DeltaPct": -17.13,
+        "d14Date": "2023-09-20",
+        "d14Value": 14.79,
+        "d14DeltaPct": -26.87
     },
     "dailyNewCases": {
-        "updatedOn": "2023-09-28",
-        "latest": 138.86,
-        "percentile": 29.06,
-        "d7Date": "2023-09-21",
-        "d7Value": 162.0,
-        "d7DeltaPct": -14.29,
-        "d14Date": "2023-09-14",
-        "d14Value": 211.0,
-        "d14DeltaPct": -34.19
+        "updatedOn": "2023-10-05",
+        "latest": 107.29,
+        "percentile": 22.29,
+        "d7Date": "2023-09-28",
+        "d7Value": 138.86,
+        "d7DeltaPct": -22.74,
+        "d14Date": "2023-09-21",
+        "d14Value": 162.0,
+        "d14DeltaPct": -33.77
     },
     "wastewater": {
         "updatedOn": "2023-09-13",
@@ -33,36 +33,36 @@
         "d14DeltaPct": 115.48
     },
     "hospitalCases": {
-        "updatedOn": "2023-09-23",
-        "latest": 116.14,
-        "percentile": 25.75,
-        "d7Date": "2023-09-16",
-        "d7Value": 139.71,
-        "d7DeltaPct": -16.87,
-        "d14Date": "2023-09-09",
-        "d14Value": 111.71,
-        "d14DeltaPct": 3.96
+        "updatedOn": "2023-09-30",
+        "latest": 127.71,
+        "percentile": 30.19,
+        "d7Date": "2023-09-23",
+        "d7Value": 124.57,
+        "d7DeltaPct": 2.52,
+        "d14Date": "2023-09-16",
+        "d14Value": 139.71,
+        "d14DeltaPct": -8.59
     },
     "icuCases": {
-        "updatedOn": "2023-09-23",
-        "latest": 15.29,
-        "percentile": 21.87,
-        "d7Date": "2023-09-16",
-        "d7Value": 16.14,
-        "d7DeltaPct": -5.31,
-        "d14Date": "2023-09-09",
-        "d14Value": 11.29,
-        "d14DeltaPct": 35.44
+        "updatedOn": "2023-09-30",
+        "latest": 14.29,
+        "percentile": 19.81,
+        "d7Date": "2023-09-23",
+        "d7Value": 15.29,
+        "d7DeltaPct": -6.54,
+        "d14Date": "2023-09-16",
+        "d14Value": 16.14,
+        "d14DeltaPct": -11.5
     },
     "deaths": {
-        "updatedOn": "2023-09-28",
-        "latest": 1.71,
-        "percentile": 23.02,
-        "d7Date": "2023-09-21",
-        "d7Value": 2.14,
-        "d7DeltaPct": -20.0,
-        "d14Date": "2023-09-14",
-        "d14Value": 1.71,
+        "updatedOn": "2023-10-05",
+        "latest": 2.14,
+        "percentile": 31.55,
+        "d7Date": "2023-09-28",
+        "d7Value": 1.71,
+        "d7DeltaPct": 25.0,
+        "d14Date": "2023-09-21",
+        "d14Value": 2.14,
         "d14DeltaPct": 0.0
     }
 }

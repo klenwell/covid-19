@@ -106,25 +106,26 @@ class OcWastewaterExtract:
     @cached_property
     def oc_rows(self):
         rows = []
-        filtering_header = 'county_names'
-        county_fips = OC_FIPS
+        county_header = 'county_names'
+        county_filter = OC_FIPS
+        virus_type_header = 'pcr_target'
+        virus_type_filter = 'sars-cov-2'
+
 
         for row in self.csv_rows:
             #breakpoint()
-            fips = row.get(filtering_header)
             date = row['sample_collect_date']
             concentrate = row.get('pcr_target_avg_conc', '0.0')
+            county_value = row.get(county_header)
+            virus_type_value = row.get(virus_type_header)
+            is_oc = county_value == county_filter
+            is_covid = virus_type_value == virus_type_filter
 
-            # Collect only OC rows
-            try:
-                if fips != county_fips:
-                    continue
-            except ValueError as e:
-                print('Skip {}: {}'.format(fips, e))
-
-            if not date:
-                print(row['lab_id'], zipcode, row['sample_collect_date'], row['test_result_date'])
+            # Data source includes all CA counties and readings for other viruses like
+            # Norovirus and RSV. Collect only rows for OC and Covid.
+            if not (is_oc and is_covid):
                 continue
+
             row['date'] = self.date_str_to_date(date)
             row['virus'] = int(round(float(concentrate.replace(',', ''))))
             row['virus_ml'] = row['virus'] / 1000
@@ -134,14 +135,6 @@ class OcWastewaterExtract:
                 rows.append(row)
 
         return rows
-
-    @cached_property
-    def cal3_rows(self):
-        return [row for row in self.oc_rows if row['lab_id'].upper() == 'CAL3']
-
-    @cached_property
-    def dwrl_rows(self):
-        return [row for row in self.oc_rows if row['lab_id'].upper() == 'DWRL']
 
     # Lab Info
     @cached_property
@@ -194,10 +187,6 @@ class OcWastewaterExtract:
     @property
     def ends_on(self):
         return self.report_dates[-1]
-
-    @property
-    def headers(self):
-        return
 
     @property
     def zip_codes(self):

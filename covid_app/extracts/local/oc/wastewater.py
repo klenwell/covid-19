@@ -66,55 +66,12 @@ class OcWastewaterExtract:
 
         return dataset
 
-    # Export Datasets
-    # Map dates to dated_values.
-    #
-    @cached_property
-    def dwrl(self):
-        dated_records = {}
-        av7d_idx = 7
-        vpml_idx = 8
-        vpl_idx = 9
-
-        for dated in self.dates:
-            row = self.dated_export_rows[dated]
-            record = {
-                'avg_virus_7d': self.to_f(row[av7d_idx]),
-                'virus_ml': self.to_f(row[vpml_idx]),
-                'virus_l': self.to_i(row[vpl_idx])
-            }
-            dated_records[dated] = record
-
-        return dated_records
-
-    @cached_property
-    def cal3(self):
-        dated_records = {}
-        av7d_idx = 1
-        vpml_idx = 2
-        vpl_idx = 4
-
-        for dated in self.dates:
-            row = self.dated_export_rows[dated]
-            record = {
-                'avg_virus_7d': self.to_f(row[av7d_idx]),
-                'virus_ml': self.to_f(row[vpml_idx]),
-                'virus_l': self.to_i(row[vpl_idx])
-            }
-            dated_records[dated] = record
-
-        return dated_records
-
     # Data Source
     # I'm extracting data from an export csv.
     @cached_property
     def csv_path(self):
         fname = 'oc-wastewater.csv'
-        return path_join(self.csv_dir, fname)
-
-    @property
-    def csv_dir(self):
-        return path_join(DATA_ROOT, 'oc')
+        return path_join(DATA_ROOT, 'oc', fname)
 
     # Dates
     @cached_property
@@ -143,6 +100,12 @@ class OcWastewaterExtract:
             dated = datetime.strptime(row['Date'], DATE_F).date()
             dates.append(dated)
         return sorted(dates)
+
+    @cached_property
+    def latest_update(self):
+        for dated in sorted(self.dates, reverse=True):
+            if self.dataset.get(dated, {}).get('virus_ml'):
+                return dated
 
     @cached_property
     def newest_samples(self):

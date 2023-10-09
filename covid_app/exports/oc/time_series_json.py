@@ -14,9 +14,6 @@ JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
 JSON_FILE_NAME = 'time-series.json'
 DATE_OUT_F = '%Y-%m-%d'
 
-# Wastewater Lab: CAL3 or DWRL
-WASTEWATER_LAB = 'DWRL'
-
 JSON_SCHEMA = {
     'meta': {},
     'dates': [],

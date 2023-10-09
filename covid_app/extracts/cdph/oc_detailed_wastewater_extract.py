@@ -13,7 +13,7 @@ from os.path import dirname, abspath, join as path_join
 from functools import cached_property
 from datetime import datetime, timedelta
 from contextlib import closing
-from config.app import DATA_ROOT
+from config.app import DATA_ROOT, OC_FIPS
 
 
 DATASET_ID = 'b8c6ee3b-539d-4d62-8fa2-c7cd17c16656'
@@ -106,22 +106,21 @@ class OcWastewaterExtract:
     @cached_property
     def oc_rows(self):
         rows = []
-        zip_header = 'zipcode'
-        county_zip = 92708
+        filtering_header = 'county_names'
+        county_fips = OC_FIPS
 
         for row in self.csv_rows:
             #breakpoint()
-            zipcode = row.get(zip_header)
+            fips = row.get(filtering_header)
             date = row['sample_collect_date']
             concentrate = row.get('pcr_target_avg_conc', '0.0')
 
             # Collect only OC rows
             try:
-                if int(zipcode) != county_zip:
+                if fips != county_fips:
                     continue
             except ValueError as e:
-                pass
-                #print('Skip {}: {}'.format(zipcode, e))
+                print('Skip {}: {}'.format(fips, e))
 
             if not date:
                 print(row['lab_id'], zipcode, row['sample_collect_date'], row['test_result_date'])
@@ -237,6 +236,26 @@ class OcWastewaterExtract:
         self.use_mock = mock
         self.csv_path = csv_path
 
+    def rows_by_epa_id(self, epa_id):
+        return [row for row in self.oc_rows if row['epaid'] == epa_id]
+
+    def samples_by_epa_id(self, epa_id):
+        dated_samples = {}
+        dated_pre_samples = {}
+
+        # This used to be used to filter out duplicate or empty rows.
+        for row in self.rows_by_epa_id(epa_id):
+            dated_pre_samples[row['date']] = row
+
+        # Add 7-day ml avg
+        for dated in self.dates:
+            pre_sample = dated_pre_samples.get(dated, {})
+            pre_sample['virus_ml_7d_avg'] = \
+                self.compute_viral_count_7d_avg_for_date(dated, dated_pre_samples)
+            dated_samples[dated] = pre_sample
+
+        return dated_samples
+
     def load_test_csv(self):
         rows = []
 
@@ -301,5 +320,4 @@ class OcWastewaterExtract:
         """
         format = '%m/%d/%Y'
         date_sub = date_str.split(' ')[0]
-        print(date_str, date_sub)
         return datetime.strptime(date_sub, format).date()

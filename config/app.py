@@ -8,6 +8,7 @@ GH_PAGES_ROOT = path_join(PROJECT_ROOT, 'docs')
 
 # OC Config
 OC_POPULATION = 3222498
+OC_FIPS = '06059'
 
 # Wave Analysis
 WAVE_ANALYSIS_CONFIG = {

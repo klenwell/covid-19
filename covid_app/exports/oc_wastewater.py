@@ -19,7 +19,7 @@ CSV_HEADER = [
     'Lab ID',
     'Virus',
     'Units',
-    '<- CAL3 | DWRL ->',
+    '<- DP | LN ->',
     'Virus/ml 7d Avg',
     'Virus/ml',
     'Virus',
@@ -42,6 +42,16 @@ class OCWastewaterExport:
     @property
     def dates(self):
         return sorted(self.extract.dates)
+
+    @cached_property
+    def dana_point_samples(self):
+        epa_id = 'CA0107417'
+        return self.extract.samples_by_epa_id(epa_id)
+
+    @cached_property
+    def laguna_niguel_samples(self):
+        epa_id = 'CA0107611'
+        return self.extract.samples_by_epa_id(epa_id)
 
     @property
     def starts_on(self):
@@ -80,38 +90,38 @@ class OCWastewaterExport:
     # Private
     #
     def extract_data_to_csv_row(self, dated):
-        cal3 = self.extract.cal3_samples.get(dated, {})
-        dwrl = self.extract.dwrl_samples.get(dated, {})
-        divider = self.format_lab_row_divider(cal3, dwrl)
+        sample1 = self.dana_point_samples.get(dated, {})
+        sample2 = self.laguna_niguel_samples.get(dated, {})
+        divider = self.format_lab_row_divider(sample1, sample2)
 
         return [
             dated,
-            cal3.get('virus_ml_7d_avg'),
-            cal3.get('virus_ml'),
-            cal3.get('lab_id'),
-            cal3.get('virus'),
-            cal3.get('units'),
+            sample1.get('virus_ml_7d_avg'),
+            sample1.get('virus_ml'),
+            sample1.get('lab_id'),
+            sample1.get('virus'),
+            sample1.get('units'),
             divider,
-            dwrl.get('virus_ml_7d_avg'),
-            dwrl.get('virus_ml'),
-            dwrl.get('virus'),
-            dwrl.get('units')
+            sample2.get('virus_ml_7d_avg'),
+            sample2.get('virus_ml'),
+            sample2.get('virus'),
+            sample2.get('units')
         ]
 
-    def format_lab_row_divider(self, cal3, dwrl):
+    def format_lab_row_divider(self, sample1, sample2):
         divider_f = '{} {} {}'
 
-        cal3_lab_id = cal3.get('Lab Id')
-        dwrl_lab_id = dwrl.get('Lab Id')
+        sample1_id = sample1.get('zipcode')
+        sample2_id = sample2.get('zipcode')
 
-        cal3_reported = cal3_lab_id is not None
-        dwrl_reported = dwrl_lab_id is not None
+        sample1_reported = sample1_id is not None
+        sample2_reported = sample2_id is not None
 
-        if cal3_reported and dwrl_reported:
-            return divider_f.format(cal3_lab_id, '|', dwrl_lab_id)
-        elif cal3_reported:
-            return cal3_lab_id
-        elif dwrl_reported:
-            return dwrl_lab_id
+        if sample1_reported and sample2_reported:
+            return divider_f.format(sample1_id, '|', sample2_id)
+        elif sample1_reported:
+            return sample1_id
+        elif sample2_reported:
+            return sample2_id
         else:
             return ''

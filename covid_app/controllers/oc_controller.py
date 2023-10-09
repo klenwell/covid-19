@@ -91,6 +91,7 @@ class OcController(Controller):
     def wastewater(self):
         use_mock = self.app.pargs.mock
         export = OCWastewaterExport(mock=use_mock)
+        #breakpoint()
         export.to_csv()
         vars = {
             'export': export,
@@ -289,15 +290,38 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.exports.oc.time_series_json import OcTimeSeriesJsonExport
+        from covid_app.extracts.cdph.oc_detailed_wastewater_extract import OcWastewaterExtract, DATA_ROOT
         from pprint import pprint
+        from os.path import join
 
-        export = OcTimeSeriesJsonExport()
-        print(export.start_date)
-        print(export.end_date)
-        pprint(export.max_values)
+        OC_ZIPS = [92656, 92698, 92801, 92802, 92803, 92804, 92805, 92806, 92807, 92808, 92809, 92812, 92814, 92815, 92816, 92817, 92825, 92850, 92899, 92811, 92821, 92822, 92823, 90620, 90621, 90622, 90624, 92624, 92625, 92626, 92627, 92628, 90630, 92629, 92650, 92609, 92610, 92708, 92728, 92831, 92832, 92833, 92834, 92835, 92836, 92837, 92838, 92840, 92841, 92842, 92843, 92844, 92845, 92846, 92605, 92615, 92646, 92647, 92648, 92649, 92602, 92603, 92604, 92606, 92612, 92614, 92616, 92618, 92619, 92620, 92623, 92697, 92709, 92710, 90631, 90632, 90633, 90623, 92694, 92651, 92652, 92637, 92653, 92654, 92607, 92677, 92630, 90720, 90721, 92655, 92690, 92691, 92692, 92658, 92659, 92660, 92661, 92662, 92663, 92657, 92856, 92857, 92859, 92862, 92863, 92864, 92865, 92866, 92867, 92868, 92869, 92870, 92871, 92688, 92672, 92673, 92674, 92675, 92693, 92701, 92702, 92703, 92704, 92705, 92706, 92707, 92711, 92712, 92725, 92735, 92799, 90740, 92676, 90680, 90742, 90743, 92678, 92679, 92780, 92781, 92782, 92861, 92683, 92684, 92685, 92885, 92886, 92887]
+        oc_zip_set = set([str(zip) for zip in OC_ZIPS])
+
+        extract = OcWastewaterExtract(mock=True)
+        print(extract.sample_csv_path)
+        print(len(extract.csv_rows))
+        print(len(extract.zip_codes))
+        print(oc_zip_set.intersection(extract.zip_codes))
+        rows_92677 = extract.rows_by_zip('92677')
+        rows_92629 = extract.rows_by_zip('92629')
+        rows_92708 = extract.rows_by_zip('92708')
+        laguna_niguel = rows_92677[-1]
+        dana_point = rows_92629[-1]
+        fountain_valley = rows_92708[-1]
+
+        def show_me(row):
+            headers = ['zipcode', 'wwtp_name', 'facility_name', 'sample_collect_date', 'lab_id', 'sample_id', 'site_id']
+            return [row[header] for header in headers]
+
+        print(show_me(laguna_niguel))
+        print(show_me(dana_point))
+        print(show_me(fountain_valley))
+
+        old_cdph_csv = join(DATA_ROOT, 'samples/cdph-master-wastewater-20220726.csv')
+        extract_v1 = OcWastewaterExtract(mock=True, csv_path=old_cdph_csv)
+        print(extract_v1.sample_csv_path)
+        print(len(extract_v1.csv_rows))
+        print(oc_zip_set.intersection(extract_v1.zip_codes))
+        print(len(extract.rows_by_zip('92708')))
 
         breakpoint()
-
-        json_path = export.to_json_file()
-        print(json_path)

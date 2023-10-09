@@ -13,13 +13,14 @@ from os.path import dirname, abspath, join as path_join
 from functools import cached_property
 from datetime import datetime, timedelta
 from contextlib import closing
+from config.app import DATA_ROOT
 
 
 DATASET_ID = 'b8c6ee3b-539d-4d62-8fa2-c7cd17c16656'
 RESOURCE_ID = '16bb2698-c243-4b66-a6e8-4861ee66f8bf'
 EXTRACT_URL = 'https://data.ca.gov'
 EXTRACT_URL_F = "{}/dataset/{}/resource/{}/download/master-covid-public.csv"
-SAMPLE_CSV = 'data/samples/cdph-master-wastewater.csv'
+SAMPLE_CSV = 'cdph-master-wastewater.csv'
 START_DATE = '6/28/2021'
 
 
@@ -38,8 +39,10 @@ class OcWastewaterExtract:
 
     @property
     def sample_csv_path(self):
-        root_dir = dirname(dirname(dirname(dirname(abspath(__file__)))))
-        return path_join(root_dir, SAMPLE_CSV)
+        if self.csv_path is None:
+            return path_join(DATA_ROOT, 'samples', SAMPLE_CSV)
+        else:
+            return self.csv_path
 
     # Data
     @cached_property
@@ -107,6 +110,7 @@ class OcWastewaterExtract:
         county_zip = 92708
 
         for row in self.csv_rows:
+            #breakpoint()
             zipcode = row.get(zip_header)
             date = row['sample_collect_date']
             concentrate = row.get('pcr_target_avg_conc', '0.0')
@@ -116,9 +120,12 @@ class OcWastewaterExtract:
                 if int(zipcode) != county_zip:
                     continue
             except ValueError as e:
-                print('Skip {}: {}'.format(zipcode, e))
+                pass
+                #print('Skip {}: {}'.format(zipcode, e))
 
-
+            if not date:
+                print(row['lab_id'], zipcode, row['sample_collect_date'], row['test_result_date'])
+                continue
             row['date'] = self.date_str_to_date(date)
             row['virus'] = int(round(float(concentrate.replace(',', ''))))
             row['virus_ml'] = row['virus'] / 1000
@@ -189,6 +196,14 @@ class OcWastewaterExtract:
     def ends_on(self):
         return self.report_dates[-1]
 
+    @property
+    def headers(self):
+        return
+
+    @property
+    def zip_codes(self):
+        return set([r['zipcode'] for r in self.csv_rows])
+
     @cached_property
     def newest_samples(self):
         cal3_rows = [(r['date'], r) for r in self.cal3_rows]
@@ -218,19 +233,17 @@ class OcWastewaterExtract:
     #
     # Instance Methods
     #
-    def __init__(self, mock=False):
+    def __init__(self, mock=False, csv_path=None):
         self.use_mock = mock
+        self.csv_path = csv_path
 
-    def load_test_csv(self, csv_path=None):
+    def load_test_csv(self):
         rows = []
 
-        if csv_path is None:
-            csv_path = self.sample_csv_path
-
-        print('NOTE: using mock data from sample csv: {}'.format(csv_path))
+        print('NOTE: using mock data from sample csv: {}'.format(self.sample_csv_path))
         time.sleep(1)
 
-        with open(csv_path) as csvfile:
+        with open(self.sample_csv_path) as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 rows.append(row)
@@ -272,6 +285,9 @@ class OcWastewaterExtract:
         else:
             return sum(viral_counts) / len(viral_counts)
 
+    def rows_by_zip(self, zipcode):
+        return [row for row in self.csv_rows if row['zipcode'] == str(zipcode)]
+
     #
     # Private
     #
@@ -285,4 +301,5 @@ class OcWastewaterExtract:
         """
         format = '%m/%d/%Y'
         date_sub = date_str.split(' ')[0]
+        print(date_str, date_sub)
         return datetime.strptime(date_sub, format).date()

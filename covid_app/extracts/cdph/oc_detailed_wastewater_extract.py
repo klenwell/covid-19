@@ -9,17 +9,18 @@ import csv
 import codecs
 import math
 import time
-from os.path import dirname, abspath, join as path_join
+from os.path import join as path_join
 from functools import cached_property
 from datetime import datetime, timedelta
 from contextlib import closing
+from config.app import DATA_ROOT, OC_FIPS
 
 
 DATASET_ID = 'b8c6ee3b-539d-4d62-8fa2-c7cd17c16656'
 RESOURCE_ID = '16bb2698-c243-4b66-a6e8-4861ee66f8bf'
 EXTRACT_URL = 'https://data.ca.gov'
 EXTRACT_URL_F = "{}/dataset/{}/resource/{}/download/master-covid-public.csv"
-SAMPLE_CSV = 'data/samples/cdph-master-wastewater.csv'
+SAMPLE_CSV = 'cdph-master-wastewater.csv'
 START_DATE = '6/28/2021'
 
 
@@ -38,8 +39,10 @@ class OcWastewaterExtract:
 
     @property
     def sample_csv_path(self):
-        root_dir = dirname(dirname(dirname(dirname(abspath(__file__)))))
-        return path_join(root_dir, SAMPLE_CSV)
+        if self.csv_path is None:
+            return path_join(DATA_ROOT, 'samples', SAMPLE_CSV)
+        else:
+            return self.csv_path
 
     # Data
     @cached_property
@@ -66,58 +69,25 @@ class OcWastewaterExtract:
         return rows
 
     @cached_property
-    def cal3_samples(self):
-        dated_samples = {}
-        dated_pre_samples = {}
-
-        # This used to be used to filter out duplicate or empty rows.
-        for row in self.cal3_rows:
-            dated_pre_samples[row['date']] = row
-
-        # Add 7-day ml avg
-        for dated in self.dates:
-            pre_sample = dated_pre_samples.get(dated, {})
-            pre_sample['virus_ml_7d_avg'] = \
-                self.compute_viral_count_7d_avg_for_date(dated, dated_pre_samples)
-            dated_samples[dated] = pre_sample
-
-        return dated_samples
-
-    @cached_property
-    def dwrl_samples(self):
-        dated_samples = {}
-        dated_pre_samples = {}
-
-        for row in self.dwrl_rows:
-            dated_pre_samples[row['date']] = row
-
-        # Add 7-day ml avg
-        for dated in self.dates:
-            pre_sample = dated_pre_samples.get(dated, {})
-            pre_sample['virus_ml_7d_avg'] = \
-                self.compute_viral_count_7d_avg_for_date(dated, dated_pre_samples)
-            dated_samples[dated] = pre_sample
-
-        return dated_samples
-
-    @cached_property
     def oc_rows(self):
         rows = []
-        zip_header = 'zipcode'
-        county_zip = 92708
+        county_header = 'county_names'
+        county_filter = OC_FIPS
+        virus_type_header = 'pcr_target'
+        virus_type_filter = 'sars-cov-2'
 
         for row in self.csv_rows:
-            zipcode = row.get(zip_header)
             date = row['sample_collect_date']
             concentrate = row.get('pcr_target_avg_conc', '0.0')
+            county_value = row.get(county_header)
+            virus_type_value = row.get(virus_type_header)
+            is_oc = county_value == county_filter
+            is_covid = virus_type_value == virus_type_filter
 
-            # Collect only OC rows
-            try:
-                if int(zipcode) != county_zip:
-                    continue
-            except ValueError as e:
-                print('Skip {}: {}'.format(zipcode, e))
-
+            # Data source includes all CA counties and readings for other viruses like
+            # Norovirus and RSV. Collect only rows for OC and Covid.
+            if not (is_oc and is_covid):
+                continue
 
             row['date'] = self.date_str_to_date(date)
             row['virus'] = int(round(float(concentrate.replace(',', ''))))
@@ -129,37 +99,28 @@ class OcWastewaterExtract:
 
         return rows
 
-    @cached_property
-    def cal3_rows(self):
-        return [row for row in self.oc_rows if row['lab_id'].upper() == 'CAL3']
+    # Identifiers
+    @property
+    def zip_codes(self):
+        return set([r['zipcode'] for r in self.oc_rows])
 
-    @cached_property
-    def dwrl_rows(self):
-        return [row for row in self.oc_rows if row['lab_id'].upper() == 'DWRL']
+    @property
+    def all_zip_codes(self):
+        return set([r['zipcode'] for r in self.csv_rows])
 
-    # Lab Info
-    @cached_property
-    def lab_samples(self):
-        labs = {}
-        lab_header = 'lab_id'
+    @property
+    def sites(self):
+        sites = []
         for row in self.oc_rows:
-            lab = row.get(lab_header)
-            if lab in labs:
-                labs[lab].append(row)
-            else:
-                labs[lab] = [row]
-        return labs
-
-    @cached_property
-    def lab_counts(self):
-        counts = {}
-        for lab, samples in self.lab_samples.items():
-            counts[lab] = len(samples)
-        return counts
-
-    @cached_property
-    def oc_labs(self):
-        return self.lab_counts.keys()
+            site_group = (
+                ('site_id', row['site_id']),
+                ('zipcode', row['zipcode']),
+                ('epaid', row['epaid']),
+                ('wwtp_name', row['wwtp_name']),
+                ('county_names', row['county_names'])
+            )
+            sites.append(site_group)
+        return set(sites)
 
     # Dates
     @cached_property
@@ -189,88 +150,25 @@ class OcWastewaterExtract:
     def ends_on(self):
         return self.report_dates[-1]
 
-    @cached_property
-    def newest_samples(self):
-        cal3_rows = [(r['date'], r) for r in self.cal3_rows]
-        dwrl_rows = [(r['date'], r) for r in self.dwrl_rows]
-
-        sorted_cal3_rows = sorted(cal3_rows, key=lambda r: r[0])
-        sorted_dwrl_rows = sorted(dwrl_rows, key=lambda r: r[0])
-
-        return {
-            'CAL3': sorted_cal3_rows[-1] if len(sorted_cal3_rows) > 0 else None,
-            'DWRL': sorted_dwrl_rows[-1] if len(sorted_dwrl_rows) > 0 else None
-        }
-
-    @cached_property
-    def lab_range(self):
-        cal3_dates = sorted([r['date'] for r in self.cal3_rows])
-        dwrl_dates = sorted([r['date'] for r in self.dwrl_rows])
-
-        cal3_count = len(cal3_dates)
-        dwrl_count = len(dwrl_dates)
-
-        return {
-            'CAL3': (cal3_dates[0], cal3_dates[-1], cal3_count) if cal3_count > 0 else None,
-            'DWRL': (dwrl_dates[0], dwrl_dates[-1], dwrl_count) if dwrl_count > 0 else None
-        }
-
     #
     # Instance Methods
     #
-    def __init__(self, mock=False):
+    def __init__(self, mock=False, csv_path=None):
         self.use_mock = mock
+        self.csv_path = csv_path
 
-    def load_test_csv(self, csv_path=None):
+    def load_test_csv(self):
         rows = []
 
-        if csv_path is None:
-            csv_path = self.sample_csv_path
-
-        print('NOTE: using mock data from sample csv: {}'.format(csv_path))
+        print('NOTE: using mock data from sample csv: {}'.format(self.sample_csv_path))
         time.sleep(1)
 
-        with open(csv_path) as csvfile:
+        with open(self.sample_csv_path) as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 rows.append(row)
 
         return rows
-
-    def latest_update_by_lab(self, lab):
-        lab = lab.upper()
-        lab_data = self.newest_samples.get(lab)
-
-        if not lab_data:
-            return None
-        else:
-            return lab_data[0]
-
-    def viral_counts_7d_avg_by_lab(self, lab):
-        dataset = {}
-        lab = lab.upper()
-        samples = self.dwrl_samples if lab == 'DWRL' else self.cal3_samples
-
-        for dated in self.dates:
-            dataset[dated] = samples[dated]['virus_ml_7d_avg']
-
-        return dataset
-
-    def compute_viral_count_7d_avg_for_date(self, dated, dated_samples):
-        viral_counts = []
-
-        for days_back in range(7):
-            back_date = dated - timedelta(days=days_back)
-            sample = dated_samples.get(back_date, {})
-            viral_count = sample.get('virus_ml')
-
-            if viral_count:
-                viral_counts.append(viral_count)
-
-        if len(viral_counts) < 1:
-            return None
-        else:
-            return sum(viral_counts) / len(viral_counts)
 
     #
     # Private

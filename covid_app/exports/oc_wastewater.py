@@ -14,14 +14,15 @@ EXPORT_FILE_NAME = 'oc-wastewater.csv'
 
 CSV_HEADER = [
     'Date',
-    'Virus/ml 7d Avg',
     'Virus/ml',
+    'Site ID',
+    'PCR Target',
+    'PCR Gene Target',
+    'Zip Code',
+    'WWTP Name',
+    'EPA ID',
     'Lab ID',
-    'Virus',
-    'Units',
-    '<- CAL3 | DWRL ->',
-    'Virus/ml 7d Avg',
-    'Virus/ml',
+    'Sample ID',
     'Virus',
     'Units'
 ]
@@ -52,6 +53,11 @@ class OCWastewaterExport:
         return self.dates[-1]
 
     @property
+    def newest_oc_sample(self):
+        newest = sorted(self.extract.oc_rows, key=lambda r: r['date'], reverse=True)[0]
+        return [newest['date'], newest['zipcode'], newest['epaid']]
+
+    @property
     def run_time(self):
         if not self.run_time_end:
             return None
@@ -71,7 +77,8 @@ class OCWastewaterExport:
             writer.writerow(CSV_HEADER)
 
             for dated in reversed(self.dates):
-                writer.writerow(self.extract_data_to_csv_row(dated))
+                for row in self.extract_oc_data_to_csv_rows(dated):
+                    writer.writerow(row)
 
         self.run_time_end = time.time()
         return self.csv_path
@@ -79,39 +86,25 @@ class OCWastewaterExport:
     #
     # Private
     #
-    def extract_data_to_csv_row(self, dated):
-        cal3 = self.extract.cal3_samples.get(dated, {})
-        dwrl = self.extract.dwrl_samples.get(dated, {})
-        divider = self.format_lab_row_divider(cal3, dwrl)
+    def extract_oc_data_to_csv_rows(self, dated):
+        csv_rows = []
+        extract_rows = [r for r in self.extract.oc_rows if r['date'] == dated]
 
-        return [
-            dated,
-            cal3.get('virus_ml_7d_avg'),
-            cal3.get('virus_ml'),
-            cal3.get('lab_id'),
-            cal3.get('virus'),
-            cal3.get('units'),
-            divider,
-            dwrl.get('virus_ml_7d_avg'),
-            dwrl.get('virus_ml'),
-            dwrl.get('virus'),
-            dwrl.get('units')
-        ]
+        for extract_row in extract_rows:
+            csv_row = [
+                dated,
+                extract_row.get('virus_ml'),
+                extract_row.get('site_id'),
+                extract_row.get('pcr_target'),
+                extract_row.get('pcr_gene_target'),
+                extract_row.get('zipcode'),
+                extract_row.get('wwtp_name'),
+                extract_row.get('epaid'),
+                extract_row.get('lab_id'),
+                extract_row.get('sample_id'),
+                extract_row.get('virus'),
+                extract_row.get('pcr_target_units')
+            ]
+            csv_rows.append(csv_row)
 
-    def format_lab_row_divider(self, cal3, dwrl):
-        divider_f = '{} {} {}'
-
-        cal3_lab_id = cal3.get('Lab Id')
-        dwrl_lab_id = dwrl.get('Lab Id')
-
-        cal3_reported = cal3_lab_id is not None
-        dwrl_reported = dwrl_lab_id is not None
-
-        if cal3_reported and dwrl_reported:
-            return divider_f.format(cal3_lab_id, '|', dwrl_lab_id)
-        elif cal3_reported:
-            return cal3_lab_id
-        elif dwrl_reported:
-            return dwrl_lab_id
-        else:
-            return ''
+        return csv_rows

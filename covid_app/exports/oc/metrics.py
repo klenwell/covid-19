@@ -14,9 +14,6 @@ from covid_app.extracts.local.oc.wastewater import OcWastewaterExtract
 JSON_DATA_PATH = path_join(GH_PAGES_ROOT, 'data', 'json', 'oc')
 JSON_FILE_NAME = 'metrics.json'
 
-# Wastewater Lab: CAL3 or DWRL
-WASTEWATER_LAB = 'DWRL'
-
 JSON_SCHEMA = {
     'testPositiveRate': {},
     'dailyNewCases': {},
@@ -80,7 +77,7 @@ class OCMetricsExport:
 
     @cached_property
     def latest_wastewater_update(self):
-        return self.waste_extract.latest_update_by_lab(WASTEWATER_LAB)
+        return self.waste_extract.latest_update
 
     # Date sets
     @property
@@ -224,7 +221,7 @@ class OCMetricsExport:
 
     def prep_wastewater(self):
         updated_on = self.latest_wastewater_update
-        dataset = self.waste_extract.viral_counts_7d_avg_by_lab(WASTEWATER_LAB)
+        dataset = self.waste_extract.viral_counts_7d_avg
         return self.prep_metric(dataset, updated_on)
 
     def prep_hospital_cases(self):

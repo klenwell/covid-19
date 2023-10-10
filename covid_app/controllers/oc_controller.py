@@ -289,15 +289,13 @@ class OcController(Controller):
     # python app.py oc dev
     @expose(help="For rapid testing and development.")
     def dev(self):
-        from covid_app.exports.oc.time_series_json import OcTimeSeriesJsonExport
+        from covid_app.extracts.cdph.oc_detailed_wastewater_extract import OcWastewaterExtract
         from pprint import pprint
 
-        export = OcTimeSeriesJsonExport()
-        print(export.start_date)
-        print(export.end_date)
-        pprint(export.max_values)
+        extract = OcWastewaterExtract(mock=True)
+
+        print(extract.sample_csv_path)
+        print(extract.zip_codes)
+        pprint(extract.sites)
 
         breakpoint()
-
-        json_path = export.to_json_file()
-        print(json_path)

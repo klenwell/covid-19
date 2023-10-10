@@ -9,7 +9,7 @@ import csv
 import codecs
 import math
 import time
-from os.path import dirname, abspath, join as path_join
+from os.path import join as path_join
 from functools import cached_property
 from datetime import datetime, timedelta
 from contextlib import closing
@@ -69,41 +69,6 @@ class OcWastewaterExtract:
         return rows
 
     @cached_property
-    def cal3_samples(self):
-        dated_samples = {}
-        dated_pre_samples = {}
-
-        # This used to be used to filter out duplicate or empty rows.
-        for row in self.cal3_rows:
-            dated_pre_samples[row['date']] = row
-
-        # Add 7-day ml avg
-        for dated in self.dates:
-            pre_sample = dated_pre_samples.get(dated, {})
-            pre_sample['virus_ml_7d_avg'] = \
-                self.compute_viral_count_7d_avg_for_date(dated, dated_pre_samples)
-            dated_samples[dated] = pre_sample
-
-        return dated_samples
-
-    @cached_property
-    def dwrl_samples(self):
-        dated_samples = {}
-        dated_pre_samples = {}
-
-        for row in self.dwrl_rows:
-            dated_pre_samples[row['date']] = row
-
-        # Add 7-day ml avg
-        for dated in self.dates:
-            pre_sample = dated_pre_samples.get(dated, {})
-            pre_sample['virus_ml_7d_avg'] = \
-                self.compute_viral_count_7d_avg_for_date(dated, dated_pre_samples)
-            dated_samples[dated] = pre_sample
-
-        return dated_samples
-
-    @cached_property
     def oc_rows(self):
         rows = []
         county_header = 'county_names'
@@ -111,9 +76,7 @@ class OcWastewaterExtract:
         virus_type_header = 'pcr_target'
         virus_type_filter = 'sars-cov-2'
 
-
         for row in self.csv_rows:
-            #breakpoint()
             date = row['sample_collect_date']
             concentrate = row.get('pcr_target_avg_conc', '0.0')
             county_value = row.get(county_header)
@@ -136,29 +99,28 @@ class OcWastewaterExtract:
 
         return rows
 
-    # Lab Info
-    @cached_property
-    def lab_samples(self):
-        labs = {}
-        lab_header = 'lab_id'
+    # Identifiers
+    @property
+    def zip_codes(self):
+        return set([r['zipcode'] for r in self.oc_rows])
+
+    @property
+    def all_zip_codes(self):
+        return set([r['zipcode'] for r in self.csv_rows])
+
+    @property
+    def sites(self):
+        sites = []
         for row in self.oc_rows:
-            lab = row.get(lab_header)
-            if lab in labs:
-                labs[lab].append(row)
-            else:
-                labs[lab] = [row]
-        return labs
-
-    @cached_property
-    def lab_counts(self):
-        counts = {}
-        for lab, samples in self.lab_samples.items():
-            counts[lab] = len(samples)
-        return counts
-
-    @cached_property
-    def oc_labs(self):
-        return self.lab_counts.keys()
+            site_group = (
+                ('site_id', row['site_id']),
+                ('zipcode', row['zipcode']),
+                ('epaid', row['epaid']),
+                ('wwtp_name', row['wwtp_name']),
+                ('county_names', row['county_names'])
+            )
+            sites.append(site_group)
+        return set(sites)
 
     # Dates
     @cached_property
@@ -188,62 +150,12 @@ class OcWastewaterExtract:
     def ends_on(self):
         return self.report_dates[-1]
 
-    @property
-    def zip_codes(self):
-        return set([r['zipcode'] for r in self.csv_rows])
-
-    @cached_property
-    def newest_samples(self):
-        cal3_rows = [(r['date'], r) for r in self.cal3_rows]
-        dwrl_rows = [(r['date'], r) for r in self.dwrl_rows]
-
-        sorted_cal3_rows = sorted(cal3_rows, key=lambda r: r[0])
-        sorted_dwrl_rows = sorted(dwrl_rows, key=lambda r: r[0])
-
-        return {
-            'CAL3': sorted_cal3_rows[-1] if len(sorted_cal3_rows) > 0 else None,
-            'DWRL': sorted_dwrl_rows[-1] if len(sorted_dwrl_rows) > 0 else None
-        }
-
-    @cached_property
-    def lab_range(self):
-        cal3_dates = sorted([r['date'] for r in self.cal3_rows])
-        dwrl_dates = sorted([r['date'] for r in self.dwrl_rows])
-
-        cal3_count = len(cal3_dates)
-        dwrl_count = len(dwrl_dates)
-
-        return {
-            'CAL3': (cal3_dates[0], cal3_dates[-1], cal3_count) if cal3_count > 0 else None,
-            'DWRL': (dwrl_dates[0], dwrl_dates[-1], dwrl_count) if dwrl_count > 0 else None
-        }
-
     #
     # Instance Methods
     #
     def __init__(self, mock=False, csv_path=None):
         self.use_mock = mock
         self.csv_path = csv_path
-
-    def rows_by_epa_id(self, epa_id):
-        return [row for row in self.oc_rows if row['epaid'] == epa_id]
-
-    def samples_by_epa_id(self, epa_id):
-        dated_samples = {}
-        dated_pre_samples = {}
-
-        # This used to be used to filter out duplicate or empty rows.
-        for row in self.rows_by_epa_id(epa_id):
-            dated_pre_samples[row['date']] = row
-
-        # Add 7-day ml avg
-        for dated in self.dates:
-            pre_sample = dated_pre_samples.get(dated, {})
-            pre_sample['virus_ml_7d_avg'] = \
-                self.compute_viral_count_7d_avg_for_date(dated, dated_pre_samples)
-            dated_samples[dated] = pre_sample
-
-        return dated_samples
 
     def load_test_csv(self):
         rows = []
@@ -257,44 +169,6 @@ class OcWastewaterExtract:
                 rows.append(row)
 
         return rows
-
-    def latest_update_by_lab(self, lab):
-        lab = lab.upper()
-        lab_data = self.newest_samples.get(lab)
-
-        if not lab_data:
-            return None
-        else:
-            return lab_data[0]
-
-    def viral_counts_7d_avg_by_lab(self, lab):
-        dataset = {}
-        lab = lab.upper()
-        samples = self.dwrl_samples if lab == 'DWRL' else self.cal3_samples
-
-        for dated in self.dates:
-            dataset[dated] = samples[dated]['virus_ml_7d_avg']
-
-        return dataset
-
-    def compute_viral_count_7d_avg_for_date(self, dated, dated_samples):
-        viral_counts = []
-
-        for days_back in range(7):
-            back_date = dated - timedelta(days=days_back)
-            sample = dated_samples.get(back_date, {})
-            viral_count = sample.get('virus_ml')
-
-            if viral_count:
-                viral_counts.append(viral_count)
-
-        if len(viral_counts) < 1:
-            return None
-        else:
-            return sum(viral_counts) / len(viral_counts)
-
-    def rows_by_zip(self, zipcode):
-        return [row for row in self.csv_rows if row['zipcode'] == str(zipcode)]
 
     #
     # Private

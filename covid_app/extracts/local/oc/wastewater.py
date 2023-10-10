@@ -15,6 +15,9 @@ DATE_F = '%Y-%m-%d'
 START_DATE = '6/28/2021'
 
 # This is the Site ID for the default reference dataset
+# Laguna Niguel (Coastal): 06059-001-01-00-00
+# Laguna Niguel (Regional): 06059-001-02-00-00
+# Dana Point: 06059-002-01-00-00
 REF_SITE_ID = '06059-002-01-00-00'
 
 
@@ -29,7 +32,6 @@ class OcWastewaterExtract:
         with open(self.csv_path, newline='') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                #breakpoint()
                 if self.site_id == row['Site ID']:
                     rows.append(row)
         return rows
@@ -51,8 +53,8 @@ class OcWastewaterExtract:
         # Add 7-day ml avg
         for dated in self.dates:
             row = self.dated_export_rows.get(dated, {})
-            virus_ml_7d_avg = self.compute_viral_count_7d_avg_for_date(dated, self.dated_export_rows)
-            row['avg_virus_7d'] = self.to_f(virus_ml_7d_avg)
+            virus_7d_avg = self.compute_viral_count_7d_avg_for_date(dated, self.dated_export_rows)
+            row['avg_virus_7d'] = self.to_f(virus_7d_avg)
             dated_records[dated] = row
 
         return dated_records
@@ -107,28 +109,6 @@ class OcWastewaterExtract:
             if self.dataset.get(dated, {}).get('virus_ml'):
                 return dated
 
-    @cached_property
-    def newest_samples(self):
-        newest = {
-            'CAL3': None,
-            'DWRL': None
-        }
-
-        for dated in sorted(self.dates, reverse=True):
-            cal3_sample = self.cal3.get(dated, {}).get('virus_l') is not None
-            dwrl_sample = self.dwrl.get(dated, {}).get('virus_l') is not None
-
-            if newest['CAL3'] is None and cal3_sample:
-                newest['CAL3'] = dated
-
-            if newest['DWRL'] is None and dwrl_sample:
-                newest['DWRL'] = dated
-
-            if newest['CAL3'] is not None and newest['DWRL'] is not None:
-                break
-
-        return newest
-
     #
     # Instance Methods
     #
@@ -140,7 +120,6 @@ class OcWastewaterExtract:
 
     def compute_viral_count_7d_avg_for_date(self, dated, dated_samples):
         viral_counts = []
-        #breakpoint()
 
         for days_back in range(7):
             back_date = dated - timedelta(days=days_back)
@@ -154,20 +133,6 @@ class OcWastewaterExtract:
             return None
         else:
             return sum(viral_counts) / len(viral_counts)
-
-    def latest_update_by_lab(self, lab):
-        lab = lab.upper()
-        return self.newest_samples[lab]
-
-    def viral_counts_7d_avg_by_lab(self, lab):
-        dataset = {}
-        lab = lab.upper()
-        samples = self.dwrl if lab == 'DWRL' else self.cal3
-
-        for dated in self.dates:
-            dataset[dated] = samples[dated]['avg_virus_7d']
-
-        return dataset
 
     def to_f(self, value):
         if value is None or value == '':

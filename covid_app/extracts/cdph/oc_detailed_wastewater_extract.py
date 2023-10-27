@@ -183,4 +183,9 @@ class OcWastewaterExtract:
         """
         format = '%m/%d/%Y'
         date_sub = date_str.split(' ')[0]
-        return datetime.strptime(date_sub, format).date()
+
+        try:
+            return datetime.strptime(date_sub, format).date()
+        except ValueError:
+            print("date value error:", date_sub)
+            return datetime.strptime(date_sub, '%Y-%m-%d').date()

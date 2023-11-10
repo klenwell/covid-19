@@ -1,19 +1,19 @@
 {
     "weeks": [
         {
-            "startDate": "2023-10-26",
-            "endDate": "2023-11-01",
+            "startDate": "2023-11-02",
+            "endDate": "2023-11-08",
             "testPositiveRate": {
-                "value": 6.8338785896037795,
-                "delta": -10.718276212205978
+                "value": 7.907824933687002,
+                "delta": 17.21553231251506
             },
             "adminTests": {
-                "average7d": 786.0,
-                "delta": -22.299110295156048
+                "average7d": 861.7142857142857,
+                "delta": -7.513032812020853
             },
             "positiveTests": {
-                "average7d": 53.714285714285715,
-                "delta": -30.627306273062732
+                "average7d": 68.14285714285714,
+                "delta": 8.409090909090908
             },
             "wastewater": {
                 "average7d": null,
@@ -24,6 +24,34 @@
                 "delta": null
             },
             "deaths": {
+                "total": 15,
+                "delta": -6.25
+            }
+        },
+        {
+            "startDate": "2023-10-26",
+            "endDate": "2023-11-01",
+            "testPositiveRate": {
+                "value": 6.746396810794235,
+                "delta": -11.848741302500429
+            },
+            "adminTests": {
+                "average7d": 931.7142857142857,
+                "delta": -7.9073707992092634
+            },
+            "positiveTests": {
+                "average7d": 62.857142857142854,
+                "delta": -18.819188191881924
+            },
+            "wastewater": {
+                "average7d": 411.3593333333333,
+                "delta": 398.79069090673926
+            },
+            "hospitalCases": {
+                "average7d": 69.85714285714286,
+                "delta": -17.95302013422818
+            },
+            "deaths": {
                 "total": 16,
                 "delta": -15.789473684210526
             }
@@ -32,12 +60,12 @@
             "startDate": "2023-10-19",
             "endDate": "2023-10-25",
             "testPositiveRate": {
-                "value": 7.654286117779975,
-                "delta": -12.393907396998395
+                "value": 7.65320530923468,
+                "delta": -12.40627764447128
             },
             "adminTests": {
-                "average7d": 1011.5714285714286,
-                "delta": 2.4302039635469406
+                "average7d": 1011.7142857142857,
+                "delta": 2.444669463329955
             },
             "positiveTests": {
                 "average7d": 77.42857142857143,
@@ -48,8 +76,8 @@
                 "delta": -7.4136027692019715
             },
             "hospitalCases": {
-                "average7d": 80.42857142857143,
-                "delta": -16.96165191740413
+                "average7d": 85.14285714285714,
+                "delta": -12.094395280235997
             },
             "deaths": {
                 "total": 19,
@@ -111,38 +139,10 @@
                 "total": 15,
                 "delta": 25.0
             }
-        },
-        {
-            "startDate": "2023-09-28",
-            "endDate": "2023-10-04",
-            "testPositiveRate": {
-                "value": 10.302178496134925,
-                "delta": -21.16080960018884
-            },
-            "adminTests": {
-                "average7d": 1016.4285714285714,
-                "delta": -11.284289276807984
-            },
-            "positiveTests": {
-                "average7d": 104.71428571428571,
-                "delta": -30.057251908396953
-            },
-            "wastewater": {
-                "average7d": 221.785,
-                "delta": 56.25777936431147
-            },
-            "hospitalCases": {
-                "average7d": 112.42857142857143,
-                "delta": -13.894967177242895
-            },
-            "deaths": {
-                "total": 12,
-                "delta": -20.0
-            }
         }
     ],
     "meta": {
-        "createdAt": "2023-11-02T18:18:19-07:00",
-        "dataLastUpdated": "2023-11-01"
+        "createdAt": "2023-11-09T17:46:44-08:00",
+        "dataLastUpdated": "2023-11-08"
     }
 }

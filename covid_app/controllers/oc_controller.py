@@ -64,76 +64,6 @@ class OcController(Controller):
         self.app.render(vars, 'oc/wastewater.jinja2')
 
     #
-    # Deprecated Commands
-    #
-    # python app.py oc daily-v2
-    @expose(help="Export latest daily data from OC HCA site.")
-    def daily_v2(self):
-        daily = OcDailyDataExport()
-        daily.to_csv()
-
-        immunity = OCImmunityExport()
-        immunity.to_csv()
-
-        vars = {
-            'daily': daily,
-            'immunity': immunity,
-            'latest': immunity.estimates[-1]
-        }
-        self.app.render(vars, 'oc/daily-v2.jinja2')
-
-    # python app.py oc nightly
-    @expose(help="Export data from OC HCA site to csv file.")
-    def nightly(self):
-        export = OcHistoricalExport()
-        csv_path = export.to_csv_file()
-        vars = {
-            'csv_path': csv_path,
-            'notes': [
-                'Start Date: {}'.format(export.extract.starts_on),
-                'End Date: {}'.format(export.extract.ends_on),
-                'Rows: {}'.format(len(export.extract.dates)),
-                'Run time: {} s'.format(round(export.run_time, 2))
-            ]
-        }
-        self.app.render(vars, 'oc/csv-export.jinja2')
-
-    # python app.py oc daily-tests
-    @expose(help="Export daily OC HCA testing data to csv file.")
-    def daily_tests(self):
-        export = OcDailyTestsExport()
-        export.to_csv()
-        vars = {'export': export}
-        self.app.render(vars, 'oc/daily-tests.jinja2')
-
-    # python app.py oc immunity
-    @expose(help="Export immunity projections to csv file.")
-    def immunity(self):
-        export = OCImmunityExport()
-        export.to_csv()
-        vars = {
-            'export': export,
-            'latest': export.estimates[-1]
-        }
-        self.app.render(vars, 'oc/immunity.jinja2')
-
-    # python app.py oc wastewater [--mock]
-    @expose(
-        help="Export wastewater data to csv file.",
-        arguments=[
-            (['--mock'], dict(action='store_true', help='mock data using sample file'))
-        ]
-    )
-    def wastewater(self):
-        use_mock = self.app.pargs.mock
-        export = OCWastewaterExport(mock=use_mock)
-        export.to_csv()
-        vars = {
-            'export': export,
-        }
-        self.app.render(vars, 'oc/wastewater.jinja2')
-
-    #
     # API / JSON Files
     #
     # python app.py oc metrics-json-file
@@ -225,6 +155,60 @@ class OcController(Controller):
             ]
         }
         self.app.render(vars, 'oc/json-export.jinja2')
+
+    #
+    # Deprecated Commands
+    #
+    # python app.py oc daily-v2
+    @expose(help="Export latest daily data from OC HCA site.")
+    def daily_v2(self):
+        daily = OcDailyDataExport()
+        daily.to_csv()
+
+        immunity = OCImmunityExport()
+        immunity.to_csv()
+
+        vars = {
+            'daily': daily,
+            'immunity': immunity,
+            'latest': immunity.estimates[-1]
+        }
+        self.app.render(vars, 'oc/daily-v2.jinja2')
+
+    # python app.py oc nightly
+    @expose(help="Export data from OC HCA site to csv file.")
+    def nightly(self):
+        export = OcHistoricalExport()
+        csv_path = export.to_csv_file()
+        vars = {
+            'csv_path': csv_path,
+            'notes': [
+                'Start Date: {}'.format(export.extract.starts_on),
+                'End Date: {}'.format(export.extract.ends_on),
+                'Rows: {}'.format(len(export.extract.dates)),
+                'Run time: {} s'.format(round(export.run_time, 2))
+            ]
+        }
+        self.app.render(vars, 'oc/csv-export.jinja2')
+
+    # python app.py oc daily-tests
+    @expose(help="Export daily OC HCA testing data to csv file.")
+    def daily_tests(self):
+        export = OcDailyTestsExport()
+        export.to_csv()
+        vars = {'export': export}
+        self.app.render(vars, 'oc/daily-tests.jinja2')
+
+    # python app.py oc immunity
+    @expose(help="Export immunity projections to csv file.")
+    def immunity(self):
+        export = OCImmunityExport()
+        export.to_csv()
+        vars = {
+            'export': export,
+            'latest': export.estimates[-1]
+        }
+        self.app.render(vars, 'oc/immunity.jinja2')
 
     #
     # Analytics

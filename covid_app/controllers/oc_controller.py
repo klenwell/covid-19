@@ -31,7 +31,7 @@ class OcController(Controller):
     #
     # Primary Interface
     #
-    # python app.py oc nightly
+    # python app.py oc infections
     @expose(help="Export infections data to data csv file.")
     def infections(self):
         export = OcInfectionsExport()

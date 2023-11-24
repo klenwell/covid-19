@@ -5,6 +5,7 @@ from pprint import pformat
 
 from covid_app.exports.oc_daily_data import OcDailyDataExport
 from covid_app.exports.oc_daily_testing import OcDailyTestsExport
+from covid_app.exports.oc.infections import OcInfectionsExport
 from covid_app.exports.oc_immunity import OCImmunityExport
 from covid_app.exports.oc_wastewater import OCWastewaterExport
 from covid_app.exports.oc.metrics import OCMetricsExport
@@ -28,7 +29,42 @@ class OcController(Controller):
         stacked_type = 'nested'
 
     #
-    # Daily Commands
+    # Primary Interface
+    #
+    # python app.py oc infections
+    @expose(help="Export infections data to data csv file.")
+    def infections(self):
+        export = OcInfectionsExport()
+        csv_path = export.to_csv_file()
+        vars = {
+            'csv_path': csv_path,
+            'notes': [
+                'Start Date: {}'.format(export.extract.starts_on),
+                'End Date: {}'.format(export.extract.ends_on),
+                'Rows: {}'.format(len(export.extract.dates)),
+                'Run time: {} s'.format(round(export.run_time, 2))
+            ]
+        }
+        self.app.render(vars, 'oc/csv-export.jinja2')
+
+    # python app.py oc wastewater [--mock]
+    @expose(
+        help="Export wastewater data to csv file.",
+        arguments=[
+            (['--mock'], dict(action='store_true', help='mock data using sample file'))
+        ]
+    )
+    def wastewater(self):
+        use_mock = self.app.pargs.mock
+        export = OCWastewaterExport(mock=use_mock)
+        export.to_csv()
+        vars = {
+            'export': export,
+        }
+        self.app.render(vars, 'oc/wastewater.jinja2')
+
+    #
+    # Deprecated Commands
     #
     # python app.py oc daily-v2
     @expose(help="Export latest daily data from OC HCA site.")

@@ -1,10 +1,31 @@
 Date,Virus/ml,Site ID,PCR Target,PCR Gene Target,Zip Code,WWTP Name,EPA ID,Lab ID,Sample ID,Virus,Units
+2023-11-13,59.03,06059-001-01-00-00,sars-cov-2,N,92677,Coastal Treatment Plant,CA0107611,VLT,159-231113,59030,copies/g dry sludge
+2023-11-13,79.048,06059-002-01-00-00,sars-cov-2,N,92629,JB Latham Treatment Plant,CA0107417,VLT,157-231113,79048,copies/g dry sludge
+2023-11-13,85.034,06059-001-02-00-00,sars-cov-2,N,92677,Regional Treatment Plant,CA0107611,VLT,158-231113,85034,copies/g dry sludge
+2023-11-12,217.832,06059-003-01-00-00,sars-cov-2,n1,92708,OCSD_P1,CA0110604,DWRL,OCSD_23WBE-2831,217832,copies/L wastewater
+2023-11-10,386.151,06059-001-01-00-00,sars-cov-2,N,92677,Coastal Treatment Plant,CA0107611,VLT,159-231110,386151,copies/g dry sludge
+2023-11-10,207.254,06059-002-01-00-00,sars-cov-2,N,92629,JB Latham Treatment Plant,CA0107417,VLT,157-231110,207254,copies/g dry sludge
+2023-11-10,85.659,06059-001-02-00-00,sars-cov-2,N,92677,Regional Treatment Plant,CA0107611,VLT,158-231110,85659,copies/g dry sludge
+2023-11-08,301.538,06059-003-01-00-00,sars-cov-2,n1,92708,OCSD_P1,CA0110604,DWRL,OCSD_23WBE-2830,301538,copies/L wastewater
+2023-11-08,92.098,06059-001-01-00-00,sars-cov-2,N,92677,Coastal Treatment Plant,CA0107611,VLT,159-231108,92098,copies/g dry sludge
+2023-11-08,75.056,06059-002-01-00-00,sars-cov-2,N,92629,JB Latham Treatment Plant,CA0107417,VLT,157-231108,75056,copies/g dry sludge
+2023-11-08,79.145,06059-001-02-00-00,sars-cov-2,N,92677,Regional Treatment Plant,CA0107611,VLT,158-231108,79145,copies/g dry sludge
+2023-11-06,196.602,06059-003-01-00-00,sars-cov-2,n1,92708,OCSD_P1,CA0110604,DWRL,OCSD_23WBE-2801,196602,copies/L wastewater
+2023-11-06,40.666,06059-001-01-00-00,sars-cov-2,N,92677,Coastal Treatment Plant,CA0107611,VLT,159-231106,40666,copies/g dry sludge
+2023-11-06,183.662,06059-002-01-00-00,sars-cov-2,N,92629,JB Latham Treatment Plant,CA0107417,VLT,157-231106,183662,copies/g dry sludge
+2023-11-06,54.706,06059-001-02-00-00,sars-cov-2,N,92677,Regional Treatment Plant,CA0107611,VLT,158-231106,54706,copies/g dry sludge
+2023-11-05,238.197,06059-003-01-00-00,sars-cov-2,n1,92708,OCSD_P1,CA0110604,DWRL,OCSD_23WBE-2756,238197,copies/L wastewater
+2023-11-03,125.409,06059-001-01-00-00,sars-cov-2,N,92677,Coastal Treatment Plant,CA0107611,VLT,159-231103,125409,copies/g dry sludge
+2023-11-03,495.37,06059-002-01-00-00,sars-cov-2,N,92629,JB Latham Treatment Plant,CA0107417,VLT,157-231103,495370,copies/g dry sludge
+2023-11-03,43.362,06059-001-02-00-00,sars-cov-2,N,92677,Regional Treatment Plant,CA0107611,VLT,158-231103,43362,copies/g dry sludge
 2023-11-01,84.212,06059-001-01-00-00,sars-cov-2,N,92677,Coastal Treatment Plant,CA0107611,VLT,159-231101,84212,copies/g dry sludge
 2023-11-01,53.887,06059-002-01-00-00,sars-cov-2,N,92629,JB Latham Treatment Plant,CA0107417,VLT,157-231101,53887,copies/g dry sludge
 2023-11-01,112.627,06059-001-02-00-00,sars-cov-2,N,92677,Regional Treatment Plant,CA0107611,VLT,158-231101,112627,copies/g dry sludge
+2023-10-30,16.84,06059-003-01-00-00,sars-cov-2,n1,92708,OCSD_P1,CA0110604,DWRL,OCSD_23WBE-2755,16840,copies/L wastewater
 2023-10-30,18.821,06059-001-01-00-00,sars-cov-2,N,92677,Coastal Treatment Plant,CA0107611,VLT,159-231030,18821,copies/g dry sludge
 2023-10-30,172.96,06059-002-01-00-00,sars-cov-2,N,92629,JB Latham Treatment Plant,CA0107417,VLT,157-231030,172960,copies/g dry sludge
 2023-10-30,134.373,06059-001-02-00-00,sars-cov-2,N,92677,Regional Treatment Plant,CA0107611,VLT,158-231030,134373,copies/g dry sludge
+2023-10-29,11.321,06059-003-01-00-00,sars-cov-2,n1,92708,OCSD_P1,CA0110604,DWRL,OCSD_23WBE-2754,11321,copies/L wastewater
 2023-10-27,33.275,06059-001-01-00-00,sars-cov-2,N,92677,Coastal Treatment Plant,CA0107611,VLT,159-231027,33275,copies/g dry sludge
 2023-10-27,1007.231,06059-002-01-00-00,sars-cov-2,N,92629,JB Latham Treatment Plant,CA0107417,VLT,157-231027,1007231,copies/g dry sludge
 2023-10-27,26.594,06059-001-02-00-00,sars-cov-2,N,92677,Regional Treatment Plant,CA0107611,VLT,158-231027,26594,copies/g dry sludge

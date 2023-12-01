@@ -68,7 +68,8 @@ class OcPhasesModel {
       22: 'The Drop of Lent',
       23: 'Covid Spring Break 2023',
       24: 'Summer Heat Wave',
-      25: 'A Cooling Trend<br />(Ongoing)',
+      25: 'Autumn Lull',
+      26: 'Holiday Surge<br />(Ongoing)',
     }
   }
 

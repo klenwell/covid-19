@@ -20,8 +20,8 @@
                 "delta": null
             },
             "hospitalCases": {
-                "average7d": null,
-                "delta": null
+                "average7d": 115.0,
+                "delta": 9.673024523160759
             },
             "deaths": {
                 "total": 11,
@@ -44,12 +44,12 @@
                 "delta": 24.451410658307218
             },
             "wastewater": {
-                "average7d": null,
-                "delta": null
+                "average7d": 267.2386666666667,
+                "delta": 193.85077208968193
             },
             "hospitalCases": {
-                "average7d": 93.14285714285714,
-                "delta": 18.115942028985497
+                "average7d": 104.85714285714286,
+                "delta": 31.305903398926656
             },
             "deaths": {
                 "total": 0,
@@ -76,8 +76,8 @@
                 "delta": -43.578083154966855
             },
             "hospitalCases": {
-                "average7d": 78.85714285714286,
-                "delta": 15.240083507306892
+                "average7d": 79.85714285714286,
+                "delta": 16.701461377870565
             },
             "deaths": {
                 "total": 15,
@@ -142,7 +142,7 @@
         }
     ],
     "meta": {
-        "createdAt": "2023-12-07T17:31:36-08:00",
+        "createdAt": "2023-12-14T18:47:22-08:00",
         "dataLastUpdated": "2023-12-06"
     }
 }

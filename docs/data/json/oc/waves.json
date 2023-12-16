@@ -7466,8 +7466,8 @@
                 "value": 127
             },
             "maxIcuCases": {
-                "date": "2023-11-25",
-                "value": 13
+                "date": "2023-12-04",
+                "value": 16
             },
             "totalTests": 34317,
             "totalPositiveTests": 3186,
@@ -7653,7 +7653,7 @@
         }
     ],
     "meta": {
-        "createdAt": "2023-12-07T17:32:01-08:00",
+        "createdAt": "2023-12-14T18:46:00-08:00",
         "lastUpdatedOn": "2023-12-06"
     }
 }

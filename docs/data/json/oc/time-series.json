@@ -1,6 +1,6 @@
 {
     "meta": {
-        "createdAt": "2023-12-14T18:45:53-08:00",
+        "createdAt": "2023-12-28T16:44:18-08:00",
         "dataLastUpdated": "2023-12-07"
     },
     "dates": [
@@ -13706,7 +13706,7 @@
         },
         {
             "date": "2023-12-05",
-            "wastewater": null,
+            "wastewater": 91.43900000000001,
             "tests": 1119.0,
             "positive-rate": 11.809013149495723,
             "cases": 108.71428571428571,
@@ -13716,22 +13716,22 @@
         },
         {
             "date": "2023-12-06",
-            "wastewater": null,
+            "wastewater": 154.72333333333333,
             "tests": 1013.2857142857143,
             "positive-rate": 12.519385309460032,
             "cases": 108.71428571428571,
-            "hospital-cases": 115.0,
+            "hospital-cases": 115.28571428571429,
             "icu-cases": 13.571428571428571,
             "deaths": 1.5714285714285714
         },
         {
             "date": "2023-12-07",
-            "wastewater": null,
+            "wastewater": 154.72333333333333,
             "tests": null,
             "positive-rate": null,
             "cases": null,
-            "hospital-cases": 110.57142857142857,
-            "icu-cases": 13.857142857142858,
+            "hospital-cases": 115.57142857142857,
+            "icu-cases": 14.142857142857142,
             "deaths": 1.2857142857142858
         }
     ],

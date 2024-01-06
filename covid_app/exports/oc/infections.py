@@ -12,7 +12,7 @@ https://occovid19.ochealthinfo.com/coronavirus-in-oc
 """
 from os.path import join as path_join
 from functools import cached_property
-from datetime import datetime
+from datetime import datetime, timedelta
 import csv
 import time
 
@@ -67,7 +67,23 @@ class OcInfectionsExport:
 
     @cached_property
     def dates(self):
-        return self.extract.dates
+        dates = []
+
+        # Fencepost alert: Don't forget to add one to range to include final day.
+        for n in range(int((self.ends_on - self.starts_on).days) + 1):
+            date = self.starts_on + timedelta(n)
+            dates.append(date)
+
+        return dates
+
+    @property
+    def starts_on(self):
+        return min([self.extract.starts_on, self.hospital_extract.starts_on])
+
+    @property
+    def ends_on(self):
+        return max([self.extract.ends_on, self.hospital_extract.ends_on])
+
 
     @property
     def run_time(self):

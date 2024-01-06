@@ -39,9 +39,9 @@ class OcController(Controller):
         vars = {
             'csv_path': csv_path,
             'notes': [
-                'Start Date: {}'.format(export.extract.starts_on),
-                'End Date: {}'.format(export.extract.ends_on),
-                'Rows: {}'.format(len(export.extract.dates)),
+                'Start Date: {}'.format(export.starts_on),
+                'End Date: {}'.format(export.ends_on),
+                'Rows: {}'.format(len(export.dates)),
                 'Run time: {} s'.format(round(export.run_time, 2))
             ]
         }

@@ -12,13 +12,15 @@ from config.app import DATA_ROOT
 
 
 DATE_F = '%Y-%m-%d'
-START_DATE = '6/28/2021'
+
+# Start Date can be as early as 6/28/2021
+START_DATE = '2022-09-20'
 
 # This is the Site ID for the default reference dataset
 # Laguna Niguel (Coastal): 06059-001-01-00-00
 # Laguna Niguel (Regional): 06059-001-02-00-00
 # Dana Point: 06059-002-01-00-00
-REF_SITE_ID = '06059-002-01-00-00'
+REF_SITE_ID = '06059-003-01-00-00'
 
 
 class OcWastewaterExtract:
@@ -93,7 +95,8 @@ class OcWastewaterExtract:
 
     @property
     def start_date(self):
-        return self.row_dates[0]
+        return datetime.strptime(START_DATE, DATE_F).date()
+        # return self.row_dates[-1]
 
     @cached_property
     def row_dates(self):

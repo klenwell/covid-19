@@ -82,8 +82,12 @@ class OcTrendsExport:
         dataset = self.case_extract.tests_admin
 
         for dated in self.dates:
-            week_avg = self.week_avg_from_date(dataset, dated)
-            daily_values[dated] = week_avg
+            try:
+                week_avg = self.week_avg_from_date(dataset, dated)
+                daily_values[dated] = week_avg
+            # This will occur when data is missing. Just leave the date blank.
+            except KeyError:
+                daily_values[dated] = None
 
         return daily_values
 
@@ -126,10 +130,25 @@ class OcTrendsExport:
         return trends
 
     # Dates
-    @property
+    @cached_property
     def dates(self):
-        num_dates = (NUM_WEEKS + 1) * 7
-        return self.case_extract.dates[-num_dates:]
+        dates = []
+
+        # Fencepost alert: Don't forget to add one to range to include final day.
+        for n in range(int((self.ends_on - self.starts_on).days) + 1):
+            date = self.starts_on + timedelta(n)
+            dates.append(date)
+
+        return dates
+
+    @property
+    def starts_on(self):
+        num_days = (NUM_WEEKS + 1) * 7
+        return self.ends_on - timedelta(days=num_days)
+
+    @property
+    def ends_on(self):
+        return max([self.waste_extract.end_date, self.case_extract.last_date])
 
     @property
     def week_dates(self):
@@ -179,24 +198,24 @@ class OcTrendsExport:
             'startDate': start_date.strftime(DATE_OUT_F),
             'endDate': end_date.strftime(DATE_OUT_F),
             'testPositiveRate': {
-                'value': self.test_positive_rates[end_date],
+                'value': self.test_positive_rates.get(end_date),
                 'delta': self.compute_change(
                     self.test_positive_rates.get(compare_end_date),
-                    self.test_positive_rates[end_date]
+                    self.test_positive_rates.get(end_date)
                 )
             },
             'adminTests': {
-                'average7d': self.admin_tests_7d_avg[end_date],
+                'average7d': self.admin_tests_7d_avg.get(end_date),
                 'delta': self.compute_change(
                     self.admin_tests_7d_avg.get(compare_end_date),
-                    self.admin_tests_7d_avg[end_date]
+                    self.admin_tests_7d_avg.get(end_date)
                 )
             },
             'positiveTests': {
-                'average7d': self.positive_tests_7d_avg[end_date],
+                'average7d': self.positive_tests_7d_avg.get(end_date),
                 'delta': self.compute_change(
                     self.positive_tests_7d_avg.get(compare_end_date),
-                    self.positive_tests_7d_avg[end_date]
+                    self.positive_tests_7d_avg.get(end_date)
                 )
             },
             'wastewater': {
@@ -207,10 +226,10 @@ class OcTrendsExport:
                 )
             },
             'hospitalCases': {
-                'average7d': self.hospital_cases_7d_avg[end_date],
+                'average7d': self.hospital_cases_7d_avg.get(end_date),
                 'delta': self.compute_change(
                     self.hospital_cases_7d_avg.get(compare_end_date),
-                    self.hospital_cases_7d_avg[end_date]
+                    self.hospital_cases_7d_avg.get(end_date)
                 )
             },
             'deaths': {

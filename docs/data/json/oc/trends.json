@@ -1,8 +1,8 @@
 {
     "weeks": [
         {
-            "startDate": "2024-02-18",
-            "endDate": "2024-02-24",
+            "startDate": "2024-03-03",
+            "endDate": "2024-03-09",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -20,8 +20,64 @@
                 "delta": null
             },
             "hospitalCases": {
-                "average7d": 63.0,
-                "delta": -42.80155642023346
+                "average7d": 57.57142857142857,
+                "delta": -14.799154334038056
+            },
+            "deaths": {
+                "total": 0,
+                "delta": null
+            }
+        },
+        {
+            "startDate": "2024-02-25",
+            "endDate": "2024-03-02",
+            "testPositiveRate": {
+                "value": null,
+                "delta": null
+            },
+            "adminTests": {
+                "average7d": null,
+                "delta": null
+            },
+            "positiveTests": {
+                "average7d": null,
+                "delta": null
+            },
+            "wastewater": {
+                "average7d": null,
+                "delta": null
+            },
+            "hospitalCases": {
+                "average7d": 67.57142857142857,
+                "delta": -4.637096774193557
+            },
+            "deaths": {
+                "total": 0,
+                "delta": null
+            }
+        },
+        {
+            "startDate": "2024-02-18",
+            "endDate": "2024-02-24",
+            "testPositiveRate": {
+                "value": null,
+                "delta": null
+            },
+            "adminTests": {
+                "average7d": null,
+                "delta": null
+            },
+            "positiveTests": {
+                "average7d": null,
+                "delta": null
+            },
+            "wastewater": {
+                "average7d": 216.5265,
+                "delta": -14.695917330171113
+            },
+            "hospitalCases": {
+                "average7d": 70.85714285714286,
+                "delta": -35.66796368352788
             },
             "deaths": {
                 "total": 0,
@@ -83,66 +139,10 @@
                 "total": 0,
                 "delta": null
             }
-        },
-        {
-            "startDate": "2024-01-28",
-            "endDate": "2024-02-03",
-            "testPositiveRate": {
-                "value": null,
-                "delta": null
-            },
-            "adminTests": {
-                "average7d": null,
-                "delta": null
-            },
-            "positiveTests": {
-                "average7d": null,
-                "delta": null
-            },
-            "wastewater": {
-                "average7d": 305.498,
-                "delta": 32.23380648288956
-            },
-            "hospitalCases": {
-                "average7d": 131.28571428571428,
-                "delta": -18.887908208296565
-            },
-            "deaths": {
-                "total": 0,
-                "delta": null
-            }
-        },
-        {
-            "startDate": "2024-01-21",
-            "endDate": "2024-01-27",
-            "testPositiveRate": {
-                "value": null,
-                "delta": null
-            },
-            "adminTests": {
-                "average7d": null,
-                "delta": null
-            },
-            "positiveTests": {
-                "average7d": null,
-                "delta": null
-            },
-            "wastewater": {
-                "average7d": 231.02866666666668,
-                "delta": -77.08129657470727
-            },
-            "hospitalCases": {
-                "average7d": 161.85714285714286,
-                "delta": -17.83901377810007
-            },
-            "deaths": {
-                "total": 0,
-                "delta": null
-            }
         }
     ],
     "meta": {
-        "createdAt": "2024-03-03T09:59:40-08:00",
-        "dataLastUpdated": "2024-02-24"
+        "createdAt": "2024-03-16T13:48:22-07:00",
+        "dataLastUpdated": "2024-03-09"
     }
 }

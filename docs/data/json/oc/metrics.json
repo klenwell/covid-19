@@ -22,37 +22,37 @@
         "d14DeltaPct": 90.81
     },
     "wastewater": {
-        "updatedOn": "2024-03-13",
-        "latest": 73.42,
-        "percentile": 3.79,
-        "d7Date": "2024-03-06",
-        "d7Value": 103.1,
-        "d7DeltaPct": -28.79,
-        "d14Date": "2024-02-28",
-        "d14Value": 117.32,
-        "d14DeltaPct": -37.42
+        "updatedOn": "2024-03-24",
+        "latest": 55.81,
+        "percentile": 3.35,
+        "d7Date": "2024-03-17",
+        "d7Value": 69.84,
+        "d7DeltaPct": -20.08,
+        "d14Date": "2024-03-10",
+        "d14Value": 85.63,
+        "d14DeltaPct": -34.82
     },
     "hospitalCases": {
-        "updatedOn": "2024-03-16",
-        "latest": 41.71,
-        "percentile": 0.59,
-        "d7Date": "2024-03-09",
-        "d7Value": 57.57,
-        "d7DeltaPct": -27.54,
-        "d14Date": "2024-03-02",
-        "d14Value": 67.57,
-        "d14DeltaPct": -38.27
+        "updatedOn": "2024-03-23",
+        "latest": 24.43,
+        "percentile": 0.03,
+        "d7Date": "2024-03-16",
+        "d7Value": 46.86,
+        "d7DeltaPct": -47.87,
+        "d14Date": "2024-03-09",
+        "d14Value": 57.57,
+        "d14DeltaPct": -57.57
     },
     "icuCases": {
-        "updatedOn": "2024-03-16",
-        "latest": 3.29,
+        "updatedOn": "2024-03-23",
+        "latest": 3.0,
         "percentile": 0.03,
-        "d7Date": "2024-03-09",
-        "d7Value": 6.29,
-        "d7DeltaPct": -47.73,
-        "d14Date": "2024-03-02",
-        "d14Value": 7.86,
-        "d14DeltaPct": -58.18
+        "d7Date": "2024-03-16",
+        "d7Value": 3.57,
+        "d7DeltaPct": -16.0,
+        "d14Date": "2024-03-09",
+        "d14Value": 6.29,
+        "d14DeltaPct": -52.27
     },
     "deaths": {
         "updatedOn": "2023-12-07",

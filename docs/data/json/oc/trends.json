@@ -1,8 +1,8 @@
 {
     "weeks": [
         {
-            "startDate": "2024-03-18",
-            "endDate": "2024-03-24",
+            "startDate": "2024-03-24",
+            "endDate": "2024-03-30",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -16,12 +16,12 @@
                 "delta": null
             },
             "wastewater": {
-                "average7d": 55.81166666666667,
-                "delta": -20.082573624170674
-            },
-            "hospitalCases": {
                 "average7d": null,
                 "delta": null
+            },
+            "hospitalCases": {
+                "average7d": 24.285714285714285,
+                "delta": -42.95302013422819
             },
             "deaths": {
                 "total": 0,
@@ -29,8 +29,8 @@
             }
         },
         {
-            "startDate": "2024-03-11",
-            "endDate": "2024-03-17",
+            "startDate": "2024-03-17",
+            "endDate": "2024-03-23",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -44,12 +44,12 @@
                 "delta": null
             },
             "wastewater": {
-                "average7d": 69.83666666666666,
-                "delta": -18.44432679881041
+                "average7d": 55.719,
+                "delta": -24.105444292596115
             },
             "hospitalCases": {
-                "average7d": 45.285714285714285,
-                "delta": -18.50899742930591
+                "average7d": 42.57142857142857,
+                "delta": -9.146341463414632
             },
             "deaths": {
                 "total": 0,
@@ -57,8 +57,8 @@
             }
         },
         {
-            "startDate": "2024-03-04",
-            "endDate": "2024-03-10",
+            "startDate": "2024-03-10",
+            "endDate": "2024-03-16",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -72,12 +72,12 @@
                 "delta": null
             },
             "wastewater": {
-                "average7d": 85.63066666666667,
-                "delta": -32.28386307681763
+                "average7d": 73.41633333333334,
+                "delta": -28.789069193736633
             },
             "hospitalCases": {
-                "average7d": 55.57142857142857,
-                "delta": -16.88034188034189
+                "average7d": 46.857142857142854,
+                "delta": -18.61042183622829
             },
             "deaths": {
                 "total": 0,
@@ -85,8 +85,8 @@
             }
         },
         {
-            "startDate": "2024-02-26",
-            "endDate": "2024-03-03",
+            "startDate": "2024-03-03",
+            "endDate": "2024-03-09",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -100,12 +100,12 @@
                 "delta": null
             },
             "wastewater": {
-                "average7d": 126.45533333333333,
-                "delta": -26.816583297484257
+                "average7d": 103.097,
+                "delta": -12.126747998431702
             },
             "hospitalCases": {
-                "average7d": 66.85714285714286,
-                "delta": -5.835010060362167
+                "average7d": 57.57142857142857,
+                "delta": -14.799154334038056
             },
             "deaths": {
                 "total": 0,
@@ -113,8 +113,8 @@
             }
         },
         {
-            "startDate": "2024-02-19",
-            "endDate": "2024-02-25",
+            "startDate": "2024-02-25",
+            "endDate": "2024-03-02",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -128,12 +128,12 @@
                 "delta": null
             },
             "wastewater": {
-                "average7d": 172.79233333333332,
-                "delta": -40.83264849563988
+                "average7d": 117.32466666666666,
+                "delta": -45.81510038417161
             },
             "hospitalCases": {
-                "average7d": 71.0,
-                "delta": -30.87621696801112
+                "average7d": 67.57142857142857,
+                "delta": -4.637096774193557
             },
             "deaths": {
                 "total": 0,
@@ -142,7 +142,7 @@
         }
     ],
     "meta": {
-        "createdAt": "2024-03-30T14:14:07-07:00",
-        "dataLastUpdated": "2024-03-24"
+        "createdAt": "2024-04-06T14:03:08-07:00",
+        "dataLastUpdated": "2024-03-30"
     }
 }

@@ -1,7 +1,7 @@
 {
     "meta": {
-        "createdAt": "2024-04-13T11:37:02-07:00",
-        "dataLastUpdated": "2024-04-06"
+        "createdAt": "2024-04-20T11:19:39-07:00",
+        "dataLastUpdated": "2024-04-13"
     },
     "dates": [
         {
@@ -14846,7 +14846,7 @@
         },
         {
             "date": "2024-03-28",
-            "wastewater": null,
+            "wastewater": 53.326,
             "tests": null,
             "positive-rate": null,
             "cases": null,
@@ -14856,7 +14856,7 @@
         },
         {
             "date": "2024-03-29",
-            "wastewater": null,
+            "wastewater": 53.326,
             "tests": null,
             "positive-rate": null,
             "cases": null,
@@ -14866,7 +14866,7 @@
         },
         {
             "date": "2024-03-30",
-            "wastewater": null,
+            "wastewater": 53.326,
             "tests": null,
             "positive-rate": null,
             "cases": null,
@@ -14876,7 +14876,7 @@
         },
         {
             "date": "2024-03-31",
-            "wastewater": null,
+            "wastewater": 48.376666666666665,
             "tests": null,
             "positive-rate": null,
             "cases": null,
@@ -14886,7 +14886,7 @@
         },
         {
             "date": "2024-04-01",
-            "wastewater": null,
+            "wastewater": 41.76433333333333,
             "tests": null,
             "positive-rate": null,
             "cases": null,
@@ -14896,7 +14896,7 @@
         },
         {
             "date": "2024-04-02",
-            "wastewater": null,
+            "wastewater": 41.76433333333333,
             "tests": null,
             "positive-rate": null,
             "cases": null,
@@ -14906,42 +14906,112 @@
         },
         {
             "date": "2024-04-03",
-            "wastewater": null,
+            "wastewater": 41.105333333333334,
             "tests": null,
             "positive-rate": null,
             "cases": null,
-            "hospital-cases": 31.857142857142858,
+            "hospital-cases": 33.142857142857146,
             "icu-cases": 2.5714285714285716,
             "deaths": null
         },
         {
             "date": "2024-04-04",
-            "wastewater": null,
+            "wastewater": 41.105333333333334,
             "tests": null,
             "positive-rate": null,
             "cases": null,
-            "hospital-cases": 31.428571428571427,
-            "icu-cases": 2.7142857142857144,
+            "hospital-cases": 33.714285714285715,
+            "icu-cases": 2.857142857142857,
             "deaths": null
         },
         {
             "date": "2024-04-05",
-            "wastewater": null,
+            "wastewater": 41.105333333333334,
             "tests": null,
             "positive-rate": null,
             "cases": null,
-            "hospital-cases": 29.857142857142858,
-            "icu-cases": 2.5714285714285716,
+            "hospital-cases": 32.857142857142854,
+            "icu-cases": 2.7142857142857144,
             "deaths": null
         },
         {
             "date": "2024-04-06",
+            "wastewater": 41.105333333333334,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 32.714285714285715,
+            "icu-cases": 2.857142857142857,
+            "deaths": null
+        },
+        {
+            "date": "2024-04-07",
+            "wastewater": 38.214333333333336,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 34.42857142857143,
+            "icu-cases": 3.0,
+            "deaths": null
+        },
+        {
+            "date": "2024-04-08",
+            "wastewater": 37.955000000000005,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 35.42857142857143,
+            "icu-cases": 3.142857142857143,
+            "deaths": null
+        },
+        {
+            "date": "2024-04-09",
+            "wastewater": 37.955000000000005,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 35.714285714285715,
+            "icu-cases": 3.142857142857143,
+            "deaths": null
+        },
+        {
+            "date": "2024-04-10",
+            "wastewater": 38.150000000000006,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 34.857142857142854,
+            "icu-cases": 3.2857142857142856,
+            "deaths": null
+        },
+        {
+            "date": "2024-04-11",
             "wastewater": null,
             "tests": null,
             "positive-rate": null,
             "cases": null,
-            "hospital-cases": 28.857142857142858,
-            "icu-cases": 2.7142857142857144,
+            "hospital-cases": 33.857142857142854,
+            "icu-cases": 3.142857142857143,
+            "deaths": null
+        },
+        {
+            "date": "2024-04-12",
+            "wastewater": null,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 32.714285714285715,
+            "icu-cases": 3.142857142857143,
+            "deaths": null
+        },
+        {
+            "date": "2024-04-13",
+            "wastewater": null,
+            "tests": null,
+            "positive-rate": null,
+            "cases": null,
+            "hospital-cases": 31.571428571428573,
+            "icu-cases": 3.142857142857143,
             "deaths": null
         }
     ],

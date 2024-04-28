@@ -1,8 +1,8 @@
 {
     "weeks": [
         {
-            "startDate": "2024-04-07",
-            "endDate": "2024-04-13",
+            "startDate": "2024-04-14",
+            "endDate": "2024-04-20",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -18,6 +18,34 @@
             "wastewater": {
                 "average7d": null,
                 "delta": null
+            },
+            "hospitalCases": {
+                "average7d": 18.714285714285715,
+                "delta": -40.723981900452486
+            },
+            "deaths": {
+                "total": 0,
+                "delta": null
+            }
+        },
+        {
+            "startDate": "2024-04-07",
+            "endDate": "2024-04-13",
+            "testPositiveRate": {
+                "value": null,
+                "delta": null
+            },
+            "adminTests": {
+                "average7d": null,
+                "delta": null
+            },
+            "positiveTests": {
+                "average7d": null,
+                "delta": null
+            },
+            "wastewater": {
+                "average7d": 38.150000000000006,
+                "delta": -7.189659087223058
             },
             "hospitalCases": {
                 "average7d": 31.571428571428573,
@@ -111,38 +139,10 @@
                 "total": 0,
                 "delta": null
             }
-        },
-        {
-            "startDate": "2024-03-10",
-            "endDate": "2024-03-16",
-            "testPositiveRate": {
-                "value": null,
-                "delta": null
-            },
-            "adminTests": {
-                "average7d": null,
-                "delta": null
-            },
-            "positiveTests": {
-                "average7d": null,
-                "delta": null
-            },
-            "wastewater": {
-                "average7d": 73.41633333333334,
-                "delta": -28.789069193736633
-            },
-            "hospitalCases": {
-                "average7d": 46.857142857142854,
-                "delta": -18.61042183622829
-            },
-            "deaths": {
-                "total": 0,
-                "delta": null
-            }
         }
     ],
     "meta": {
-        "createdAt": "2024-04-20T11:19:35-07:00",
-        "dataLastUpdated": "2024-04-13"
+        "createdAt": "2024-04-27T19:51:28-07:00",
+        "dataLastUpdated": "2024-04-20"
     }
 }

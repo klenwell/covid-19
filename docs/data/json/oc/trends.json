@@ -1,6 +1,34 @@
 {
     "weeks": [
         {
+            "startDate": "2024-08-25",
+            "endDate": "2024-08-31",
+            "testPositiveRate": {
+                "value": null,
+                "delta": null
+            },
+            "adminTests": {
+                "average7d": null,
+                "delta": null
+            },
+            "positiveTests": {
+                "average7d": null,
+                "delta": null
+            },
+            "wastewater": {
+                "average7d": null,
+                "delta": null
+            },
+            "hospitalCases": {
+                "average7d": 90.85714285714286,
+                "delta": -27.80930760499432
+            },
+            "deaths": {
+                "total": 0,
+                "delta": null
+            }
+        },
+        {
             "startDate": "2024-08-18",
             "endDate": "2024-08-24",
             "testPositiveRate": {
@@ -20,8 +48,8 @@
                 "delta": null
             },
             "hospitalCases": {
-                "average7d": 124.71428571428571,
-                "delta": 9.535759096612287
+                "average7d": 125.85714285714286,
+                "delta": 10.53952321204517
             },
             "deaths": {
                 "total": 0,
@@ -111,38 +139,10 @@
                 "total": 0,
                 "delta": null
             }
-        },
-        {
-            "startDate": "2024-07-21",
-            "endDate": "2024-07-27",
-            "testPositiveRate": {
-                "value": null,
-                "delta": null
-            },
-            "adminTests": {
-                "average7d": null,
-                "delta": null
-            },
-            "positiveTests": {
-                "average7d": null,
-                "delta": null
-            },
-            "wastewater": {
-                "average7d": 457.641,
-                "delta": 30.38811872537278
-            },
-            "hospitalCases": {
-                "average7d": 122.0,
-                "delta": 44.745762711864394
-            },
-            "deaths": {
-                "total": 0,
-                "delta": null
-            }
         }
     ],
     "meta": {
-        "createdAt": "2024-08-31T13:40:47-07:00",
-        "dataLastUpdated": "2024-08-24"
+        "createdAt": "2024-09-07T12:15:43-07:00",
+        "dataLastUpdated": "2024-08-31"
     }
 }

@@ -33,26 +33,26 @@
         "d14DeltaPct": 332.48
     },
     "hospitalCases": {
-        "updatedOn": "2024-08-31",
-        "latest": 90.86,
-        "percentile": 25.89,
-        "d7Date": "2024-08-24",
-        "d7Value": 125.86,
-        "d7DeltaPct": -27.81,
-        "d14Date": "2024-08-17",
-        "d14Value": 113.86,
-        "d14DeltaPct": -20.2
+        "updatedOn": "2024-09-07",
+        "latest": 81.86,
+        "percentile": 23.45,
+        "d7Date": "2024-08-31",
+        "d7Value": 97.14,
+        "d7DeltaPct": -15.74,
+        "d14Date": "2024-08-24",
+        "d14Value": 125.86,
+        "d14DeltaPct": -34.96
     },
     "icuCases": {
-        "updatedOn": "2024-08-31",
-        "latest": 7.43,
-        "percentile": 13.44,
-        "d7Date": "2024-08-24",
-        "d7Value": 6.57,
-        "d7DeltaPct": 13.04,
-        "d14Date": "2024-08-17",
-        "d14Value": 7.57,
-        "d14DeltaPct": -1.89
+        "updatedOn": "2024-09-07",
+        "latest": 11.0,
+        "percentile": 21.46,
+        "d7Date": "2024-08-31",
+        "d7Value": 7.71,
+        "d7DeltaPct": 42.59,
+        "d14Date": "2024-08-24",
+        "d14Value": 6.57,
+        "d14DeltaPct": 67.39
     },
     "deaths": {
         "updatedOn": "2023-12-07",

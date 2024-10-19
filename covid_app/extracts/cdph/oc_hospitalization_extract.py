@@ -176,7 +176,11 @@ class OcHospitalDataExtract:
         return response
 
     def date_str_to_date(self, date_str):
-        return datetime.strptime(date_str, DATE_FORMAT).date()
+        alt_format = "%m/%d/%Y"
+        try:
+            return datetime.strptime(date_str, DATE_FORMAT).date()
+        except ValueError:
+            return datetime.strptime(date_str, alt_format).date()
 
 
 #

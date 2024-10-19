@@ -1,8 +1,8 @@
 {
     "weeks": [
         {
-            "startDate": "2024-09-22",
-            "endDate": "2024-09-28",
+            "startDate": "2024-10-01",
+            "endDate": "2024-10-07",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -20,8 +20,8 @@
                 "delta": null
             },
             "hospitalCases": {
-                "average7d": 53.0,
-                "delta": -31.296296296296294
+                "average7d": 35.714285714285715,
+                "delta": 52.439024390243915
             },
             "deaths": {
                 "total": 0,
@@ -29,8 +29,8 @@
             }
         },
         {
-            "startDate": "2024-09-15",
-            "endDate": "2024-09-21",
+            "startDate": "2024-09-24",
+            "endDate": "2024-09-30",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -48,8 +48,8 @@
                 "delta": null
             },
             "hospitalCases": {
-                "average7d": 77.14285714285714,
-                "delta": -13.461538461538462
+                "average7d": 23.428571428571427,
+                "delta": -66.11570247933884
             },
             "deaths": {
                 "total": 0,
@@ -57,8 +57,8 @@
             }
         },
         {
-            "startDate": "2024-09-08",
-            "endDate": "2024-09-14",
+            "startDate": "2024-09-17",
+            "endDate": "2024-09-23",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -76,8 +76,8 @@
                 "delta": null
             },
             "hospitalCases": {
-                "average7d": 89.14285714285714,
-                "delta": 3.482587064676617
+                "average7d": 69.14285714285714,
+                "delta": -18.518518518518526
             },
             "deaths": {
                 "total": 0,
@@ -85,8 +85,8 @@
             }
         },
         {
-            "startDate": "2024-09-01",
-            "endDate": "2024-09-07",
+            "startDate": "2024-09-10",
+            "endDate": "2024-09-16",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -104,8 +104,8 @@
                 "delta": null
             },
             "hospitalCases": {
-                "average7d": 86.14285714285714,
-                "delta": -11.323529411764707
+                "average7d": 84.85714285714286,
+                "delta": -2.141680395387138
             },
             "deaths": {
                 "total": 0,
@@ -113,8 +113,8 @@
             }
         },
         {
-            "startDate": "2024-08-25",
-            "endDate": "2024-08-31",
+            "startDate": "2024-09-03",
+            "endDate": "2024-09-09",
             "testPositiveRate": {
                 "value": null,
                 "delta": null
@@ -132,8 +132,8 @@
                 "delta": null
             },
             "hospitalCases": {
-                "average7d": 97.14285714285714,
-                "delta": -22.814982973893308
+                "average7d": 86.71428571428571,
+                "delta": -7.186544342507655
             },
             "deaths": {
                 "total": 0,
@@ -142,7 +142,7 @@
         }
     ],
     "meta": {
-        "createdAt": "2024-10-12T10:24:27-07:00",
-        "dataLastUpdated": "2024-09-28"
+        "createdAt": "2024-10-19T11:40:51-07:00",
+        "dataLastUpdated": "2024-10-07"
     }
 }
